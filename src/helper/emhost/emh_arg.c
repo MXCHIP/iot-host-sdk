@@ -144,6 +144,46 @@ const char *EMH_ARG_ILOP_VT[] =
 #endif
 
 /******************************************************************************
+ *                              Coud QLINK service
+ ******************************************************************************/
+
+#ifdef AT_SUPPORT_QLINK
+
+const char* EMH_ARG_QLINK_FORMAT[] =
+{
+	[EMH_ARG_QLINK_FORMAT_JSON] = "JSON",
+	[EMH_ARG_QLINK_FORMAT_MAX]  = "\0",
+};
+
+const char* EMH_ARG_QLINK_STATUS[] =
+{
+	[EMH_ARG_QLINK_STATUS_UNINITIALIZED]	= "NONE",
+	[EMH_ARG_QLINK_STATUS_INITIALIZED]		= "INIT",
+	[EMH_ARG_QLINK_STATUS_CONNECTED]		= "CONNECT",
+	[EMH_ARG_QLINK_STATUS_DISCONNECTED]		= "DISCONNECT",
+	[EMH_ARG_QLINK_STATUS_MAX]     		  	= "\0",
+};
+
+const char* EMH_ARG_QLINK_CONN[] =
+{
+	[EMH_ARG_QLINK_CONN_CLOUD_CONNECTED]     = "CLOUD_CONNECT",
+	[EMH_ARG_QLINK_CONN_CLOUD_DISCONNECTED]  = "CLOUD_DISCONNECT",
+	[EMH_ARG_QLINK_CONN_LOCAL_CONNECTED]     = "LOCAL_CONNECT",
+	[EMH_ARG_QLINK_CONN_LOCAL_DISCONNECTED]  = "LOCAL_DISCONNECT",
+	[EMH_ARG_QLINK_CONN_MAX]           	     = "\0",
+};
+    
+const char* EMH_ARG_QLINK_EV[] =
+{
+	[EMH_ARG_QLINK_EV_QLINK]		= "QLINK",
+	[EMH_ARG_QLINK_EV_GET]          = "GET",
+	[EMH_ARG_QLINK_EV_SET]          = "SET",
+	[EMH_ARG_QLINK_EV_MAX]       	= "\0",
+}; 
+
+#endif
+
+/******************************************************************************
  *                              Function Definitions
  ******************************************************************************/
 

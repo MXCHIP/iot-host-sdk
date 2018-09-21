@@ -35,6 +35,7 @@ C_SOURCES =  \
 			src/helper/emhost/emh_alisds.c \
 			src/helper/emhost/emh_arg.c \
 			src/helper/emhost/emh_ilop.c \
+			src/helper/emhost/emh_qlink.c \
 			src/helper/emhost/emh_module.c \
 			src/helper/emhost/emh_wlan.c \
 			src/helper/mx_utils/mx_ringbuffer.c
@@ -175,8 +176,23 @@ C_INCLUDES += -Isrc/alicloud_sds -Isrc/helper/jsmn
 CFLAGS += -DAT_SUPPORT_ALISDS
 endif
 
+ifeq (qlinkapp,$(findstring qlinkapp,$(MAKECMDGOALS)))
+TARGET = iot-qlinkapp
+C_SOURCES += examples/qlinkapp/main.c \
+			 src/cloud_qlink/cloud_qlink.c \
+			 src/helper/jsmn/jsmn.c \
+			 src/helper/jsmn/json_escape_str.c \
+			 src/helper/jsmn/json_generator.c \
+			 src/helper/jsmn/json_utils.c \
+			 src/helper/jsmn/json_wrappers.c
+
+C_INCLUDES += -Iexamples/qlinkapp -Isrc/cloud_qlink -Isrc/helper/jsmn
+
+CFLAGS += -DAT_SUPPORT_QLINK -DQLINK_USE_JSON
+endif
+
 # default action: build all
-all test ilopicaapp iloprawapp sdsapp: $(BUILD_DIR)/$(TARGET).elf
+all test ilopicaapp iloprawapp sdsapp qlinkapp: $(BUILD_DIR)/$(TARGET).elf
 
 #######################################
 # build the application

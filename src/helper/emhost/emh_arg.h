@@ -176,6 +176,49 @@ enum{
 };
 typedef uint8_t emh_arg_ilop_vt_t;
 extern const char *EMH_ARG_ILOP_VT[];
+
+
+/******************************************************************************
+ *                              Cloud QLINK service
+ ******************************************************************************/
+/** \addtogroup qlink */
+/** @{*/
+enum{
+	EMH_ARG_QLINK_FORMAT_JSON,
+	EMH_ARG_QLINK_FORMAT_MAX,
+};
+typedef uint8_t emh_arg_qlink_format_t;
+extern const char* EMH_ARG_QLINK_FORMAT[];
+
+enum{
+	EMH_ARG_QLINK_STATUS_UNINITIALIZED,
+	EMH_ARG_QLINK_STATUS_INITIALIZED,
+	EMH_ARG_QLINK_STATUS_CONNECTED,
+	EMH_ARG_QLINK_STATUS_DISCONNECTED,
+	EMH_ARG_QLINK_STATUS_MAX,
+};
+typedef uint8_t emh_arg_qlink_status_t;
+extern const char* EMH_ARG_QLINK_STATUS[];
+
+enum{
+	EMH_ARG_QLINK_CONN_CLOUD_CONNECTED,
+	EMH_ARG_QLINK_CONN_CLOUD_DISCONNECTED,
+	EMH_ARG_QLINK_CONN_LOCAL_CONNECTED,
+	EMH_ARG_QLINK_CONN_LOCAL_DISCONNECTED,	
+	EMH_ARG_QLINK_CONN_MAX,
+};
+typedef uint8_t emh_arg_qlink_conn_t;
+extern const char* EMH_ARG_QLINK_CONN[];
+
+enum{
+	EMH_ARG_QLINK_EV_QLINK,
+	EMH_ARG_QLINK_EV_SET,
+	EMH_ARG_QLINK_EV_GET,
+	EMH_ARG_QLINK_EV_MAX,
+};
+typedef uint8_t emh_arg_qlink_ev_t;
+extern const char* EMH_ARG_QLINK_EV[];
+
 /** @}*/
 
 /******************************************************************************

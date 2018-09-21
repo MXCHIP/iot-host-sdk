@@ -333,7 +333,7 @@ mx_status emh_ilop_get_key(char pk[EMH_ILOP_PRODUCT_KEY_MAXLEN], char ps[EMH_ILO
  * 
  * @return		status
  */
-mx_status emh_ilop_awss_start(void);
+mx_status emh_qlink_raw_start(void);
 
 /**
  * @brief		Start AWSS press
@@ -341,7 +341,7 @@ mx_status emh_ilop_awss_start(void);
  * 
  * @return		status
  */
-mx_status emh_ilop_awss_press(void);
+mx_status emh_qlink_user_start(void);
 
 /**
  * @brief		Start cloud service on module
@@ -417,6 +417,133 @@ MX_WEAK void emh_ev_ilop_connection(emh_arg_ilop_conn_t conn);
  * @return		none
  */
 MX_WEAK void emh_ev_ilop_set_local_attr(emh_ilop_msg* msg);
+
+/** @}*/
+/******************************************************************************
+ *                              Coud QLINK service
+ ******************************************************************************/
+
+/** \addtogroup alicloud_ilop */
+/** @{*/
+
+#define EMH_QLINK_PRODUCT_TOKEN_MAXLEN    (16 + 1)
+#define EMH_QLINK_ANDLINK_TOKEN_MAXLEN    (16 + 1)
+#define EMH_QLINK_DEVICE_TYPE_MAXLEN      (10 + 1)
+
+typedef struct {
+    struct {
+        const char* product_token; /**< Reference to product TRD document */
+        const char* andlink_token; /**< Reference to product TRD document */
+        const char* device_type; /**< Reference to product TRD document */
+        emh_arg_qlink_format_t format; /**< Reference to product TRD document */
+    } product_info;
+    struct {
+        const char* firmware_version; /**< Reference to product TRD document */
+        const char* software_version; /**< Reference to product TRD document */
+    } version_info;
+} emh_qlink_config_t;
+
+/**
+ *  Alicloud ilop service message
+ */
+typedef struct {
+    int32_t len; /**< message length */
+    uint8_t* data; /**< point to the buffer store the message */
+    emh_arg_qlink_format_t format; /**< message format, ica or raw data */
+} emh_qlink_msg_t;
+
+/**
+ * @brief		Read product info data from module, write new data if not equal
+ * 
+ * @param[in] 	config: Product information
+ * @param[in] 	force: Force setting
+ * 
+ * @return		status
+ */
+mx_status emh_qlink_config(const emh_qlink_config_t* config, bool force);
+
+/**
+ * @brief		Start AWSS Wi-Fi configuration. EMW module start monitor mode
+ * @note  		In the monitor mode, only capture packets.
+ * 
+ * @return		status
+ */
+mx_status emh_qlink_raw_start(void);
+
+/**
+ * @brief		Start AWSS press
+ * @note  		In the monitor mode, parsing the air package, connecting the server, binding the phone
+ * 
+ * @return		status
+ */
+mx_status emh_qlink_user_start(void);
+
+/**
+ * @brief		Start cloud service on module
+ * 
+ * @return		status
+ */
+mx_status emh_qlink_service_start(void);
+
+/**
+ * @brief		Get current alicloud ILOP service connection status.
+ * 
+ * @return		connection status
+ */
+emh_arg_ilop_status_t emh_qlink_get_stauts(void);
+
+/**
+ * @brief		Stop cloud service on module
+ * 
+ * @return		mx_status
+ */
+mx_status emh_qlink_service_stop(void);
+
+/**
+ * @brief		Send message to cloud from local
+ * 
+ * @param[in] 	data: point to the buffer store the outgoing message
+ * @param[in] 	len: outgoing message length
+ * 
+ * @return		mx_status
+ */
+mx_status emh_qlink_send_json_to_cloud( char *type, uint8_t *data, uint32_t len );
+
+/**
+ * @brief		Event hadnle, incomming oob packet prefix.
+ * 
+ * @param[in] 	attrs: SDS service msg
+ * 
+ * @return		none
+ */
+void emh_qlink_event_handler(void);
+
+/**
+ * @brief		Event: Alicloud ILOP service connection status is changed
+ * 
+ * @param[in] 	conn: service connection status
+ * 
+ * @return		none
+ */
+MX_WEAK void emh_ev_qlink_connection(emh_arg_qlink_conn_t conn);
+
+/**
+ * @brief		Event: Alicloud SDS service is requesting data from local device
+ * 
+ * @param[in] 	attrs: SDS service msg
+ * 
+ * @return		none
+ */
+MX_WEAK void emh_ev_qlink_get_local_attrs(emh_qlink_msg_t* attrs);
+
+/**
+ * @brief		Event: Alicloud ILOP service is writing data to local device
+ * 
+ * @param[in] 	msg: ILOP service msg
+ * 
+ * @return		none
+ */
+MX_WEAK void emh_ev_qlink_set_local_attrs(emh_qlink_msg_t* msg);
 
 /** @}*/
 /** @}*/
