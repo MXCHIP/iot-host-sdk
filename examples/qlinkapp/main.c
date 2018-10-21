@@ -2,9 +2,9 @@
 
 const emh_qlink_config_t config = {
     .product_info = {
-        .product_token = "38Szyd6i1240elbV",
-        .andlink_token = "wWppJIdROfQkcsMW",
-        .device_type   = "30413",
+        .product_token = "PXmsE6kQmxEgc0e3",
+        .andlink_token = "ZxMo0zJvvZMWP3Az",
+        .device_type   = "30531",
         .format = EMH_ARG_QLINK_FORMAT_JSON,
     },
     .version_info = {
@@ -16,26 +16,30 @@ const emh_qlink_config_t config = {
 void qlink_event_handler(qlink_event_t event)
 {
     switch (event) {
-    case QLINK_EVENT_WLAN_CONFIG_STARTED: {
-        app_log("Wi-Fi config....");
+        case QLINK_EVENT_WLAN_CONFIG_STARTED: {
+            app_log("Wi-Fi config....");
+            break;
+        }
+        case QLINK_EVENT_WLAN_CONFIG_STARTED_IN_AP_MODE: {
+            app_log("WiFi config in AP mode......");
         break;
-    }
-    case QLINK_EVENT_WLAN_CONNECTED: {
-        app_log("Wi-Fi connected");
-        break;
-    }
-    case QLINK_EVENT_WLAN_DISCONNECTED: {
-        app_log("Wi-Fi disconnected");
-        break;
-    }
-    case QLINK_EVENT_CLOUD_CONNECTED: {
-        app_log("Cloud connected");
-        break;
-    }
-    case QLINK_EVENT_CLOUD_DISCONNECTED: {
-        app_log("Cloud disconnected");
-        break;
-    }
+        }
+        case QLINK_EVENT_WLAN_CONNECTED: {
+            app_log("Wi-Fi connected");
+            break;
+        }
+        case QLINK_EVENT_WLAN_DISCONNECTED: {
+            app_log("Wi-Fi disconnected");
+            break;
+        }
+        case QLINK_EVENT_CLOUD_CONNECTED: {
+            app_log("Cloud connected");
+            break;
+        }
+        case QLINK_EVENT_CLOUD_DISCONNECTED: {
+            app_log("Cloud disconnected");
+            break;
+        }
     }
 }
 
@@ -58,7 +62,7 @@ void emh_ev_qlink_set_local_attrs(emh_qlink_msg_t* msg)
 
     //factory
 
-    //set data,  if this field has also need to be upload, this function return 1, otherwise 0 will be returned.
+    //set data,  if this field also need to be upload, this function return 1, otherwise 0 will be returned.
 
 }
 
@@ -77,6 +81,7 @@ static void handle_raw_cmd(char* pwbuf, int blen, int argc, char** argv)
 
 static void handle_user_cmd(char* pwbuf, int blen, int argc, char** argv)
 {
+    app_log("enter handle_user_cmd()!");
     if (argc != 2)
         return;
 
@@ -96,19 +101,27 @@ struct cli_command qlinkcmds[] = {
 void qlink_main(void)
 {
     mx_status err = kNoErr;
+    int nums = 0;
 
      /* System initialization， ticker, stdio */
     mx_hal_ms_ticker_init();
     mx_hal_stdio_init();
 
 #ifdef MX_CLI_ENABLE
+    app_log("open cli function");
     cli_register_commands(qlinkcmds, sizeof(qlinkcmds) / sizeof(struct cli_command));
 #endif
 
+label_reinit:
     /* qlink service initialization */
     err = qlink_init(&config);
-    if (err != kNoErr)
+    if (err != kNoErr){
         app_log("qlink init err");
+        if( nums<3 ){
+            nums++;
+            goto label_reinit;
+        }
+    }
 
     while (1) {
         qlink_runloop();

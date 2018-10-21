@@ -73,6 +73,10 @@ MX_WEAK void qlink_event_handler(qlink_event_t event)
         qlink_log("Wi-Fi config....");
         break;
     }
+    case QLINK_EVENT_WLAN_CONFIG_STARTED_IN_AP_MODE: {
+        qlink_log("WiFi config in AP mode......");
+        break;
+    }
     case QLINK_EVENT_WLAN_CONNECTED: {
         qlink_log("Wi-Fi connected");
         break;
@@ -170,6 +174,8 @@ void emh_ev_wlan(emh_arg_wlan_ev_t event)
         qlink_event_handler(QLINK_EVENT_WLAN_CONNECTED);
     } else if (event == EMH_ARG_WLAN_EV_STA_DISCONNECTED) {
         qlink_event_handler(QLINK_EVENT_WLAN_DISCONNECTED);
+    } else if (event == EMH_ARG_WLAN_EV_UAP_ESTABLISHED) {
+        qlink_event_handler(QLINK_EVENT_WLAN_CONFIG_STARTED_IN_AP_MODE);
     }
 }
 

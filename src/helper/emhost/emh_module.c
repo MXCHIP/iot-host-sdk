@@ -97,6 +97,9 @@ mx_status emh_init(void)
 #ifdef AT_SUPPORT_ALISDS
 			ATCmdParser_add_oob("+ALINKEVENT:",	emh_alisds_event_handler);
 #endif			
+#ifdef AT_SUPPORT_QLINK
+			ATCmdParser_add_oob("+QLINKEVENT:",	emh_qlink_event_handler);
+#endif		
 			ATCmdParser_add_oob("+WEVENT:",		emh_wlan_event_handler);
 			return kNoErr;
 		}

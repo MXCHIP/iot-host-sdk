@@ -10,7 +10,7 @@
 
 #define app_log(M, ...) MX_LOG(APP_DEBUG, "APP", M, ##__VA_ARGS__)
 
-#define MX_CLI_ENABLE            1
+// #define MX_CLI_ENABLE            1
 #define APP_DEBUG                MX_DEBUG_ON
 
 

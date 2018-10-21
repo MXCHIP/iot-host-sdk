@@ -54,6 +54,7 @@
 /** Alicloud QLINK service events */
 enum qlink_event_e {
     QLINK_EVENT_WLAN_CONFIG_STARTED, /**< AWS service is started to set wlan and cloud. */
+    QLINK_EVENT_WLAN_CONFIG_STARTED_IN_AP_MODE,
     QLINK_EVENT_WLAN_CONNECTED, /**< Device is connected to Wi-Fi access point. */
     QLINK_EVENT_WLAN_DISCONNECTED, /**< Device is disconnected from Wi-Fi access point. */
     QLINK_EVENT_CLOUD_CONNECTED, /**< Alicloud QLINK service is connected */

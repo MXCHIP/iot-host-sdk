@@ -45,54 +45,48 @@ mx_status emh_qlink_config(const emh_qlink_config_t* config, bool force)
 	if( false==force )
 	{
 		/* Check product info*/
-		if (!(ATCmdParser_send("AT+ALINKPRODUCT?")
-		&& ATCmdParser_recv("+ALINKPRODUCT:%200[^\r]\r\n",args)
+		if (ATCmdParser_send("AT+QLINKPRODUCT?")
+		&& ATCmdParser_recv("+QLINKPRODUCT:%200[^\r]\r\n",args)
+		&& ATCmdParser_recv("OK\r\n")) {
+			if (3 == ATCmdParser_analyse_args(args, arg_list, 3)) {
+				if ( !(strcmp(arg_list[0], config->product_info.product_token)
+				|| strcmp(arg_list[1], config->product_info.andlink_token)
+				|| strcmp(arg_list[2], config->product_info.device_type)) ){
+					goto label_version;
+				}
+			}
+		}
+	}
+
+	if (!(ATCmdParser_send("AT+QLINKPRODUCT=%s,%s,%s", 
+							config->product_info.product_token, config->product_info.andlink_token, 
+							config->product_info.device_type )
 		&& ATCmdParser_recv("OK\r\n"))) {
-			goto label_version;
-		}
+		return kGeneralErr;
 	}
-
-	if (3 != ATCmdParser_analyse_args(args, arg_list, 3)) {
-		return kMalformedErr;
-	}
-
-	if (strcmp(arg_list[0], config->product_info.product_token)
-	 || strcmp(arg_list[1], config->product_info.andlink_token)
-	 || strcmp(arg_list[2], config->product_info.device_type)){
-		 
-		if (!(ATCmdParser_send("AT+ALINKPRODUCT=%s,%s,%s", 
-							 config->product_info.product_token, config->product_info.andlink_token, 
-	                         config->product_info.device_type )
-		  && ATCmdParser_recv("OK\r\n"))) {
-			return kGeneralErr;
-		}
-	 }
 
 label_version:
 	if( false==force )
 	{
 		/* Check version info*/
-		if (!(ATCmdParser_send("AT+QLINKVERSION?")
+		if (ATCmdParser_send("AT+QLINKVERSION?")
 		&& ATCmdParser_recv("+QLINKVERSION:%40[^\r]\r\n",args)
-		&& ATCmdParser_recv("OK\r\n"))) {
-			return kReadErr;
+		&& ATCmdParser_recv("OK\r\n")) {
+			if (2 == ATCmdParser_analyse_args(args, arg_list, 2)) {
+				if (!(strcmp(arg_list[0], config->version_info.firmware_version)
+				|| strcmp(arg_list[1], config->version_info.software_version))){
+					return kNoErr;
+				}
+			}
 		}
 	}		
-
-	if (2 != ATCmdParser_analyse_args(args, arg_list, 2)) {
-		return kMalformedErr;
-	}
-
-	if ((strcmp(arg_list[0], config->version_info.firmware_version)
-	  || strcmp(arg_list[1], config->version_info.software_version))){
 		 
-		if (!(ATCmdParser_send("AT+QLINKVERSION=%s,%s", 
-							   config->version_info.firmware_version, config->version_info.software_version )
-		  && ATCmdParser_recv("OK\r\n"))) {
-			return kGeneralErr;
-		}
+	if (!(ATCmdParser_send("AT+QLINKVERSION=%s,%s", 
+							config->version_info.firmware_version, config->version_info.software_version )
+		&& ATCmdParser_recv("OK\r\n"))) {
+		return kGeneralErr;
 	}
-	  
+	
 	return kNoErr; 
 }
 
