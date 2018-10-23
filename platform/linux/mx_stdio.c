@@ -108,7 +108,7 @@ void mx_hal_stdio_init(void)
 #ifdef MX_CLI_ENABLE
     pthread_t ntid;
 
-    pthread_mutex_lock(&stdio_mtx);
+    pthread_mutex_init(&stdio_mtx, NULL);
 
     err = pthread_create(&ntid, NULL, cli_recv_task, NULL);
     require_noerr(err, exit);
@@ -141,3 +141,4 @@ int mx_hal_cli_getc(void)
 }
 
 #endif
+
