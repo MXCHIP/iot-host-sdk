@@ -150,6 +150,15 @@ mx_status emh_qlink_send_json_to_cloud( char *type, uint8_t *data, uint32_t len 
 	return kGeneralErr;
 }
 
+mx_status emh_qlink_send_data_to_uart( int res )
+{
+	if (  ATCmdParser_send("AT+QLINKPARAM=%d", res)
+       && ATCmdParser_recv("OK\r\n")) {
+        return kNoErr;
+    }
+	return kGeneralErr;
+}
+
 void emh_qlink_event_handler(void)
 {
 	mx_status err = kNoErr;
@@ -184,7 +193,15 @@ void emh_qlink_event_handler(void)
 		msg.data = data;
 		msg.format = EMH_ARG_QLINK_FORMAT_JSON;
 		msg.len = count;
-		emh_ev_qlink_set_local_attrs(&msg);
+
+		int res = 0;
+		res = emh_ev_qlink_set_local_attrs(&msg);
+		if( NULL!=strstr(msg.data, "data") )
+		{
+			printf("ready to send back data\r\n");
+			emh_qlink_send_data_to_uart(res);
+		}
+		printf("after sending back data\r\n");
 		free(data);
     }
     /* QLINK device === json value===> server */
@@ -194,10 +211,11 @@ void emh_qlink_event_handler(void)
 		int32_t count;
 		require_action(ATCmdParser_recv("%d,", &count), exit, err = kMalformedErr);
 
-        uint8_t *data = malloc(count);
+        uint8_t *data = malloc(count+1);
 		require_action(data, exit, err = kNoMemoryErr);
 		require_action(ATCmdParser_read((char *)data, count) == count, exit, err = kTimeoutErr);
 
+		*(data+count) = 0x00;
 		msg.data = data;
 		msg.format = EMH_ARG_QLINK_FORMAT_JSON;
 		msg.len = count;

@@ -10,8 +10,12 @@
 
 #define app_log(M, ...) MX_LOG(APP_DEBUG, "APP", M, ##__VA_ARGS__)
 
-// #define MX_CLI_ENABLE            1
-#define APP_DEBUG                MX_DEBUG_ON
+#define APP_DEBUG                            MX_DEBUG_ON
+
+#define QLINK_EVENT_TYPE_INFORM              "Inform"   //send data initiate
+#define QLINK_EVENT_TYPE_FILE                "File"
+#define QLINK_EVENT_TYPE_PARAMCHANGE         "ParamChange"  //send data after triggering by hand
+#define QLINK_EVENT_TYPE_DATA                "Data"         //send data as a response
 
 
 void qlink_main(void);

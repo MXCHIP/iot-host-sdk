@@ -206,7 +206,7 @@ MX_WEAK void emh_ev_qlink_get_local_attrs(emh_qlink_msg_t* msg)
     qlink_log("please redeclare this function in application!!!");
 }
 
-MX_WEAK void emh_ev_qlink_set_local_attrs(emh_qlink_msg_t* msg)
+MX_WEAK int emh_ev_qlink_set_local_attrs(emh_qlink_msg_t* msg)
 {
 
 }

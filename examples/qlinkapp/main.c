@@ -57,19 +57,26 @@ void emh_ev_qlink_get_local_attrs(emh_qlink_msg_t* msg)
 
 }
 
-void emh_ev_qlink_set_local_attrs(emh_qlink_msg_t* msg)
+int emh_ev_qlink_set_local_attrs(emh_qlink_msg_t* msg)
 {
     app_log("set attrs");
-    app_log("data is :%s  len is :%d", msg->data, msg->len);
 
-    //unbind
-
-    //reset
-
-    //factory
-
-    //set data,  if this field also need to be upload, this function return 1, otherwise 0 will be returned.
-
+    //REBOOT, reboot device
+    if( 0==strncmp(msg->data, "REBOOT", msg->len ) )
+    {
+        app_log("please reboot device.");
+    }else if( 0==strncmp(msg->data, "FACTORY", msg->len) ) //FACTOR, restore factory settings and clear all parameters of then system.
+    {
+        app_log("please restore device.");
+    }else if( 0==strncmp(msg->data, "UNBIND", msg->len) ) //UNBIND 
+    {
+        app_log("this device has already bend unbinded");
+    }else  //set data,  if this field also need to be upload, this function return 1, otherwise 0 will be returned.
+    {
+        app_log("data is :%s  len is :%d", msg->data, msg->len);
+        // return 1;
+    }
+    return 0;
 }
 
 #ifdef MX_CLI_ENABLE
@@ -111,10 +118,22 @@ static void handle_reboot_cmd(char* pwbuf, int blen, int argc, char** argv)
 
 }
 
+static void handle_send_cmd(char* pwbuf, int blen, int argc, char** argv)
+{
+    if (argc != 3)
+    {
+        app_log("input param error!!!");
+        return;
+    }
+    
+    emh_qlink_send_json_to_cloud( QLINK_EVENT_TYPE_INFORM, *argv[2], strlen(*argv[2]) );
+}
+
 struct cli_command qlinkcmds[] = {
     { "raw", "raw [start|stop]", handle_raw_cmd },
     { "user", "start|stop", handle_user_cmd },
     { "reboot", "reboot", handle_reboot_cmd },
+    { "send", "send <type>", handle_send_cmd },
 };
 #endif
 

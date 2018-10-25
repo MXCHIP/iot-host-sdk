@@ -1,3 +1,7 @@
 {
-    "aliosStudio.sdkPath": "/Users/miaogs/.aos/AliOS-Things"
+    "aliosStudio.sdkPath": "/Users/miaogs/.aos/AliOS-Things",
+    "files.associations": {
+        "emh_api.h": "c",
+        "atcmdparser.h": "c"
+    }
 }
