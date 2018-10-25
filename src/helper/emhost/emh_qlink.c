@@ -176,10 +176,11 @@ void emh_qlink_event_handler(void)
 		int32_t count;
 		require_action(ATCmdParser_recv("%d,", &count), exit, err = kMalformedErr);
 
-        uint8_t *data = malloc(count);
+        uint8_t *data = malloc(count+1);
 		require_action(data, exit, err = kNoMemoryErr);
 		require_action(ATCmdParser_read((char *)data, count) == count, exit, err = kTimeoutErr);
 
+		*(data+count) = 0x00;
 		msg.data = data;
 		msg.format = EMH_ARG_QLINK_FORMAT_JSON;
 		msg.len = count;
