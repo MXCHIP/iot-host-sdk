@@ -62,6 +62,24 @@ mx_status emh_ilop_config( emh_ilop_config_t *config, bool force )
             return kParamErr;
     }
 
+
+    //check domain
+    if (!(ATCmdParser_send("AT+ILOPDOMAIN?")
+	   && ATCmdParser_recv("+ILOPDOMAIN:%10[^\r]\r\n",arg)
+	   && ATCmdParser_recv("OK\r\n"))) {
+		return kReadErr;
+	}
+
+    //if dm value different, we need to be set
+    if( emh_arg_for_arg( EMH_ARG_ILOP_DOMAIN, arg) != config->domain )
+    {
+        if ( !(ATCmdParser_send("AT+ILOPDOMAIN=%s", emh_arg_for_type(EMH_ARG_ILOP_DOMAIN, config->domain))
+	        && ATCmdParser_recv("OK\r\n"))) {
+		    return kReadErr;
+	    }
+    }
+
+
     //check data format
     if (!(ATCmdParser_send("AT+ILOPDM?")
 	   && ATCmdParser_recv("+ILOPDM:%10[^\r]\r\n",arg)

@@ -303,7 +303,7 @@ static mx_status protocol_payloa_handler(uint8_t* data, uint16_t length)
         break;
 
     default:
-        ilop_wlog("Method(%d) not support\n", payload->method);
+        ilop_log("Method(%d) not support\n", payload->method);
         return kParamErr;
     }
 
@@ -324,7 +324,7 @@ mx_status raw_protocol_format_handler(uint8_t* data, uint32_t length)
         break;
 
     default:
-        ilop_wlog("Cmd %02x not support\n", cmd);
+        ilop_log("Cmd %02x not support\n", cmd);
         break;
     }
 

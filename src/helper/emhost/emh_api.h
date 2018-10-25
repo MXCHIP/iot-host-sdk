@@ -271,6 +271,7 @@ typedef struct {
     const char* tsl_thing; /**< TSL model defined by Alibaba cloud platform(json string). if dm=EMH_ARG_ILOP_DM_RAW, tls_thing=NULL */
     uint32_t tsl_len; /**< The JSON string length of the TSL model. if dm=EMH_ARG_ILOP_DM_RAW, tls_len=0 */
     emh_arg_ilop_dm_t dm; /**< The method to access the TLS, raw , local, cloud.*/
+    emh_arg_ilop_domain_t domain; /**< specify the could server domain */
 } emh_ilop_config_t;
 
 /**

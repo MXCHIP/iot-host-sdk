@@ -11,9 +11,10 @@ static int awss_press = 0;
 static int reset = 0;
 
 const emh_ilop_config_t ilop_config = {
-    .tls_thing = NULL,
-    .tls_len = 0,
+    .tsl_thing = NULL,
+    .tsl_len = 0,
     .dm = EMH_ARG_ILOP_DM_RAW,
+    .domain = EMH_ARG_ILOP_DOMAIN_SHANGHAI,
 };
 
 const ilop_device_key_t device_key = {
