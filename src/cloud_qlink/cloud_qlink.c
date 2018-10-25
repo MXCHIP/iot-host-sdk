@@ -34,8 +34,8 @@
 
 typedef enum {
     eState_M1_initialize = 1, /**< State machine: Reset and initialize module */
-    eState_M2_normal_ap = 2, /**< State machine: Waiting for WiFi config */
-    eState_M2_normal_cloud = 3,/** connect to WiFi successfully, waiting for cloud connection  */
+    eState_M2_provision  = 2, /**< State machine: Waiting for WiFi config */
+    eState_M2_provision_ap = 3,/** connect to WiFi successfully, waiting for cloud connection  */
     eState_M3_normal = 4, /**< State machine: Connected to cloud, application running  */
     eState_M4_disconnected = 5, /**< State machine: Disconnect to cloud, all data transmission should stop */
     eState_M5_fault = 6, /**< State machine: Drop in an unexpected error */
@@ -121,7 +121,7 @@ static mx_status _handle_state_initialize(void)
     err = emh_qlink_config(qlink_config, true);
     require_noerr(err, exit);
 
-    qlink_context.device_state = eState_M2_normal_ap;
+    qlink_context.device_state = eState_M2_provision;
 
 exit:
     return err;
@@ -138,11 +138,11 @@ mx_status qlink_runloop(void)
             break;
         }
 
-        case eState_M2_normal_ap: {//waitint for connect to ap
+        case eState_M2_provision: {//waitint for connect to ap
             break;
         }
 
-        case eState_M2_normal_cloud:{  //connect to ap successfully, buf fail to connect to cloud
+        case eState_M2_provision_ap:{  //connect to ap successfully, buf fail to connect to cloud
             qlink_context.device_state = eState_M4_disconnected;
             emh_qlink_service_start();
             break;
@@ -169,9 +169,10 @@ exit:
 
 void emh_ev_wlan(emh_arg_wlan_ev_t event)
 {
-    qlink_log("Wlan event: %s", emh_arg_for_type(EMH_ARG_WLAN_EV, event));
+    qlink_debug_log("Wlan event: %s", emh_arg_for_type(EMH_ARG_WLAN_EV, event));
     if (event == EMH_ARG_WLAN_EV_STA_CONNECTED) {
         qlink_event_handler(QLINK_EVENT_WLAN_CONNECTED);
+        qlink_context.device_state = eState_M2_provision_ap;
     } else if (event == EMH_ARG_WLAN_EV_STA_DISCONNECTED) {
         qlink_event_handler(QLINK_EVENT_WLAN_DISCONNECTED);
     } else if (event == EMH_ARG_WLAN_EV_UAP_ESTABLISHED) {
@@ -181,7 +182,7 @@ void emh_ev_wlan(emh_arg_wlan_ev_t event)
 
 void emh_ev_qlink_connection(emh_arg_qlink_conn_t conn)
 {
-    qlink_log("AliCloud event: %s", emh_arg_for_type(EMH_ARG_QLINK_CONN, conn));
+    qlink_debug_log("AliCloud event: %s", emh_arg_for_type(EMH_ARG_QLINK_CONN, conn));
 
     qlink_context.cloud_state = conn;
 

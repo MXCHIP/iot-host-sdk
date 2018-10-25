@@ -40,6 +40,7 @@
  ******************************************************************************/
 
 #define qlink_log(M, ...) MX_LOG(CONFIG_CLOUD_DEBUG, "QLINK", M, ##__VA_ARGS__)
+#define qlink_debug_log(M, ...) //MX_LOG(CONFIG_CLOUD_DEBUG, "QLINK_DEBUG", M, ##__VA_ARGS__)
 
 /******************************************************************************
  *                                 Constants

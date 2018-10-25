@@ -7,6 +7,12 @@ const emh_qlink_config_t config = {
         .device_type   = "30531",
         .format = EMH_ARG_QLINK_FORMAT_JSON,
     },
+    // .product_info = {
+    // .product_token = "38Szyd6i1240elbV",
+    // .andlink_token = "wWppJIdROfQkcsMW",
+    // .device_type   = "30413",
+    // .format = EMH_ARG_QLINK_FORMAT_JSON,
+    // },
     .version_info = {
         .firmware_version = "1.4.3",
         .software_version = "1.0.1",
@@ -92,9 +98,23 @@ static void handle_user_cmd(char* pwbuf, int blen, int argc, char** argv)
     }
 }
 
+static void handle_reboot_cmd(char* pwbuf, int blen, int argc, char** argv)
+{
+
+    if (argc != 1)
+    {
+        app_log("input param error!!!");
+        return;
+    }
+    
+    emh_module_reset();
+
+}
+
 struct cli_command qlinkcmds[] = {
     { "raw", "raw [start|stop]", handle_raw_cmd },
     { "user", "start|stop", handle_user_cmd },
+    { "reboot", "reboot", handle_reboot_cmd },
 };
 #endif
 
