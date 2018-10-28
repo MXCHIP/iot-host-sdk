@@ -242,7 +242,7 @@ data:上传具体内容
   通过cli串口发送 user start命令 或者 按键触发调用qlink_user_start()接口使设备进入云网关用户配网模式，
 
   同时手机APP(resource/qlink/2.云网关/app路径)进入添加设备页面，扫描到如下页面，说明设备进入了配网页面：
-  >>>>![user_config](./resource/qlink/image/user_config.png)
+  <img src="./resource/qlink/image/user_config.png" width="500" hegiht="313" align=center />
   点击弹出来的添加按钮即可进行配网操作
   
 
