@@ -191,7 +191,7 @@ open at uart succeed
 * 测试本地环境是否OK
 
   如果本地环境OK，点击配网andlinkdemo1.0.apk 开始连接按钮，会有如下页面：
-  >>>>![环境OK](./resource/qlink/image/环境OK.png)
+  <img src="./resource/qlink/image/环境OK.png" width="500" hegiht="313" align=center />
   
 * 配网操作 
   
@@ -243,6 +243,7 @@ data:上传具体内容
 
   同时手机APP(resource/qlink/2.云网关/app路径)进入添加设备页面，扫描到如下页面，说明设备进入了配网页面：
   <img src="./resource/qlink/image/user_config.png" width="500" hegiht="313" align=center />
+  
   点击弹出来的添加按钮即可进行配网操作
   
 
