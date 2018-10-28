@@ -110,16 +110,16 @@ open at uart succeed
 
 (8) 使用materials/下的和家亲APP测试(开发环境获取到的mqtt服务器地址以.199结尾,测试环境以.207结尾，生产环境以205结尾)
 
-(8) 杭研云网关验证
+(9) 杭研云网关验证
  
 #### 4.3.2 使用方法
 
-* (1) 庆科wifi模块烧录杭研qlink最新[AT固件](http://developer.mxchip.com/downloads/22/)
+(1) 庆科wifi模块烧录杭研qlink最新[AT固件](http://developer.mxchip.com/downloads/22/)
 
     
 固件烧录具体方法可以参考resource/common/烧录路径下相关文档。
 
-* (2) 修改产品信息
+(2) 修改产品信息
       
 
 新建产品后，可以获得product_token,andlink_token,product_id,豪恩报警盒子产品信息如下：
@@ -141,7 +141,7 @@ const emh_qlink_config_t config = {
 
 ```
 
-* (3) 编译运行demo
+(3) 编译运行demo
 
 
 * make clean
@@ -183,7 +183,7 @@ open at uart succeed
 [APP: main.c:  42] Cloud connected
 ```
 
-* (4) 基于虚拟网关使用说明
+(4) 基于虚拟网关使用说明
 
 
 * 按照4.3.1使用流程中说明搭建好本地虚拟网关开发环境
@@ -229,7 +229,7 @@ data:上传具体内容
 ```
   也可通过cli串口输入send type <data> 发送数据
 
-* (5) 基于云网关使用说明
+(5) 基于云网关使用说明
  
 * 提交XML配网资料 
   
@@ -242,13 +242,28 @@ data:上传具体内容
   通过cli串口发送 user start命令 或者 按键触发调用qlink_user_start()接口使设备进入云网关用户配网模式，
 
   同时手机APP(resource/qlink/2.云网关/app路径)进入添加设备页面，扫描到如下页面，说明设备进入了配网页面：
-  ![user_config](.resource/qlink/image/user_config.png)
+  ![user_config](./resource/qlink/image/user_config.png)
   点击弹出来的添加按钮即可进行配网操作
   
 
 #### 4.3.3 注意事项
+    
+(1) 云端查询数据
 
 
+  回调函数emh_ev_qlink_get_local_attrs()收到数据时候，用户需要根据收到的内容选择发送给云端的数据，组成json包后再调用qlink_send_data()接口将数据发送给远端，注意类型应该是"ParamChange"类型。
+
+(2) 云端下发命令数据
+  
+
+  云端下发命令，回调函数emh_ev_qlink_set_local_attrs()会收到数据，用户需要根据字段的类型进行处理，如果字段即下发又要求上报，则return 1,否则return 0。 
+
+(3) 其他
+
+
+联系人：庆科李博
+
+邮箱：  libo@mxchip.com
 
 ## 5. 移植SDK
 
