@@ -123,7 +123,7 @@ open at uart succeed
       
 
 新建产品后，可以获得product_token,andlink_token,product_id,豪恩报警盒子产品信息如下：
-![30531](./resource/qlink/image/产品资料.png)
+>>>>![30531](./resource/qlink/image/产品资料.png)
 ```
 初始化产品参数
 const emh_qlink_config_t config = {
@@ -191,25 +191,25 @@ open at uart succeed
 * 测试本地环境是否OK
 
   如果本地环境OK，点击配网andlinkdemo1.0.apk 开始连接按钮，会有如下页面：
-  ![环境OK](./resource/qlink/image/环境OK.png)
+  >>>>![环境OK](./resource/qlink/image/环境OK.png)
   
 * 配网操作 
   
   通过cli串口发送 raw start命令 或者 按键触发调用qlink_raw_start()接口使设备进入本地网关一键配网模式，
 
   同时手机APP点击开始连接按钮，绑定成功后APP提示添加成功，后台虚拟网关下面会显示出设备，如下：
-  ![bind_ok](./resource/qlink/image/bind_ok.png)
+  >>>>![bind_ok](./resource/qlink/image/bind_ok.png)
 
 * 数据下发
     
   通过后台获取所有字段，操作如下所示：
-  ![request_all_data](./resource/qlink/image/request_all_data.png)
+  >>>>![request_all_data](./resource/qlink/image/request_all_data.png)
 
   通过后台获取部分字段，操作如下所示：
-  ![request_some_data](./resource/qlink/image/request_some_data.png)
+  >>>>![request_some_data](./resource/qlink/image/request_some_data.png)
   
   通过后台下发命令，操作如下所示：
-  ![control_data](./resource/qlink/image/control_data.png)
+  >>>>![control_data](./resource/qlink/image/control_data.png)
   
   设备收到云端获取字段指令后，需要调用mx_status emh_qlink_send_json_to_cloud( char *type, uint8_t *data, uint32_t len ) 函数将数据发送到云端
   
@@ -242,7 +242,7 @@ data:上传具体内容
   通过cli串口发送 user start命令 或者 按键触发调用qlink_user_start()接口使设备进入云网关用户配网模式，
 
   同时手机APP(resource/qlink/2.云网关/app路径)进入添加设备页面，扫描到如下页面，说明设备进入了配网页面：
-  ![user_config](./resource/qlink/image/user_config.png)
+  >>>>![user_config](./resource/qlink/image/user_config.png)
   点击弹出来的添加按钮即可进行配网操作
   
 
