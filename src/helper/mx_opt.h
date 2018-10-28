@@ -65,7 +65,7 @@ extern "C" {
 #endif
 
 #if !defined MX_CLI_RX_BUF_SIZE
-#define MX_CLI_RX_BUF_SIZE                  (128)  /**< Cli command receiver serial port input buffer size */
+#define MX_CLI_RX_BUF_SIZE                  (1024)  /**< Cli command receiver serial port input buffer size */
 #endif
 
 /******************************************************************************

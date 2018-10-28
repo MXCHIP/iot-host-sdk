@@ -4,21 +4,21 @@ const emh_qlink_config_t config = {
     .product_info = {
         .product_token = "PXmsE6kQmxEgc0e3",
         .andlink_token = "ZxMo0zJvvZMWP3Az",
-        .device_type   = "30531",
+        .product_id   = "30531",
         .format = EMH_ARG_QLINK_FORMAT_JSON,
     },
-    // .product_info = {
-    // .product_token = "38Szyd6i1240elbV",
-    // .andlink_token = "wWppJIdROfQkcsMW",
-    // .device_type   = "30413",
-    // .format = EMH_ARG_QLINK_FORMAT_JSON,
-    // },
     .version_info = {
         .firmware_version = "1.4.3",
         .software_version = "1.0.1",
     }
 };
-
+    // .product_info = {
+    // .product_token = "38Szyd6i1240elbV",
+    // .andlink_token = "wWppJIdROfQkcsMW",
+    // .product_id   = "30413",
+    // .format = EMH_ARG_QLINK_FORMAT_JSON,
+    // },
+    
 void qlink_event_handler(qlink_event_t event)
 {
     switch (event) {
@@ -118,6 +118,7 @@ static void handle_reboot_cmd(char* pwbuf, int blen, int argc, char** argv)
 
 }
 
+// {"deviceId":"CMCC-30531-B0F89327CDF4","childDeviceId":"","eventType":"Inform","timestamp":0,"data":{"params":[{"paramCode":"permitJoining","paramValue":"0"},{"paramCode":"firmware","paramValue":"1.6.0"},{"paramCode":"softVersion","paramValue":"V1.0.6"}]}}
 static void handle_send_cmd(char* pwbuf, int blen, int argc, char** argv)
 {
     if (argc != 3)
@@ -125,8 +126,9 @@ static void handle_send_cmd(char* pwbuf, int blen, int argc, char** argv)
         app_log("input param error!!!");
         return;
     }
-    
-    emh_qlink_send_json_to_cloud( QLINK_EVENT_TYPE_INFORM, *argv[2], strlen(*argv[2]) );
+    app_log("type is:%s\r\n data is:%s\r\ndata's length is:%d", argv[1], argv[2], strlen(argv[2]) );
+
+    qlink_send_data( argv[1], argv[2], strlen(argv[2]) );
 }
 
 struct cli_command qlinkcmds[] = {

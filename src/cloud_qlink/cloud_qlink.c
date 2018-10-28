@@ -208,7 +208,7 @@ MX_WEAK void emh_ev_qlink_get_local_attrs(emh_qlink_msg_t* msg)
 
 MX_WEAK int emh_ev_qlink_set_local_attrs(emh_qlink_msg_t* msg)
 {
-
+    return 0;
 }
 
 mx_status qlink_raw_start(void)
@@ -221,3 +221,7 @@ mx_status qlink_user_start(void)
     return emh_qlink_user_start();
 }
 
+mx_status qlink_send_data( char *type, uint8_t *data, uint32_t len )
+{
+    return emh_qlink_send_json_to_cloud( type, data, len );
+}

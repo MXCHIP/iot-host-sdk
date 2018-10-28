@@ -1,0 +1,8 @@
+六月 28, 2018 5:54:11 下午 org.eclipse.californium.core.network.config.NetworkConfig load
+信息: loading properties from file D:\Work\project\factory\onenet_hangzhou\debug\gateay_tool\Californium.properties
+六月 28, 2018 5:54:14 下午 org.eclipse.californium.core.network.CoapEndpoint start
+信息: Starting endpoint at coap://0.0.0.0:0
+六月 28, 2018 5:54:15 下午 org.eclipse.californium.core.network.CoapEndpoint start
+信息: Started endpoint at coap://0.0.0.0:62565
+六月 28, 2018 5:54:15 下午 org.eclipse.californium.core.network.EndpointManager createDefaultEndpoint
+信息: Created implicit endpoint coap://0.0.0.0:62565 for coap

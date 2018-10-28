@@ -40,7 +40,7 @@
 mx_status emh_qlink_config(const emh_qlink_config_t* config, bool force)
 {
 	char args[200], *arg_list[5];
-	const char* format_arg = emh_arg_for_type(EMH_ARG_QLINK_FORMAT, config->product_info.format); //JSON or RAW
+	// const char* format_arg = emh_arg_for_type(EMH_ARG_QLINK_FORMAT, config->product_info.format); //JSON or RAW
 	
 	if( false==force )
 	{
@@ -49,18 +49,17 @@ mx_status emh_qlink_config(const emh_qlink_config_t* config, bool force)
 		&& ATCmdParser_recv("+QLINKPRODUCT:%200[^\r]\r\n",args)
 		&& ATCmdParser_recv("OK\r\n")) {
 			if (3 == ATCmdParser_analyse_args(args, arg_list, 3)) {
-				if ( !(strcmp(arg_list[0], config->product_info.product_token)
-				|| strcmp(arg_list[1], config->product_info.andlink_token)
-				|| strcmp(arg_list[2], config->product_info.device_type)) ){
+				if ( strcmp(arg_list[0], config->product_info.product_id)
+				||!(strcmp(arg_list[1], config->product_info.product_token)
+				|| strcmp(arg_list[2], config->product_info.andlink_token)) ){
 					goto label_version;
 				}
 			}
 		}
 	}
 
-	if (!(ATCmdParser_send("AT+QLINKPRODUCT=%s,%s,%s", 
-							config->product_info.product_token, config->product_info.andlink_token, 
-							config->product_info.device_type )
+	if (!(ATCmdParser_send("AT+QLINKPRODUCT=%s,%s,%s", config->product_info.product_id,
+							config->product_info.product_token, config->product_info.andlink_token )
 		&& ATCmdParser_recv("OK\r\n"))) {
 		return kGeneralErr;
 	}
@@ -141,7 +140,7 @@ mx_status emh_qlink_service_stop( void )
 
 mx_status emh_qlink_send_json_to_cloud( char *type, uint8_t *data, uint32_t len )
 {
-    if (ATCmdParser_send("AT+QLINKSEND=%d", type, len)
+    if (ATCmdParser_send("AT+QLINKSEND=%s,%d", type, len)
 	 && ATCmdParser_recv(">")
 	 && ATCmdParser_write((char *)data, len) == len
 	 && ATCmdParser_recv("OK\r\n")) {
@@ -196,12 +195,12 @@ void emh_qlink_event_handler(void)
 
 		int res = 0;
 		res = emh_ev_qlink_set_local_attrs(&msg);
-		if( NULL!=strstr(msg.data, "data") )
+		if( NULL!=strstr((char *)msg.data, "data") )
 		{
-			printf("ready to send back data\r\n");
+			// printf("ready to send back data\r\n");
 			emh_qlink_send_data_to_uart(res);
 		}
-		printf("after sending back data\r\n");
+		// printf("after sending back data\r\n");
 		free(data);
     }
     /* QLINK device === json value===> server */

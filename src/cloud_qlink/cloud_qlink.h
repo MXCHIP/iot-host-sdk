@@ -138,7 +138,6 @@ typedef struct {
 mx_status qlink_init(emh_qlink_config_t *config);
 
 /**
- *
  * @brief        	Cloud qlink service runloop, application should called
  *                  periodically to handle events and transfer data.
  *                  To save power, also can be called when uart data is ready 
@@ -151,7 +150,6 @@ mx_status qlink_init(emh_qlink_config_t *config);
 mx_status qlink_runloop(void);
 
 /**
- * 
  * @brief 	Start one key  Wi-Fi configuration. EMW module start monitor mode
  * 
  * @return	mx_status
@@ -169,14 +167,11 @@ mx_status qlink_raw_start(void);
 mx_status qlink_user_start(void);
 
 /**
- *
- * @brief	Try to procedure an unbind operation on cloud if connected and 
- *          restore module settings to default.
+ * @brief 
  * 
- * @return	mx_status
- *
+ * 
  */
-mx_status qlink_restore(void);
+mx_status qlink_send_data( char *type, uint8_t *data, uint32_t len );
 
 #endif //_CLOUD_QLINK_H_
 

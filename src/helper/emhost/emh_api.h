@@ -428,13 +428,13 @@ MX_WEAK void emh_ev_ilop_set_local_attr(emh_ilop_msg* msg);
 
 #define EMH_QLINK_PRODUCT_TOKEN_MAXLEN    (16 + 1)
 #define EMH_QLINK_ANDLINK_TOKEN_MAXLEN    (16 + 1)
-#define EMH_QLINK_DEVICE_TYPE_MAXLEN      (10 + 1)
+#define EMH_QLINK_PRODUCT_ID_MAXLEN      (10 + 1)
 
 typedef struct {
     struct {
         const char* product_token; /**< Reference to product TRD document */
         const char* andlink_token; /**< Reference to product TRD document */
-        const char* device_type; /**< Reference to product TRD document */
+        const char* product_id; /**< Reference to product TRD document */
         emh_arg_qlink_format_t format; /**< Reference to product TRD document */
     } product_info;
     struct {

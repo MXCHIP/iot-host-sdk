@@ -1,0 +1,16 @@
+{"deviceId":"CMCC50294D20B11C","deviceType":"QLINK"}
+
+
+2.¹Ì¼þÉý¼¶£º
+coap://IP:5683/device/command/file
+
+{
+    "deviceId":"CMCC-30531-B0F89327CDA8",
+    "childDeviceId":"",
+    "fileMode":"DOWN",
+    "fileType":"FIRM",
+    "gwip":"123456",
+    "fileUrl":"http://mxchip-fog.oss-cn-beijing.aliyuncs.com/ota/9e702e7441eb11e8b7ac00163e30fc50/WPyi2RGnYf.bin",
+    "downMode":1
+}
+

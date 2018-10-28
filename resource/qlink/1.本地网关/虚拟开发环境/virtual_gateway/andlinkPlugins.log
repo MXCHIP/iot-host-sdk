@@ -1,0 +1,530 @@
+2018-08-24 09:31:46,508 [INFO]-[com.chinamobile.smartgateway.andlink.proxy.NanoHTTPD] httpproxy is starting......
+2018-08-24 09:31:46,508 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.LanControl] Andlink gw is running(version 2.10y)
+2018-08-24 09:31:47,447 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:31:48,382 [INFO]-[org.hsqldb.persist.Logger] checkpointClose start
+2018-08-24 09:31:51,319 [INFO]-[org.hsqldb.persist.Logger] checkpointClose end
+2018-08-24 09:31:51,332 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:31:51,470 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.GWBootBean] gw encrypt code:0
+2018-08-24 09:31:52,015 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] Down secretKey:kZAqkvGHXk30sy83
+2018-08-24 09:31:52,017 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] gw boot http message:{"deviceType":"13000","productToken":"kw9pS2OqkbcMSRVY","encrypt":0,"gwId":"005056C00008","firmwareVersion":"f1.0","softwareVersion":"S1.0","timestamp":1535074311465,"andlinkVersion":"2.10y"}
+2018-08-24 09:31:52,019 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.GWBootBean] gw encrypt code:0
+2018-08-24 09:31:52,020 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] Down secretKey:kZAqkvGHXk30sy83
+2018-08-24 09:31:52,022 [INFO]-[com.chinamobile.smartgateway.andlink.util.HttpsPost] AndlinkWebURL:https://open.home.komect.com/apistg/m2m/rest/device
+2018-08-24 09:31:52,559 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] gw boot success!!!
+2018-08-24 09:31:54,802 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:32:17,448 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:32:24,806 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:32:47,449 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:32:54,808 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:33:17,450 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:33:24,812 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:33:47,450 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:33:54,817 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:34:17,451 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:34:24,818 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:34:47,452 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:34:54,819 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:35:17,452 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:35:24,821 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:35:47,452 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:35:54,823 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:36:17,453 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:36:24,828 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:36:47,453 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:36:54,830 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:37:17,454 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:37:24,832 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:37:47,455 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:37:54,835 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:38:17,456 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:38:24,838 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:38:47,457 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:38:54,841 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:39:17,458 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:39:24,843 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:39:47,458 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:39:54,848 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:40:17,458 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:40:24,853 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:40:47,459 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:40:54,856 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:41:17,460 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:41:24,863 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:41:47,460 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:41:54,865 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:42:17,460 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:42:24,868 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:42:47,460 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:42:54,872 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:43:17,460 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:43:24,876 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:43:47,461 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:43:54,880 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:44:17,461 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:44:24,885 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:44:47,461 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:44:54,889 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:45:17,461 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:45:24,895 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:45:47,461 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:45:54,898 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:46:17,462 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:46:24,901 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:46:47,462 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:46:54,904 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:47:17,463 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:47:24,908 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:47:47,463 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:47:54,912 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:48:17,464 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:48:24,916 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:48:47,464 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:48:54,922 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:49:17,464 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:49:24,925 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:49:47,465 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:49:54,928 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:50:17,465 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:50:24,933 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:50:47,466 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:50:54,936 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:51:17,466 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:51:24,941 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:51:47,468 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:51:54,946 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:52:17,469 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:52:24,949 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:52:47,469 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:52:54,959 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:53:17,470 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:53:24,961 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:53:47,471 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:53:54,963 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:54:17,471 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:54:24,965 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:54:47,472 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:54:54,967 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:55:17,473 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:55:24,969 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:55:47,473 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:55:54,979 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:56:17,475 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:56:24,985 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:56:47,476 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:56:54,986 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:57:17,477 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-08-24 09:57:24,987 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-08-24 09:57:47,478 [INFO]-[com.chinamobile.sm2018-10-25 15:18:51,324 [INFO]-[com.chinamobile.smartgateway.andlink.proxy.NanoHTTPD] httpproxy is starting......
+2018-10-25 15:18:51,324 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.LanControl] Andlink gw is running(version 2.10y)
+2018-10-25 15:18:52,219 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-10-25 15:18:52,526 [INFO]-[org.hsqldb.persist.Logger] checkpointClose start
+2018-10-25 15:18:52,561 [INFO]-[org.hsqldb.persist.Logger] checkpointClose end
+2018-10-25 15:18:52,581 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-10-25 15:18:52,801 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.GWBootBean] gw encrypt code:0
+2018-10-25 15:18:53,827 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] Down secretKey:kZAqkvGHXk30sy83
+2018-10-25 15:18:53,829 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] gw boot http message:{"deviceType":"13000","productToken":"kw9pS2OqkbcMSRVY","encrypt":0,"gwId":"005056C00008","firmwareVersion":"f1.0","softwareVersion":"S1.0","timestamp":1540451932798,"andlinkVersion":"2.10y"}
+2018-10-25 15:18:53,830 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.GWBootBean] gw encrypt code:0
+2018-10-25 15:18:53,832 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] Down secretKey:kZAqkvGHXk30sy83
+2018-10-25 15:18:53,835 [INFO]-[com.chinamobile.smartgateway.andlink.util.HttpsPost] AndlinkWebURL:https://open.home.komect.com/apistg/m2m/rest/device
+2018-10-25 15:18:54,519 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] gw boot success!!!
+2018-10-25 15:18:54,521 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-10-25 15:19:06,966 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SearchGWResource] searchKey: {"searchKey":"ANDLINK-DEVICE","andlinkVersion":"V2"}
+2018-10-25 15:19:06,967 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SearchGWResource] search gateway request type is: CON
+2018-10-25 15:19:06,970 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SearchGWResource] sync response with : {"searchAck":"ANDLINK-GW","andlinkVersion":"V2"}
+2018-10-25 15:19:07,262 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.RequestResource] post arg from RequestResource:{"deviceMac":"B0F89330F997","deviceType":"30531"}
+2018-10-25 15:19:07,262 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.RequestResource] Receive deviceId:B0F89330F997,deviceType:30531,ipAddress:192.168.1.102,andlinkVersion:V1
+2018-10-25 15:19:07,266 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.RequestResource] IfIpInMemory function is invoked!
+2018-10-25 15:19:07,267 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.RequestResource] RequestResource receive device qlink request,but no user online!!
+2018-10-25 15:19:08,723 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.RequestResource] post arg from RequestResource:{"deviceMac":"B0F89330F997","deviceType":"30531"}
+2018-10-25 15:19:08,723 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.RequestResource] Receive deviceId:B0F89330F997,deviceType:30531,ipAddress:192.168.1.102,andlinkVersion:V1
+2018-10-25 15:19:08,725 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.RequestResource] IfIpInMemory function is invoked!
+2018-10-25 15:19:08,726 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.RequestResource] RequestResource receive device qlink request,but no user online!!
+2018-10-25 15:19:09,209 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] post arg from RegistResource:{"clientIp":"192.168.1.101","password":"123456","clientType":"1"}
+2018-10-25 15:19:09,210 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] Receive password:123456
+2018-10-25 15:19:09,213 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] password ok and regist user ok:192.168.1.101
+2018-10-25 15:19:09,381 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.AckResource] AckResource post arg:{"deviceId":"CMCC50294D20B11C"}
+2018-10-25 15:19:09,381 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.AckResource] AckResource deviceId:CMCC50294D20B11C
+2018-10-25 15:19:09,387 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.SSIDUtil] NotifyDevice to IP:192.168.1.102
+2018-10-25 15:19:09,391 [INFO]-[com.chinamobile.smartgateway.andlink.HomNetworkingDeviceMgnService.ApdeviceServiceImp] {"password":"12345678","encrypt":"WPAPSK","channel":0,"SSID":"LB023"}
+2018-10-25 15:19:09,392 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.SSIDUtil] send device:coap://192.168.1.102:5683/qlink/netinfo,payload:{"password":"12345678","encrypt":"WPAPSK","channel":0,"SSID":"LB023"}
+2018-10-25 15:19:09,595 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.SSIDUtil] AckResource notify device and receive:{"respCode":"1"}
+2018-10-25 15:19:09,887 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] post arg from RegistResource:{"clientIp":"192.168.1.101","password":"123456","clientType":"1"}
+2018-10-25 15:19:09,888 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] Receive password:123456
+2018-10-25 15:19:09,890 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] password ok and regist user ok:192.168.1.101
+2018-10-25 15:19:09,924 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.AckResource] AckResource post arg:{"deviceId":"CMCC50294D20B11C"}
+2018-10-25 15:19:09,925 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.AckResource] AckResource deviceId:CMCC50294D20B11C
+2018-10-25 15:19:09,927 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.SSIDUtil] NotifyDevice to IP:192.168.1.102
+2018-10-25 15:19:09,928 [INFO]-[com.chinamobile.smartgateway.andlink.HomNetworkingDeviceMgnService.ApdeviceServiceImp] {"password":"12345678","encrypt":"WPAPSK","channel":0,"SSID":"LB023"}
+2018-10-25 15:19:09,930 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.SSIDUtil] send device:coap://192.168.1.102:5683/qlink/netinfo,payload:{"password":"12345678","encrypt":"WPAPSK","channel":0,"SSID":"LB023"}
+2018-10-25 15:19:11,932 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.SSIDUtil] AckResource notify device but failed Post!!
+2018-10-25 15:19:22,219 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-10-25 15:19:24,529 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-10-25 15:19:52,220 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-10-25 15:19:54,535 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-10-25 15:19:55,807 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] post arg from RegistResource:{"clientIp":"192.168.1.101","password":"123456","clientType":"1"}
+2018-10-25 15:19:55,808 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] Receive password:123456
+2018-10-25 15:19:55,811 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] password ok and regist user ok:192.168.1.101
+2018-10-25 15:19:55,901 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.AckResource] AckResource post arg:{"deviceId":"CMCC50294D20B11C"}
+2018-10-25 15:19:55,901 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.AckResource] AckResource deviceId:CMCC50294D20B11C
+2018-10-25 15:19:55,904 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.SSIDUtil] NotifyDevice to IP:192.168.1.102
+2018-10-25 15:19:55,905 [INFO]-[com.chinamobile.smartgateway.andlink.HomNetworkingDeviceMgnService.ApdeviceServiceImp] {"password":"12345678","encrypt":"WPAPSK","channel":0,"SSID":"LB_023"}
+2018-10-25 15:19:55,906 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.SSIDUtil] send device:coap://192.168.1.102:5683/qlink/netinfo,payload:{"password":"12345678","encrypt":"WPAPSK","channel":0,"SSID":"LB_023"}
+2018-10-25 15:19:57,908 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.SSIDUtil] AckResource notify device but failed Post!!
+2018-10-25 15:20:09,473 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SearchGWResource] searchKey: {"searchKey":"ANDLINK-DEVICE","andlinkVersion":"V2"}
+2018-10-25 15:20:09,473 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SearchGWResource] search gateway request type is: CON
+2018-10-25 15:20:09,476 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SearchGWResource] sync response with : {"searchAck":"ANDLINK-GW","andlinkVersion":"V2"}
+2018-10-25 15:20:15,024 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.RequestResource] post arg from RequestResource:{"deviceMac":"B0F89330F997","deviceType":"30531"}
+2018-10-25 15:20:15,024 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.RequestResource] Receive deviceId:B0F89330F997,deviceType:30531,ipAddress:192.168.1.102,andlinkVersion:V1
+2018-10-25 15:20:15,028 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.RequestResource] IfIpInMemory function is invoked!
+2018-10-25 15:20:15,239 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.RequestResource] RequestResource notify user and receive:{"result":"1"}
+2018-10-25 15:20:15,524 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] post arg from RegistResource:{"clientIp":"192.168.1.101","password":"123456","clientType":"1"}
+2018-10-25 15:20:15,525 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] Receive password:123456
+2018-10-25 15:20:15,527 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] password ok and regist user ok:192.168.1.101
+2018-10-25 15:20:15,589 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.AckResource] AckResource post arg:{"deviceId":"CMCC50294D20B11C"}
+2018-10-25 15:20:15,589 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.AckResource] AckResource deviceId:CMCC50294D20B11C
+2018-10-25 15:20:15,592 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.SSIDUtil] NotifyDevice to IP:192.168.1.102
+2018-10-25 15:20:15,593 [INFO]-[com.chinamobile.smartgateway.andlink.HomNetworkingDeviceMgnService.ApdeviceServiceImp] {"password":"12345678","encrypt":"WPAPSK","channel":0,"SSID":"LB_023"}
+2018-10-25 15:20:15,594 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.SSIDUtil] send device:coap://192.168.1.102:5683/qlink/netinfo,payload:{"password":"12345678","encrypt":"WPAPSK","channel":0,"SSID":"LB_023"}
+2018-10-25 15:20:17,596 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.SSIDUtil] AckResource notify device but failed Post!!
+2018-10-25 15:20:21,211 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SuccessResource] post arg:{"deviceMac":"B0F89330F997","deviceType":"30531"}
+2018-10-25 15:20:21,212 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SuccessResource] SuccessResource Received and del deviceId:B0F89330F997
+2018-10-25 15:20:21,310 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SuccessResource] SuccessResource notify user and receive:{"result":"1"}
+2018-10-25 15:20:22,221 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:0
+2018-10-25 15:20:24,536 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:0
+2018-10-25 15:20:25,215 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootStrapResource] ----------------device bootstrap come in----------------------
+2018-10-25 15:20:25,215 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootStrapResource] device register parameters:{"deviceMac":"B0F89330F997","deviceType":"30531","productToken":"PXmsE6kQmxEgc0e3","timestamp":1540452026}
+2018-10-25 15:20:25,218 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] http commit!
+2018-10-25 15:20:25,219 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] bootstrap to platform:{"deviceType":"30531","productToken":"PXmsE6kQmxEgc0e3","deviceMac":"B0F89330F997","gwId":"005056C00008","timestamp":734354788}
+2018-10-25 15:20:25,220 [INFO]-[com.chinamobile.smartgateway.andlink.util.HttpsPost] AndlinkWebURL:https://open.home.komect.com/apistg/m2m/rest/device
+2018-10-25 15:20:25,496 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] platform Resp:{"timestamp":1540452027000,"heartBeatTime":30000,"deviceId":"CMCC-30531-B0F89330F997","deviceToken":"Nsjq8T7L9PjitA1/","andlinkToken":"ZxMo0zJvvZMWP3Az"}
+2018-10-25 15:20:25,499 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.DeviceBootBean] addDevice sql:INSERT INTO DEVICE VALUES('CMCC-30531-B0F89330F997','B0F89330F997','null','30531','192.168.1.102',1540452025499,1540452025499,'',1,'FatherDevice','Nsjq8T7L9PjitA1/',1,'null','null','null','PXmsE6kQmxEgc0e3')
+2018-10-25 15:20:25,503 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] ----------[test][InformBootStrapService] before check connected
+2018-10-25 15:20:25,503 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] ----------[test][InformBootStrapService] set true
+2018-10-25 15:20:25,504 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] ----------[test][InformBootStrapService] after check connected
+2018-10-25 15:20:25,505 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] Down secretKey:kZAqkvGHXk30sy83
+2018-10-25 15:20:25,506 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] bootstrap response to device:{"deviceId":"CMCC-30531-B0F89330F997","andlinkToken":"ZxMo0zJvvZMWP3Az","deviceToken":"Nsjq8T7L9PjitA1/","gwToken":"kZAqkvGHXk30sy83"}
+2018-10-25 15:20:25,508 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootStrapResource] SuccessRegist message post to app:{"deviceType":"30531","respCont":"success","deviceId":"CMCC-30531-B0F89330F997","respCode":1}
+2018-10-25 15:20:25,911 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootStrapResource] notify user and receive:
+2018-10-25 15:20:29,472 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootResource] ---------------device boot come in---------------
+2018-10-25 15:20:29,473 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootResource] device online parameters:{"deviceId":"CMCC-30531-B0F89330F997","deviceType":"30531","firmwareVersion":"1.4.3","softwareVersion":"1.0.1","ipAddress":"192.168.1.102","timestamp":1540452030}
+2018-10-25 15:20:29,477 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootResource] boot Resp:{"encrypt":0,"heartBeatTime":30000,"timestamp":734354788}
+2018-10-25 15:20:29,479 [WARN]-[com.chinamobile.smartgateway.andlink.util.MqConnection] client did not connect, client is: null
+2018-10-25 15:20:29,479 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootService] Boot localService is invoked!!!
+2018-10-25 15:20:29,482 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.DeviceBootBean] updateStatus sql:UPDATE DEVICE  SET STATUS = 1,LASTTIME = 1540452029482,ISSYNC=1,IP='192.168.1.102',FIRMWAREVERSION='1.4.3',SOFTWAREVERSION='1.0.1',XDATA='null' WHERE DEVICEID = 'CMCC-30531-B0F89330F997'
+2018-10-25 15:20:29,485 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootService] boot Resp:{"encrypt":0,"heartBeatTime":30000,"timestamp":734354788}
+2018-10-25 15:20:29,536 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.GWBootBean] gw encrypt code:0
+2018-10-25 15:20:29,536 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] Down secretKey:kZAqkvGHXk30sy83
+2018-10-25 15:20:29,539 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] gw boot http message:{"deviceType":"13000","productToken":"kw9pS2OqkbcMSRVY","encrypt":0,"gwId":"005056C00008","firmwareVersion":"f1.0","softwareVersion":"S1.0","timestamp":1540452029536,"andlinkVersion":"2.10y"}
+2018-10-25 15:20:29,542 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.GWBootBean] gw encrypt code:0
+2018-10-25 15:20:29,542 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] Down secretKey:kZAqkvGHXk30sy83
+2018-10-25 15:20:29,543 [INFO]-[com.chinamobile.smartgateway.andlink.util.HttpsPost] AndlinkWebURL:https://open.home.komect.com/apistg/m2m/rest/device
+2018-10-25 15:20:29,792 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] gw boot success!!!
+2018-10-25 15:20:30,040 [INFO]-[com.chinamobile.smartgateway.andlink.util.MqConnection] Connecting to platform  with client ID 005056C00008
+2018-10-25 15:20:30,396 [INFO]-[com.chinamobile.smartgateway.andlink.util.MqConnection] MQ Connected!!! result is: true
+2018-10-25 15:20:30,608 [INFO]-[com.chinamobile.smartgateway.andlink.util.MqConnection] Publishing at: 2018-10-25 15:20:30.607 to topic "/device/upward/data/005056C00008" qos 1
+2018-10-25 15:20:30,610 [INFO]-[com.chinamobile.smartgateway.andlink.util.MqConnection] Publishing message: {"data":{"ipAddress":"192.168.44.1","firmwareVersion":"f1.0","softwareVersion":"S1.0"},"eventType":"Boot","gwId":"005056C00008","sessionId":2,"timestamp":1540452030605}
+2018-10-25 15:20:52,222 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:21:00,312 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:21:22,222 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:21:30,323 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:21:52,223 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:21:55,402 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootResource] ---------------device boot come in---------------
+2018-10-25 15:21:55,403 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootResource] device online parameters:{"deviceId":"CMCC-30531-B0F89330F997","deviceType":"30531","firmwareVersion":"1.4.3","softwareVersion":"1.0.1","ipAddress":"192.168.1.102","timestamp":1540452117}
+2018-10-25 15:21:55,407 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootResource] boot Resp:{"encrypt":0,"heartBeatTime":30000,"timestamp":734354788}
+2018-10-25 15:21:55,408 [INFO]-[com.chinamobile.smartgateway.andlink.util.MqConnection] Publishing at: 2018-10-25 15:21:55.408 to topic "/device/upward/data/005056C00008" qos 1
+2018-10-25 15:21:55,409 [INFO]-[com.chinamobile.smartgateway.andlink.util.MqConnection] Publishing message: {"data":{"ipAddress":"192.168.1.102","firmwareVersion":"1.4.3","softwareVersion":"1.0.1"},"eventType":"Boot","gwId":"005056C00008","sessionId":3,"deviceId":"CMCC-30531-B0F89330F997","timestamp":1540452115408}
+2018-10-25 15:21:55,660 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootService] Boot localService is invoked!!!
+2018-10-25 15:21:55,663 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.DeviceBootBean] updateStatus sql:UPDATE DEVICE  SET STATUS = 1,LASTTIME = 1540452115663,ISSYNC=1,IP='192.168.1.102',FIRMWAREVERSION='1.4.3',SOFTWAREVERSION='1.0.1',XDATA='null' WHERE DEVICEID = 'CMCC-30531-B0F89330F997'
+2018-10-25 15:21:55,666 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootService] boot Resp:{"encrypt":0,"heartBeatTime":30000,"timestamp":734354788}
+2018-10-25 15:22:22,224 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:22:25,557 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:22:52,225 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:22:55,194 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:23:22,226 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:23:24,666 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:23:49,450 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] post arg from RegistResource:{"clientIp":"192.168.1.101","password":"123456","clientType":"1"}
+2018-10-25 15:23:49,451 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] Receive password:123456
+2018-10-25 15:23:49,453 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] password ok and regist user ok:192.168.1.101
+2018-10-25 15:23:49,780 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.AckResource] AckResource post arg:{"deviceId":"CMCC50294D20B11C"}
+2018-10-25 15:23:49,781 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.AckResource] AckResource deviceId:CMCC50294D20B11C
+2018-10-25 15:23:51,317 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SearchGWResource] searchKey: {"searchKey":"ANDLINK-DEVICE","andlinkVersion":"V2"}
+2018-10-25 15:23:51,317 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SearchGWResource] search gateway request type is: CON
+2018-10-25 15:23:51,320 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SearchGWResource] sync response with : {"searchAck":"ANDLINK-GW","andlinkVersion":"V2"}
+2018-10-25 15:23:51,793 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.RequestResource] post arg from RequestResource:{"deviceMac":"B0F89330F997","deviceType":"30531"}
+2018-10-25 15:23:51,793 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.RequestResource] Receive deviceId:B0F89330F997,deviceType:30531,ipAddress:192.168.1.102,andlinkVersion:V1
+2018-10-25 15:23:51,796 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.SSIDUtil] NotifyDevice to IP:192.168.1.102
+2018-10-25 15:23:51,797 [INFO]-[com.chinamobile.smartgateway.andlink.HomNetworkingDeviceMgnService.ApdeviceServiceImp] {"password":"12345678","encrypt":"WPAPSK","channel":0,"SSID":"LB_023"}
+2018-10-25 15:23:51,797 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.SSIDUtil] send device:coap://192.168.1.102:5683/qlink/netinfo,payload:{"password":"12345678","encrypt":"WPAPSK","channel":0,"SSID":"LB_023"}
+2018-10-25 15:23:52,227 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:23:52,308 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.SSIDUtil] AckResource notify device and receive:{"respCode":"1"}
+2018-10-25 15:24:02,363 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SuccessResource] post arg:{"deviceMac":"B0F89330F997","deviceType":"30531"}
+2018-10-25 15:24:02,363 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SuccessResource] SuccessResource Received and del deviceId:B0F89330F997
+2018-10-25 15:24:03,404 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SuccessResource] SuccessResource notify user and receive:{"result":"1"}
+2018-10-25 15:24:04,644 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootStrapResource] ----------------device bootstrap come in----------------------
+2018-10-25 15:24:04,645 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootStrapResource] device register parameters:{"deviceMac":"B0F89330F997","deviceType":"30531","productToken":"PXmsE6kQmxEgc0e3","timestamp":1540452246}
+2018-10-25 15:24:04,648 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] http commit!
+2018-10-25 15:24:04,650 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] bootstrap to platform:{"deviceType":"30531","productToken":"PXmsE6kQmxEgc0e3","deviceMac":"B0F89330F997","gwId":"005056C00008","timestamp":734354788}
+2018-10-25 15:24:04,650 [INFO]-[com.chinamobile.smartgateway.andlink.util.HttpsPost] AndlinkWebURL:https://open.home.komect.com/apistg/m2m/rest/device
+2018-10-25 15:24:05,427 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] platform Resp:{"timestamp":1540452247000,"heartBeatTime":30000,"deviceId":"CMCC-30531-B0F89330F997","deviceToken":"Nsjq8T7L9PjitA1/","andlinkToken":"ZxMo0zJvvZMWP3Az"}
+2018-10-25 15:24:05,429 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.DeviceBootBean] delDevice sql:delete FROM device where deviceId='CMCC-30531-B0F89330F997'
+2018-10-25 15:24:05,433 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.DeviceBootBean] addDevice sql:INSERT INTO DEVICE VALUES('CMCC-30531-B0F89330F997','B0F89330F997','null','30531','192.168.1.102',1540452245433,1540452245433,'',1,'FatherDevice','Nsjq8T7L9PjitA1/',1,'null','null','null','PXmsE6kQmxEgc0e3')
+2018-10-25 15:24:05,434 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] ----------[test][InformBootStrapService] before check connected
+2018-10-25 15:24:05,434 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] ----------[test][InformBootStrapService] after check connected
+2018-10-25 15:24:05,436 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] Down secretKey:kZAqkvGHXk30sy83
+2018-10-25 15:24:05,436 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] bootstrap response to device:{"deviceId":"CMCC-30531-B0F89330F997","andlinkToken":"ZxMo0zJvvZMWP3Az","deviceToken":"Nsjq8T7L9PjitA1/","gwToken":"kZAqkvGHXk30sy83"}
+2018-10-25 15:24:05,437 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootStrapResource] SuccessRegist message post to app:{"deviceType":"30531","respCont":"success","deviceId":"CMCC-30531-B0F89330F997","respCode":1}
+2018-10-25 15:24:06,527 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootStrapResource] notify user and receive:
+2018-10-25 15:24:07,266 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootResource] ---------------device boot come in---------------
+2018-10-25 15:24:07,266 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootResource] device online parameters:{"deviceId":"CMCC-30531-B0F89330F997","deviceType":"30531","firmwareVersion":"1.4.3","softwareVersion":"1.0.1","ipAddress":"192.168.1.102","timestamp":1540452249}
+2018-10-25 15:24:07,272 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootResource] boot Resp:{"encrypt":0,"heartBeatTime":30000,"timestamp":734354788}
+2018-10-25 15:24:07,273 [INFO]-[com.chinamobile.smartgateway.andlink.util.MqConnection] Publishing at: 2018-10-25 15:24:07.273 to topic "/device/upward/data/005056C00008" qos 1
+2018-10-25 15:24:07,274 [INFO]-[com.chinamobile.smartgateway.andlink.util.MqConnection] Publishing message: {"data":{"ipAddress":"192.168.1.102","firmwareVersion":"1.4.3","softwareVersion":"1.0.1"},"eventType":"Boot","gwId":"005056C00008","sessionId":4,"deviceId":"CMCC-30531-B0F89330F997","timestamp":1540452247272}
+2018-10-25 15:24:07,306 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootService] Boot localService is invoked!!!
+2018-10-25 15:24:07,309 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.DeviceBootBean] updateStatus sql:UPDATE DEVICE  SET STATUS = 1,LASTTIME = 1540452247309,ISSYNC=1,IP='192.168.1.102',FIRMWAREVERSION='1.4.3',SOFTWAREVERSION='1.0.1',XDATA='null' WHERE DEVICEID = 'CMCC-30531-B0F89330F997'
+2018-10-25 15:24:07,310 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootService] boot Resp:{"encrypt":0,"heartBeatTime":30000,"timestamp":734354788}
+2018-10-25 15:24:22,227 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:24:37,553 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:24:52,228 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:25:08,097 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:25:22,228 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:25:38,575 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:25:52,229 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:26:08,072 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:26:22,229 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:26:37,665 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:26:52,230 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:27:07,109 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:27:22,231 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:27:36,608 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:27:52,232 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:28:07,141 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:28:22,233 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:28:36,615 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:28:52,234 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:29:02,309 [WARN]-[com.chinamobile.smartgateway.andlink.device.control.wan.PushCallback] ----------MQ Connection lost!已断开连接 (32109) - java.net.SocketException: Connection reset
+2018-10-25 15:29:22,234 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:29:33,812 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] the gw has device count:1
+2018-10-25 15:29:33,813 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.GWBootBean] gw encrypt code:0
+2018-10-25 15:29:33,816 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] Down secretKey:kZAqkvGHXk30sy83
+2018-10-25 15:29:33,818 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] gw boot http message:{"deviceType":"13000","productToken":"kw9pS2OqkbcMSRVY","encrypt":0,"gwId":"005056C00008","firmwareVersion":"f1.0","softwareVersion":"S1.0","timestamp":1540452573812,"andlinkVersion":"2.10y"}
+2018-10-25 15:29:33,818 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.GWBootBean] gw encrypt code:0
+2018-10-25 15:29:33,821 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] Down secretKey:kZAqkvGHXk30sy83
+2018-10-25 15:29:33,821 [INFO]-[com.chinamobile.smartgateway.andlink.util.HttpsPost] AndlinkWebURL:https://open.home.komect.com/apistg/m2m/rest/device
+2018-10-25 15:29:34,207 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.WanControl] gw boot success!!!
+2018-10-25 15:29:34,404 [INFO]-[com.chinamobile.smartgateway.andlink.util.MqConnection] Connecting to platform  with client ID 005056C00008
+2018-10-25 15:29:34,525 [INFO]-[com.chinamobile.smartgateway.andlink.util.MqConnection] MQ Connected!!! result is: true
+2018-10-25 15:29:34,600 [INFO]-[com.chinamobile.smartgateway.andlink.util.MqConnection] Publishing at: 2018-10-25 15:29:34.6 to topic "/device/upward/data/005056C00008" qos 1
+2018-10-25 15:29:34,604 [INFO]-[com.chinamobile.smartgateway.andlink.util.MqConnection] Publishing message: {"data":{"ipAddress":"192.168.44.1","firmwareVersion":"f1.0","softwareVersion":"S1.0"},"eventType":"Boot","gwId":"005056C00008","sessionId":5,"timestamp":1540452574600}
+2018-10-25 15:29:38,455 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:29:52,235 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:30:10,621 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:30:22,236 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:30:40,516 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:30:52,237 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:31:09,985 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:31:22,238 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:31:39,452 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:31:52,239 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:32:08,948 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:32:22,240 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:32:38,458 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:32:52,240 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:33:08,046 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:33:22,241 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:33:37,482 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:33:52,242 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:34:06,982 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:34:22,243 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:34:36,494 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:34:52,244 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:35:05,982 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:35:22,245 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:35:35,484 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:35:52,245 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:36:05,028 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:36:22,246 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:36:34,513 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:36:52,247 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:37:04,003 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:37:22,248 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:37:33,489 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:37:52,249 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:38:02,987 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:38:22,250 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:38:32,525 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:38:52,252 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:39:01,995 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:39:22,253 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:39:31,491 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:39:52,254 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:39:58,704 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootResource] ---------------device boot come in---------------
+2018-10-25 15:39:58,705 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootResource] device online parameters:{"deviceId":"CMCC-30531-B0F89330F997","deviceType":"30531","firmwareVersion":"1.4.3","softwareVersion":"1.0.1","ipAddress":"192.168.1.102","timestamp":1540453200}
+2018-10-25 15:39:58,711 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootResource] boot Resp:{"encrypt":0,"heartBeatTime":30000,"timestamp":734354788}
+2018-10-25 15:39:58,716 [INFO]-[com.chinamobile.smartgateway.andlink.util.MqConnection] Publishing at: 2018-10-25 15:39:58.716 to topic "/device/upward/data/005056C00008" qos 1
+2018-10-25 15:39:58,724 [INFO]-[com.chinamobile.smartgateway.andlink.util.MqConnection] Publishing message: {"data":{"ipAddress":"192.168.1.102","firmwareVersion":"1.4.3","softwareVersion":"1.0.1"},"eventType":"Boot","gwId":"005056C00008","sessionId":6,"deviceId":"CMCC-30531-B0F89330F997","timestamp":1540453198714}
+2018-10-25 15:39:58,756 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootService] Boot localService is invoked!!!
+2018-10-25 15:39:58,760 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.DeviceBootBean] updateStatus sql:UPDATE DEVICE  SET STATUS = 1,LASTTIME = 1540453198760,ISSYNC=1,IP='192.168.1.102',FIRMWAREVERSION='1.4.3',SOFTWAREVERSION='1.0.1',XDATA='null' WHERE DEVICEID = 'CMCC-30531-B0F89330F997'
+2018-10-25 15:39:58,762 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootService] boot Resp:{"encrypt":0,"heartBeatTime":30000,"timestamp":734354788}
+2018-10-25 15:40:19,066 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SearchGWResource] searchKey: {"searchKey":"ANDLINK-DEVICE","andlinkVersion":"V2"}
+2018-10-25 15:40:19,066 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SearchGWResource] search gateway request type is: CON
+2018-10-25 15:40:19,071 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SearchGWResource] sync response with : {"searchAck":"ANDLINK-GW","andlinkVersion":"V2"}
+2018-10-25 15:40:20,554 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] post arg from RegistResource:{"clientIp":"192.168.1.101","password":"123456","clientType":"1"}
+2018-10-25 15:40:20,555 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] Receive password:123456
+2018-10-25 15:40:20,558 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] password ok and regist user ok:192.168.1.101
+2018-10-25 15:40:20,586 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.RequestResource] post arg from RequestResource:{"deviceMac":"B0F89330F997","deviceType":"30531"}
+2018-10-25 15:40:20,587 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.RequestResource] Receive deviceId:B0F89330F997,deviceType:30531,ipAddress:192.168.1.102,andlinkVersion:V1
+2018-10-25 15:40:20,590 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.RequestResource] IfIpInMemory function is invoked!
+2018-10-25 15:40:20,591 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.SSIDUtil] NotifyDevice to IP:192.168.1.102
+2018-10-25 15:40:20,592 [INFO]-[com.chinamobile.smartgateway.andlink.HomNetworkingDeviceMgnService.ApdeviceServiceImp] {"password":"12345678","encrypt":"WPAPSK","channel":0,"SSID":"LB_023"}
+2018-10-25 15:40:20,592 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.SSIDUtil] send device:coap://192.168.1.102:5683/qlink/netinfo,payload:{"password":"12345678","encrypt":"WPAPSK","channel":0,"SSID":"LB_023"}
+2018-10-25 15:40:20,604 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.AckResource] AckResource post arg:{"deviceId":"CMCC50294D20B11C"}
+2018-10-25 15:40:20,604 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.AckResource] AckResource deviceId:CMCC50294D20B11C
+2018-10-25 15:40:20,605 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.SSIDUtil] NotifyDevice to IP:192.168.1.102
+2018-10-25 15:40:20,606 [INFO]-[com.chinamobile.smartgateway.andlink.HomNetworkingDeviceMgnService.ApdeviceServiceImp] {"password":"12345678","encrypt":"WPAPSK","channel":0,"SSID":"LB_023"}
+2018-10-25 15:40:20,607 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.SSIDUtil] send device:coap://192.168.1.102:5683/qlink/netinfo,payload:{"password":"12345678","encrypt":"WPAPSK","channel":0,"SSID":"LB_023"}
+2018-10-25 15:40:20,914 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.SSIDUtil] AckResource notify device and receive:{"respCode":"1"}
+2018-10-25 15:40:22,255 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:40:22,609 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.SSIDUtil] AckResource notify device but failed Post!!
+2018-10-25 15:40:24,806 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SuccessResource] post arg:{"deviceMac":"B0F89330F997","deviceType":"30531"}
+2018-10-25 15:40:24,807 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SuccessResource] SuccessResource Received and del deviceId:B0F89330F997
+2018-10-25 15:40:24,853 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SuccessResource] SuccessResource notify user and receive:{"result":"1"}
+2018-10-25 15:40:24,854 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootStrapResource] ----------------device bootstrap come in----------------------
+2018-10-25 15:40:24,856 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootStrapResource] device register parameters:{"deviceMac":"B0F89330F997","deviceType":"30531","productToken":"PXmsE6kQmxEgc0e3","timestamp":1540453227}
+2018-10-25 15:40:24,857 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] http commit!
+2018-10-25 15:40:24,858 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] bootstrap to platform:{"deviceType":"30531","productToken":"PXmsE6kQmxEgc0e3","deviceMac":"B0F89330F997","gwId":"005056C00008","timestamp":734354788}
+2018-10-25 15:40:24,858 [INFO]-[com.chinamobile.smartgateway.andlink.util.HttpsPost] AndlinkWebURL:https://open.home.komect.com/apistg/m2m/rest/device
+2018-10-25 15:40:25,067 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] platform Resp:{"timestamp":1540453227000,"heartBeatTime":30000,"deviceId":"CMCC-30531-B0F89330F997","deviceToken":"Nsjq8T7L9PjitA1/","andlinkToken":"ZxMo0zJvvZMWP3Az"}
+2018-10-25 15:40:25,068 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.DeviceBootBean] delDevice sql:delete FROM device where deviceId='CMCC-30531-B0F89330F997'
+2018-10-25 15:40:25,072 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.DeviceBootBean] addDevice sql:INSERT INTO DEVICE VALUES('CMCC-30531-B0F89330F997','B0F89330F997','null','30531','192.168.1.102',1540453225072,1540453225072,'',1,'FatherDevice','Nsjq8T7L9PjitA1/',1,'null','null','null','PXmsE6kQmxEgc0e3')
+2018-10-25 15:40:25,074 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] ----------[test][InformBootStrapService] before check connected
+2018-10-25 15:40:25,074 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] ----------[test][InformBootStrapService] after check connected
+2018-10-25 15:40:25,076 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] Down secretKey:kZAqkvGHXk30sy83
+2018-10-25 15:40:25,076 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] bootstrap response to device:{"deviceId":"CMCC-30531-B0F89330F997","andlinkToken":"ZxMo0zJvvZMWP3Az","deviceToken":"Nsjq8T7L9PjitA1/","gwToken":"kZAqkvGHXk30sy83"}
+2018-10-25 15:40:25,077 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootStrapResource] SuccessRegist message post to app:{"deviceType":"30531","respCont":"success","deviceId":"CMCC-30531-B0F89330F997","respCode":1}
+2018-10-25 15:40:25,114 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootStrapResource] notify user and receive:
+2018-10-25 15:40:41,019 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootStrapResource] ----------------device bootstrap come in----------------------
+2018-10-25 15:40:41,019 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootStrapResource] device register parameters:{"deviceMac":"B0F89330F997","deviceType":"30531","productToken":"PXmsE6kQmxEgc0e3","timestamp":1540453243}
+2018-10-25 15:40:41,022 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] http commit!
+2018-10-25 15:40:41,024 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] bootstrap to platform:{"deviceType":"30531","productToken":"PXmsE6kQmxEgc0e3","deviceMac":"B0F89330F997","gwId":"005056C00008","timestamp":734354788}
+2018-10-25 15:40:41,025 [INFO]-[com.chinamobile.smartgateway.andlink.util.HttpsPost] AndlinkWebURL:https://open.home.komect.com/apistg/m2m/rest/device
+2018-10-25 15:40:41,554 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] platform Resp:{"timestamp":1540453243000,"heartBeatTime":30000,"deviceId":"CMCC-30531-B0F89330F997","deviceToken":"Nsjq8T7L9PjitA1/","andlinkToken":"ZxMo0zJvvZMWP3Az"}
+2018-10-25 15:40:41,556 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.DeviceBootBean] delDevice sql:delete FROM device where deviceId='CMCC-30531-B0F89330F997'
+2018-10-25 15:40:41,560 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.DeviceBootBean] addDevice sql:INSERT INTO DEVICE VALUES('CMCC-30531-B0F89330F997','B0F89330F997','null','30531','192.168.1.102',1540453241560,1540453241560,'',1,'FatherDevice','Nsjq8T7L9PjitA1/',1,'null','null','null','PXmsE6kQmxEgc0e3')
+2018-10-25 15:40:41,561 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] ----------[test][InformBootStrapService] before check connected
+2018-10-25 15:40:41,561 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] ----------[test][InformBootStrapService] after check connected
+2018-10-25 15:40:41,563 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] Down secretKey:kZAqkvGHXk30sy83
+2018-10-25 15:40:41,563 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] bootstrap response to device:{"deviceId":"CMCC-30531-B0F89330F997","andlinkToken":"ZxMo0zJvvZMWP3Az","deviceToken":"Nsjq8T7L9PjitA1/","gwToken":"kZAqkvGHXk30sy83"}
+2018-10-25 15:40:41,565 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootStrapResource] SuccessRegist message post to app:{"deviceType":"30531","respCont":"success","deviceId":"CMCC-30531-B0F89330F997","respCode":1}
+2018-10-25 15:40:41,672 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootStrapResource] notify user and receive:
+2018-10-25 15:40:42,132 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootResource] ---------------device boot come in---------------
+2018-10-25 15:40:42,133 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootResource] device online parameters:{"deviceId":"CMCC-30531-B0F89330F997","deviceType":"30531","firmwareVersion":"1.4.3","softwareVersion":"1.0.1","ipAddress":"192.168.1.102","timestamp":1540453244}
+2018-10-25 15:40:42,137 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootResource] boot Resp:{"encrypt":0,"heartBeatTime":30000,"timestamp":734354788}
+2018-10-25 15:40:42,138 [INFO]-[com.chinamobile.smartgateway.andlink.util.MqConnection] Publishing at: 2018-10-25 15:40:42.138 to topic "/device/upward/data/005056C00008" qos 1
+2018-10-25 15:40:42,139 [INFO]-[com.chinamobile.smartgateway.andlink.util.MqConnection] Publishing message: {"data":{"ipAddress":"192.168.1.102","firmwareVersion":"1.4.3","softwareVersion":"1.0.1"},"eventType":"Boot","gwId":"005056C00008","sessionId":7,"deviceId":"CMCC-30531-B0F89330F997","timestamp":1540453242138}
+2018-10-25 15:40:42,346 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootService] Boot localService is invoked!!!
+2018-10-25 15:40:42,353 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.DeviceBootBean] updateStatus sql:UPDATE DEVICE  SET STATUS = 1,LASTTIME = 1540453242353,ISSYNC=1,IP='192.168.1.102',FIRMWAREVERSION='1.4.3',SOFTWAREVERSION='1.0.1',XDATA='null' WHERE DEVICEID = 'CMCC-30531-B0F89330F997'
+2018-10-25 15:40:42,359 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootService] boot Resp:{"encrypt":0,"heartBeatTime":30000,"timestamp":734354788}
+2018-10-25 15:40:52,256 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:41:12,429 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:41:22,256 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:41:41,921 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:41:52,256 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:42:11,417 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:42:22,257 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:42:40,929 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:42:52,258 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:43:10,409 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:43:22,258 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:43:38,158 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootResource] ---------------device boot come in---------------
+2018-10-25 15:43:38,158 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootResource] device online parameters:{"deviceId":"CMCC-30531-B0F89330F997","deviceType":"30531","firmwareVersion":"1.4.3","softwareVersion":"1.0.1","ipAddress":"192.168.1.102","timestamp":1540453420}
+2018-10-25 15:43:38,162 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootResource] boot Resp:{"encrypt":0,"heartBeatTime":30000,"timestamp":734354788}
+2018-10-25 15:43:38,163 [INFO]-[com.chinamobile.smartgateway.andlink.util.MqConnection] Publishing at: 2018-10-25 15:43:38.163 to topic "/device/upward/data/005056C00008" qos 1
+2018-10-25 15:43:38,163 [INFO]-[com.chinamobile.smartgateway.andlink.util.MqConnection] Publishing message: {"data":{"ipAddress":"192.168.1.102","firmwareVersion":"1.4.3","softwareVersion":"1.0.1"},"eventType":"Boot","gwId":"005056C00008","sessionId":8,"deviceId":"CMCC-30531-B0F89330F997","timestamp":1540453418162}
+2018-10-25 15:43:38,243 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootService] Boot localService is invoked!!!
+2018-10-25 15:43:38,246 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.DeviceBootBean] updateStatus sql:UPDATE DEVICE  SET STATUS = 1,LASTTIME = 1540453418246,ISSYNC=1,IP='192.168.1.102',FIRMWAREVERSION='1.4.3',SOFTWAREVERSION='1.0.1',XDATA='null' WHERE DEVICEID = 'CMCC-30531-B0F89330F997'
+2018-10-25 15:43:38,248 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootService] boot Resp:{"encrypt":0,"heartBeatTime":30000,"timestamp":734354788}
+2018-10-25 15:43:50,712 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] post arg from RegistResource:{"clientIp":"192.168.1.101","password":"123456","clientType":"1"}
+2018-10-25 15:43:50,713 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] Receive password:123456
+2018-10-25 15:43:50,715 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] password ok and regist user ok:192.168.1.101
+2018-10-25 15:43:50,753 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.AckResource] AckResource post arg:{"deviceId":"CMCC50294D20B11C"}
+2018-10-25 15:43:50,754 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.AckResource] AckResource deviceId:CMCC50294D20B11C
+2018-10-25 15:43:52,259 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:43:52,699 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] post arg from RegistResource:{"clientIp":"192.168.1.101","password":"123456","clientType":"1"}
+2018-10-25 15:43:52,699 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] Receive password:123456
+2018-10-25 15:43:52,701 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] password ok and regist user ok:192.168.1.101
+2018-10-25 15:43:52,720 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.AckResource] AckResource post arg:{"deviceId":"CMCC50294D20B11C"}
+2018-10-25 15:43:52,720 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.AckResource] AckResource deviceId:CMCC50294D20B11C
+2018-10-25 15:43:52,941 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] post arg from RegistResource:{"clientIp":"192.168.1.101","password":"123456","clientType":"1"}
+2018-10-25 15:43:52,942 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] Receive password:123456
+2018-10-25 15:43:52,944 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] password ok and regist user ok:192.168.1.101
+2018-10-25 15:43:52,955 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.AckResource] AckResource post arg:{"deviceId":"CMCC50294D20B11C"}
+2018-10-25 15:43:52,955 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.AckResource] AckResource deviceId:CMCC50294D20B11C
+2018-10-25 15:43:57,054 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] post arg from RegistResource:{"clientIp":"192.168.1.101","password":"123456","clientType":"1"}
+2018-10-25 15:43:57,054 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] Receive password:123456
+2018-10-25 15:43:57,057 [INFO]-[com.chinamobile.smartgateway.andlink.basic.RegistResource] password ok and regist user ok:192.168.1.101
+2018-10-25 15:43:57,082 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.AckResource] AckResource post arg:{"deviceId":"CMCC50294D20B11C"}
+2018-10-25 15:43:57,082 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.AckResource] AckResource deviceId:CMCC50294D20B11C
+2018-10-25 15:43:58,516 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SearchGWResource] searchKey: {"searchKey":"ANDLINK-DEVICE","andlinkVersion":"V2"}
+2018-10-25 15:43:58,516 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SearchGWResource] search gateway request type is: CON
+2018-10-25 15:43:58,519 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SearchGWResource] sync response with : {"searchAck":"ANDLINK-GW","andlinkVersion":"V2"}
+2018-10-25 15:43:58,857 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.RequestResource] post arg from RequestResource:{"deviceMac":"B0F89330F997","deviceType":"30531"}
+2018-10-25 15:43:58,858 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.RequestResource] Receive deviceId:B0F89330F997,deviceType:30531,ipAddress:192.168.1.102,andlinkVersion:V1
+2018-10-25 15:43:58,860 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.SSIDUtil] NotifyDevice to IP:192.168.1.102
+2018-10-25 15:43:58,863 [INFO]-[com.chinamobile.smartgateway.andlink.HomNetworkingDeviceMgnService.ApdeviceServiceImp] {"password":"12345678","encrypt":"WPAPSK","channel":0,"SSID":"LB_023"}
+2018-10-25 15:43:58,864 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.SSIDUtil] send device:coap://192.168.1.102:5683/qlink/netinfo,payload:{"password":"12345678","encrypt":"WPAPSK","channel":0,"SSID":"LB_023"}
+2018-10-25 15:43:59,136 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.SSIDUtil] AckResource notify device and receive:{"respCode":"1"}
+2018-10-25 15:44:03,328 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SuccessResource] post arg:{"deviceMac":"B0F89330F997","deviceType":"30531"}
+2018-10-25 15:44:03,328 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SuccessResource] SuccessResource Received and del deviceId:B0F89330F997
+2018-10-25 15:44:03,369 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootStrapResource] ----------------device bootstrap come in----------------------
+2018-10-25 15:44:03,369 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootStrapResource] device register parameters:{"deviceMac":"B0F89330F997","deviceType":"30531","productToken":"PXmsE6kQmxEgc0e3","timestamp":1540453445}
+2018-10-25 15:44:03,371 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] http commit!
+2018-10-25 15:44:03,373 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] bootstrap to platform:{"deviceType":"30531","productToken":"PXmsE6kQmxEgc0e3","deviceMac":"B0F89330F997","gwId":"005056C00008","timestamp":734354788}
+2018-10-25 15:44:03,373 [INFO]-[com.chinamobile.smartgateway.andlink.util.HttpsPost] AndlinkWebURL:https://open.home.komect.com/apistg/m2m/rest/device
+2018-10-25 15:44:03,408 [INFO]-[com.chinamobile.smartgateway.andlink.qlink.resource.SuccessResource] SuccessResource notify user and receive:{"result":"1"}
+2018-10-25 15:44:03,683 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] platform Resp:{"timestamp":1540453445000,"heartBeatTime":30000,"deviceId":"CMCC-30531-B0F89330F997","deviceToken":"Nsjq8T7L9PjitA1/","andlinkToken":"ZxMo0zJvvZMWP3Az"}
+2018-10-25 15:44:03,684 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.DeviceBootBean] delDevice sql:delete FROM device where deviceId='CMCC-30531-B0F89330F997'
+2018-10-25 15:44:03,687 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.DeviceBootBean] addDevice sql:INSERT INTO DEVICE VALUES('CMCC-30531-B0F89330F997','B0F89330F997','null','30531','192.168.1.102',1540453443687,1540453443687,'',1,'FatherDevice','Nsjq8T7L9PjitA1/',1,'null','null','null','PXmsE6kQmxEgc0e3')
+2018-10-25 15:44:03,688 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] ----------[test][InformBootStrapService] before check connected
+2018-10-25 15:44:03,689 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] ----------[test][InformBootStrapService] after check connected
+2018-10-25 15:44:03,690 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] Down secretKey:kZAqkvGHXk30sy83
+2018-10-25 15:44:03,691 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] bootstrap response to device:{"deviceId":"CMCC-30531-B0F89330F997","andlinkToken":"ZxMo0zJvvZMWP3Az","deviceToken":"Nsjq8T7L9PjitA1/","gwToken":"kZAqkvGHXk30sy83"}
+2018-10-25 15:44:03,692 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootStrapResource] SuccessRegist message post to app:{"deviceType":"30531","respCont":"success","deviceId":"CMCC-30531-B0F89330F997","respCode":1}
+2018-10-25 15:44:03,710 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootStrapResource] notify user and receive:
+2018-10-25 15:44:19,361 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootStrapResource] ----------------device bootstrap come in----------------------
+2018-10-25 15:44:19,362 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootStrapResource] device register parameters:{"deviceMac":"B0F89330F997","deviceType":"30531","productToken":"PXmsE6kQmxEgc0e3","timestamp":1540453461}
+2018-10-25 15:44:19,364 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] http commit!
+2018-10-25 15:44:19,364 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] bootstrap to platform:{"deviceType":"30531","productToken":"PXmsE6kQmxEgc0e3","deviceMac":"B0F89330F997","gwId":"005056C00008","timestamp":734354788}
+2018-10-25 15:44:19,366 [INFO]-[com.chinamobile.smartgateway.andlink.util.HttpsPost] AndlinkWebURL:https://open.home.komect.com/apistg/m2m/rest/device
+2018-10-25 15:44:19,522 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] platform Resp:{"timestamp":1540453461000,"heartBeatTime":30000,"deviceId":"CMCC-30531-B0F89330F997","deviceToken":"Nsjq8T7L9PjitA1/","andlinkToken":"ZxMo0zJvvZMWP3Az"}
+2018-10-25 15:44:19,524 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.DeviceBootBean] delDevice sql:delete FROM device where deviceId='CMCC-30531-B0F89330F997'
+2018-10-25 15:44:19,525 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.DeviceBootBean] addDevice sql:INSERT INTO DEVICE VALUES('CMCC-30531-B0F89330F997','B0F89330F997','null','30531','192.168.1.102',1540453459525,1540453459525,'',1,'FatherDevice','Nsjq8T7L9PjitA1/',1,'null','null','null','PXmsE6kQmxEgc0e3')
+2018-10-25 15:44:19,528 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] ----------[test][InformBootStrapService] before check connected
+2018-10-25 15:44:19,529 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] ----------[test][InformBootStrapService] after check connected
+2018-10-25 15:44:19,530 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] Down secretKey:kZAqkvGHXk30sy83
+2018-10-25 15:44:19,531 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootStrapService] bootstrap response to device:{"deviceId":"CMCC-30531-B0F89330F997","andlinkToken":"ZxMo0zJvvZMWP3Az","deviceToken":"Nsjq8T7L9PjitA1/","gwToken":"kZAqkvGHXk30sy83"}
+2018-10-25 15:44:19,533 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootStrapResource] SuccessRegist message post to app:{"deviceType":"30531","respCont":"success","deviceId":"CMCC-30531-B0F89330F997","respCode":1}
+2018-10-25 15:44:19,610 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootStrapResource] notify user and receive:
+2018-10-25 15:44:19,870 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootResource] ---------------device boot come in---------------
+2018-10-25 15:44:19,873 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootResource] device online parameters:{"deviceId":"CMCC-30531-B0F89330F997","deviceType":"30531","firmwareVersion":"1.4.3","softwareVersion":"1.0.1","ipAddress":"192.168.1.102","timestamp":1540453462}
+2018-10-25 15:44:19,877 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformBootResource] boot Resp:{"encrypt":0,"heartBeatTime":30000,"timestamp":734354788}
+2018-10-25 15:44:19,878 [INFO]-[com.chinamobile.smartgateway.andlink.util.MqConnection] Publishing at: 2018-10-25 15:44:19.878 to topic "/device/upward/data/005056C00008" qos 1
+2018-10-25 15:44:19,878 [INFO]-[com.chinamobile.smartgateway.andlink.util.MqConnection] Publishing message: {"data":{"ipAddress":"192.168.1.102","firmwareVersion":"1.4.3","softwareVersion":"1.0.1"},"eventType":"Boot","gwId":"005056C00008","sessionId":9,"deviceId":"CMCC-30531-B0F89330F997","timestamp":1540453459878}
+2018-10-25 15:44:19,910 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootService] Boot localService is invoked!!!
+2018-10-25 15:44:19,911 [INFO]-[com.chinamobile.smartgateway.andlink.device.bean.DeviceBootBean] updateStatus sql:UPDATE DEVICE  SET STATUS = 1,LASTTIME = 1540453459911,ISSYNC=1,IP='192.168.1.102',FIRMWAREVERSION='1.4.3',SOFTWAREVERSION='1.0.1',XDATA='null' WHERE DEVICEID = 'CMCC-30531-B0F89330F997'
+2018-10-25 15:44:19,914 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformBootService] boot Resp:{"encrypt":0,"heartBeatTime":30000,"timestamp":734354788}
+2018-10-25 15:44:22,260 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:44:50,203 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:44:52,261 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:45:19,700 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:45:22,261 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:45:49,200 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:45:52,262 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:46:18,734 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:46:22,263 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:46:48,199 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:46:52,264 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:47:17,747 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:47:22,265 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:47:47,203 [INFO]-[com.chinamobile.smartgateway.andlink.device.control.lan.InformHeartBeatResource] Device heartBeat come in, deviceId: CMCC-30531-B0F89330F997, source port: 5683
+2018-10-25 15:47:52,266 [INFO]-[com.chinamobile.smartgateway.andlink.device.service.InformHeartBeatService] heartBeat timer come in,now onlineDevice.size is:1
+2018-10-25 15:48:16,702 [INFO]-[com.chinamobile.smartga

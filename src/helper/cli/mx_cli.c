@@ -25,7 +25,7 @@
 #define EXIT_MSG "exit"
 #define NUM_BUFFERS 1
 #define MAX_COMMANDS 50
-#define INBUF_SIZE 80
+#define INBUF_SIZE 1024
 #define OUTBUF_SIZE 1024
 
 struct cli_st {
