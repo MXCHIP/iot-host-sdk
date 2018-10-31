@@ -2,9 +2,9 @@
 
 const emh_qlink_config_t config = {
     .product_info = {
+        .product_id   = "30531",
         .product_token = "PXmsE6kQmxEgc0e3",
         .andlink_token = "ZxMo0zJvvZMWP3Az",
-        .product_id   = "30531",
         .format = EMH_ARG_QLINK_FORMAT_JSON,
     },
     .version_info = {
@@ -13,9 +13,9 @@ const emh_qlink_config_t config = {
     }
 };
     // .product_info = {
+    // .product_id   = "30413",
     // .product_token = "38Szyd6i1240elbV",
     // .andlink_token = "wWppJIdROfQkcsMW",
-    // .product_id   = "30413",
     // .format = EMH_ARG_QLINK_FORMAT_JSON,
     // },
     
