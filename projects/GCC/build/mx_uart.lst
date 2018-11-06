@@ -1,0 +1,1010 @@
+ARM GAS  /tmp/ccp8Oxpw.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"mx_uart.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.mx_hal_uart_dev_set,"ax",%progbits
+  18              		.align	1
+  19              		.global	mx_hal_uart_dev_set
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	mx_hal_uart_dev_set:
+  26              	.LFB128:
+  27              		.file 1 "Platform/STM32F4xx/peripherals/mx_uart.c"
+   1:Platform/STM32F4xx/peripherals/mx_uart.c **** /**
+   2:Platform/STM32F4xx/peripherals/mx_uart.c ****  ******************************************************************************
+   3:Platform/STM32F4xx/peripherals/mx_uart.c ****  * @file    mx_uart.c
+   4:Platform/STM32F4xx/peripherals/mx_uart.c ****  * @author  QQ Ding
+   5:Platform/STM32F4xx/peripherals/mx_uart.c ****  * @version V1.0.0
+   6:Platform/STM32F4xx/peripherals/mx_uart.c ****  * @date    3-Sept-2018
+   7:Platform/STM32F4xx/peripherals/mx_uart.c ****  * @brief   UART driver function
+   8:Platform/STM32F4xx/peripherals/mx_uart.c ****  ******************************************************************************
+   9:Platform/STM32F4xx/peripherals/mx_uart.c ****  *
+  10:Platform/STM32F4xx/peripherals/mx_uart.c ****  * Copyright (c) 2009-2018 MXCHIP Co.,Ltd.
+  11:Platform/STM32F4xx/peripherals/mx_uart.c ****  *
+  12:Platform/STM32F4xx/peripherals/mx_uart.c ****  * Licensed under the Apache License, Version 2.0 (the "License");
+  13:Platform/STM32F4xx/peripherals/mx_uart.c ****  * you may not use this file except in compliance with the License.
+  14:Platform/STM32F4xx/peripherals/mx_uart.c ****  * You may obtain a copy of the License at
+  15:Platform/STM32F4xx/peripherals/mx_uart.c ****  *
+  16:Platform/STM32F4xx/peripherals/mx_uart.c ****  *     http://www.apache.org/licenses/LICENSE-2.0
+  17:Platform/STM32F4xx/peripherals/mx_uart.c ****  *
+  18:Platform/STM32F4xx/peripherals/mx_uart.c ****  * Unless required by applicable law or agreed to in writing, software
+  19:Platform/STM32F4xx/peripherals/mx_uart.c ****  * distributed under the License is distributed on an "AS IS" BASIS,
+  20:Platform/STM32F4xx/peripherals/mx_uart.c ****  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  21:Platform/STM32F4xx/peripherals/mx_uart.c ****  * See the License for the specific language governing permissions and
+  22:Platform/STM32F4xx/peripherals/mx_uart.c ****  * limitations under the License.
+  23:Platform/STM32F4xx/peripherals/mx_uart.c ****  *
+  24:Platform/STM32F4xx/peripherals/mx_uart.c ****  ******************************************************************************
+  25:Platform/STM32F4xx/peripherals/mx_uart.c ****  */
+  26:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+  27:Platform/STM32F4xx/peripherals/mx_uart.c **** #include "mx_common.h"
+  28:Platform/STM32F4xx/peripherals/mx_uart.c **** #include "mx_hal.h"
+  29:Platform/STM32F4xx/peripherals/mx_uart.c **** #include "stm32f4xx_hal.h"
+  30:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+  31:Platform/STM32F4xx/peripherals/mx_uart.c **** /******************************************************************************
+ARM GAS  /tmp/ccp8Oxpw.s 			page 2
+
+
+  32:Platform/STM32F4xx/peripherals/mx_uart.c ****  *                              Variable Definitions
+  33:Platform/STM32F4xx/peripherals/mx_uart.c ****  ******************************************************************************/
+  34:Platform/STM32F4xx/peripherals/mx_uart.c **** UART_HandleTypeDef at_uart; //huart1
+  35:Platform/STM32F4xx/peripherals/mx_uart.c **** UART_HandleTypeDef stdio_uart; //huart2
+  36:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+  37:Platform/STM32F4xx/peripherals/mx_uart.c **** uint8_t aTxBuffer[]="\r\n12345678\r\n";
+  38:Platform/STM32F4xx/peripherals/mx_uart.c **** /******************************************************************************
+  39:Platform/STM32F4xx/peripherals/mx_uart.c ****  *                              Function Definitions
+  40:Platform/STM32F4xx/peripherals/mx_uart.c ****  ******************************************************************************/
+  41:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+  42:Platform/STM32F4xx/peripherals/mx_uart.c **** void mx_hal_uart_dev_set(char* dev)
+  43:Platform/STM32F4xx/peripherals/mx_uart.c **** {
+  28              		.loc 1 43 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+  44:Platform/STM32F4xx/peripherals/mx_uart.c ****     return;
+  45:Platform/STM32F4xx/peripherals/mx_uart.c **** }
+  34              		.loc 1 45 0
+  35 0000 7047     		bx	lr
+  36              		.cfi_endproc
+  37              	.LFE128:
+  39              		.section	.text.mx_hal_uart_init,"ax",%progbits
+  40              		.align	1
+  41              		.global	mx_hal_uart_init
+  42              		.syntax unified
+  43              		.thumb
+  44              		.thumb_func
+  45              		.fpu fpv4-sp-d16
+  47              	mx_hal_uart_init:
+  48              	.LFB129:
+  46:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+  47:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+  48:Platform/STM32F4xx/peripherals/mx_uart.c **** int32_t mx_hal_uart_init(uart_dev_t* uart)
+  49:Platform/STM32F4xx/peripherals/mx_uart.c **** {
+  49              		.loc 1 49 0
+  50              		.cfi_startproc
+  51              		@ args = 0, pretend = 0, frame = 0
+  52              		@ frame_needed = 0, uses_anonymous_args = 0
+  53              	.LVL1:
+  54 0000 08B5     		push	{r3, lr}
+  55              	.LCFI0:
+  56              		.cfi_def_cfa_offset 8
+  57              		.cfi_offset 3, -8
+  58              		.cfi_offset 14, -4
+  50:Platform/STM32F4xx/peripherals/mx_uart.c ****     UART_HandleTypeDef* temp_uart;
+  51:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+  52:Platform/STM32F4xx/peripherals/mx_uart.c ****     if (uart->port == AT_UART_PORT) {
+  59              		.loc 1 52 0
+  60 0002 0278     		ldrb	r2, [r0]	@ zero_extendqisi2
+  61 0004 C2B9     		cbnz	r2, .L3
+  62              	.LVL2:
+  53:Platform/STM32F4xx/peripherals/mx_uart.c ****         temp_uart = (UART_HandleTypeDef*)&at_uart;
+  54:Platform/STM32F4xx/peripherals/mx_uart.c ****         temp_uart->Instance = USART2;
+  63              		.loc 1 54 0
+ARM GAS  /tmp/ccp8Oxpw.s 			page 3
+
+
+  64 0006 2F4B     		ldr	r3, .L29
+  65 0008 2F4A     		ldr	r2, .L29+4
+  66 000a 1A60     		str	r2, [r3]
+  67              	.LVL3:
+  68              	.L4:
+  55:Platform/STM32F4xx/peripherals/mx_uart.c ****     } else if (uart->port == STDIO_UART_PORT) {
+  56:Platform/STM32F4xx/peripherals/mx_uart.c ****         temp_uart = (UART_HandleTypeDef*)&stdio_uart;
+  57:Platform/STM32F4xx/peripherals/mx_uart.c ****         temp_uart->Instance = USART1;
+  58:Platform/STM32F4xx/peripherals/mx_uart.c ****     }
+  59:Platform/STM32F4xx/peripherals/mx_uart.c ****     
+  60:Platform/STM32F4xx/peripherals/mx_uart.c ****     temp_uart->Init.BaudRate = uart->config.baud_rate;
+  69              		.loc 1 60 0
+  70 000c 4268     		ldr	r2, [r0, #4]
+  71 000e 5A60     		str	r2, [r3, #4]
+  61:Platform/STM32F4xx/peripherals/mx_uart.c ****     
+  62:Platform/STM32F4xx/peripherals/mx_uart.c ****     if (uart->config.data_width == DATA_WIDTH_8BIT) {
+  72              		.loc 1 62 0
+  73 0010 027A     		ldrb	r2, [r0, #8]	@ zero_extendqisi2
+  74 0012 032A     		cmp	r2, #3
+  75 0014 16D0     		beq	.L21
+  63:Platform/STM32F4xx/peripherals/mx_uart.c ****         temp_uart->Init.WordLength = UART_WORDLENGTH_8B;
+  64:Platform/STM32F4xx/peripherals/mx_uart.c ****     } else if (uart->config.data_width == DATA_WIDTH_9BIT) {
+  76              		.loc 1 64 0
+  77 0016 042A     		cmp	r2, #4
+  78 0018 17D0     		beq	.L22
+  79              	.L6:
+  65:Platform/STM32F4xx/peripherals/mx_uart.c ****         temp_uart->Init.WordLength = UART_WORDLENGTH_9B;
+  66:Platform/STM32F4xx/peripherals/mx_uart.c ****     }
+  67:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+  68:Platform/STM32F4xx/peripherals/mx_uart.c ****     if (uart->config.stop_bits == STOP_BITS_1) {
+  80              		.loc 1 68 0
+  81 001a 827A     		ldrb	r2, [r0, #10]	@ zero_extendqisi2
+  82 001c CAB9     		cbnz	r2, .L7
+  69:Platform/STM32F4xx/peripherals/mx_uart.c ****         temp_uart->Init.StopBits = UART_STOPBITS_1;
+  83              		.loc 1 69 0
+  84 001e DA60     		str	r2, [r3, #12]
+  85              	.L8:
+  70:Platform/STM32F4xx/peripherals/mx_uart.c ****     } else if (uart->config.stop_bits == STOP_BITS_2) {
+  71:Platform/STM32F4xx/peripherals/mx_uart.c ****         temp_uart->Init.StopBits = UART_STOPBITS_2;
+  72:Platform/STM32F4xx/peripherals/mx_uart.c ****     }
+  73:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+  74:Platform/STM32F4xx/peripherals/mx_uart.c ****     if (uart->config.parity == NO_PARITY) {
+  86              		.loc 1 74 0
+  87 0020 427A     		ldrb	r2, [r0, #9]	@ zero_extendqisi2
+  88 0022 E2B9     		cbnz	r2, .L9
+  75:Platform/STM32F4xx/peripherals/mx_uart.c ****         temp_uart->Init.Parity = UART_PARITY_NONE;
+  89              		.loc 1 75 0
+  90 0024 1A61     		str	r2, [r3, #16]
+  91              	.L10:
+  76:Platform/STM32F4xx/peripherals/mx_uart.c ****     } else if (uart->config.parity == ODD_PARITY) {
+  77:Platform/STM32F4xx/peripherals/mx_uart.c ****         temp_uart->Init.Parity = UART_PARITY_ODD;
+  78:Platform/STM32F4xx/peripherals/mx_uart.c ****     } else if (uart->config.parity == EVEN_PARITY) {
+  79:Platform/STM32F4xx/peripherals/mx_uart.c ****         temp_uart->Init.Parity = UART_PARITY_EVEN;
+  80:Platform/STM32F4xx/peripherals/mx_uart.c ****     }
+  81:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+  82:Platform/STM32F4xx/peripherals/mx_uart.c ****     if (uart->config.mode == MODE_TX_RX) {
+  92              		.loc 1 82 0
+ARM GAS  /tmp/ccp8Oxpw.s 			page 4
+
+
+  93 0026 027B     		ldrb	r2, [r0, #12]	@ zero_extendqisi2
+  94 0028 022A     		cmp	r2, #2
+  95 002a 24D0     		beq	.L23
+  83:Platform/STM32F4xx/peripherals/mx_uart.c ****         temp_uart->Init.Mode = UART_MODE_TX_RX;
+  84:Platform/STM32F4xx/peripherals/mx_uart.c ****     } else if (uart->config.mode == MODE_RX) {
+  96              		.loc 1 84 0
+  97 002c 012A     		cmp	r2, #1
+  98 002e 2FD0     		beq	.L24
+  85:Platform/STM32F4xx/peripherals/mx_uart.c ****         temp_uart->Init.Mode = UART_MODE_RX;
+  86:Platform/STM32F4xx/peripherals/mx_uart.c ****     } else if (uart->config.mode == MODE_TX) {
+  99              		.loc 1 86 0
+ 100 0030 1ABB     		cbnz	r2, .L13
+  87:Platform/STM32F4xx/peripherals/mx_uart.c ****         temp_uart->Init.Mode = UART_MODE_TX;
+ 101              		.loc 1 87 0
+ 102 0032 0822     		movs	r2, #8
+ 103 0034 5A61     		str	r2, [r3, #20]
+ 104 0036 20E0     		b	.L13
+ 105              	.LVL4:
+ 106              	.L3:
+  55:Platform/STM32F4xx/peripherals/mx_uart.c ****         temp_uart = (UART_HandleTypeDef*)&stdio_uart;
+ 107              		.loc 1 55 0
+ 108 0038 012A     		cmp	r2, #1
+ 109 003a E7D1     		bne	.L4
+ 110              	.LVL5:
+  57:Platform/STM32F4xx/peripherals/mx_uart.c ****     }
+ 111              		.loc 1 57 0
+ 112 003c 234B     		ldr	r3, .L29+8
+ 113 003e 244A     		ldr	r2, .L29+12
+ 114 0040 1A60     		str	r2, [r3]
+ 115 0042 E3E7     		b	.L4
+ 116              	.LVL6:
+ 117              	.L21:
+  63:Platform/STM32F4xx/peripherals/mx_uart.c ****     } else if (uart->config.data_width == DATA_WIDTH_9BIT) {
+ 118              		.loc 1 63 0
+ 119 0044 0022     		movs	r2, #0
+ 120 0046 9A60     		str	r2, [r3, #8]
+ 121 0048 E7E7     		b	.L6
+ 122              	.L22:
+  65:Platform/STM32F4xx/peripherals/mx_uart.c ****     }
+ 123              		.loc 1 65 0
+ 124 004a 4FF48052 		mov	r2, #4096
+ 125 004e 9A60     		str	r2, [r3, #8]
+ 126 0050 E3E7     		b	.L6
+ 127              	.L7:
+  70:Platform/STM32F4xx/peripherals/mx_uart.c ****         temp_uart->Init.StopBits = UART_STOPBITS_2;
+ 128              		.loc 1 70 0
+ 129 0052 012A     		cmp	r2, #1
+ 130 0054 E4D1     		bne	.L8
+  71:Platform/STM32F4xx/peripherals/mx_uart.c ****     }
+ 131              		.loc 1 71 0
+ 132 0056 4FF40052 		mov	r2, #8192
+ 133 005a DA60     		str	r2, [r3, #12]
+ 134 005c E0E7     		b	.L8
+ 135              	.L9:
+  76:Platform/STM32F4xx/peripherals/mx_uart.c ****         temp_uart->Init.Parity = UART_PARITY_ODD;
+ 136              		.loc 1 76 0
+ 137 005e 012A     		cmp	r2, #1
+ARM GAS  /tmp/ccp8Oxpw.s 			page 5
+
+
+ 138 0060 05D0     		beq	.L25
+  78:Platform/STM32F4xx/peripherals/mx_uart.c ****         temp_uart->Init.Parity = UART_PARITY_EVEN;
+ 139              		.loc 1 78 0
+ 140 0062 022A     		cmp	r2, #2
+ 141 0064 DFD1     		bne	.L10
+  79:Platform/STM32F4xx/peripherals/mx_uart.c ****     }
+ 142              		.loc 1 79 0
+ 143 0066 4FF48062 		mov	r2, #1024
+ 144 006a 1A61     		str	r2, [r3, #16]
+ 145 006c DBE7     		b	.L10
+ 146              	.L25:
+  77:Platform/STM32F4xx/peripherals/mx_uart.c ****     } else if (uart->config.parity == EVEN_PARITY) {
+ 147              		.loc 1 77 0
+ 148 006e 4FF4C062 		mov	r2, #1536
+ 149 0072 1A61     		str	r2, [r3, #16]
+ 150 0074 D7E7     		b	.L10
+ 151              	.L23:
+  83:Platform/STM32F4xx/peripherals/mx_uart.c ****     } else if (uart->config.mode == MODE_RX) {
+ 152              		.loc 1 83 0
+ 153 0076 0C22     		movs	r2, #12
+ 154 0078 5A61     		str	r2, [r3, #20]
+ 155              	.L13:
+  88:Platform/STM32F4xx/peripherals/mx_uart.c ****     }
+  89:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+  90:Platform/STM32F4xx/peripherals/mx_uart.c ****     if (uart->config.flow_control == FLOW_CONTROL_DISABLED) {
+ 156              		.loc 1 90 0
+ 157 007a C27A     		ldrb	r2, [r0, #11]	@ zero_extendqisi2
+ 158 007c 5AB9     		cbnz	r2, .L15
+  91:Platform/STM32F4xx/peripherals/mx_uart.c ****         temp_uart->Init.HwFlowCtl = UART_HWCONTROL_NONE;
+ 159              		.loc 1 91 0
+ 160 007e 9A61     		str	r2, [r3, #24]
+ 161              	.L16:
+  92:Platform/STM32F4xx/peripherals/mx_uart.c ****     } else if (uart->config.flow_control == FLOW_CONTROL_CTS) {
+  93:Platform/STM32F4xx/peripherals/mx_uart.c ****         temp_uart->Init.HwFlowCtl = UART_HWCONTROL_CTS;
+  94:Platform/STM32F4xx/peripherals/mx_uart.c ****     } else if (uart->config.flow_control == FLOW_CONTROL_RTS) {
+  95:Platform/STM32F4xx/peripherals/mx_uart.c ****         temp_uart->Init.HwFlowCtl = UART_HWCONTROL_RTS;
+  96:Platform/STM32F4xx/peripherals/mx_uart.c ****     } else if (uart->config.flow_control == FLOW_CONTROL_CTS_RTS) {
+  97:Platform/STM32F4xx/peripherals/mx_uart.c ****         temp_uart->Init.HwFlowCtl = UART_HWCONTROL_RTS_CTS;
+  98:Platform/STM32F4xx/peripherals/mx_uart.c ****     }
+  99:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 100:Platform/STM32F4xx/peripherals/mx_uart.c ****     temp_uart->Init.OverSampling = UART_OVERSAMPLING_16; //
+ 162              		.loc 1 100 0
+ 163 0080 0022     		movs	r2, #0
+ 164 0082 DA61     		str	r2, [r3, #28]
+ 101:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 102:Platform/STM32F4xx/peripherals/mx_uart.c ****     if (HAL_UART_Init(temp_uart) != HAL_OK) {
+ 165              		.loc 1 102 0
+ 166 0084 1846     		mov	r0, r3
+ 167              	.LVL7:
+ 168 0086 FFF7FEFF 		bl	HAL_UART_Init
+ 169              	.LVL8:
+ 170 008a B0B9     		cbnz	r0, .L26
+ 171              	.L19:
+ 103:Platform/STM32F4xx/peripherals/mx_uart.c ****         _Error_Handler(__FILE__, __LINE__);
+ 104:Platform/STM32F4xx/peripherals/mx_uart.c ****     }
+ 105:Platform/STM32F4xx/peripherals/mx_uart.c ****     
+ 106:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ARM GAS  /tmp/ccp8Oxpw.s 			page 6
+
+
+ 107:Platform/STM32F4xx/peripherals/mx_uart.c **** //      uart_it_test();
+ 108:Platform/STM32F4xx/peripherals/mx_uart.c ****     // clear uart buffer
+ 109:Platform/STM32F4xx/peripherals/mx_uart.c **** return 0;
+ 110:Platform/STM32F4xx/peripherals/mx_uart.c **** }
+ 172              		.loc 1 110 0
+ 173 008c 0020     		movs	r0, #0
+ 174 008e 08BD     		pop	{r3, pc}
+ 175              	.LVL9:
+ 176              	.L24:
+  85:Platform/STM32F4xx/peripherals/mx_uart.c ****     } else if (uart->config.mode == MODE_TX) {
+ 177              		.loc 1 85 0
+ 178 0090 0422     		movs	r2, #4
+ 179 0092 5A61     		str	r2, [r3, #20]
+ 180 0094 F1E7     		b	.L13
+ 181              	.L15:
+  92:Platform/STM32F4xx/peripherals/mx_uart.c ****         temp_uart->Init.HwFlowCtl = UART_HWCONTROL_CTS;
+ 182              		.loc 1 92 0
+ 183 0096 012A     		cmp	r2, #1
+ 184 0098 07D0     		beq	.L27
+  94:Platform/STM32F4xx/peripherals/mx_uart.c ****         temp_uart->Init.HwFlowCtl = UART_HWCONTROL_RTS;
+ 185              		.loc 1 94 0
+ 186 009a 022A     		cmp	r2, #2
+ 187 009c 09D0     		beq	.L28
+  96:Platform/STM32F4xx/peripherals/mx_uart.c ****         temp_uart->Init.HwFlowCtl = UART_HWCONTROL_RTS_CTS;
+ 188              		.loc 1 96 0
+ 189 009e 032A     		cmp	r2, #3
+ 190 00a0 EED1     		bne	.L16
+  97:Platform/STM32F4xx/peripherals/mx_uart.c ****     }
+ 191              		.loc 1 97 0
+ 192 00a2 4FF44072 		mov	r2, #768
+ 193 00a6 9A61     		str	r2, [r3, #24]
+ 194 00a8 EAE7     		b	.L16
+ 195              	.L27:
+  93:Platform/STM32F4xx/peripherals/mx_uart.c ****     } else if (uart->config.flow_control == FLOW_CONTROL_RTS) {
+ 196              		.loc 1 93 0
+ 197 00aa 4FF40072 		mov	r2, #512
+ 198 00ae 9A61     		str	r2, [r3, #24]
+ 199 00b0 E6E7     		b	.L16
+ 200              	.L28:
+  95:Platform/STM32F4xx/peripherals/mx_uart.c ****     } else if (uart->config.flow_control == FLOW_CONTROL_CTS_RTS) {
+ 201              		.loc 1 95 0
+ 202 00b2 4FF48072 		mov	r2, #256
+ 203 00b6 9A61     		str	r2, [r3, #24]
+ 204 00b8 E2E7     		b	.L16
+ 205              	.LVL10:
+ 206              	.L26:
+ 103:Platform/STM32F4xx/peripherals/mx_uart.c ****     }
+ 207              		.loc 1 103 0
+ 208 00ba 6721     		movs	r1, #103
+ 209 00bc 0548     		ldr	r0, .L29+16
+ 210 00be FFF7FEFF 		bl	_Error_Handler
+ 211              	.LVL11:
+ 212 00c2 E3E7     		b	.L19
+ 213              	.L30:
+ 214              		.align	2
+ 215              	.L29:
+ 216 00c4 00000000 		.word	at_uart
+ARM GAS  /tmp/ccp8Oxpw.s 			page 7
+
+
+ 217 00c8 00440040 		.word	1073759232
+ 218 00cc 00000000 		.word	stdio_uart
+ 219 00d0 00100140 		.word	1073811456
+ 220 00d4 00000000 		.word	.LC0
+ 221              		.cfi_endproc
+ 222              	.LFE129:
+ 224              		.section	.text.mx_hal_stdio_iaq_set,"ax",%progbits
+ 225              		.align	1
+ 226              		.global	mx_hal_stdio_iaq_set
+ 227              		.syntax unified
+ 228              		.thumb
+ 229              		.thumb_func
+ 230              		.fpu fpv4-sp-d16
+ 232              	mx_hal_stdio_iaq_set:
+ 233              	.LFB130:
+ 111:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 112:Platform/STM32F4xx/peripherals/mx_uart.c **** void mx_hal_stdio_iaq_set( void )
+ 113:Platform/STM32F4xx/peripherals/mx_uart.c **** {   
+ 234              		.loc 1 113 0
+ 235              		.cfi_startproc
+ 236              		@ args = 0, pretend = 0, frame = 0
+ 237              		@ frame_needed = 0, uses_anonymous_args = 0
+ 238              		@ link register save eliminated.
+ 114:Platform/STM32F4xx/peripherals/mx_uart.c ****     SET_BIT( stdio_uart.Instance->CR3, USART_CR3_EIE );
+ 239              		.loc 1 114 0
+ 240 0000 054B     		ldr	r3, .L32
+ 241 0002 1B68     		ldr	r3, [r3]
+ 242 0004 5A69     		ldr	r2, [r3, #20]
+ 243 0006 42F00102 		orr	r2, r2, #1
+ 244 000a 5A61     		str	r2, [r3, #20]
+ 115:Platform/STM32F4xx/peripherals/mx_uart.c ****     /* Enable the UART Parity Error interrupt and Data Register Not Empty interrupt */
+ 116:Platform/STM32F4xx/peripherals/mx_uart.c ****     SET_BIT( stdio_uart.Instance->CR1, USART_CR1_PEIE | USART_CR1_RXNEIE );  
+ 245              		.loc 1 116 0
+ 246 000c DA68     		ldr	r2, [r3, #12]
+ 247 000e 42F49072 		orr	r2, r2, #288
+ 248 0012 DA60     		str	r2, [r3, #12]
+ 117:Platform/STM32F4xx/peripherals/mx_uart.c **** }
+ 249              		.loc 1 117 0
+ 250 0014 7047     		bx	lr
+ 251              	.L33:
+ 252 0016 00BF     		.align	2
+ 253              	.L32:
+ 254 0018 00000000 		.word	stdio_uart
+ 255              		.cfi_endproc
+ 256              	.LFE130:
+ 258              		.section	.text.mx_hal_serial_iaq_set,"ax",%progbits
+ 259              		.align	1
+ 260              		.global	mx_hal_serial_iaq_set
+ 261              		.syntax unified
+ 262              		.thumb
+ 263              		.thumb_func
+ 264              		.fpu fpv4-sp-d16
+ 266              	mx_hal_serial_iaq_set:
+ 267              	.LFB131:
+ 118:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 119:Platform/STM32F4xx/peripherals/mx_uart.c **** void mx_hal_serial_iaq_set( void )
+ 120:Platform/STM32F4xx/peripherals/mx_uart.c **** {   
+ARM GAS  /tmp/ccp8Oxpw.s 			page 8
+
+
+ 268              		.loc 1 120 0
+ 269              		.cfi_startproc
+ 270              		@ args = 0, pretend = 0, frame = 0
+ 271              		@ frame_needed = 0, uses_anonymous_args = 0
+ 272              		@ link register save eliminated.
+ 121:Platform/STM32F4xx/peripherals/mx_uart.c ****     SET_BIT( at_uart.Instance->CR3, USART_CR3_EIE );
+ 273              		.loc 1 121 0
+ 274 0000 054B     		ldr	r3, .L35
+ 275 0002 1B68     		ldr	r3, [r3]
+ 276 0004 5A69     		ldr	r2, [r3, #20]
+ 277 0006 42F00102 		orr	r2, r2, #1
+ 278 000a 5A61     		str	r2, [r3, #20]
+ 122:Platform/STM32F4xx/peripherals/mx_uart.c ****     /* Enable the UART Parity Error interrupt and Data Register Not Empty interrupt */
+ 123:Platform/STM32F4xx/peripherals/mx_uart.c ****     SET_BIT( at_uart.Instance->CR1, USART_CR1_PEIE | USART_CR1_RXNEIE );  
+ 279              		.loc 1 123 0
+ 280 000c DA68     		ldr	r2, [r3, #12]
+ 281 000e 42F49072 		orr	r2, r2, #288
+ 282 0012 DA60     		str	r2, [r3, #12]
+ 124:Platform/STM32F4xx/peripherals/mx_uart.c **** }
+ 283              		.loc 1 124 0
+ 284 0014 7047     		bx	lr
+ 285              	.L36:
+ 286 0016 00BF     		.align	2
+ 287              	.L35:
+ 288 0018 00000000 		.word	at_uart
+ 289              		.cfi_endproc
+ 290              	.LFE131:
+ 292              		.section	.text.mx_hal_uart_send,"ax",%progbits
+ 293              		.align	1
+ 294              		.global	mx_hal_uart_send
+ 295              		.syntax unified
+ 296              		.thumb
+ 297              		.thumb_func
+ 298              		.fpu fpv4-sp-d16
+ 300              	mx_hal_uart_send:
+ 301              	.LFB132:
+ 125:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 126:Platform/STM32F4xx/peripherals/mx_uart.c **** int32_t mx_hal_uart_send(uart_dev_t* uart, const void* data, uint32_t size, uint32_t timeout)
+ 127:Platform/STM32F4xx/peripherals/mx_uart.c **** {
+ 302              		.loc 1 127 0
+ 303              		.cfi_startproc
+ 304              		@ args = 0, pretend = 0, frame = 0
+ 305              		@ frame_needed = 0, uses_anonymous_args = 0
+ 306              	.LVL12:
+ 307 0000 08B5     		push	{r3, lr}
+ 308              	.LCFI1:
+ 309              		.cfi_def_cfa_offset 8
+ 310              		.cfi_offset 3, -8
+ 311              		.cfi_offset 14, -4
+ 312              	.LVL13:
+ 128:Platform/STM32F4xx/peripherals/mx_uart.c ****     uint32_t ret, rmd = size;
+ 129:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 130:Platform/STM32F4xx/peripherals/mx_uart.c ****     if (uart->port == AT_UART_PORT) {
+ 313              		.loc 1 130 0
+ 314 0002 0078     		ldrb	r0, [r0]	@ zero_extendqisi2
+ 315              	.LVL14:
+ 316 0004 18B1     		cbz	r0, .L42
+ARM GAS  /tmp/ccp8Oxpw.s 			page 9
+
+
+ 131:Platform/STM32F4xx/peripherals/mx_uart.c ****         ret = HAL_UART_Transmit(&at_uart, (uint8_t*)data, rmd, timeout);
+ 132:Platform/STM32F4xx/peripherals/mx_uart.c **** //        while(__HAL_UART_GET_FLAG(&at_uart,UART_FLAG_TC)!=SET);	
+ 133:Platform/STM32F4xx/peripherals/mx_uart.c ****         return ret;
+ 134:Platform/STM32F4xx/peripherals/mx_uart.c ****     } else if (uart->port == STDIO_UART_PORT) {
+ 317              		.loc 1 134 0
+ 318 0006 0128     		cmp	r0, #1
+ 319 0008 06D0     		beq	.L43
+ 135:Platform/STM32F4xx/peripherals/mx_uart.c ****         ret = HAL_UART_Transmit(&stdio_uart, (uint8_t*)data, rmd, timeout);
+ 136:Platform/STM32F4xx/peripherals/mx_uart.c **** //        while(__HAL_UART_GET_FLAG(&stdio_uart,UART_FLAG_TC)!=SET);	
+ 137:Platform/STM32F4xx/peripherals/mx_uart.c ****         return ret;
+ 138:Platform/STM32F4xx/peripherals/mx_uart.c ****     }
+ 139:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 140:Platform/STM32F4xx/peripherals/mx_uart.c ****     return 0;
+ 320              		.loc 1 140 0
+ 321 000a 0020     		movs	r0, #0
+ 322              	.LVL15:
+ 323              	.L37:
+ 141:Platform/STM32F4xx/peripherals/mx_uart.c **** }
+ 324              		.loc 1 141 0
+ 325 000c 08BD     		pop	{r3, pc}
+ 326              	.LVL16:
+ 327              	.L42:
+ 131:Platform/STM32F4xx/peripherals/mx_uart.c ****         ret = HAL_UART_Transmit(&at_uart, (uint8_t*)data, rmd, timeout);
+ 328              		.loc 1 131 0
+ 329 000e 92B2     		uxth	r2, r2
+ 330              	.LVL17:
+ 331 0010 0448     		ldr	r0, .L44
+ 332 0012 FFF7FEFF 		bl	HAL_UART_Transmit
+ 333              	.LVL18:
+ 133:Platform/STM32F4xx/peripherals/mx_uart.c ****     } else if (uart->port == STDIO_UART_PORT) {
+ 334              		.loc 1 133 0
+ 335 0016 F9E7     		b	.L37
+ 336              	.LVL19:
+ 337              	.L43:
+ 135:Platform/STM32F4xx/peripherals/mx_uart.c ****         ret = HAL_UART_Transmit(&stdio_uart, (uint8_t*)data, rmd, timeout);
+ 338              		.loc 1 135 0
+ 339 0018 92B2     		uxth	r2, r2
+ 340              	.LVL20:
+ 341 001a 0348     		ldr	r0, .L44+4
+ 342 001c FFF7FEFF 		bl	HAL_UART_Transmit
+ 343              	.LVL21:
+ 137:Platform/STM32F4xx/peripherals/mx_uart.c ****     }
+ 344              		.loc 1 137 0
+ 345 0020 F4E7     		b	.L37
+ 346              	.L45:
+ 347 0022 00BF     		.align	2
+ 348              	.L44:
+ 349 0024 00000000 		.word	at_uart
+ 350 0028 00000000 		.word	stdio_uart
+ 351              		.cfi_endproc
+ 352              	.LFE132:
+ 354              		.section	.text.mx_hal_uart_recv,"ax",%progbits
+ 355              		.align	1
+ 356              		.global	mx_hal_uart_recv
+ 357              		.syntax unified
+ 358              		.thumb
+ 359              		.thumb_func
+ARM GAS  /tmp/ccp8Oxpw.s 			page 10
+
+
+ 360              		.fpu fpv4-sp-d16
+ 362              	mx_hal_uart_recv:
+ 363              	.LFB133:
+ 142:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 143:Platform/STM32F4xx/peripherals/mx_uart.c **** int32_t mx_hal_uart_recv(uart_dev_t* uart, void* data, uint32_t expect_size, uint32_t* recv_size, u
+ 144:Platform/STM32F4xx/peripherals/mx_uart.c **** {
+ 364              		.loc 1 144 0
+ 365              		.cfi_startproc
+ 366              		@ args = 4, pretend = 0, frame = 0
+ 367              		@ frame_needed = 0, uses_anonymous_args = 0
+ 368              		@ link register save eliminated.
+ 369              	.LVL22:
+ 145:Platform/STM32F4xx/peripherals/mx_uart.c ****     return 0;
+ 146:Platform/STM32F4xx/peripherals/mx_uart.c **** }
+ 370              		.loc 1 146 0
+ 371 0000 0020     		movs	r0, #0
+ 372              	.LVL23:
+ 373 0002 7047     		bx	lr
+ 374              		.cfi_endproc
+ 375              	.LFE133:
+ 377              		.section	.text.mx_hal_uart_finalize,"ax",%progbits
+ 378              		.align	1
+ 379              		.global	mx_hal_uart_finalize
+ 380              		.syntax unified
+ 381              		.thumb
+ 382              		.thumb_func
+ 383              		.fpu fpv4-sp-d16
+ 385              	mx_hal_uart_finalize:
+ 386              	.LFB134:
+ 147:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 148:Platform/STM32F4xx/peripherals/mx_uart.c **** int32_t mx_hal_uart_finalize(uart_dev_t* uart)
+ 149:Platform/STM32F4xx/peripherals/mx_uart.c **** {
+ 387              		.loc 1 149 0
+ 388              		.cfi_startproc
+ 389              		@ args = 0, pretend = 0, frame = 0
+ 390              		@ frame_needed = 0, uses_anonymous_args = 0
+ 391              		@ link register save eliminated.
+ 392              	.LVL24:
+ 150:Platform/STM32F4xx/peripherals/mx_uart.c ****     //deinit
+ 151:Platform/STM32F4xx/peripherals/mx_uart.c ****     return 0;
+ 152:Platform/STM32F4xx/peripherals/mx_uart.c **** }
+ 393              		.loc 1 152 0
+ 394 0000 0020     		movs	r0, #0
+ 395              	.LVL25:
+ 396 0002 7047     		bx	lr
+ 397              		.cfi_endproc
+ 398              	.LFE134:
+ 400              		.section	.text.HAL_UART_MspInit,"ax",%progbits
+ 401              		.align	1
+ 402              		.global	HAL_UART_MspInit
+ 403              		.syntax unified
+ 404              		.thumb
+ 405              		.thumb_func
+ 406              		.fpu fpv4-sp-d16
+ 408              	HAL_UART_MspInit:
+ 409              	.LFB135:
+ 153:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ARM GAS  /tmp/ccp8Oxpw.s 			page 11
+
+
+ 154:Platform/STM32F4xx/peripherals/mx_uart.c **** void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
+ 155:Platform/STM32F4xx/peripherals/mx_uart.c **** {
+ 410              		.loc 1 155 0
+ 411              		.cfi_startproc
+ 412              		@ args = 0, pretend = 0, frame = 32
+ 413              		@ frame_needed = 0, uses_anonymous_args = 0
+ 414              	.LVL26:
+ 415 0000 00B5     		push	{lr}
+ 416              	.LCFI2:
+ 417              		.cfi_def_cfa_offset 4
+ 418              		.cfi_offset 14, -4
+ 419 0002 89B0     		sub	sp, sp, #36
+ 420              	.LCFI3:
+ 421              		.cfi_def_cfa_offset 40
+ 156:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 157:Platform/STM32F4xx/peripherals/mx_uart.c ****   GPIO_InitTypeDef GPIO_InitStruct;
+ 158:Platform/STM32F4xx/peripherals/mx_uart.c ****   if(uartHandle->Instance==USART1)
+ 422              		.loc 1 158 0
+ 423 0004 0368     		ldr	r3, [r0]
+ 424 0006 204A     		ldr	r2, .L54
+ 425 0008 9342     		cmp	r3, r2
+ 426 000a 05D0     		beq	.L52
+ 159:Platform/STM32F4xx/peripherals/mx_uart.c ****   {
+ 160:Platform/STM32F4xx/peripherals/mx_uart.c ****   /* USER CODE BEGIN USART1_MspInit 0 */
+ 161:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 162:Platform/STM32F4xx/peripherals/mx_uart.c ****   /* USER CODE END USART1_MspInit 0 */
+ 163:Platform/STM32F4xx/peripherals/mx_uart.c ****     /* USART1 clock enable */
+ 164:Platform/STM32F4xx/peripherals/mx_uart.c ****     __HAL_RCC_USART1_CLK_ENABLE();
+ 165:Platform/STM32F4xx/peripherals/mx_uart.c ****   
+ 166:Platform/STM32F4xx/peripherals/mx_uart.c ****     /**USART1 GPIO Configuration    
+ 167:Platform/STM32F4xx/peripherals/mx_uart.c ****     PA9     ------> USART1_TX
+ 168:Platform/STM32F4xx/peripherals/mx_uart.c ****     PA10     ------> USART1_RX 
+ 169:Platform/STM32F4xx/peripherals/mx_uart.c ****     */
+ 170:Platform/STM32F4xx/peripherals/mx_uart.c ****     GPIO_InitStruct.Pin = GPIO_PIN_9|GPIO_PIN_10;
+ 171:Platform/STM32F4xx/peripherals/mx_uart.c ****     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+ 172:Platform/STM32F4xx/peripherals/mx_uart.c ****     GPIO_InitStruct.Pull = GPIO_PULLUP;
+ 173:Platform/STM32F4xx/peripherals/mx_uart.c ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+ 174:Platform/STM32F4xx/peripherals/mx_uart.c ****     GPIO_InitStruct.Alternate = GPIO_AF7_USART1;
+ 175:Platform/STM32F4xx/peripherals/mx_uart.c ****     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+ 176:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 177:Platform/STM32F4xx/peripherals/mx_uart.c ****   /* USER CODE BEGIN USART1_MspInit 1 */
+ 178:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 179:Platform/STM32F4xx/peripherals/mx_uart.c ****   /* USER CODE END USART1_MspInit 1 */
+ 180:Platform/STM32F4xx/peripherals/mx_uart.c ****   }
+ 181:Platform/STM32F4xx/peripherals/mx_uart.c ****   else if(uartHandle->Instance==USART2)
+ 427              		.loc 1 181 0
+ 428 000c 1F4A     		ldr	r2, .L54+4
+ 429 000e 9342     		cmp	r3, r2
+ 430 0010 1ED0     		beq	.L53
+ 431              	.LVL27:
+ 432              	.L48:
+ 182:Platform/STM32F4xx/peripherals/mx_uart.c ****   {
+ 183:Platform/STM32F4xx/peripherals/mx_uart.c ****   /* USER CODE BEGIN USART2_MspInit 0 */
+ 184:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 185:Platform/STM32F4xx/peripherals/mx_uart.c ****   /* USER CODE END USART2_MspInit 0 */
+ 186:Platform/STM32F4xx/peripherals/mx_uart.c ****     /* USART2 clock enable */
+ 187:Platform/STM32F4xx/peripherals/mx_uart.c ****     __HAL_RCC_USART2_CLK_ENABLE();
+ARM GAS  /tmp/ccp8Oxpw.s 			page 12
+
+
+ 188:Platform/STM32F4xx/peripherals/mx_uart.c ****   
+ 189:Platform/STM32F4xx/peripherals/mx_uart.c ****     /**USART2 GPIO Configuration    
+ 190:Platform/STM32F4xx/peripherals/mx_uart.c ****     PA2     ------> USART2_TX
+ 191:Platform/STM32F4xx/peripherals/mx_uart.c ****     PA3     ------> USART2_RX 
+ 192:Platform/STM32F4xx/peripherals/mx_uart.c ****     */
+ 193:Platform/STM32F4xx/peripherals/mx_uart.c ****     GPIO_InitStruct.Pin = GPIO_PIN_2|GPIO_PIN_3;
+ 194:Platform/STM32F4xx/peripherals/mx_uart.c ****     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+ 195:Platform/STM32F4xx/peripherals/mx_uart.c ****     GPIO_InitStruct.Pull = GPIO_PULLUP;
+ 196:Platform/STM32F4xx/peripherals/mx_uart.c ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+ 197:Platform/STM32F4xx/peripherals/mx_uart.c ****     GPIO_InitStruct.Alternate = GPIO_AF7_USART2;
+ 198:Platform/STM32F4xx/peripherals/mx_uart.c ****     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+ 199:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 200:Platform/STM32F4xx/peripherals/mx_uart.c ****   /* USER CODE BEGIN USART2_MspInit 1 */
+ 201:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 202:Platform/STM32F4xx/peripherals/mx_uart.c ****   /* USER CODE END USART2_MspInit 1 */
+ 203:Platform/STM32F4xx/peripherals/mx_uart.c ****   }
+ 204:Platform/STM32F4xx/peripherals/mx_uart.c **** }
+ 433              		.loc 1 204 0
+ 434 0012 09B0     		add	sp, sp, #36
+ 435              	.LCFI4:
+ 436              		.cfi_remember_state
+ 437              		.cfi_def_cfa_offset 4
+ 438              		@ sp needed
+ 439 0014 5DF804FB 		ldr	pc, [sp], #4
+ 440              	.LVL28:
+ 441              	.L52:
+ 442              	.LCFI5:
+ 443              		.cfi_restore_state
+ 444              	.LBB2:
+ 164:Platform/STM32F4xx/peripherals/mx_uart.c ****   
+ 445              		.loc 1 164 0
+ 446 0018 0023     		movs	r3, #0
+ 447 001a 0193     		str	r3, [sp, #4]
+ 448 001c 1C4B     		ldr	r3, .L54+8
+ 449 001e 5A6C     		ldr	r2, [r3, #68]
+ 450 0020 42F01002 		orr	r2, r2, #16
+ 451 0024 5A64     		str	r2, [r3, #68]
+ 452 0026 5B6C     		ldr	r3, [r3, #68]
+ 453 0028 03F01003 		and	r3, r3, #16
+ 454 002c 0193     		str	r3, [sp, #4]
+ 455 002e 019B     		ldr	r3, [sp, #4]
+ 456              	.LBE2:
+ 170:Platform/STM32F4xx/peripherals/mx_uart.c ****     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+ 457              		.loc 1 170 0
+ 458 0030 4FF4C063 		mov	r3, #1536
+ 459 0034 0393     		str	r3, [sp, #12]
+ 171:Platform/STM32F4xx/peripherals/mx_uart.c ****     GPIO_InitStruct.Pull = GPIO_PULLUP;
+ 460              		.loc 1 171 0
+ 461 0036 0223     		movs	r3, #2
+ 462 0038 0493     		str	r3, [sp, #16]
+ 172:Platform/STM32F4xx/peripherals/mx_uart.c ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+ 463              		.loc 1 172 0
+ 464 003a 0123     		movs	r3, #1
+ 465 003c 0593     		str	r3, [sp, #20]
+ 173:Platform/STM32F4xx/peripherals/mx_uart.c ****     GPIO_InitStruct.Alternate = GPIO_AF7_USART1;
+ 466              		.loc 1 173 0
+ 467 003e 0323     		movs	r3, #3
+ARM GAS  /tmp/ccp8Oxpw.s 			page 13
+
+
+ 468 0040 0693     		str	r3, [sp, #24]
+ 174:Platform/STM32F4xx/peripherals/mx_uart.c ****     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+ 469              		.loc 1 174 0
+ 470 0042 0723     		movs	r3, #7
+ 471 0044 0793     		str	r3, [sp, #28]
+ 175:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 472              		.loc 1 175 0
+ 473 0046 03A9     		add	r1, sp, #12
+ 474 0048 1248     		ldr	r0, .L54+12
+ 475              	.LVL29:
+ 476 004a FFF7FEFF 		bl	HAL_GPIO_Init
+ 477              	.LVL30:
+ 478 004e E0E7     		b	.L48
+ 479              	.LVL31:
+ 480              	.L53:
+ 481              	.LBB3:
+ 187:Platform/STM32F4xx/peripherals/mx_uart.c ****   
+ 482              		.loc 1 187 0
+ 483 0050 0023     		movs	r3, #0
+ 484 0052 0293     		str	r3, [sp, #8]
+ 485 0054 0E4B     		ldr	r3, .L54+8
+ 486 0056 1A6C     		ldr	r2, [r3, #64]
+ 487 0058 42F40032 		orr	r2, r2, #131072
+ 488 005c 1A64     		str	r2, [r3, #64]
+ 489 005e 1B6C     		ldr	r3, [r3, #64]
+ 490 0060 03F40033 		and	r3, r3, #131072
+ 491 0064 0293     		str	r3, [sp, #8]
+ 492 0066 029B     		ldr	r3, [sp, #8]
+ 493              	.LBE3:
+ 193:Platform/STM32F4xx/peripherals/mx_uart.c ****     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+ 494              		.loc 1 193 0
+ 495 0068 0C23     		movs	r3, #12
+ 496 006a 0393     		str	r3, [sp, #12]
+ 194:Platform/STM32F4xx/peripherals/mx_uart.c ****     GPIO_InitStruct.Pull = GPIO_PULLUP;
+ 497              		.loc 1 194 0
+ 498 006c 0223     		movs	r3, #2
+ 499 006e 0493     		str	r3, [sp, #16]
+ 195:Platform/STM32F4xx/peripherals/mx_uart.c ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+ 500              		.loc 1 195 0
+ 501 0070 0123     		movs	r3, #1
+ 502 0072 0593     		str	r3, [sp, #20]
+ 196:Platform/STM32F4xx/peripherals/mx_uart.c ****     GPIO_InitStruct.Alternate = GPIO_AF7_USART2;
+ 503              		.loc 1 196 0
+ 504 0074 0323     		movs	r3, #3
+ 505 0076 0693     		str	r3, [sp, #24]
+ 197:Platform/STM32F4xx/peripherals/mx_uart.c ****     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+ 506              		.loc 1 197 0
+ 507 0078 0723     		movs	r3, #7
+ 508 007a 0793     		str	r3, [sp, #28]
+ 198:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 509              		.loc 1 198 0
+ 510 007c 03A9     		add	r1, sp, #12
+ 511 007e 0548     		ldr	r0, .L54+12
+ 512              	.LVL32:
+ 513 0080 FFF7FEFF 		bl	HAL_GPIO_Init
+ 514              	.LVL33:
+ 515              		.loc 1 204 0
+ARM GAS  /tmp/ccp8Oxpw.s 			page 14
+
+
+ 516 0084 C5E7     		b	.L48
+ 517              	.L55:
+ 518 0086 00BF     		.align	2
+ 519              	.L54:
+ 520 0088 00100140 		.word	1073811456
+ 521 008c 00440040 		.word	1073759232
+ 522 0090 00380240 		.word	1073887232
+ 523 0094 00000240 		.word	1073872896
+ 524              		.cfi_endproc
+ 525              	.LFE135:
+ 527              		.section	.text.HAL_UART_MspDeInit,"ax",%progbits
+ 528              		.align	1
+ 529              		.global	HAL_UART_MspDeInit
+ 530              		.syntax unified
+ 531              		.thumb
+ 532              		.thumb_func
+ 533              		.fpu fpv4-sp-d16
+ 535              	HAL_UART_MspDeInit:
+ 536              	.LFB136:
+ 205:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 206:Platform/STM32F4xx/peripherals/mx_uart.c **** void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
+ 207:Platform/STM32F4xx/peripherals/mx_uart.c **** {
+ 537              		.loc 1 207 0
+ 538              		.cfi_startproc
+ 539              		@ args = 0, pretend = 0, frame = 0
+ 540              		@ frame_needed = 0, uses_anonymous_args = 0
+ 541              	.LVL34:
+ 542 0000 08B5     		push	{r3, lr}
+ 543              	.LCFI6:
+ 544              		.cfi_def_cfa_offset 8
+ 545              		.cfi_offset 3, -8
+ 546              		.cfi_offset 14, -4
+ 208:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 209:Platform/STM32F4xx/peripherals/mx_uart.c ****   if(uartHandle->Instance==USART1)
+ 547              		.loc 1 209 0
+ 548 0002 0368     		ldr	r3, [r0]
+ 549 0004 114A     		ldr	r2, .L62
+ 550 0006 9342     		cmp	r3, r2
+ 551 0008 03D0     		beq	.L60
+ 210:Platform/STM32F4xx/peripherals/mx_uart.c ****   {
+ 211:Platform/STM32F4xx/peripherals/mx_uart.c ****   /* USER CODE BEGIN USART1_MspDeInit 0 */
+ 212:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 213:Platform/STM32F4xx/peripherals/mx_uart.c ****   /* USER CODE END USART1_MspDeInit 0 */
+ 214:Platform/STM32F4xx/peripherals/mx_uart.c ****     /* Peripheral clock disable */
+ 215:Platform/STM32F4xx/peripherals/mx_uart.c ****     __HAL_RCC_USART1_CLK_DISABLE();
+ 216:Platform/STM32F4xx/peripherals/mx_uart.c ****   
+ 217:Platform/STM32F4xx/peripherals/mx_uart.c ****     /**USART1 GPIO Configuration    
+ 218:Platform/STM32F4xx/peripherals/mx_uart.c ****     PA9     ------> USART1_TX
+ 219:Platform/STM32F4xx/peripherals/mx_uart.c ****     PA10     ------> USART1_RX 
+ 220:Platform/STM32F4xx/peripherals/mx_uart.c ****     */
+ 221:Platform/STM32F4xx/peripherals/mx_uart.c ****     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_9|GPIO_PIN_10);
+ 222:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 223:Platform/STM32F4xx/peripherals/mx_uart.c ****     /* USART1 interrupt Deinit */
+ 224:Platform/STM32F4xx/peripherals/mx_uart.c ****     HAL_NVIC_DisableIRQ(USART1_IRQn);
+ 225:Platform/STM32F4xx/peripherals/mx_uart.c ****   /* USER CODE BEGIN USART1_MspDeInit 1 */
+ 226:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 227:Platform/STM32F4xx/peripherals/mx_uart.c ****   /* USER CODE END USART1_MspDeInit 1 */
+ARM GAS  /tmp/ccp8Oxpw.s 			page 15
+
+
+ 228:Platform/STM32F4xx/peripherals/mx_uart.c ****   }
+ 229:Platform/STM32F4xx/peripherals/mx_uart.c ****   else if(uartHandle->Instance==USART2)
+ 552              		.loc 1 229 0
+ 553 000a 114A     		ldr	r2, .L62+4
+ 554 000c 9342     		cmp	r3, r2
+ 555 000e 0FD0     		beq	.L61
+ 556              	.LVL35:
+ 557              	.L56:
+ 230:Platform/STM32F4xx/peripherals/mx_uart.c ****   {
+ 231:Platform/STM32F4xx/peripherals/mx_uart.c ****   /* USER CODE BEGIN USART2_MspDeInit 0 */
+ 232:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 233:Platform/STM32F4xx/peripherals/mx_uart.c ****   /* USER CODE END USART2_MspDeInit 0 */
+ 234:Platform/STM32F4xx/peripherals/mx_uart.c ****     /* Peripheral clock disable */
+ 235:Platform/STM32F4xx/peripherals/mx_uart.c ****     __HAL_RCC_USART2_CLK_DISABLE();
+ 236:Platform/STM32F4xx/peripherals/mx_uart.c ****   
+ 237:Platform/STM32F4xx/peripherals/mx_uart.c ****     /**USART2 GPIO Configuration    
+ 238:Platform/STM32F4xx/peripherals/mx_uart.c ****     PA2     ------> USART2_TX
+ 239:Platform/STM32F4xx/peripherals/mx_uart.c ****     PA3     ------> USART2_RX 
+ 240:Platform/STM32F4xx/peripherals/mx_uart.c ****     */
+ 241:Platform/STM32F4xx/peripherals/mx_uart.c ****     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_2|GPIO_PIN_3);
+ 242:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 243:Platform/STM32F4xx/peripherals/mx_uart.c ****     /* USART2 interrupt Deinit */
+ 244:Platform/STM32F4xx/peripherals/mx_uart.c ****     HAL_NVIC_DisableIRQ(USART2_IRQn);
+ 245:Platform/STM32F4xx/peripherals/mx_uart.c ****   /* USER CODE BEGIN USART2_MspDeInit 1 */
+ 246:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 247:Platform/STM32F4xx/peripherals/mx_uart.c ****   /* USER CODE END USART2_MspDeInit 1 */
+ 248:Platform/STM32F4xx/peripherals/mx_uart.c ****   }
+ 249:Platform/STM32F4xx/peripherals/mx_uart.c **** } 
+ 558              		.loc 1 249 0
+ 559 0010 08BD     		pop	{r3, pc}
+ 560              	.LVL36:
+ 561              	.L60:
+ 215:Platform/STM32F4xx/peripherals/mx_uart.c ****   
+ 562              		.loc 1 215 0
+ 563 0012 02F59432 		add	r2, r2, #75776
+ 564 0016 536C     		ldr	r3, [r2, #68]
+ 565 0018 23F01003 		bic	r3, r3, #16
+ 566 001c 5364     		str	r3, [r2, #68]
+ 221:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 567              		.loc 1 221 0
+ 568 001e 4FF4C061 		mov	r1, #1536
+ 569 0022 0C48     		ldr	r0, .L62+8
+ 570              	.LVL37:
+ 571 0024 FFF7FEFF 		bl	HAL_GPIO_DeInit
+ 572              	.LVL38:
+ 224:Platform/STM32F4xx/peripherals/mx_uart.c ****   /* USER CODE BEGIN USART1_MspDeInit 1 */
+ 573              		.loc 1 224 0
+ 574 0028 2520     		movs	r0, #37
+ 575 002a FFF7FEFF 		bl	HAL_NVIC_DisableIRQ
+ 576              	.LVL39:
+ 577 002e EFE7     		b	.L56
+ 578              	.LVL40:
+ 579              	.L61:
+ 235:Platform/STM32F4xx/peripherals/mx_uart.c ****   
+ 580              		.loc 1 235 0
+ 581 0030 02F5FA32 		add	r2, r2, #128000
+ 582 0034 136C     		ldr	r3, [r2, #64]
+ARM GAS  /tmp/ccp8Oxpw.s 			page 16
+
+
+ 583 0036 23F40033 		bic	r3, r3, #131072
+ 584 003a 1364     		str	r3, [r2, #64]
+ 241:Platform/STM32F4xx/peripherals/mx_uart.c **** 
+ 585              		.loc 1 241 0
+ 586 003c 0C21     		movs	r1, #12
+ 587 003e 0548     		ldr	r0, .L62+8
+ 588              	.LVL41:
+ 589 0040 FFF7FEFF 		bl	HAL_GPIO_DeInit
+ 590              	.LVL42:
+ 244:Platform/STM32F4xx/peripherals/mx_uart.c ****   /* USER CODE BEGIN USART2_MspDeInit 1 */
+ 591              		.loc 1 244 0
+ 592 0044 2620     		movs	r0, #38
+ 593 0046 FFF7FEFF 		bl	HAL_NVIC_DisableIRQ
+ 594              	.LVL43:
+ 595              		.loc 1 249 0
+ 596 004a E1E7     		b	.L56
+ 597              	.L63:
+ 598              		.align	2
+ 599              	.L62:
+ 600 004c 00100140 		.word	1073811456
+ 601 0050 00440040 		.word	1073759232
+ 602 0054 00000240 		.word	1073872896
+ 603              		.cfi_endproc
+ 604              	.LFE136:
+ 606              		.global	aTxBuffer
+ 607              		.comm	stdio_uart,64,4
+ 608              		.comm	at_uart,64,4
+ 609              		.section	.data.aTxBuffer,"aw",%progbits
+ 610              		.align	2
+ 613              	aTxBuffer:
+ 614 0000 0D0A3132 		.ascii	"\015\01212345678\015\012\000"
+ 614      33343536 
+ 614      37380D0A 
+ 614      00
+ 615              		.section	.rodata.mx_hal_uart_init.str1.4,"aMS",%progbits,1
+ 616              		.align	2
+ 617              	.LC0:
+ 618 0000 506C6174 		.ascii	"Platform/STM32F4xx/peripherals/mx_uart.c\000"
+ 618      666F726D 
+ 618      2F53544D 
+ 618      33324634 
+ 618      78782F70 
+ 619              		.text
+ 620              	.Letext0:
+ 621              		.file 2 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 622              		.file 3 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 623              		.file 4 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 624              		.file 5 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 625              		.file 6 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/lib/gc
+ 626              		.file 7 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 627              		.file 8 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 628              		.file 9 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 629              		.file 10 "Platform/STM32F4xx/drivers/CMSIS/Include/core_cm4.h"
+ 630              		.file 11 "Platform/STM32F4xx/drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ 631              		.file 12 "Platform/STM32F4xx/drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f411xe.h"
+ 632              		.file 13 "Platform/STM32F4xx/drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 633              		.file 14 "Platform/STM32F4xx/drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+ARM GAS  /tmp/ccp8Oxpw.s 			page 17
+
+
+ 634              		.file 15 "Platform/STM32F4xx/drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 635              		.file 16 "Platform/STM32F4xx/drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+ 636              		.file 17 "Platform/STM32F4xx/peripherals/mx_hal.h"
+ 637              		.file 18 "Platform/STM32F4xx/drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h"
+ 638              		.file 19 "Platform/STM32F4xx/main.h"
+ARM GAS  /tmp/ccp8Oxpw.s 			page 18
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 mx_uart.c
+     /tmp/ccp8Oxpw.s:18     .text.mx_hal_uart_dev_set:0000000000000000 $t
+     /tmp/ccp8Oxpw.s:25     .text.mx_hal_uart_dev_set:0000000000000000 mx_hal_uart_dev_set
+     /tmp/ccp8Oxpw.s:40     .text.mx_hal_uart_init:0000000000000000 $t
+     /tmp/ccp8Oxpw.s:47     .text.mx_hal_uart_init:0000000000000000 mx_hal_uart_init
+     /tmp/ccp8Oxpw.s:216    .text.mx_hal_uart_init:00000000000000c4 $d
+                            *COM*:0000000000000040 at_uart
+                            *COM*:0000000000000040 stdio_uart
+     /tmp/ccp8Oxpw.s:225    .text.mx_hal_stdio_iaq_set:0000000000000000 $t
+     /tmp/ccp8Oxpw.s:232    .text.mx_hal_stdio_iaq_set:0000000000000000 mx_hal_stdio_iaq_set
+     /tmp/ccp8Oxpw.s:254    .text.mx_hal_stdio_iaq_set:0000000000000018 $d
+     /tmp/ccp8Oxpw.s:259    .text.mx_hal_serial_iaq_set:0000000000000000 $t
+     /tmp/ccp8Oxpw.s:266    .text.mx_hal_serial_iaq_set:0000000000000000 mx_hal_serial_iaq_set
+     /tmp/ccp8Oxpw.s:288    .text.mx_hal_serial_iaq_set:0000000000000018 $d
+     /tmp/ccp8Oxpw.s:293    .text.mx_hal_uart_send:0000000000000000 $t
+     /tmp/ccp8Oxpw.s:300    .text.mx_hal_uart_send:0000000000000000 mx_hal_uart_send
+     /tmp/ccp8Oxpw.s:349    .text.mx_hal_uart_send:0000000000000024 $d
+     /tmp/ccp8Oxpw.s:355    .text.mx_hal_uart_recv:0000000000000000 $t
+     /tmp/ccp8Oxpw.s:362    .text.mx_hal_uart_recv:0000000000000000 mx_hal_uart_recv
+     /tmp/ccp8Oxpw.s:378    .text.mx_hal_uart_finalize:0000000000000000 $t
+     /tmp/ccp8Oxpw.s:385    .text.mx_hal_uart_finalize:0000000000000000 mx_hal_uart_finalize
+     /tmp/ccp8Oxpw.s:401    .text.HAL_UART_MspInit:0000000000000000 $t
+     /tmp/ccp8Oxpw.s:408    .text.HAL_UART_MspInit:0000000000000000 HAL_UART_MspInit
+     /tmp/ccp8Oxpw.s:520    .text.HAL_UART_MspInit:0000000000000088 $d
+     /tmp/ccp8Oxpw.s:528    .text.HAL_UART_MspDeInit:0000000000000000 $t
+     /tmp/ccp8Oxpw.s:535    .text.HAL_UART_MspDeInit:0000000000000000 HAL_UART_MspDeInit
+     /tmp/ccp8Oxpw.s:600    .text.HAL_UART_MspDeInit:000000000000004c $d
+     /tmp/ccp8Oxpw.s:613    .data.aTxBuffer:0000000000000000 aTxBuffer
+     /tmp/ccp8Oxpw.s:610    .data.aTxBuffer:0000000000000000 $d
+     /tmp/ccp8Oxpw.s:616    .rodata.mx_hal_uart_init.str1.4:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+HAL_UART_Init
+_Error_Handler
+HAL_UART_Transmit
+HAL_GPIO_Init
+HAL_GPIO_DeInit
+HAL_NVIC_DisableIRQ

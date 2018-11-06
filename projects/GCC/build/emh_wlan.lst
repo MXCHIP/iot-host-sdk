@@ -1,0 +1,517 @@
+ARM GAS  /tmp/ccle4CLi.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"emh_wlan.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.emh_wlan_get_para,"ax",%progbits
+  18              		.align	1
+  19              		.global	emh_wlan_get_para
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	emh_wlan_get_para:
+  26              	.LFB5:
+  27              		.file 1 "src/helper/emhost/emh_wlan.c"
+   1:src/helper/emhost/emh_wlan.c **** /**
+   2:src/helper/emhost/emh_wlan.c ****  ******************************************************************************
+   3:src/helper/emhost/emh_wlan.c ****  * @file    emh_wlan.c
+   4:src/helper/emhost/emh_wlan.c ****  * @author  William Xu
+   5:src/helper/emhost/emh_wlan.c ****  * @version V1.0.0
+   6:src/helper/emhost/emh_wlan.c ****  * @date    9-Apr-2018
+   7:src/helper/emhost/emh_wlan.c ****  * @brief   wlan management AT commands
+   8:src/helper/emhost/emh_wlan.c ****  ******************************************************************************
+   9:src/helper/emhost/emh_wlan.c ****  *
+  10:src/helper/emhost/emh_wlan.c ****  * Copyright (c) 2009-2018 MXCHIP Co.,Ltd.
+  11:src/helper/emhost/emh_wlan.c ****  *
+  12:src/helper/emhost/emh_wlan.c ****  * Licensed under the Apache License, Version 2.0 (the "License");
+  13:src/helper/emhost/emh_wlan.c ****  * you may not use this file except in compliance with the License.
+  14:src/helper/emhost/emh_wlan.c ****  * You may obtain a copy of the License at
+  15:src/helper/emhost/emh_wlan.c ****  *
+  16:src/helper/emhost/emh_wlan.c ****  *     http://www.apache.org/licenses/LICENSE-2.0
+  17:src/helper/emhost/emh_wlan.c ****  *
+  18:src/helper/emhost/emh_wlan.c ****  * Unless required by applicable law or agreed to in writing, software
+  19:src/helper/emhost/emh_wlan.c ****  * distributed under the License is distributed on an "AS IS" BASIS,
+  20:src/helper/emhost/emh_wlan.c ****  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  21:src/helper/emhost/emh_wlan.c ****  * See the License for the specific language governing permissions and
+  22:src/helper/emhost/emh_wlan.c ****  * limitations under the License.
+  23:src/helper/emhost/emh_wlan.c ****  *
+  24:src/helper/emhost/emh_wlan.c ****  ******************************************************************************
+  25:src/helper/emhost/emh_wlan.c ****  */
+  26:src/helper/emhost/emh_wlan.c **** 
+  27:src/helper/emhost/emh_wlan.c **** 
+  28:src/helper/emhost/emh_wlan.c **** #include "ATCmdParser/ATCmdParser.h"
+  29:src/helper/emhost/emh_wlan.c **** #include "emh_api.h"
+  30:src/helper/emhost/emh_wlan.c **** 
+  31:src/helper/emhost/emh_wlan.c **** /******************************************************************************
+ARM GAS  /tmp/ccle4CLi.s 			page 2
+
+
+  32:src/helper/emhost/emh_wlan.c ****  *                              Function Definitions
+  33:src/helper/emhost/emh_wlan.c ****  ******************************************************************************/
+  34:src/helper/emhost/emh_wlan.c **** 
+  35:src/helper/emhost/emh_wlan.c **** mx_status emh_wlan_get_para(char ssid[33], char pwd[33])
+  36:src/helper/emhost/emh_wlan.c **** {
+  28              		.loc 1 36 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 112
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 30B5     		push	{r4, r5, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 12
+  36              		.cfi_offset 4, -12
+  37              		.cfi_offset 5, -8
+  38              		.cfi_offset 14, -4
+  39 0002 9DB0     		sub	sp, sp, #116
+  40              	.LCFI1:
+  41              		.cfi_def_cfa_offset 128
+  42 0004 0546     		mov	r5, r0
+  43 0006 0C46     		mov	r4, r1
+  37:src/helper/emhost/emh_wlan.c **** 	char args[100], *arg_list[2];
+  38:src/helper/emhost/emh_wlan.c **** 
+  39:src/helper/emhost/emh_wlan.c **** 	if (!(ATCmdParser_send("AT+WJAP=?")
+  44              		.loc 1 39 0
+  45 0008 1548     		ldr	r0, .L10
+  46              	.LVL1:
+  47 000a FFF7FEFF 		bl	ATCmdParser_send
+  48              	.LVL2:
+  49 000e E0B1     		cbz	r0, .L4
+  40:src/helper/emhost/emh_wlan.c **** 	   && ATCmdParser_recv("+WJAP:%100[^\r]\r\n",args)
+  50              		.loc 1 40 0
+  51 0010 03A9     		add	r1, sp, #12
+  52 0012 1448     		ldr	r0, .L10+4
+  53 0014 FFF7FEFF 		bl	ATCmdParser_recv
+  54              	.LVL3:
+  55 0018 C8B1     		cbz	r0, .L5
+  41:src/helper/emhost/emh_wlan.c **** 	   && ATCmdParser_recv("OK\r\n"))) {
+  56              		.loc 1 41 0
+  57 001a 1348     		ldr	r0, .L10+8
+  58 001c FFF7FEFF 		bl	ATCmdParser_recv
+  59              	.LVL4:
+  39:src/helper/emhost/emh_wlan.c **** 	   && ATCmdParser_recv("+WJAP:%100[^\r]\r\n",args)
+  60              		.loc 1 39 0
+  61 0020 B8B1     		cbz	r0, .L6
+  42:src/helper/emhost/emh_wlan.c **** 		return kReadErr;
+  43:src/helper/emhost/emh_wlan.c **** 	}
+  44:src/helper/emhost/emh_wlan.c **** 	
+  45:src/helper/emhost/emh_wlan.c **** 	if (2 != ATCmdParser_analyse_args(args, arg_list, 2)) {
+  62              		.loc 1 45 0
+  63 0022 0222     		movs	r2, #2
+  64 0024 01A9     		add	r1, sp, #4
+  65 0026 03A8     		add	r0, sp, #12
+  66 0028 FFF7FEFF 		bl	ATCmdParser_analyse_args
+  67              	.LVL5:
+  68 002c 0228     		cmp	r0, #2
+  69 002e 12D1     		bne	.L7
+ARM GAS  /tmp/ccle4CLi.s 			page 3
+
+
+  46:src/helper/emhost/emh_wlan.c **** 		return kMalformedErr;
+  47:src/helper/emhost/emh_wlan.c **** 	};
+  48:src/helper/emhost/emh_wlan.c **** 	if (ssid) strcpy(ssid, arg_list[0]);
+  70              		.loc 1 48 0
+  71 0030 1DB1     		cbz	r5, .L3
+  72              		.loc 1 48 0 is_stmt 0 discriminator 1
+  73 0032 0199     		ldr	r1, [sp, #4]
+  74 0034 2846     		mov	r0, r5
+  75 0036 FFF7FEFF 		bl	strcpy
+  76              	.LVL6:
+  77              	.L3:
+  49:src/helper/emhost/emh_wlan.c **** 	if (pwd)  strcpy(pwd,  arg_list[1]);
+  78              		.loc 1 49 0 is_stmt 1
+  79 003a 74B1     		cbz	r4, .L8
+  80              		.loc 1 49 0 is_stmt 0 discriminator 1
+  81 003c 0299     		ldr	r1, [sp, #8]
+  82 003e 2046     		mov	r0, r4
+  83 0040 FFF7FEFF 		bl	strcpy
+  84              	.LVL7:
+  50:src/helper/emhost/emh_wlan.c **** 	
+  51:src/helper/emhost/emh_wlan.c **** 	return kNoErr;
+  85              		.loc 1 51 0 is_stmt 1 discriminator 1
+  86 0044 0020     		movs	r0, #0
+  87              	.L1:
+  52:src/helper/emhost/emh_wlan.c **** }
+  88              		.loc 1 52 0
+  89 0046 1DB0     		add	sp, sp, #116
+  90              	.LCFI2:
+  91              		.cfi_remember_state
+  92              		.cfi_def_cfa_offset 12
+  93              		@ sp needed
+  94 0048 30BD     		pop	{r4, r5, pc}
+  95              	.LVL8:
+  96              	.L4:
+  97              	.LCFI3:
+  98              		.cfi_restore_state
+  42:src/helper/emhost/emh_wlan.c **** 	}
+  99              		.loc 1 42 0
+ 100 004a 0848     		ldr	r0, .L10+12
+ 101 004c FBE7     		b	.L1
+ 102              	.L5:
+ 103 004e 0748     		ldr	r0, .L10+12
+ 104 0050 F9E7     		b	.L1
+ 105              	.L6:
+ 106 0052 0648     		ldr	r0, .L10+12
+ 107 0054 F7E7     		b	.L1
+ 108              	.L7:
+  46:src/helper/emhost/emh_wlan.c **** 	};
+ 109              		.loc 1 46 0
+ 110 0056 0648     		ldr	r0, .L10+16
+ 111 0058 F5E7     		b	.L1
+ 112              	.L8:
+  51:src/helper/emhost/emh_wlan.c **** }
+ 113              		.loc 1 51 0
+ 114 005a 0020     		movs	r0, #0
+ 115 005c F3E7     		b	.L1
+ 116              	.L11:
+ARM GAS  /tmp/ccle4CLi.s 			page 4
+
+
+ 117 005e 00BF     		.align	2
+ 118              	.L10:
+ 119 0060 00000000 		.word	.LC0
+ 120 0064 0C000000 		.word	.LC1
+ 121 0068 20000000 		.word	.LC2
+ 122 006c A6E5FFFF 		.word	-6746
+ 123 0070 AAE5FFFF 		.word	-6742
+ 124              		.cfi_endproc
+ 125              	.LFE5:
+ 127              		.section	.text.emh_wlan_get_sta_status,"ax",%progbits
+ 128              		.align	1
+ 129              		.global	emh_wlan_get_sta_status
+ 130              		.syntax unified
+ 131              		.thumb
+ 132              		.thumb_func
+ 133              		.fpu fpv4-sp-d16
+ 135              	emh_wlan_get_sta_status:
+ 136              	.LFB6:
+  53:src/helper/emhost/emh_wlan.c **** 
+  54:src/helper/emhost/emh_wlan.c **** emh_arg_wlan_sta_t emh_wlan_get_sta_status(void)
+  55:src/helper/emhost/emh_wlan.c **** {
+ 137              		.loc 1 55 0
+ 138              		.cfi_startproc
+ 139              		@ args = 0, pretend = 0, frame = 24
+ 140              		@ frame_needed = 0, uses_anonymous_args = 0
+ 141 0000 00B5     		push	{lr}
+ 142              	.LCFI4:
+ 143              		.cfi_def_cfa_offset 4
+ 144              		.cfi_offset 14, -4
+ 145 0002 87B0     		sub	sp, sp, #28
+ 146              	.LCFI5:
+ 147              		.cfi_def_cfa_offset 32
+  56:src/helper/emhost/emh_wlan.c **** 	char arg[20];
+  57:src/helper/emhost/emh_wlan.c **** 
+  58:src/helper/emhost/emh_wlan.c **** 	if (!(ATCmdParser_send("AT+WJAPS")
+ 148              		.loc 1 58 0
+ 149 0004 0C48     		ldr	r0, .L18
+ 150 0006 FFF7FEFF 		bl	ATCmdParser_send
+ 151              	.LVL9:
+ 152 000a 68B1     		cbz	r0, .L14
+  59:src/helper/emhost/emh_wlan.c **** 	   && ATCmdParser_recv("+WJAPS:%20[^\r]\r\n",arg)
+ 153              		.loc 1 59 0
+ 154 000c 01A9     		add	r1, sp, #4
+ 155 000e 0B48     		ldr	r0, .L18+4
+ 156 0010 FFF7FEFF 		bl	ATCmdParser_recv
+ 157              	.LVL10:
+ 158 0014 60B1     		cbz	r0, .L15
+  60:src/helper/emhost/emh_wlan.c **** 	   && ATCmdParser_recv("OK\r\n"))) {
+ 159              		.loc 1 60 0
+ 160 0016 0A48     		ldr	r0, .L18+8
+ 161 0018 FFF7FEFF 		bl	ATCmdParser_recv
+ 162              	.LVL11:
+  58:src/helper/emhost/emh_wlan.c **** 	   && ATCmdParser_recv("+WJAPS:%20[^\r]\r\n",arg)
+ 163              		.loc 1 58 0
+ 164 001c 50B1     		cbz	r0, .L16
+  61:src/helper/emhost/emh_wlan.c **** 		return EMH_ARG_ERR;
+  62:src/helper/emhost/emh_wlan.c **** 	}
+ARM GAS  /tmp/ccle4CLi.s 			page 5
+
+
+  63:src/helper/emhost/emh_wlan.c **** 	
+  64:src/helper/emhost/emh_wlan.c **** 	return emh_arg_for_arg( EMH_ARG_WLAN_STA, arg);
+ 165              		.loc 1 64 0
+ 166 001e 01A9     		add	r1, sp, #4
+ 167 0020 0848     		ldr	r0, .L18+12
+ 168 0022 FFF7FEFF 		bl	emh_arg_for_arg
+ 169              	.LVL12:
+ 170 0026 00E0     		b	.L13
+ 171              	.L14:
+  61:src/helper/emhost/emh_wlan.c **** 		return EMH_ARG_ERR;
+ 172              		.loc 1 61 0
+ 173 0028 FF20     		movs	r0, #255
+ 174              	.L13:
+  65:src/helper/emhost/emh_wlan.c **** }
+ 175              		.loc 1 65 0
+ 176 002a 07B0     		add	sp, sp, #28
+ 177              	.LCFI6:
+ 178              		.cfi_remember_state
+ 179              		.cfi_def_cfa_offset 4
+ 180              		@ sp needed
+ 181 002c 5DF804FB 		ldr	pc, [sp], #4
+ 182              	.L15:
+ 183              	.LCFI7:
+ 184              		.cfi_restore_state
+  61:src/helper/emhost/emh_wlan.c **** 		return EMH_ARG_ERR;
+ 185              		.loc 1 61 0
+ 186 0030 FF20     		movs	r0, #255
+ 187 0032 FAE7     		b	.L13
+ 188              	.L16:
+ 189 0034 FF20     		movs	r0, #255
+ 190 0036 F8E7     		b	.L13
+ 191              	.L19:
+ 192              		.align	2
+ 193              	.L18:
+ 194 0038 00000000 		.word	.LC3
+ 195 003c 0C000000 		.word	.LC4
+ 196 0040 20000000 		.word	.LC2
+ 197 0044 00000000 		.word	EMH_ARG_WLAN_STA
+ 198              		.cfi_endproc
+ 199              	.LFE6:
+ 201              		.section	.text.emh_wlan_event_handler,"ax",%progbits
+ 202              		.align	1
+ 203              		.global	emh_wlan_event_handler
+ 204              		.syntax unified
+ 205              		.thumb
+ 206              		.thumb_func
+ 207              		.fpu fpv4-sp-d16
+ 209              	emh_wlan_event_handler:
+ 210              	.LFB7:
+  66:src/helper/emhost/emh_wlan.c **** 
+  67:src/helper/emhost/emh_wlan.c **** void emh_wlan_event_handler(void)
+  68:src/helper/emhost/emh_wlan.c **** {
+ 211              		.loc 1 68 0
+ 212              		.cfi_startproc
+ 213              		@ args = 0, pretend = 0, frame = 16
+ 214              		@ frame_needed = 0, uses_anonymous_args = 0
+ 215 0000 00B5     		push	{lr}
+ARM GAS  /tmp/ccle4CLi.s 			page 6
+
+
+ 216              	.LCFI8:
+ 217              		.cfi_def_cfa_offset 4
+ 218              		.cfi_offset 14, -4
+ 219 0002 87B0     		sub	sp, sp, #28
+ 220              	.LCFI9:
+ 221              		.cfi_def_cfa_offset 32
+ 222              	.LVL13:
+  69:src/helper/emhost/emh_wlan.c **** 	mx_status err = kNoErr;
+  70:src/helper/emhost/emh_wlan.c **** 	char arg[15];
+  71:src/helper/emhost/emh_wlan.c **** 
+  72:src/helper/emhost/emh_wlan.c **** 	// parse out the packet
+  73:src/helper/emhost/emh_wlan.c **** 	require_action(ATCmdParser_recv("%100[^\r]\r\n", arg), exit, err = kMalformedErr);
+ 223              		.loc 1 73 0
+ 224 0004 02A9     		add	r1, sp, #8
+ 225 0006 1148     		ldr	r0, .L27
+ 226 0008 FFF7FEFF 		bl	ATCmdParser_recv
+ 227              	.LVL14:
+ 228 000c 60B9     		cbnz	r0, .L21
+ 229              		.loc 1 73 0 is_stmt 0 discriminator 1
+ 230 000e 104B     		ldr	r3, .L27+4
+ 231 0010 0093     		str	r3, [sp]
+ 232 0012 4923     		movs	r3, #73
+ 233 0014 0F4A     		ldr	r2, .L27+8
+ 234 0016 1049     		ldr	r1, .L27+12
+ 235 0018 1048     		ldr	r0, .L27+16
+ 236 001a FFF7FEFF 		bl	printf
+ 237              	.LVL15:
+ 238              	.L22:
+  74:src/helper/emhost/emh_wlan.c **** 		
+  75:src/helper/emhost/emh_wlan.c **** 	emh_arg_wlan_ev_t event = emh_arg_for_arg(EMH_ARG_WLAN_EV, arg);
+  76:src/helper/emhost/emh_wlan.c **** 	require_action(event != EMH_ARG_ERR, exit,  err = kMalformedErr);
+  77:src/helper/emhost/emh_wlan.c **** 	
+  78:src/helper/emhost/emh_wlan.c **** 	emh_ev_wlan(event);
+  79:src/helper/emhost/emh_wlan.c **** 	
+  80:src/helper/emhost/emh_wlan.c **** exit:
+  81:src/helper/emhost/emh_wlan.c **** 	if (err == kMalformedErr) emh_ev_unknown();
+ 239              		.loc 1 81 0 is_stmt 1 discriminator 1
+ 240 001e FFF7FEFF 		bl	emh_ev_unknown
+ 241              	.LVL16:
+ 242              	.L20:
+  82:src/helper/emhost/emh_wlan.c **** 	return;
+  83:src/helper/emhost/emh_wlan.c **** }
+ 243              		.loc 1 83 0
+ 244 0022 07B0     		add	sp, sp, #28
+ 245              	.LCFI10:
+ 246              		.cfi_remember_state
+ 247              		.cfi_def_cfa_offset 4
+ 248              		@ sp needed
+ 249 0024 5DF804FB 		ldr	pc, [sp], #4
+ 250              	.LVL17:
+ 251              	.L21:
+ 252              	.LCFI11:
+ 253              		.cfi_restore_state
+  75:src/helper/emhost/emh_wlan.c **** 	require_action(event != EMH_ARG_ERR, exit,  err = kMalformedErr);
+ 254              		.loc 1 75 0
+ 255 0028 02A9     		add	r1, sp, #8
+ 256 002a 0D48     		ldr	r0, .L27+20
+ARM GAS  /tmp/ccle4CLi.s 			page 7
+
+
+ 257 002c FFF7FEFF 		bl	emh_arg_for_arg
+ 258              	.LVL18:
+  76:src/helper/emhost/emh_wlan.c **** 	
+ 259              		.loc 1 76 0
+ 260 0030 FF28     		cmp	r0, #255
+ 261 0032 02D0     		beq	.L26
+  78:src/helper/emhost/emh_wlan.c **** 	
+ 262              		.loc 1 78 0
+ 263 0034 FFF7FEFF 		bl	emh_ev_wlan
+ 264              	.LVL19:
+ 265 0038 F3E7     		b	.L20
+ 266              	.LVL20:
+ 267              	.L26:
+  76:src/helper/emhost/emh_wlan.c **** 	
+ 268              		.loc 1 76 0 discriminator 1
+ 269 003a 054B     		ldr	r3, .L27+4
+ 270 003c 0093     		str	r3, [sp]
+ 271 003e 4C23     		movs	r3, #76
+ 272 0040 044A     		ldr	r2, .L27+8
+ 273 0042 0549     		ldr	r1, .L27+12
+ 274 0044 0548     		ldr	r0, .L27+16
+ 275              	.LVL21:
+ 276 0046 FFF7FEFF 		bl	printf
+ 277              	.LVL22:
+ 278 004a E8E7     		b	.L22
+ 279              	.L28:
+ 280              		.align	2
+ 281              	.L27:
+ 282 004c 00000000 		.word	.LC5
+ 283 0050 4C000000 		.word	.LC8
+ 284 0054 00000000 		.word	.LANCHOR0
+ 285 0058 12000000 		.word	.LC6+18
+ 286 005c 2C000000 		.word	.LC7
+ 287 0060 00000000 		.word	EMH_ARG_WLAN_EV
+ 288              		.cfi_endproc
+ 289              	.LFE7:
+ 291              		.section	.rodata.__PRETTY_FUNCTION__.7415,"a",%progbits
+ 292              		.align	2
+ 293              		.set	.LANCHOR0,. + 0
+ 296              	__PRETTY_FUNCTION__.7415:
+ 297 0000 656D685F 		.ascii	"emh_wlan_event_handler\000"
+ 297      776C616E 
+ 297      5F657665 
+ 297      6E745F68 
+ 297      616E646C 
+ 298              		.section	.rodata.emh_wlan_event_handler.str1.4,"aMS",%progbits,1
+ 299              		.align	2
+ 300              	.LC5:
+ 301 0000 25313030 		.ascii	"%100[^\015]\015\012\000"
+ 301      5B5E0D5D 
+ 301      0D0A00
+ 302 000b 00       		.space	1
+ 303              	.LC6:
+ 304 000c 7372632F 		.ascii	"src/helper/emhost/emh_wlan.c\000"
+ 304      68656C70 
+ 304      65722F65 
+ 304      6D686F73 
+ARM GAS  /tmp/ccle4CLi.s 			page 8
+
+
+ 304      742F656D 
+ 305 0029 000000   		.space	3
+ 306              	.LC7:
+ 307 002c 5B4D583A 		.ascii	"[MX:%s:%s:%4d] **ASSERT** %s\015\012\000"
+ 307      25733A25 
+ 307      733A2534 
+ 307      645D202A 
+ 307      2A415353 
+ 308 004b 00       		.space	1
+ 309              	.LC8:
+ 310 004c 00       		.ascii	"\000"
+ 311              		.section	.rodata.emh_wlan_get_para.str1.4,"aMS",%progbits,1
+ 312              		.align	2
+ 313              	.LC0:
+ 314 0000 41542B57 		.ascii	"AT+WJAP=?\000"
+ 314      4A41503D 
+ 314      3F00
+ 315 000a 0000     		.space	2
+ 316              	.LC1:
+ 317 000c 2B574A41 		.ascii	"+WJAP:%100[^\015]\015\012\000"
+ 317      503A2531 
+ 317      30305B5E 
+ 317      0D5D0D0A 
+ 317      00
+ 318 001d 000000   		.space	3
+ 319              	.LC2:
+ 320 0020 4F4B0D0A 		.ascii	"OK\015\012\000"
+ 320      00
+ 321              		.section	.rodata.emh_wlan_get_sta_status.str1.4,"aMS",%progbits,1
+ 322              		.align	2
+ 323              	.LC3:
+ 324 0000 41542B57 		.ascii	"AT+WJAPS\000"
+ 324      4A415053 
+ 324      00
+ 325 0009 000000   		.space	3
+ 326              	.LC4:
+ 327 000c 2B574A41 		.ascii	"+WJAPS:%20[^\015]\015\012\000"
+ 327      50533A25 
+ 327      32305B5E 
+ 327      0D5D0D0A 
+ 327      00
+ 328              		.weak	emh_ev_wlan
+ 329              		.weak	emh_ev_unknown
+ 330              		.text
+ 331              	.Letext0:
+ 332              		.file 2 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 333              		.file 3 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 334              		.file 4 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 335              		.file 5 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 336              		.file 6 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/lib/gc
+ 337              		.file 7 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 338              		.file 8 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 339              		.file 9 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 340              		.file 10 "src/helper/mx_common.h"
+ 341              		.file 11 "src/helper/emhost/emh_arg.h"
+ 342              		.file 12 "src/helper/emhost/ATCmdParser/ATCmdParser.h"
+ 343              		.file 13 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-n
+ARM GAS  /tmp/ccle4CLi.s 			page 9
+
+
+ 344              		.file 14 "src/helper/emhost/emh_api.h"
+ 345              		.file 15 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-n
+ARM GAS  /tmp/ccle4CLi.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 emh_wlan.c
+     /tmp/ccle4CLi.s:18     .text.emh_wlan_get_para:0000000000000000 $t
+     /tmp/ccle4CLi.s:25     .text.emh_wlan_get_para:0000000000000000 emh_wlan_get_para
+     /tmp/ccle4CLi.s:119    .text.emh_wlan_get_para:0000000000000060 $d
+     /tmp/ccle4CLi.s:128    .text.emh_wlan_get_sta_status:0000000000000000 $t
+     /tmp/ccle4CLi.s:135    .text.emh_wlan_get_sta_status:0000000000000000 emh_wlan_get_sta_status
+     /tmp/ccle4CLi.s:194    .text.emh_wlan_get_sta_status:0000000000000038 $d
+     /tmp/ccle4CLi.s:202    .text.emh_wlan_event_handler:0000000000000000 $t
+     /tmp/ccle4CLi.s:209    .text.emh_wlan_event_handler:0000000000000000 emh_wlan_event_handler
+     /tmp/ccle4CLi.s:282    .text.emh_wlan_event_handler:000000000000004c $d
+     /tmp/ccle4CLi.s:292    .rodata.__PRETTY_FUNCTION__.7415:0000000000000000 $d
+     /tmp/ccle4CLi.s:296    .rodata.__PRETTY_FUNCTION__.7415:0000000000000000 __PRETTY_FUNCTION__.7415
+     /tmp/ccle4CLi.s:299    .rodata.emh_wlan_event_handler.str1.4:0000000000000000 $d
+     /tmp/ccle4CLi.s:303    .rodata.emh_wlan_event_handler.str1.4:000000000000000c .LC6
+     /tmp/ccle4CLi.s:312    .rodata.emh_wlan_get_para.str1.4:0000000000000000 $d
+     /tmp/ccle4CLi.s:322    .rodata.emh_wlan_get_sta_status.str1.4:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+ATCmdParser_send
+ATCmdParser_recv
+ATCmdParser_analyse_args
+strcpy
+emh_arg_for_arg
+EMH_ARG_WLAN_STA
+printf
+emh_ev_unknown
+emh_ev_wlan
+EMH_ARG_WLAN_EV

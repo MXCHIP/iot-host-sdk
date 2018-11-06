@@ -1,0 +1,2061 @@
+ARM GAS  /tmp/ccsHQQpf.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"ATCmdParser.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.debug_if,"ax",%progbits
+  18              		.align	1
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  24              	debug_if:
+  25              	.LFB128:
+  26              		.file 1 "src/helper/emhost/ATCmdParser/ATCmdParser.c"
+   1:src/helper/emhost/ATCmdParser/ATCmdParser.c **** /**
+   2:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  ******************************************************************************
+   3:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  * @file    ATCmdParser.c
+   4:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  * @author  William Xu
+   5:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  * @version V1.0.0
+   6:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  * @date    9-Apr-2018
+   7:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  * @brief   EMW module AT command parser
+   8:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  ******************************************************************************
+   9:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  *
+  10:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  * Copyright (c) 2009-2018 MXCHIP Co.,Ltd.
+  11:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  *
+  12:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  * Licensed under the Apache License, Version 2.0 (the "License");
+  13:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  * you may not use this file except in compliance with the License.
+  14:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  * You may obtain a copy of the License at
+  15:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  *
+  16:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  *     http://www.apache.org/licenses/LICENSE-2.0
+  17:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  *
+  18:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  * Unless required by applicable law or agreed to in writing, software
+  19:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  * distributed under the License is distributed on an "AS IS" BASIS,
+  20:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  21:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  * See the License for the specific language governing permissions and
+  22:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  * limitations under the License.
+  23:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  *
+  24:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  ******************************************************************************
+  25:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  */
+  26:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+  27:src/helper/emhost/ATCmdParser/ATCmdParser.c **** #include "ATCmdParser.h"
+  28:src/helper/emhost/ATCmdParser/ATCmdParser.c **** #include "mx_hal.h"
+  29:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+  30:src/helper/emhost/ATCmdParser/ATCmdParser.c **** #include "mx_common.h"
+  31:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+  32:src/helper/emhost/ATCmdParser/ATCmdParser.c **** /******************************************************************************
+ARM GAS  /tmp/ccsHQQpf.s 			page 2
+
+
+  33:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  *                                 Constants
+  34:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  ******************************************************************************/
+  35:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+  36:src/helper/emhost/ATCmdParser/ATCmdParser.c **** #ifdef LF
+  37:src/helper/emhost/ATCmdParser/ATCmdParser.c **** #undef LF
+  38:src/helper/emhost/ATCmdParser/ATCmdParser.c **** #define LF 10
+  39:src/helper/emhost/ATCmdParser/ATCmdParser.c **** #else
+  40:src/helper/emhost/ATCmdParser/ATCmdParser.c **** #define LF 10
+  41:src/helper/emhost/ATCmdParser/ATCmdParser.c **** #endif
+  42:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+  43:src/helper/emhost/ATCmdParser/ATCmdParser.c **** #ifdef CR
+  44:src/helper/emhost/ATCmdParser/ATCmdParser.c **** #undef CR
+  45:src/helper/emhost/ATCmdParser/ATCmdParser.c **** #define CR 13
+  46:src/helper/emhost/ATCmdParser/ATCmdParser.c **** #else
+  47:src/helper/emhost/ATCmdParser/ATCmdParser.c **** #define CR 13
+  48:src/helper/emhost/ATCmdParser/ATCmdParser.c **** #endif
+  49:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+  50:src/helper/emhost/ATCmdParser/ATCmdParser.c **** /******************************************************************************
+  51:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  *                              Variable Definitions
+  52:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  ******************************************************************************/
+  53:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+  54:src/helper/emhost/ATCmdParser/ATCmdParser.c **** bool _dbg_on = false;
+  55:src/helper/emhost/ATCmdParser/ATCmdParser.c **** static struct oob* _oobs;
+  56:src/helper/emhost/ATCmdParser/ATCmdParser.c **** static char _buffer[AT_BUFFER_SIZE];
+  57:src/helper/emhost/ATCmdParser/ATCmdParser.c **** static const char* _output_delimiter;
+  58:src/helper/emhost/ATCmdParser/ATCmdParser.c **** static int _output_delim_size;
+  59:src/helper/emhost/ATCmdParser/ATCmdParser.c **** static const char* _input_delimiter;
+  60:src/helper/emhost/ATCmdParser/ATCmdParser.c **** static int _input_delim_size;
+  61:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+  62:src/helper/emhost/ATCmdParser/ATCmdParser.c **** /******************************************************************************
+  63:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  *                              Function Definitions
+  64:src/helper/emhost/ATCmdParser/ATCmdParser.c ****  ******************************************************************************/
+  65:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+  66:src/helper/emhost/ATCmdParser/ATCmdParser.c **** static inline void debug_if(int condition, const char* format, ...)
+  67:src/helper/emhost/ATCmdParser/ATCmdParser.c **** {
+  27              		.loc 1 67 0
+  28              		.cfi_startproc
+  29              		@ args = 4, pretend = 12, frame = 8
+  30              		@ frame_needed = 0, uses_anonymous_args = 1
+  31              	.LVL0:
+  68:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     if (condition) {
+  32              		.loc 1 68 0
+  33 0000 00B9     		cbnz	r0, .L7
+  34 0002 7047     		bx	lr
+  35              	.L7:
+  67:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     if (condition) {
+  36              		.loc 1 67 0
+  37 0004 0EB4     		push	{r1, r2, r3}
+  38              	.LCFI0:
+  39              		.cfi_def_cfa_offset 12
+  40              		.cfi_offset 1, -12
+  41              		.cfi_offset 2, -8
+  42              		.cfi_offset 3, -4
+  43 0006 00B5     		push	{lr}
+  44              	.LCFI1:
+  45              		.cfi_def_cfa_offset 16
+  46              		.cfi_offset 14, -16
+ARM GAS  /tmp/ccsHQQpf.s 			page 3
+
+
+  47 0008 82B0     		sub	sp, sp, #8
+  48              	.LCFI2:
+  49              		.cfi_def_cfa_offset 24
+  50              	.LBB2:
+  69:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         va_list args;
+  70:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         va_start(args, format);
+  51              		.loc 1 70 0
+  52 000a 04A9     		add	r1, sp, #16
+  53 000c 0191     		str	r1, [sp, #4]
+  71:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         vprintf(format, args);
+  54              		.loc 1 71 0
+  55 000e 0398     		ldr	r0, [sp, #12]
+  56              	.LVL1:
+  57 0010 FFF7FEFF 		bl	vprintf
+  58              	.LVL2:
+  59              	.LBE2:
+  72:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         va_end(args);
+  73:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     }
+  74:src/helper/emhost/ATCmdParser/ATCmdParser.c **** }
+  60              		.loc 1 74 0
+  61 0014 02B0     		add	sp, sp, #8
+  62              	.LCFI3:
+  63              		.cfi_def_cfa_offset 16
+  64              		@ sp needed
+  65 0016 5DF804EB 		ldr	lr, [sp], #4
+  66              	.LCFI4:
+  67              		.cfi_restore 14
+  68              		.cfi_def_cfa_offset 12
+  69 001a 03B0     		add	sp, sp, #12
+  70              	.LCFI5:
+  71              		.cfi_restore 3
+  72              		.cfi_restore 2
+  73              		.cfi_restore 1
+  74              		.cfi_def_cfa_offset 0
+  75 001c 7047     		bx	lr
+  76              		.cfi_endproc
+  77              	.LFE128:
+  79              		.section	.text.ATCmdParser_vrecv,"ax",%progbits
+  80              		.align	1
+  81              		.global	ATCmdParser_vrecv
+  82              		.syntax unified
+  83              		.thumb
+  84              		.thumb_func
+  85              		.fpu fpv4-sp-d16
+  87              	ATCmdParser_vrecv:
+  88              	.LFB129:
+  75:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+  76:src/helper/emhost/ATCmdParser/ATCmdParser.c **** bool ATCmdParser_vrecv(const char* response, va_list args)
+  77:src/helper/emhost/ATCmdParser/ATCmdParser.c **** {
+  89              		.loc 1 77 0
+  90              		.cfi_startproc
+  91              		@ args = 0, pretend = 0, frame = 104
+  92              		@ frame_needed = 0, uses_anonymous_args = 0
+  93              	.LVL3:
+  94 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+  95              	.LCFI6:
+  96              		.cfi_def_cfa_offset 36
+ARM GAS  /tmp/ccsHQQpf.s 			page 4
+
+
+  97              		.cfi_offset 4, -36
+  98              		.cfi_offset 5, -32
+  99              		.cfi_offset 6, -28
+ 100              		.cfi_offset 7, -24
+ 101              		.cfi_offset 8, -20
+ 102              		.cfi_offset 9, -16
+ 103              		.cfi_offset 10, -12
+ 104              		.cfi_offset 11, -8
+ 105              		.cfi_offset 14, -4
+ 106 0004 9DB0     		sub	sp, sp, #116
+ 107              	.LCFI7:
+ 108              		.cfi_def_cfa_offset 152
+ 109 0006 0746     		mov	r7, r0
+ 110 0008 0591     		str	r1, [sp, #20]
+ 111              	.LVL4:
+  78:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     char _in_prev = 0;
+ 112              		.loc 1 78 0
+ 113 000a 0023     		movs	r3, #0
+ 114 000c 0293     		str	r3, [sp, #8]
+ 115 000e 7BE0     		b	.L10
+ 116              	.LVL5:
+ 117              	.L40:
+ 118              	.LBB3:
+  79:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     bool _aborted;
+  80:src/helper/emhost/ATCmdParser/ATCmdParser.c **** restart:
+  81:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     _aborted = false;
+  82:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     // Iterate through each line in the expected response
+  83:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     while (response[0]) {
+  84:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         // Since response is const, we need to copy it into our buffer to
+  85:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         // add the line's null terminator and clobber value-matches with asterisks.
+  86:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         //
+  87:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         // We just use the beginning of the buffer to avoid unnecessary allocations.
+  88:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         int i = 0;
+  89:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         int offset = 0;
+  90:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         bool whole_line_wanted = false;
+  91:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+  92:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         while (response[i]) {
+  93:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             if (response[i] == '%' && response[i + 1] != '%' && response[i + 1] != '*') {
+ 119              		.loc 1 93 0 discriminator 1
+ 120 0010 3A44     		add	r2, r2, r7
+ 121              	.LVL6:
+ 122 0012 5278     		ldrb	r2, [r2, #1]	@ zero_extendqisi2
+ 123 0014 252A     		cmp	r2, #37
+ 124 0016 10D0     		beq	.L11
+ 125              		.loc 1 93 0 is_stmt 0 discriminator 2
+ 126 0018 2A2A     		cmp	r2, #42
+ 127 001a 0ED0     		beq	.L11
+  94:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 _buffer[offset++] = '%';
+ 128              		.loc 1 94 0 is_stmt 1
+ 129 001c 711C     		adds	r1, r6, #1
+ 130              	.LVL7:
+ 131 001e 814B     		ldr	r3, .L47
+ 132 0020 2522     		movs	r2, #37
+ 133 0022 9A55     		strb	r2, [r3, r6]
+  95:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 _buffer[offset++] = '*';
+ 134              		.loc 1 95 0
+ 135 0024 B21C     		adds	r2, r6, #2
+ARM GAS  /tmp/ccsHQQpf.s 			page 5
+
+
+ 136              	.LVL8:
+ 137 0026 2A20     		movs	r0, #42
+ 138 0028 5854     		strb	r0, [r3, r1]
+  96:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 i++;
+ 139              		.loc 1 96 0
+ 140 002a 0135     		adds	r5, r5, #1
+ 141              	.LVL9:
+ 142              	.L12:
+ 143              	.LBE3:
+  78:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     bool _aborted;
+ 144              		.loc 1 78 0
+ 145 002c 1646     		mov	r6, r2
+ 146              	.LVL10:
+ 147              	.L29:
+ 148              	.LBB9:
+  92:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             if (response[i] == '%' && response[i + 1] != '%' && response[i + 1] != '*') {
+ 149              		.loc 1 92 0
+ 150 002e 2A46     		mov	r2, r5
+ 151 0030 7919     		adds	r1, r7, r5
+ 152              	.LVL11:
+ 153 0032 7B5D     		ldrb	r3, [r7, r5]	@ zero_extendqisi2
+ 154 0034 CBB1     		cbz	r3, .L39
+  93:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 _buffer[offset++] = '%';
+ 155              		.loc 1 93 0
+ 156 0036 252B     		cmp	r3, #37
+ 157 0038 EAD0     		beq	.L40
+ 158              	.L11:
+  97:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             } else {
+  98:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 _buffer[offset++] = response[i++];
+ 159              		.loc 1 98 0
+ 160 003a 0135     		adds	r5, r5, #1
+ 161              	.LVL12:
+ 162 003c 721C     		adds	r2, r6, #1
+ 163              	.LVL13:
+ 164 003e 7948     		ldr	r0, .L47
+ 165 0040 8355     		strb	r3, [r0, r6]
+  99:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 // Find linebreaks, taking care not to be fooled if they're in a %[^\n] conversion 
+ 100:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 if (response[i - 1] == '\n' && !(i >= 3 && response[i - 3] == '[' && response[i - 2
+ 166              		.loc 1 100 0
+ 167 0042 2B46     		mov	r3, r5
+ 168 0044 0978     		ldrb	r1, [r1]	@ zero_extendqisi2
+ 169 0046 0A29     		cmp	r1, #10
+ 170 0048 F0D1     		bne	.L12
+ 171              		.loc 1 100 0 is_stmt 0 discriminator 1
+ 172 004a 022D     		cmp	r5, #2
+ 173 004c 23DD     		ble	.L30
+ 174              		.loc 1 100 0 discriminator 2
+ 175 004e 7919     		adds	r1, r7, r5
+ 176 0050 11F8031C 		ldrb	r1, [r1, #-3]	@ zero_extendqisi2
+ 177 0054 5B29     		cmp	r1, #91
+ 178 0056 22D1     		bne	.L31
+ 179              		.loc 1 100 0 discriminator 3
+ 180 0058 3B44     		add	r3, r3, r7
+ 181 005a 13F8023C 		ldrb	r3, [r3, #-2]	@ zero_extendqisi2
+ 182 005e 5E2B     		cmp	r3, #94
+ 183 0060 E4D0     		beq	.L12
+  98:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 // Find linebreaks, taking care not to be fooled if they're in a %[^\n] conversion 
+ARM GAS  /tmp/ccsHQQpf.s 			page 6
+
+
+ 184              		.loc 1 98 0 is_stmt 1
+ 185 0062 1646     		mov	r6, r2
+ 101:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                     whole_line_wanted = true;
+ 186              		.loc 1 101 0
+ 187 0064 0123     		movs	r3, #1
+ 188 0066 0393     		str	r3, [sp, #12]
+ 189 0068 00E0     		b	.L13
+ 190              	.LVL14:
+ 191              	.L39:
+  90:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 192              		.loc 1 90 0
+ 193 006a 0393     		str	r3, [sp, #12]
+ 194              	.LVL15:
+ 195              	.L13:
+ 102:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                     break;
+ 103:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 }
+ 104:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             }
+ 105:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         }
+ 106:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 107:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         // Scanf has very poor support for catching errors
+ 108:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         // fortunately, we can abuse the %n specifier to determine
+ 109:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         // if the entire string was matched.
+ 110:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         _buffer[offset++] = '%';
+ 196              		.loc 1 110 0
+ 197 006c 711C     		adds	r1, r6, #1
+ 198              	.LVL16:
+ 199 006e 6D4A     		ldr	r2, .L47
+ 200 0070 2523     		movs	r3, #37
+ 201 0072 9355     		strb	r3, [r2, r6]
+ 111:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         _buffer[offset++] = 'n';
+ 202              		.loc 1 111 0
+ 203 0074 B31C     		adds	r3, r6, #2
+ 204              	.LVL17:
+ 205 0076 6E20     		movs	r0, #110
+ 206 0078 5054     		strb	r0, [r2, r1]
+ 112:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         _buffer[offset++] = 0;
+ 207              		.loc 1 112 0
+ 208 007a 0336     		adds	r6, r6, #3
+ 209              	.LVL18:
+ 210 007c 4FF0000A 		mov	r10, #0
+ 211 0080 02F803A0 		strb	r10, [r2, r3]
+ 113:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 114:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         debug_if(_dbg_on, "AT? %s\n", _buffer);
+ 212              		.loc 1 114 0
+ 213 0084 6849     		ldr	r1, .L47+4
+ 214 0086 694B     		ldr	r3, .L47+8
+ 215 0088 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 216 008a FFF7FEFF 		bl	debug_if
+ 217              	.LVL19:
+ 115:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         // To workaround scanf's lack of error reporting, we actually
+ 116:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         // make two passes. One checks the validity with the modified
+ 117:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         // format string that only stores the matched characters (%n).
+ 118:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         // The other reads in the actual matched values.
+ 119:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         //
+ 120:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         // We keep trying the match until we succeed or some other error
+ 121:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         // derails us.
+ 122:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         int j = 0, dummy = 0;
+ARM GAS  /tmp/ccsHQQpf.s 			page 7
+
+
+ 218              		.loc 1 122 0
+ 219 008e CDF810A0 		str	r10, [sp, #16]
+ 220 0092 AB46     		mov	fp, r5
+ 221 0094 6FE0     		b	.L28
+ 222              	.LVL20:
+ 223              	.L30:
+  98:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 // Find linebreaks, taking care not to be fooled if they're in a %[^\n] conversion 
+ 224              		.loc 1 98 0
+ 225 0096 1646     		mov	r6, r2
+ 101:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                     break;
+ 226              		.loc 1 101 0
+ 227 0098 0123     		movs	r3, #1
+ 228              	.LVL21:
+ 229 009a 0393     		str	r3, [sp, #12]
+ 230 009c E6E7     		b	.L13
+ 231              	.LVL22:
+ 232              	.L31:
+  98:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 // Find linebreaks, taking care not to be fooled if they're in a %[^\n] conversion 
+ 233              		.loc 1 98 0
+ 234 009e 1646     		mov	r6, r2
+ 101:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                     break;
+ 235              		.loc 1 101 0
+ 236 00a0 0123     		movs	r3, #1
+ 237              	.LVL23:
+ 238 00a2 0393     		str	r3, [sp, #12]
+ 239 00a4 E2E7     		b	.L13
+ 240              	.LVL24:
+ 241              	.L44:
+ 242              	.LBB4:
+ 123:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         int dummy_pos[20];
+ 124:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 125:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         while (true) {
+ 126:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             // Receive next character
+ 127:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             int c = mx_hal_serial_getc();
+ 128:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             if (c < 0) {
+ 129:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 debug_if(_dbg_on, "AT(Timeout)\n");
+ 243              		.loc 1 129 0
+ 244 00a6 6249     		ldr	r1, .L47+12
+ 245 00a8 604B     		ldr	r3, .L47+8
+ 246 00aa 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 247              	.LVL25:
+ 248 00ac FFF7FEFF 		bl	debug_if
+ 249              	.LVL26:
+ 250              	.LBE4:
+ 251 00b0 0020     		movs	r0, #0
+ 252              	.LVL27:
+ 253              	.L16:
+ 254              	.LBE9:
+ 130:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 return false;
+ 131:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             }
+ 132:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 133:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             /* Possible not existed string may cause %n function failed:
+ 134:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 			example: "cmd:%*s\r\n%n" not match "cmd:\r\n", %n will not 
+ 135:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 			give a valid value, so we give some dummy chars */
+ 136:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             if (c == '\n' && _in_prev == ':') {
+ 137:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 dummy_pos[dummy++] = j;
+ 138:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 _buffer[offset + j++] = 'x';
+ARM GAS  /tmp/ccsHQQpf.s 			page 8
+
+
+ 139:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             }
+ 140:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 141:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             _in_prev = c;
+ 142:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 143:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             _buffer[offset + j++] = c;
+ 144:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             _buffer[offset + j] = 0;
+ 145:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 146:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             struct oob* oob = _oobs;
+ 147:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             // Check for oob data
+ 148:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             for (; oob; oob = (struct oob*)oob->next) {
+ 149:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 if ((unsigned)j == oob->len && memcmp(oob->prefix, _buffer + offset, oob->len) == 0
+ 150:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                     debug_if(_dbg_on, "AT! %s\n", oob->prefix);
+ 151:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                     oob->cb();
+ 152:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 153:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                     if (_aborted) {
+ 154:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                         debug_if(_dbg_on, "AT(Aborted)\n");
+ 155:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                         return false;
+ 156:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                     }
+ 157:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                     // oob may have corrupted non-reentrant buffer,
+ 158:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                     // so we need to set it up again
+ 159:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                     goto restart;
+ 160:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 }
+ 161:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             }
+ 162:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 163:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             // Check for match
+ 164:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             int count = -1;
+ 165:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             if (whole_line_wanted && c != '\n') {
+ 166:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 // Don't attempt scanning until we get delimiter if they included it in format
+ 167:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 // This allows recv("Foo: %s\n") to work, and not match with just the first charact
+ 168:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 // (scanf does not itself match whitespace in its format string, so \n is not signi
+ 169:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             } else {
+ 170:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 sscanf(_buffer + offset, _buffer, &count);
+ 171:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 debug_if(_dbg_on, "%s=====%s, %d,%d\r\n", _buffer, _buffer + offset, count, j);
+ 172:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             }
+ 173:src/helper/emhost/ATCmdParser/ATCmdParser.c **** //            printf("count[%d] j[%d]\r\n", count, j);
+ 174:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             // We only succeed if all characters in the response are matched
+ 175:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             if (count == j) {
+ 176:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 /* Remove dummy chars*/
+ 177:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 for (int k = 0; k < dummy; k++, j--) {
+ 178:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                     dummy_pos[k] -= k;
+ 179:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                     memcpy(_buffer + offset + dummy_pos[k], _buffer + offset + dummy_pos[k] + 1, j 
+ 180:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                     debug_if(_dbg_on, "AT= %s\n", _buffer + offset);
+ 181:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 }
+ 182:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 183:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 debug_if(_dbg_on, "AT= %s\n", _buffer + offset);
+ 184:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 // Reuse the front end of the buffer
+ 185:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 memcpy(_buffer, response, i);
+ 186:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 _buffer[i] = 0;
+ 187:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 188:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 // Store the found results
+ 189:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 vsscanf(_buffer + offset, _buffer, args);
+ 190:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 // Jump to next line and continue parsing
+ 191:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 response += i;
+ 192:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 break;
+ 193:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             }
+ 194:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 195:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             // Clear the buffer when we hit a newline or ran out of space
+ARM GAS  /tmp/ccsHQQpf.s 			page 9
+
+
+ 196:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             // running out of space usually means we ran into binary data
+ 197:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             if (c == '\n' || j + 1 >= AT_BUFFER_SIZE - offset) {
+ 198:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 debug_if(_dbg_on, "AT< %s", _buffer + offset);
+ 199:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 j = 0;
+ 200:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 dummy = 0;
+ 201:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             }
+ 202:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         }
+ 203:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     }
+ 204:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 205:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     return true;
+ 206:src/helper/emhost/ATCmdParser/ATCmdParser.c **** }
+ 255              		.loc 1 206 0 discriminator 2
+ 256 00b2 1DB0     		add	sp, sp, #116
+ 257              	.LCFI8:
+ 258              		.cfi_remember_state
+ 259              		.cfi_def_cfa_offset 36
+ 260              		@ sp needed
+ 261 00b4 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 262              	.LVL28:
+ 263              	.L45:
+ 264              	.LCFI9:
+ 265              		.cfi_restore_state
+ 266              	.LBB10:
+ 267              	.LBB6:
+ 136:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 dummy_pos[dummy++] = j;
+ 268              		.loc 1 136 0 discriminator 1
+ 269 00b8 029B     		ldr	r3, [sp, #8]
+ 270 00ba 3A2B     		cmp	r3, #58
+ 271 00bc 63D1     		bne	.L17
+ 272              	.LVL29:
+ 137:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 _buffer[offset + j++] = 'x';
+ 273              		.loc 1 137 0
+ 274 00be 1CAA     		add	r2, sp, #112
+ 275 00c0 0498     		ldr	r0, [sp, #16]
+ 276              	.LVL30:
+ 277 00c2 02EB8003 		add	r3, r2, r0, lsl #2
+ 278 00c6 43F850AC 		str	r10, [r3, #-80]
+ 279              	.LVL31:
+ 138:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             }
+ 280              		.loc 1 138 0
+ 281 00ca 0AEB0603 		add	r3, r10, r6
+ 282              	.LVL32:
+ 283 00ce 554A     		ldr	r2, .L47
+ 284              	.LVL33:
+ 285 00d0 7821     		movs	r1, #120
+ 286 00d2 D154     		strb	r1, [r2, r3]
+ 137:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 _buffer[offset + j++] = 'x';
+ 287              		.loc 1 137 0
+ 288 00d4 431C     		adds	r3, r0, #1
+ 289              	.LVL34:
+ 290 00d6 0493     		str	r3, [sp, #16]
+ 291              	.LVL35:
+ 138:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             }
+ 292              		.loc 1 138 0
+ 293 00d8 0AF1010A 		add	r10, r10, #1
+ 294              	.LVL36:
+ 295 00dc 53E0     		b	.L17
+ARM GAS  /tmp/ccsHQQpf.s 			page 10
+
+
+ 296              	.LVL37:
+ 297              	.L19:
+ 148:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 if ((unsigned)j == oob->len && memcmp(oob->prefix, _buffer + offset, oob->len) == 0
+ 298              		.loc 1 148 0
+ 299 00de E468     		ldr	r4, [r4, #12]
+ 300              	.LVL38:
+ 301              	.L18:
+ 148:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 if ((unsigned)j == oob->len && memcmp(oob->prefix, _buffer + offset, oob->len) == 0
+ 302              		.loc 1 148 0 is_stmt 0 discriminator 1
+ 303 00e0 CCB1     		cbz	r4, .L41
+ 149:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                     debug_if(_dbg_on, "AT! %s\n", oob->prefix);
+ 304              		.loc 1 149 0 is_stmt 1
+ 305 00e2 2268     		ldr	r2, [r4]
+ 306 00e4 4245     		cmp	r2, r8
+ 307 00e6 FAD1     		bne	.L19
+ 149:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                     debug_if(_dbg_on, "AT! %s\n", oob->prefix);
+ 308              		.loc 1 149 0 is_stmt 0 discriminator 1
+ 309 00e8 6568     		ldr	r5, [r4, #4]
+ 310 00ea 4E49     		ldr	r1, .L47
+ 311 00ec 3144     		add	r1, r1, r6
+ 312 00ee 2846     		mov	r0, r5
+ 313 00f0 FFF7FEFF 		bl	memcmp
+ 314              	.LVL39:
+ 315 00f4 0028     		cmp	r0, #0
+ 316 00f6 F2D1     		bne	.L19
+ 150:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                     oob->cb();
+ 317              		.loc 1 150 0 is_stmt 1
+ 318 00f8 2A46     		mov	r2, r5
+ 319 00fa 4E49     		ldr	r1, .L47+16
+ 320 00fc 4B4B     		ldr	r3, .L47+8
+ 321 00fe 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 322 0100 FFF7FEFF 		bl	debug_if
+ 323              	.LVL40:
+ 151:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 324              		.loc 1 151 0
+ 325 0104 A368     		ldr	r3, [r4, #8]
+ 326 0106 9847     		blx	r3
+ 327              	.LVL41:
+ 328              	.L9:
+ 329              	.L10:
+ 330              	.LBE6:
+ 331              	.LBE10:
+  83:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         // Since response is const, we need to copy it into our buffer to
+ 332              		.loc 1 83 0
+ 333 0108 3B78     		ldrb	r3, [r7]	@ zero_extendqisi2
+ 334 010a 002B     		cmp	r3, #0
+ 335 010c 00F08780 		beq	.L42
+ 336              	.LBB11:
+  89:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         bool whole_line_wanted = false;
+ 337              		.loc 1 89 0
+ 338 0110 0026     		movs	r6, #0
+  88:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         int offset = 0;
+ 339              		.loc 1 88 0
+ 340 0112 3546     		mov	r5, r6
+ 341 0114 8BE7     		b	.L29
+ 342              	.LVL42:
+ 343              	.L41:
+ARM GAS  /tmp/ccsHQQpf.s 			page 11
+
+
+ 344              	.LBB7:
+ 164:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             if (whole_line_wanted && c != '\n') {
+ 345              		.loc 1 164 0
+ 346 0116 4FF0FF33 		mov	r3, #-1
+ 347 011a 0793     		str	r3, [sp, #28]
+ 165:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 // Don't attempt scanning until we get delimiter if they included it in format
+ 348              		.loc 1 165 0
+ 349 011c 039B     		ldr	r3, [sp, #12]
+ 350 011e 13B1     		cbz	r3, .L21
+ 165:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 // Don't attempt scanning until we get delimiter if they included it in format
+ 351              		.loc 1 165 0 is_stmt 0 discriminator 1
+ 352 0120 B9F10A0F 		cmp	r9, #10
+ 353 0124 11D1     		bne	.L22
+ 354              	.L21:
+ 170:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 debug_if(_dbg_on, "%s=====%s, %d,%d\r\n", _buffer, _buffer + offset, count, j);
+ 355              		.loc 1 170 0 is_stmt 1
+ 356 0126 3F4C     		ldr	r4, .L47
+ 357              	.LVL43:
+ 358 0128 A519     		adds	r5, r4, r6
+ 359 012a 07AA     		add	r2, sp, #28
+ 360 012c 2146     		mov	r1, r4
+ 361 012e 2846     		mov	r0, r5
+ 362 0130 FFF7FEFF 		bl	sscanf
+ 363              	.LVL44:
+ 171:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             }
+ 364              		.loc 1 171 0
+ 365 0134 3D4B     		ldr	r3, .L47+8
+ 366 0136 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 367 0138 CDF80480 		str	r8, [sp, #4]
+ 368 013c 079B     		ldr	r3, [sp, #28]
+ 369 013e 0093     		str	r3, [sp]
+ 370 0140 2B46     		mov	r3, r5
+ 371 0142 2246     		mov	r2, r4
+ 372 0144 3C49     		ldr	r1, .L47+20
+ 373 0146 FFF7FEFF 		bl	debug_if
+ 374              	.LVL45:
+ 375              	.L22:
+ 175:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 /* Remove dummy chars*/
+ 376              		.loc 1 175 0
+ 377 014a 079B     		ldr	r3, [sp, #28]
+ 378 014c 4345     		cmp	r3, r8
+ 379 014e 2AD0     		beq	.L43
+ 197:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 debug_if(_dbg_on, "AT< %s", _buffer + offset);
+ 380              		.loc 1 197 0
+ 381 0150 B9F10A0F 		cmp	r9, #10
+ 382 0154 05D0     		beq	.L26
+ 197:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 debug_if(_dbg_on, "AT< %s", _buffer + offset);
+ 383              		.loc 1 197 0 is_stmt 0 discriminator 1
+ 384 0156 0AF1020A 		add	r10, r10, #2
+ 385 015a C6F50073 		rsb	r3, r6, #512
+ 386 015e 9A45     		cmp	r10, r3
+ 387 0160 5BDB     		blt	.L34
+ 388              	.L26:
+ 198:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 j = 0;
+ 389              		.loc 1 198 0 is_stmt 1
+ 390 0162 304A     		ldr	r2, .L47
+ 391 0164 3244     		add	r2, r2, r6
+ARM GAS  /tmp/ccsHQQpf.s 			page 12
+
+
+ 392 0166 3549     		ldr	r1, .L47+24
+ 393 0168 304B     		ldr	r3, .L47+8
+ 394 016a 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 395 016c FFF7FEFF 		bl	debug_if
+ 396              	.LVL46:
+ 200:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             }
+ 397              		.loc 1 200 0
+ 398 0170 0023     		movs	r3, #0
+ 399 0172 0493     		str	r3, [sp, #16]
+ 199:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 dummy = 0;
+ 400              		.loc 1 199 0
+ 401 0174 9A46     		mov	r10, r3
+ 402              	.LVL47:
+ 403              	.L28:
+ 127:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             if (c < 0) {
+ 404              		.loc 1 127 0
+ 405 0176 FFF7FEFF 		bl	mx_hal_serial_getc
+ 406              	.LVL48:
+ 128:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 debug_if(_dbg_on, "AT(Timeout)\n");
+ 407              		.loc 1 128 0
+ 408 017a B0F10009 		subs	r9, r0, #0
+ 409 017e 92DB     		blt	.L44
+ 136:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 dummy_pos[dummy++] = j;
+ 410              		.loc 1 136 0
+ 411 0180 B9F10A0F 		cmp	r9, #10
+ 412 0184 98D0     		beq	.L45
+ 413              	.LVL49:
+ 414              	.L17:
+ 141:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 415              		.loc 1 141 0
+ 416 0186 5FFA89F1 		uxtb	r1, r9
+ 417 018a 0291     		str	r1, [sp, #8]
+ 418              	.LVL50:
+ 143:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             _buffer[offset + j] = 0;
+ 419              		.loc 1 143 0
+ 420 018c 0AF10108 		add	r8, r10, #1
+ 421              	.LVL51:
+ 422 0190 0AEB0603 		add	r3, r10, r6
+ 423 0194 234A     		ldr	r2, .L47
+ 424 0196 D154     		strb	r1, [r2, r3]
+ 144:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 425              		.loc 1 144 0
+ 426 0198 06EB0803 		add	r3, r6, r8
+ 427 019c 0021     		movs	r1, #0
+ 428              	.LVL52:
+ 429 019e D154     		strb	r1, [r2, r3]
+ 146:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             // Check for oob data
+ 430              		.loc 1 146 0
+ 431 01a0 274B     		ldr	r3, .L47+28
+ 432 01a2 1C68     		ldr	r4, [r3]
+ 433              	.LVL53:
+ 148:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 if ((unsigned)j == oob->len && memcmp(oob->prefix, _buffer + offset, oob->len) == 0
+ 434              		.loc 1 148 0
+ 435 01a4 9CE7     		b	.L18
+ 436              	.LVL54:
+ 437              	.L43:
+ 438 01a6 5D46     		mov	r5, fp
+ARM GAS  /tmp/ccsHQQpf.s 			page 13
+
+
+ 439              	.LBB5:
+ 177:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                     dummy_pos[k] -= k;
+ 440              		.loc 1 177 0
+ 441 01a8 0024     		movs	r4, #0
+ 442 01aa DDF81090 		ldr	r9, [sp, #16]
+ 443              	.LVL55:
+ 444              	.L23:
+ 177:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                     dummy_pos[k] -= k;
+ 445              		.loc 1 177 0 is_stmt 0 discriminator 1
+ 446 01ae A145     		cmp	r9, r4
+ 447 01b0 1DDD     		ble	.L46
+ 178:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                     memcpy(_buffer + offset + dummy_pos[k], _buffer + offset + dummy_pos[k] + 1, j 
+ 448              		.loc 1 178 0 is_stmt 1 discriminator 3
+ 449 01b2 1CAB     		add	r3, sp, #112
+ 450 01b4 03EB8403 		add	r3, r3, r4, lsl #2
+ 451 01b8 53F8502C 		ldr	r2, [r3, #-80]
+ 452 01bc 121B     		subs	r2, r2, r4
+ 453 01be 43F8502C 		str	r2, [r3, #-80]
+ 179:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                     debug_if(_dbg_on, "AT= %s\n", _buffer + offset);
+ 454              		.loc 1 179 0 discriminator 3
+ 455 01c2 9019     		adds	r0, r2, r6
+ 456 01c4 411C     		adds	r1, r0, #1
+ 457 01c6 A8EB0202 		sub	r2, r8, r2
+ 458 01ca DFF858A0 		ldr	r10, .L47
+ 459 01ce 013A     		subs	r2, r2, #1
+ 460 01d0 5144     		add	r1, r1, r10
+ 461 01d2 5044     		add	r0, r0, r10
+ 462 01d4 FFF7FEFF 		bl	memcpy
+ 463              	.LVL56:
+ 180:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 }
+ 464              		.loc 1 180 0 discriminator 3
+ 465 01d8 0AEB0602 		add	r2, r10, r6
+ 466 01dc 1949     		ldr	r1, .L47+32
+ 467 01de 134B     		ldr	r3, .L47+8
+ 468 01e0 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 469 01e2 FFF7FEFF 		bl	debug_if
+ 470              	.LVL57:
+ 177:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                     dummy_pos[k] -= k;
+ 471              		.loc 1 177 0 discriminator 3
+ 472 01e6 0134     		adds	r4, r4, #1
+ 473              	.LVL58:
+ 474 01e8 08F1FF38 		add	r8, r8, #-1
+ 475              	.LVL59:
+ 476 01ec DFE7     		b	.L23
+ 477              	.L46:
+ 478              	.LBE5:
+ 183:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 // Reuse the front end of the buffer
+ 479              		.loc 1 183 0
+ 480 01ee 0D4C     		ldr	r4, .L47
+ 481              	.LVL60:
+ 482 01f0 2644     		add	r6, r6, r4
+ 483              	.LVL61:
+ 484 01f2 3246     		mov	r2, r6
+ 485 01f4 1349     		ldr	r1, .L47+32
+ 486 01f6 0D4B     		ldr	r3, .L47+8
+ 487 01f8 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 488 01fa FFF7FEFF 		bl	debug_if
+ARM GAS  /tmp/ccsHQQpf.s 			page 14
+
+
+ 489              	.LVL62:
+ 185:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 _buffer[i] = 0;
+ 490              		.loc 1 185 0
+ 491 01fe 2A46     		mov	r2, r5
+ 492 0200 3946     		mov	r1, r7
+ 493 0202 2046     		mov	r0, r4
+ 494 0204 FFF7FEFF 		bl	memcpy
+ 495              	.LVL63:
+ 186:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 496              		.loc 1 186 0
+ 497 0208 0023     		movs	r3, #0
+ 498 020a 6355     		strb	r3, [r4, r5]
+ 189:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 // Jump to next line and continue parsing
+ 499              		.loc 1 189 0
+ 500 020c 059A     		ldr	r2, [sp, #20]
+ 501 020e 2146     		mov	r1, r4
+ 502 0210 3046     		mov	r0, r6
+ 503 0212 FFF7FEFF 		bl	vsscanf
+ 504              	.LVL64:
+ 191:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 break;
+ 505              		.loc 1 191 0
+ 506 0216 2F44     		add	r7, r7, r5
+ 507              	.LVL65:
+ 508              	.LBE7:
+ 509 0218 76E7     		b	.L10
+ 510              	.LVL66:
+ 511              	.L34:
+ 512              	.LBB8:
+ 143:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             _buffer[offset + j] = 0;
+ 513              		.loc 1 143 0
+ 514 021a C246     		mov	r10, r8
+ 515              	.LVL67:
+ 516              	.LBE8:
+ 125:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             // Receive next character
+ 517              		.loc 1 125 0
+ 518 021c ABE7     		b	.L28
+ 519              	.LVL68:
+ 520              	.L42:
+ 521              	.LBE11:
+ 205:src/helper/emhost/ATCmdParser/ATCmdParser.c **** }
+ 522              		.loc 1 205 0
+ 523 021e 0120     		movs	r0, #1
+ 524 0220 47E7     		b	.L16
+ 525              	.L48:
+ 526 0222 00BF     		.align	2
+ 527              	.L47:
+ 528 0224 00000000 		.word	.LANCHOR0
+ 529 0228 00000000 		.word	.LC0
+ 530 022c 00000000 		.word	.LANCHOR1
+ 531 0230 08000000 		.word	.LC1
+ 532 0234 18000000 		.word	.LC2
+ 533 0238 20000000 		.word	.LC3
+ 534 023c 3C000000 		.word	.LC5
+ 535 0240 00000000 		.word	.LANCHOR2
+ 536 0244 34000000 		.word	.LC4
+ 537              		.cfi_endproc
+ 538              	.LFE129:
+ARM GAS  /tmp/ccsHQQpf.s 			page 15
+
+
+ 540              		.section	.text.ATCmdParser_recv,"ax",%progbits
+ 541              		.align	1
+ 542              		.global	ATCmdParser_recv
+ 543              		.syntax unified
+ 544              		.thumb
+ 545              		.thumb_func
+ 546              		.fpu fpv4-sp-d16
+ 548              	ATCmdParser_recv:
+ 549              	.LFB131:
+ 207:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 208:src/helper/emhost/ATCmdParser/ATCmdParser.c **** // Command parsing with line handling
+ 209:src/helper/emhost/ATCmdParser/ATCmdParser.c **** bool ATCmdParser_vsend(const char* command, va_list args)
+ 210:src/helper/emhost/ATCmdParser/ATCmdParser.c **** {
+ 211:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     while (ATCmdParser_process_oob())
+ 212:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         ;
+ 213:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     // Create and send command
+ 214:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     if (vsprintf(_buffer, command, args) < 0) {
+ 215:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         return false;
+ 216:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     }
+ 217:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 218:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     for (int i = 0; _buffer[i]; i++) {
+ 219:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         if (mx_hal_serial_putc(_buffer[i]) < 0) {
+ 220:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             return false;
+ 221:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         }
+ 222:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     }
+ 223:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 224:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     // Finish with newline
+ 225:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     for (size_t i = 0; _output_delimiter[i]; i++) {
+ 226:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         if (mx_hal_serial_putc(_output_delimiter[i]) < 0) {
+ 227:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             return false;
+ 228:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         }
+ 229:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     }
+ 230:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 231:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     debug_if(_dbg_on, "AT> %s\n", _buffer);
+ 232:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     return true;
+ 233:src/helper/emhost/ATCmdParser/ATCmdParser.c **** }
+ 234:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 235:src/helper/emhost/ATCmdParser/ATCmdParser.c **** bool ATCmdParser_recv(const char* response, ...)
+ 236:src/helper/emhost/ATCmdParser/ATCmdParser.c **** {
+ 550              		.loc 1 236 0
+ 551              		.cfi_startproc
+ 552              		@ args = 4, pretend = 16, frame = 8
+ 553              		@ frame_needed = 0, uses_anonymous_args = 1
+ 554              	.LVL69:
+ 555 0000 0FB4     		push	{r0, r1, r2, r3}
+ 556              	.LCFI10:
+ 557              		.cfi_def_cfa_offset 16
+ 558              		.cfi_offset 0, -16
+ 559              		.cfi_offset 1, -12
+ 560              		.cfi_offset 2, -8
+ 561              		.cfi_offset 3, -4
+ 562 0002 00B5     		push	{lr}
+ 563              	.LCFI11:
+ 564              		.cfi_def_cfa_offset 20
+ 565              		.cfi_offset 14, -20
+ 566 0004 83B0     		sub	sp, sp, #12
+ 567              	.LCFI12:
+ARM GAS  /tmp/ccsHQQpf.s 			page 16
+
+
+ 568              		.cfi_def_cfa_offset 32
+ 569 0006 04A9     		add	r1, sp, #16
+ 570 0008 51F8040B 		ldr	r0, [r1], #4
+ 237:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     va_list args;
+ 238:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     va_start(args, response);
+ 571              		.loc 1 238 0
+ 572 000c 0191     		str	r1, [sp, #4]
+ 239:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     bool res = ATCmdParser_vrecv(response, args);
+ 573              		.loc 1 239 0
+ 574 000e FFF7FEFF 		bl	ATCmdParser_vrecv
+ 575              	.LVL70:
+ 240:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     va_end(args);
+ 241:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     return res;
+ 242:src/helper/emhost/ATCmdParser/ATCmdParser.c **** }
+ 576              		.loc 1 242 0
+ 577 0012 03B0     		add	sp, sp, #12
+ 578              	.LCFI13:
+ 579              		.cfi_def_cfa_offset 20
+ 580              		@ sp needed
+ 581 0014 5DF804EB 		ldr	lr, [sp], #4
+ 582              	.LCFI14:
+ 583              		.cfi_restore 14
+ 584              		.cfi_def_cfa_offset 16
+ 585 0018 04B0     		add	sp, sp, #16
+ 586              	.LCFI15:
+ 587              		.cfi_restore 3
+ 588              		.cfi_restore 2
+ 589              		.cfi_restore 1
+ 590              		.cfi_restore 0
+ 591              		.cfi_def_cfa_offset 0
+ 592 001a 7047     		bx	lr
+ 593              		.cfi_endproc
+ 594              	.LFE131:
+ 596              		.section	.text.ATCmdParser_write,"ax",%progbits
+ 597              		.align	1
+ 598              		.global	ATCmdParser_write
+ 599              		.syntax unified
+ 600              		.thumb
+ 601              		.thumb_func
+ 602              		.fpu fpv4-sp-d16
+ 604              	ATCmdParser_write:
+ 605              	.LFB133:
+ 243:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 244:src/helper/emhost/ATCmdParser/ATCmdParser.c **** bool ATCmdParser_send(const char* command, ...)
+ 245:src/helper/emhost/ATCmdParser/ATCmdParser.c **** {
+ 246:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     va_list args;
+ 247:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     va_start(args, command);
+ 248:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     bool res = ATCmdParser_vsend(command, args);
+ 249:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     va_end(args);
+ 250:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     return res;
+ 251:src/helper/emhost/ATCmdParser/ATCmdParser.c **** }
+ 252:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 253:src/helper/emhost/ATCmdParser/ATCmdParser.c **** // read/write handling with timeouts
+ 254:src/helper/emhost/ATCmdParser/ATCmdParser.c **** int ATCmdParser_write(const char* data, int size)
+ 255:src/helper/emhost/ATCmdParser/ATCmdParser.c **** {
+ 606              		.loc 1 255 0
+ 607              		.cfi_startproc
+ARM GAS  /tmp/ccsHQQpf.s 			page 17
+
+
+ 608              		@ args = 0, pretend = 0, frame = 0
+ 609              		@ frame_needed = 0, uses_anonymous_args = 0
+ 610              	.LVL71:
+ 611 0000 70B5     		push	{r4, r5, r6, lr}
+ 612              	.LCFI16:
+ 613              		.cfi_def_cfa_offset 16
+ 614              		.cfi_offset 4, -16
+ 615              		.cfi_offset 5, -12
+ 616              		.cfi_offset 6, -8
+ 617              		.cfi_offset 14, -4
+ 618 0002 0646     		mov	r6, r0
+ 619 0004 0D46     		mov	r5, r1
+ 620              	.LVL72:
+ 256:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     int i = 0;
+ 621              		.loc 1 256 0
+ 622 0006 0024     		movs	r4, #0
+ 623              	.LVL73:
+ 624              	.L52:
+ 257:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     for (; i < size; i++) {
+ 625              		.loc 1 257 0 discriminator 1
+ 626 0008 AC42     		cmp	r4, r5
+ 627 000a 08DA     		bge	.L51
+ 258:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         if (mx_hal_serial_putc(data[i]) < 0) {
+ 628              		.loc 1 258 0
+ 629 000c 305D     		ldrb	r0, [r6, r4]	@ zero_extendqisi2
+ 630 000e FFF7FEFF 		bl	mx_hal_serial_putc
+ 631              	.LVL74:
+ 632 0012 0028     		cmp	r0, #0
+ 633 0014 01DB     		blt	.L55
+ 257:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     for (; i < size; i++) {
+ 634              		.loc 1 257 0
+ 635 0016 0134     		adds	r4, r4, #1
+ 636              	.LVL75:
+ 637 0018 F6E7     		b	.L52
+ 638              	.L55:
+ 259:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             return -1;
+ 639              		.loc 1 259 0
+ 640 001a 4FF0FF34 		mov	r4, #-1
+ 641              	.LVL76:
+ 642              	.L51:
+ 260:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         }
+ 261:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         //mx_delay(1);
+ 262:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     }
+ 263:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     return i;
+ 264:src/helper/emhost/ATCmdParser/ATCmdParser.c **** }
+ 643              		.loc 1 264 0
+ 644 001e 2046     		mov	r0, r4
+ 645 0020 70BD     		pop	{r4, r5, r6, pc}
+ 646              		.cfi_endproc
+ 647              	.LFE133:
+ 649              		.section	.text.ATCmdParser_read,"ax",%progbits
+ 650              		.align	1
+ 651              		.global	ATCmdParser_read
+ 652              		.syntax unified
+ 653              		.thumb
+ 654              		.thumb_func
+ 655              		.fpu fpv4-sp-d16
+ARM GAS  /tmp/ccsHQQpf.s 			page 18
+
+
+ 657              	ATCmdParser_read:
+ 658              	.LFB134:
+ 265:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 266:src/helper/emhost/ATCmdParser/ATCmdParser.c **** int ATCmdParser_read(char* data, int size)
+ 267:src/helper/emhost/ATCmdParser/ATCmdParser.c **** {
+ 659              		.loc 1 267 0
+ 660              		.cfi_startproc
+ 661              		@ args = 0, pretend = 0, frame = 0
+ 662              		@ frame_needed = 0, uses_anonymous_args = 0
+ 663              	.LVL77:
+ 664 0000 70B5     		push	{r4, r5, r6, lr}
+ 665              	.LCFI17:
+ 666              		.cfi_def_cfa_offset 16
+ 667              		.cfi_offset 4, -16
+ 668              		.cfi_offset 5, -12
+ 669              		.cfi_offset 6, -8
+ 670              		.cfi_offset 14, -4
+ 671 0002 0646     		mov	r6, r0
+ 672 0004 0D46     		mov	r5, r1
+ 673              	.LVL78:
+ 268:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     int i = 0;
+ 674              		.loc 1 268 0
+ 675 0006 0024     		movs	r4, #0
+ 676              	.LVL79:
+ 677              	.L58:
+ 269:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     for (; i < size; i++) {
+ 678              		.loc 1 269 0 discriminator 1
+ 679 0008 AC42     		cmp	r4, r5
+ 680 000a 08DA     		bge	.L57
+ 681              	.LBB12:
+ 270:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         int c = mx_hal_serial_getc();
+ 682              		.loc 1 270 0
+ 683 000c FFF7FEFF 		bl	mx_hal_serial_getc
+ 684              	.LVL80:
+ 271:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         if (c < 0) {
+ 685              		.loc 1 271 0
+ 686 0010 0028     		cmp	r0, #0
+ 687 0012 02DB     		blt	.L61
+ 272:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             return -1;
+ 273:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         }
+ 274:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         data[i] = c;
+ 688              		.loc 1 274 0
+ 689 0014 3055     		strb	r0, [r6, r4]
+ 690              	.LBE12:
+ 269:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         int c = mx_hal_serial_getc();
+ 691              		.loc 1 269 0
+ 692 0016 0134     		adds	r4, r4, #1
+ 693              	.LVL81:
+ 694 0018 F6E7     		b	.L58
+ 695              	.L61:
+ 696              	.LBB13:
+ 272:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             return -1;
+ 697              		.loc 1 272 0
+ 698 001a 4FF0FF34 		mov	r4, #-1
+ 699              	.LVL82:
+ 700              	.L57:
+ 701              	.LBE13:
+ARM GAS  /tmp/ccsHQQpf.s 			page 19
+
+
+ 275:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     }
+ 276:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     return i;
+ 277:src/helper/emhost/ATCmdParser/ATCmdParser.c **** }
+ 702              		.loc 1 277 0
+ 703 001e 2046     		mov	r0, r4
+ 704 0020 70BD     		pop	{r4, r5, r6, pc}
+ 705              		.cfi_endproc
+ 706              	.LFE134:
+ 708              		.section	.text.ATCmdParser_debug,"ax",%progbits
+ 709              		.align	1
+ 710              		.global	ATCmdParser_debug
+ 711              		.syntax unified
+ 712              		.thumb
+ 713              		.thumb_func
+ 714              		.fpu fpv4-sp-d16
+ 716              	ATCmdParser_debug:
+ 717              	.LFB135:
+ 278:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 279:src/helper/emhost/ATCmdParser/ATCmdParser.c **** void ATCmdParser_debug(bool on)
+ 280:src/helper/emhost/ATCmdParser/ATCmdParser.c **** {
+ 718              		.loc 1 280 0
+ 719              		.cfi_startproc
+ 720              		@ args = 0, pretend = 0, frame = 0
+ 721              		@ frame_needed = 0, uses_anonymous_args = 0
+ 722              		@ link register save eliminated.
+ 723              	.LVL83:
+ 281:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     _dbg_on = on;
+ 724              		.loc 1 281 0
+ 725 0000 014B     		ldr	r3, .L64
+ 726 0002 1870     		strb	r0, [r3]
+ 282:src/helper/emhost/ATCmdParser/ATCmdParser.c **** }
+ 727              		.loc 1 282 0
+ 728 0004 7047     		bx	lr
+ 729              	.L65:
+ 730 0006 00BF     		.align	2
+ 731              	.L64:
+ 732 0008 00000000 		.word	.LANCHOR1
+ 733              		.cfi_endproc
+ 734              	.LFE135:
+ 736              		.section	.text.ATCmdParser_add_oob,"ax",%progbits
+ 737              		.align	1
+ 738              		.global	ATCmdParser_add_oob
+ 739              		.syntax unified
+ 740              		.thumb
+ 741              		.thumb_func
+ 742              		.fpu fpv4-sp-d16
+ 744              	ATCmdParser_add_oob:
+ 745              	.LFB136:
+ 283:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 284:src/helper/emhost/ATCmdParser/ATCmdParser.c **** void ATCmdParser_add_oob(const char* prefix, oob_callback cb)
+ 285:src/helper/emhost/ATCmdParser/ATCmdParser.c **** {
+ 746              		.loc 1 285 0
+ 747              		.cfi_startproc
+ 748              		@ args = 0, pretend = 0, frame = 0
+ 749              		@ frame_needed = 0, uses_anonymous_args = 0
+ 750              	.LVL84:
+ 751 0000 70B5     		push	{r4, r5, r6, lr}
+ARM GAS  /tmp/ccsHQQpf.s 			page 20
+
+
+ 752              	.LCFI18:
+ 753              		.cfi_def_cfa_offset 16
+ 754              		.cfi_offset 4, -16
+ 755              		.cfi_offset 5, -12
+ 756              		.cfi_offset 6, -8
+ 757              		.cfi_offset 14, -4
+ 758 0002 0546     		mov	r5, r0
+ 759 0004 0E46     		mov	r6, r1
+ 286:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     struct oob* oob = malloc(sizeof(struct oob));
+ 760              		.loc 1 286 0
+ 761 0006 1020     		movs	r0, #16
+ 762              	.LVL85:
+ 763 0008 FFF7FEFF 		bl	malloc
+ 764              	.LVL86:
+ 765 000c 0446     		mov	r4, r0
+ 766              	.LVL87:
+ 287:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     oob->len = strlen(prefix);
+ 767              		.loc 1 287 0
+ 768 000e 2846     		mov	r0, r5
+ 769              	.LVL88:
+ 770 0010 FFF7FEFF 		bl	strlen
+ 771              	.LVL89:
+ 772 0014 2060     		str	r0, [r4]
+ 288:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     oob->prefix = prefix;
+ 773              		.loc 1 288 0
+ 774 0016 6560     		str	r5, [r4, #4]
+ 289:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     oob->cb = cb;
+ 775              		.loc 1 289 0
+ 776 0018 A660     		str	r6, [r4, #8]
+ 290:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     oob->next = _oobs;
+ 777              		.loc 1 290 0
+ 778 001a 024B     		ldr	r3, .L68
+ 779 001c 1A68     		ldr	r2, [r3]
+ 780 001e E260     		str	r2, [r4, #12]
+ 291:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     _oobs = oob;
+ 781              		.loc 1 291 0
+ 782 0020 1C60     		str	r4, [r3]
+ 292:src/helper/emhost/ATCmdParser/ATCmdParser.c **** }
+ 783              		.loc 1 292 0
+ 784 0022 70BD     		pop	{r4, r5, r6, pc}
+ 785              	.LVL90:
+ 786              	.L69:
+ 787              		.align	2
+ 788              	.L68:
+ 789 0024 00000000 		.word	.LANCHOR2
+ 790              		.cfi_endproc
+ 791              	.LFE136:
+ 793              		.section	.text.ATCmdParser_process_oob,"ax",%progbits
+ 794              		.align	1
+ 795              		.global	ATCmdParser_process_oob
+ 796              		.syntax unified
+ 797              		.thumb
+ 798              		.thumb_func
+ 799              		.fpu fpv4-sp-d16
+ 801              	ATCmdParser_process_oob:
+ 802              	.LFB137:
+ 293:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ARM GAS  /tmp/ccsHQQpf.s 			page 21
+
+
+ 294:src/helper/emhost/ATCmdParser/ATCmdParser.c **** bool ATCmdParser_process_oob(void)
+ 295:src/helper/emhost/ATCmdParser/ATCmdParser.c **** {
+ 803              		.loc 1 295 0
+ 804              		.cfi_startproc
+ 805              		@ args = 0, pretend = 0, frame = 0
+ 806              		@ frame_needed = 0, uses_anonymous_args = 0
+ 807 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 808              	.LCFI19:
+ 809              		.cfi_def_cfa_offset 24
+ 810              		.cfi_offset 4, -24
+ 811              		.cfi_offset 5, -20
+ 812              		.cfi_offset 6, -16
+ 813              		.cfi_offset 7, -12
+ 814              		.cfi_offset 8, -8
+ 815              		.cfi_offset 14, -4
+ 296:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     if (!mx_hal_serial_readable()) {
+ 816              		.loc 1 296 0
+ 817 0004 FFF7FEFF 		bl	mx_hal_serial_readable
+ 818              	.LVL91:
+ 819 0008 8046     		mov	r8, r0
+ 820 000a B8B1     		cbz	r0, .L72
+ 297:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         return false;
+ 298:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     }
+ 299:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 300:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     int i = 0;
+ 821              		.loc 1 300 0
+ 822 000c 0027     		movs	r7, #0
+ 823 000e 2FE0     		b	.L71
+ 824              	.LVL92:
+ 825              	.L80:
+ 826              	.LBB14:
+ 301:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     while (true) {
+ 302:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         // Receive next character
+ 303:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         int c = mx_hal_serial_getc();
+ 304:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         if (c < 0) {
+ 305:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             return false;
+ 306:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         }
+ 307:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         _buffer[i++] = c;
+ 827              		.loc 1 307 0
+ 828 0010 2F46     		mov	r7, r5
+ 829 0012 2DE0     		b	.L71
+ 830              	.L74:
+ 308:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         _buffer[i] = 0;
+ 309:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 310:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         // Check for oob data
+ 311:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         struct oob* oob = _oobs;
+ 312:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         while (oob) {
+ 313:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             if (i == (int)oob->len && memcmp(oob->prefix, _buffer, oob->len) == 0) {
+ 314:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 debug_if(_dbg_on, "AT! %s\r\n", oob->prefix);
+ 315:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 oob->cb();
+ 316:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 return true;
+ 317:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             }
+ 318:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             oob = oob->next;
+ 831              		.loc 1 318 0
+ 832 0014 E468     		ldr	r4, [r4, #12]
+ 833              	.LVL93:
+ 834              	.L73:
+ARM GAS  /tmp/ccsHQQpf.s 			page 22
+
+
+ 312:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             if (i == (int)oob->len && memcmp(oob->prefix, _buffer, oob->len) == 0) {
+ 835              		.loc 1 312 0
+ 836 0016 A4B1     		cbz	r4, .L82
+ 313:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 debug_if(_dbg_on, "AT! %s\r\n", oob->prefix);
+ 837              		.loc 1 313 0
+ 838 0018 2268     		ldr	r2, [r4]
+ 839 001a AA42     		cmp	r2, r5
+ 840 001c FAD1     		bne	.L74
+ 313:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 debug_if(_dbg_on, "AT! %s\r\n", oob->prefix);
+ 841              		.loc 1 313 0 is_stmt 0 discriminator 1
+ 842 001e 6668     		ldr	r6, [r4, #4]
+ 843 0020 1B49     		ldr	r1, .L83
+ 844 0022 3046     		mov	r0, r6
+ 845 0024 FFF7FEFF 		bl	memcmp
+ 846              	.LVL94:
+ 847 0028 0028     		cmp	r0, #0
+ 848 002a F3D1     		bne	.L74
+ 314:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 oob->cb();
+ 849              		.loc 1 314 0 is_stmt 1
+ 850 002c 3246     		mov	r2, r6
+ 851 002e 1949     		ldr	r1, .L83+4
+ 852 0030 194B     		ldr	r3, .L83+8
+ 853 0032 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 854 0034 FFF7FEFF 		bl	debug_if
+ 855              	.LVL95:
+ 315:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 return true;
+ 856              		.loc 1 315 0
+ 857 0038 A368     		ldr	r3, [r4, #8]
+ 858 003a 9847     		blx	r3
+ 859              	.LVL96:
+ 860              	.L72:
+ 861              	.LBE14:
+ 319:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         }
+ 320:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 321:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         // Clear the buffer when we hit a newline or ran out of space
+ 322:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         // running out of space usually means we ran into binary data
+ 323:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         if (i + 1 >= AT_BUFFER_SIZE || strcmp(&_buffer[i - _input_delim_size], _input_delimiter) ==
+ 324:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 325:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             debug_if(_dbg_on, "AT< %s, %d\r\n", _buffer, i);
+ 326:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             i = 0;
+ 327:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         }
+ 328:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     }
+ 329:src/helper/emhost/ATCmdParser/ATCmdParser.c **** }
+ 862              		.loc 1 329 0
+ 863 003c 4046     		mov	r0, r8
+ 864 003e BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 865              	.LVL97:
+ 866              	.L82:
+ 867              	.LBB15:
+ 323:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 868              		.loc 1 323 0
+ 869 0042 0237     		adds	r7, r7, #2
+ 870 0044 B7F5007F 		cmp	r7, #512
+ 871 0048 0ADA     		bge	.L76
+ 323:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 872              		.loc 1 323 0 is_stmt 0 discriminator 1
+ 873 004a 144B     		ldr	r3, .L83+12
+ARM GAS  /tmp/ccsHQQpf.s 			page 23
+
+
+ 874 004c 1B68     		ldr	r3, [r3]
+ 875 004e EB1A     		subs	r3, r5, r3
+ 876 0050 134A     		ldr	r2, .L83+16
+ 877 0052 1168     		ldr	r1, [r2]
+ 878 0054 0E48     		ldr	r0, .L83
+ 879 0056 1844     		add	r0, r0, r3
+ 880 0058 FFF7FEFF 		bl	strcmp
+ 881              	.LVL98:
+ 882 005c 0028     		cmp	r0, #0
+ 883 005e D7D1     		bne	.L80
+ 884              	.L76:
+ 325:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             i = 0;
+ 885              		.loc 1 325 0 is_stmt 1
+ 886 0060 2B46     		mov	r3, r5
+ 887 0062 0B4A     		ldr	r2, .L83
+ 888 0064 0F49     		ldr	r1, .L83+20
+ 889 0066 0C48     		ldr	r0, .L83+8
+ 890 0068 0078     		ldrb	r0, [r0]	@ zero_extendqisi2
+ 891 006a FFF7FEFF 		bl	debug_if
+ 892              	.LVL99:
+ 326:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         }
+ 893              		.loc 1 326 0
+ 894 006e 0027     		movs	r7, #0
+ 895              	.LVL100:
+ 896              	.L71:
+ 303:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         if (c < 0) {
+ 897              		.loc 1 303 0
+ 898 0070 FFF7FEFF 		bl	mx_hal_serial_getc
+ 899              	.LVL101:
+ 304:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             return false;
+ 900              		.loc 1 304 0
+ 901 0074 0028     		cmp	r0, #0
+ 902 0076 07DB     		blt	.L79
+ 307:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         _buffer[i] = 0;
+ 903              		.loc 1 307 0
+ 904 0078 7D1C     		adds	r5, r7, #1
+ 905              	.LVL102:
+ 906 007a 054B     		ldr	r3, .L83
+ 907 007c D855     		strb	r0, [r3, r7]
+ 308:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 908              		.loc 1 308 0
+ 909 007e 0022     		movs	r2, #0
+ 910 0080 5A55     		strb	r2, [r3, r5]
+ 311:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         while (oob) {
+ 911              		.loc 1 311 0
+ 912 0082 094B     		ldr	r3, .L83+24
+ 913 0084 1C68     		ldr	r4, [r3]
+ 914              	.LVL103:
+ 312:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             if (i == (int)oob->len && memcmp(oob->prefix, _buffer, oob->len) == 0) {
+ 915              		.loc 1 312 0
+ 916 0086 C6E7     		b	.L73
+ 917              	.LVL104:
+ 918              	.L79:
+ 305:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         }
+ 919              		.loc 1 305 0
+ 920 0088 4FF00008 		mov	r8, #0
+ 921 008c D6E7     		b	.L72
+ARM GAS  /tmp/ccsHQQpf.s 			page 24
+
+
+ 922              	.L84:
+ 923 008e 00BF     		.align	2
+ 924              	.L83:
+ 925 0090 00000000 		.word	.LANCHOR0
+ 926 0094 00000000 		.word	.LC6
+ 927 0098 00000000 		.word	.LANCHOR1
+ 928 009c 00000000 		.word	.LANCHOR3
+ 929 00a0 00000000 		.word	.LANCHOR4
+ 930 00a4 0C000000 		.word	.LC7
+ 931 00a8 00000000 		.word	.LANCHOR2
+ 932              	.LBE15:
+ 933              		.cfi_endproc
+ 934              	.LFE137:
+ 936              		.section	.text.ATCmdParser_vsend,"ax",%progbits
+ 937              		.align	1
+ 938              		.global	ATCmdParser_vsend
+ 939              		.syntax unified
+ 940              		.thumb
+ 941              		.thumb_func
+ 942              		.fpu fpv4-sp-d16
+ 944              	ATCmdParser_vsend:
+ 945              	.LFB130:
+ 210:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     while (ATCmdParser_process_oob())
+ 946              		.loc 1 210 0
+ 947              		.cfi_startproc
+ 948              		@ args = 0, pretend = 0, frame = 0
+ 949              		@ frame_needed = 0, uses_anonymous_args = 0
+ 950              	.LVL105:
+ 951 0000 70B5     		push	{r4, r5, r6, lr}
+ 952              	.LCFI20:
+ 953              		.cfi_def_cfa_offset 16
+ 954              		.cfi_offset 4, -16
+ 955              		.cfi_offset 5, -12
+ 956              		.cfi_offset 6, -8
+ 957              		.cfi_offset 14, -4
+ 958 0002 0446     		mov	r4, r0
+ 959 0004 0E46     		mov	r6, r1
+ 960              	.LVL106:
+ 961              	.L86:
+ 211:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         ;
+ 962              		.loc 1 211 0 discriminator 1
+ 963 0006 FFF7FEFF 		bl	ATCmdParser_process_oob
+ 964              	.LVL107:
+ 965 000a 0546     		mov	r5, r0
+ 966 000c 0028     		cmp	r0, #0
+ 967 000e FAD1     		bne	.L86
+ 968              	.LVL108:
+ 214:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         return false;
+ 969              		.loc 1 214 0
+ 970 0010 3246     		mov	r2, r6
+ 971 0012 2146     		mov	r1, r4
+ 972 0014 1148     		ldr	r0, .L95
+ 973 0016 FFF7FEFF 		bl	vsprintf
+ 974              	.LVL109:
+ 975 001a 0028     		cmp	r0, #0
+ 976 001c 1BDB     		blt	.L87
+ 977              	.LBB16:
+ARM GAS  /tmp/ccsHQQpf.s 			page 25
+
+
+ 218:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         if (mx_hal_serial_putc(_buffer[i]) < 0) {
+ 978              		.loc 1 218 0
+ 979 001e 0024     		movs	r4, #0
+ 980              	.LVL110:
+ 981              	.L88:
+ 218:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         if (mx_hal_serial_putc(_buffer[i]) < 0) {
+ 982              		.loc 1 218 0 is_stmt 0 discriminator 1
+ 983 0020 0E4B     		ldr	r3, .L95
+ 984 0022 185D     		ldrb	r0, [r3, r4]	@ zero_extendqisi2
+ 985 0024 28B1     		cbz	r0, .L93
+ 219:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             return false;
+ 986              		.loc 1 219 0 is_stmt 1
+ 987 0026 FFF7FEFF 		bl	mx_hal_serial_putc
+ 988              	.LVL111:
+ 989 002a 0028     		cmp	r0, #0
+ 990 002c 13DB     		blt	.L87
+ 218:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         if (mx_hal_serial_putc(_buffer[i]) < 0) {
+ 991              		.loc 1 218 0 discriminator 2
+ 992 002e 0134     		adds	r4, r4, #1
+ 993              	.LVL112:
+ 994 0030 F6E7     		b	.L88
+ 995              	.L93:
+ 996              	.LBE16:
+ 997              	.LBB17:
+ 225:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         if (mx_hal_serial_putc(_output_delimiter[i]) < 0) {
+ 998              		.loc 1 225 0
+ 999 0032 0024     		movs	r4, #0
+ 1000              	.LVL113:
+ 1001              	.L90:
+ 225:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         if (mx_hal_serial_putc(_output_delimiter[i]) < 0) {
+ 1002              		.loc 1 225 0 is_stmt 0 discriminator 1
+ 1003 0034 0A4B     		ldr	r3, .L95+4
+ 1004 0036 1B68     		ldr	r3, [r3]
+ 1005 0038 185D     		ldrb	r0, [r3, r4]	@ zero_extendqisi2
+ 1006 003a 28B1     		cbz	r0, .L94
+ 226:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             return false;
+ 1007              		.loc 1 226 0 is_stmt 1
+ 1008 003c FFF7FEFF 		bl	mx_hal_serial_putc
+ 1009              	.LVL114:
+ 1010 0040 0028     		cmp	r0, #0
+ 1011 0042 08DB     		blt	.L87
+ 225:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         if (mx_hal_serial_putc(_output_delimiter[i]) < 0) {
+ 1012              		.loc 1 225 0 discriminator 2
+ 1013 0044 0134     		adds	r4, r4, #1
+ 1014              	.LVL115:
+ 1015 0046 F5E7     		b	.L90
+ 1016              	.L94:
+ 1017              	.LBE17:
+ 231:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     return true;
+ 1018              		.loc 1 231 0
+ 1019 0048 044A     		ldr	r2, .L95
+ 1020 004a 0649     		ldr	r1, .L95+8
+ 1021 004c 064B     		ldr	r3, .L95+12
+ 1022 004e 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 1023 0050 FFF7FEFF 		bl	debug_if
+ 1024              	.LVL116:
+ 232:src/helper/emhost/ATCmdParser/ATCmdParser.c **** }
+ARM GAS  /tmp/ccsHQQpf.s 			page 26
+
+
+ 1025              		.loc 1 232 0
+ 1026 0054 0125     		movs	r5, #1
+ 1027              	.LVL117:
+ 1028              	.L87:
+ 233:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 1029              		.loc 1 233 0
+ 1030 0056 2846     		mov	r0, r5
+ 1031 0058 70BD     		pop	{r4, r5, r6, pc}
+ 1032              	.LVL118:
+ 1033              	.L96:
+ 1034 005a 00BF     		.align	2
+ 1035              	.L95:
+ 1036 005c 00000000 		.word	.LANCHOR0
+ 1037 0060 00000000 		.word	.LANCHOR5
+ 1038 0064 00000000 		.word	.LC8
+ 1039 0068 00000000 		.word	.LANCHOR1
+ 1040              		.cfi_endproc
+ 1041              	.LFE130:
+ 1043              		.section	.text.ATCmdParser_send,"ax",%progbits
+ 1044              		.align	1
+ 1045              		.global	ATCmdParser_send
+ 1046              		.syntax unified
+ 1047              		.thumb
+ 1048              		.thumb_func
+ 1049              		.fpu fpv4-sp-d16
+ 1051              	ATCmdParser_send:
+ 1052              	.LFB132:
+ 245:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     va_list args;
+ 1053              		.loc 1 245 0
+ 1054              		.cfi_startproc
+ 1055              		@ args = 4, pretend = 16, frame = 8
+ 1056              		@ frame_needed = 0, uses_anonymous_args = 1
+ 1057              	.LVL119:
+ 1058 0000 0FB4     		push	{r0, r1, r2, r3}
+ 1059              	.LCFI21:
+ 1060              		.cfi_def_cfa_offset 16
+ 1061              		.cfi_offset 0, -16
+ 1062              		.cfi_offset 1, -12
+ 1063              		.cfi_offset 2, -8
+ 1064              		.cfi_offset 3, -4
+ 1065 0002 00B5     		push	{lr}
+ 1066              	.LCFI22:
+ 1067              		.cfi_def_cfa_offset 20
+ 1068              		.cfi_offset 14, -20
+ 1069 0004 83B0     		sub	sp, sp, #12
+ 1070              	.LCFI23:
+ 1071              		.cfi_def_cfa_offset 32
+ 1072 0006 04A9     		add	r1, sp, #16
+ 1073 0008 51F8040B 		ldr	r0, [r1], #4
+ 247:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     bool res = ATCmdParser_vsend(command, args);
+ 1074              		.loc 1 247 0
+ 1075 000c 0191     		str	r1, [sp, #4]
+ 248:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     va_end(args);
+ 1076              		.loc 1 248 0
+ 1077 000e FFF7FEFF 		bl	ATCmdParser_vsend
+ 1078              	.LVL120:
+ 251:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ARM GAS  /tmp/ccsHQQpf.s 			page 27
+
+
+ 1079              		.loc 1 251 0
+ 1080 0012 03B0     		add	sp, sp, #12
+ 1081              	.LCFI24:
+ 1082              		.cfi_def_cfa_offset 20
+ 1083              		@ sp needed
+ 1084 0014 5DF804EB 		ldr	lr, [sp], #4
+ 1085              	.LCFI25:
+ 1086              		.cfi_restore 14
+ 1087              		.cfi_def_cfa_offset 16
+ 1088 0018 04B0     		add	sp, sp, #16
+ 1089              	.LCFI26:
+ 1090              		.cfi_restore 3
+ 1091              		.cfi_restore 2
+ 1092              		.cfi_restore 1
+ 1093              		.cfi_restore 0
+ 1094              		.cfi_def_cfa_offset 0
+ 1095 001a 7047     		bx	lr
+ 1096              		.cfi_endproc
+ 1097              	.LFE132:
+ 1099              		.section	.text.ATCmdParser_analyse_args,"ax",%progbits
+ 1100              		.align	1
+ 1101              		.global	ATCmdParser_analyse_args
+ 1102              		.syntax unified
+ 1103              		.thumb
+ 1104              		.thumb_func
+ 1105              		.fpu fpv4-sp-d16
+ 1107              	ATCmdParser_analyse_args:
+ 1108              	.LFB138:
+ 330:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 331:src/helper/emhost/ATCmdParser/ATCmdParser.c **** int ATCmdParser_analyse_args(char args[], char* arg_list[], int list_size)
+ 332:src/helper/emhost/ATCmdParser/ATCmdParser.c **** {
+ 1109              		.loc 1 332 0
+ 1110              		.cfi_startproc
+ 1111              		@ args = 0, pretend = 0, frame = 8
+ 1112              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1113              	.LVL121:
+ 1114 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 1115              	.LCFI27:
+ 1116              		.cfi_def_cfa_offset 36
+ 1117              		.cfi_offset 4, -36
+ 1118              		.cfi_offset 5, -32
+ 1119              		.cfi_offset 6, -28
+ 1120              		.cfi_offset 7, -24
+ 1121              		.cfi_offset 8, -20
+ 1122              		.cfi_offset 9, -16
+ 1123              		.cfi_offset 10, -12
+ 1124              		.cfi_offset 11, -8
+ 1125              		.cfi_offset 14, -4
+ 1126 0004 83B0     		sub	sp, sp, #12
+ 1127              	.LCFI28:
+ 1128              		.cfi_def_cfa_offset 48
+ 1129 0006 0546     		mov	r5, r0
+ 1130 0008 8B46     		mov	fp, r1
+ 1131 000a 0192     		str	r2, [sp, #4]
+ 1132              	.LVL122:
+ 333:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     char _in_prev = 0;
+ 334:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     int arg_num = 1;
+ARM GAS  /tmp/ccsHQQpf.s 			page 28
+
+
+ 335:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     size_t len = strlen(args);
+ 1133              		.loc 1 335 0
+ 1134 000c FFF7FEFF 		bl	strlen
+ 1135              	.LVL123:
+ 1136 0010 0646     		mov	r6, r0
+ 1137              	.LVL124:
+ 336:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 337:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     arg_list[0] = args;
+ 1138              		.loc 1 337 0
+ 1139 0012 CBF80050 		str	r5, [fp]
+ 1140              	.LVL125:
+ 1141              	.LBB18:
+ 338:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 339:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     for (int i = 0; i <= len; i++) {
+ 1142              		.loc 1 339 0
+ 1143 0016 0024     		movs	r4, #0
+ 1144              	.LBE18:
+ 334:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     size_t len = strlen(args);
+ 1145              		.loc 1 334 0
+ 1146 0018 4FF0010A 		mov	r10, #1
+ 333:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     int arg_num = 1;
+ 1147              		.loc 1 333 0
+ 1148 001c A146     		mov	r9, r4
+ 1149              	.LBB19:
+ 1150              		.loc 1 339 0
+ 1151 001e 0DE0     		b	.L100
+ 1152              	.LVL126:
+ 1153              	.L107:
+ 340:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         debug_if(_dbg_on, "check %c, %d\r\n", args[i], len);
+ 341:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         if (args[i] == ',') {
+ 342:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             debug_if(_dbg_on, "find ,\r\n");
+ 343:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             if (_in_prev == '\\') {
+ 344:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 args[i - i] = ',';
+ 1154              		.loc 1 344 0
+ 1155 0020 2C23     		movs	r3, #44
+ 1156 0022 2B70     		strb	r3, [r5]
+ 345:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 memcpy(&args[i], &args[i + 1], len - (i + 1));
+ 1157              		.loc 1 345 0
+ 1158 0024 08F10101 		add	r1, r8, #1
+ 1159 0028 A6EB0802 		sub	r2, r6, r8
+ 1160 002c 013A     		subs	r2, r2, #1
+ 1161 002e 2944     		add	r1, r1, r5
+ 1162 0030 3846     		mov	r0, r7
+ 1163 0032 FFF7FEFF 		bl	memcpy
+ 1164              	.LVL127:
+ 1165              	.L101:
+ 346:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             } else {
+ 347:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 args[i] = 0;
+ 348:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 arg_list[arg_num++] = &args[i + 1];
+ 349:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 if (arg_num > list_size)
+ 350:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                     break;
+ 351:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             }
+ 352:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         }
+ 353:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         _in_prev = args[i];
+ 1166              		.loc 1 353 0 discriminator 2
+ 1167 0036 97F80090 		ldrb	r9, [r7]	@ zero_extendqisi2
+ 1168              	.LVL128:
+ARM GAS  /tmp/ccsHQQpf.s 			page 29
+
+
+ 339:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         debug_if(_dbg_on, "check %c, %d\r\n", args[i], len);
+ 1169              		.loc 1 339 0 discriminator 2
+ 1170 003a 0134     		adds	r4, r4, #1
+ 1171              	.LVL129:
+ 1172              	.L100:
+ 339:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         debug_if(_dbg_on, "check %c, %d\r\n", args[i], len);
+ 1173              		.loc 1 339 0 is_stmt 0 discriminator 1
+ 1174 003c A046     		mov	r8, r4
+ 1175 003e B442     		cmp	r4, r6
+ 1176 0040 21D8     		bhi	.L99
+ 340:src/helper/emhost/ATCmdParser/ATCmdParser.c ****         if (args[i] == ',') {
+ 1177              		.loc 1 340 0 is_stmt 1
+ 1178 0042 2F19     		adds	r7, r5, r4
+ 1179 0044 3346     		mov	r3, r6
+ 1180 0046 2A5D     		ldrb	r2, [r5, r4]	@ zero_extendqisi2
+ 1181 0048 1149     		ldr	r1, .L108
+ 1182 004a 1248     		ldr	r0, .L108+4
+ 1183 004c 0078     		ldrb	r0, [r0]	@ zero_extendqisi2
+ 1184 004e FFF7FEFF 		bl	debug_if
+ 1185              	.LVL130:
+ 341:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             debug_if(_dbg_on, "find ,\r\n");
+ 1186              		.loc 1 341 0
+ 1187 0052 2B5D     		ldrb	r3, [r5, r4]	@ zero_extendqisi2
+ 1188 0054 2C2B     		cmp	r3, #44
+ 1189 0056 EED1     		bne	.L101
+ 342:src/helper/emhost/ATCmdParser/ATCmdParser.c ****             if (_in_prev == '\\') {
+ 1190              		.loc 1 342 0
+ 1191 0058 0F49     		ldr	r1, .L108+8
+ 1192 005a 0E4B     		ldr	r3, .L108+4
+ 1193 005c 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 1194 005e FFF7FEFF 		bl	debug_if
+ 1195              	.LVL131:
+ 343:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 args[i - i] = ',';
+ 1196              		.loc 1 343 0
+ 1197 0062 B9F15C0F 		cmp	r9, #92
+ 1198 0066 DBD0     		beq	.L107
+ 347:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 arg_list[arg_num++] = &args[i + 1];
+ 1199              		.loc 1 347 0
+ 1200 0068 0023     		movs	r3, #0
+ 1201 006a 3B70     		strb	r3, [r7]
+ 348:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 if (arg_num > list_size)
+ 1202              		.loc 1 348 0
+ 1203 006c 08F10102 		add	r2, r8, #1
+ 1204 0070 0AF10103 		add	r3, r10, #1
+ 1205              	.LVL132:
+ 1206 0074 2A44     		add	r2, r2, r5
+ 1207 0076 4BF82A20 		str	r2, [fp, r10, lsl #2]
+ 349:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                     break;
+ 1208              		.loc 1 349 0
+ 1209 007a 019A     		ldr	r2, [sp, #4]
+ 1210 007c 9342     		cmp	r3, r2
+ 1211 007e 01DC     		bgt	.L105
+ 348:src/helper/emhost/ATCmdParser/ATCmdParser.c ****                 if (arg_num > list_size)
+ 1212              		.loc 1 348 0
+ 1213 0080 9A46     		mov	r10, r3
+ 1214 0082 D8E7     		b	.L101
+ 1215              	.L105:
+ARM GAS  /tmp/ccsHQQpf.s 			page 30
+
+
+ 1216 0084 9A46     		mov	r10, r3
+ 1217              	.LVL133:
+ 1218              	.L99:
+ 1219              	.LBE19:
+ 354:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     }
+ 355:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     return arg_num;
+ 356:src/helper/emhost/ATCmdParser/ATCmdParser.c **** }
+ 1220              		.loc 1 356 0
+ 1221 0086 5046     		mov	r0, r10
+ 1222 0088 03B0     		add	sp, sp, #12
+ 1223              	.LCFI29:
+ 1224              		.cfi_def_cfa_offset 36
+ 1225              		@ sp needed
+ 1226 008a BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 1227              	.LVL134:
+ 1228              	.L109:
+ 1229 008e 00BF     		.align	2
+ 1230              	.L108:
+ 1231 0090 00000000 		.word	.LC9
+ 1232 0094 00000000 		.word	.LANCHOR1
+ 1233 0098 10000000 		.word	.LC10
+ 1234              		.cfi_endproc
+ 1235              	.LFE138:
+ 1237              		.section	.text.ATCmdParser_set_timeout,"ax",%progbits
+ 1238              		.align	1
+ 1239              		.global	ATCmdParser_set_timeout
+ 1240              		.syntax unified
+ 1241              		.thumb
+ 1242              		.thumb_func
+ 1243              		.fpu fpv4-sp-d16
+ 1245              	ATCmdParser_set_timeout:
+ 1246              	.LFB139:
+ 357:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 358:src/helper/emhost/ATCmdParser/ATCmdParser.c **** void ATCmdParser_set_timeout(int timeout)
+ 359:src/helper/emhost/ATCmdParser/ATCmdParser.c **** {
+ 1247              		.loc 1 359 0
+ 1248              		.cfi_startproc
+ 1249              		@ args = 0, pretend = 0, frame = 0
+ 1250              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1251              	.LVL135:
+ 1252 0000 08B5     		push	{r3, lr}
+ 1253              	.LCFI30:
+ 1254              		.cfi_def_cfa_offset 8
+ 1255              		.cfi_offset 3, -8
+ 1256              		.cfi_offset 14, -4
+ 360:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     mx_hal_serial_set_timeout(timeout);
+ 1257              		.loc 1 360 0
+ 1258 0002 FFF7FEFF 		bl	mx_hal_serial_set_timeout
+ 1259              	.LVL136:
+ 361:src/helper/emhost/ATCmdParser/ATCmdParser.c **** }
+ 1260              		.loc 1 361 0
+ 1261 0006 08BD     		pop	{r3, pc}
+ 1262              		.cfi_endproc
+ 1263              	.LFE139:
+ 1265              		.section	.text.ATCmdParser_init,"ax",%progbits
+ 1266              		.align	1
+ 1267              		.global	ATCmdParser_init
+ARM GAS  /tmp/ccsHQQpf.s 			page 31
+
+
+ 1268              		.syntax unified
+ 1269              		.thumb
+ 1270              		.thumb_func
+ 1271              		.fpu fpv4-sp-d16
+ 1273              	ATCmdParser_init:
+ 1274              	.LFB140:
+ 362:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 363:src/helper/emhost/ATCmdParser/ATCmdParser.c **** void ATCmdParser_init(const char* output_delimiter, const char* input_delimiter, int timeout, bool 
+ 364:src/helper/emhost/ATCmdParser/ATCmdParser.c **** {
+ 1275              		.loc 1 364 0
+ 1276              		.cfi_startproc
+ 1277              		@ args = 0, pretend = 0, frame = 0
+ 1278              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1279              	.LVL137:
+ 1280 0000 10B5     		push	{r4, lr}
+ 1281              	.LCFI31:
+ 1282              		.cfi_def_cfa_offset 8
+ 1283              		.cfi_offset 4, -8
+ 1284              		.cfi_offset 14, -4
+ 1285 0002 1446     		mov	r4, r2
+ 365:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     _dbg_on = debug;
+ 1286              		.loc 1 365 0
+ 1287 0004 074A     		ldr	r2, .L114
+ 1288              	.LVL138:
+ 1289 0006 1370     		strb	r3, [r2]
+ 366:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 367:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     _output_delimiter = output_delimiter;
+ 1290              		.loc 1 367 0
+ 1291 0008 074B     		ldr	r3, .L114+4
+ 1292              	.LVL139:
+ 1293 000a 1860     		str	r0, [r3]
+ 368:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     _output_delim_size = strlen(output_delimiter);
+ 369:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 370:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     _input_delimiter = input_delimiter;
+ 1294              		.loc 1 370 0
+ 1295 000c 074B     		ldr	r3, .L114+8
+ 1296 000e 1960     		str	r1, [r3]
+ 371:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     _input_delim_size = strlen(input_delimiter);
+ 1297              		.loc 1 371 0
+ 1298 0010 0846     		mov	r0, r1
+ 1299              	.LVL140:
+ 1300 0012 FFF7FEFF 		bl	strlen
+ 1301              	.LVL141:
+ 1302 0016 064B     		ldr	r3, .L114+12
+ 1303 0018 1860     		str	r0, [r3]
+ 372:src/helper/emhost/ATCmdParser/ATCmdParser.c **** 
+ 373:src/helper/emhost/ATCmdParser/ATCmdParser.c ****     mx_hal_serial_init(timeout);
+ 1304              		.loc 1 373 0
+ 1305 001a 2046     		mov	r0, r4
+ 1306 001c FFF7FEFF 		bl	mx_hal_serial_init
+ 1307              	.LVL142:
+ 374:src/helper/emhost/ATCmdParser/ATCmdParser.c **** }
+ 1308              		.loc 1 374 0
+ 1309 0020 10BD     		pop	{r4, pc}
+ 1310              	.LVL143:
+ 1311              	.L115:
+ 1312 0022 00BF     		.align	2
+ARM GAS  /tmp/ccsHQQpf.s 			page 32
+
+
+ 1313              	.L114:
+ 1314 0024 00000000 		.word	.LANCHOR1
+ 1315 0028 00000000 		.word	.LANCHOR5
+ 1316 002c 00000000 		.word	.LANCHOR4
+ 1317 0030 00000000 		.word	.LANCHOR3
+ 1318              		.cfi_endproc
+ 1319              	.LFE140:
+ 1321              		.global	_dbg_on
+ 1322              		.section	.bss._buffer,"aw",%nobits
+ 1323              		.align	2
+ 1324              		.set	.LANCHOR0,. + 0
+ 1327              	_buffer:
+ 1328 0000 00000000 		.space	512
+ 1328      00000000 
+ 1328      00000000 
+ 1328      00000000 
+ 1328      00000000 
+ 1329              		.section	.bss._dbg_on,"aw",%nobits
+ 1330              		.set	.LANCHOR1,. + 0
+ 1333              	_dbg_on:
+ 1334 0000 00       		.space	1
+ 1335              		.section	.bss._input_delim_size,"aw",%nobits
+ 1336              		.align	2
+ 1337              		.set	.LANCHOR3,. + 0
+ 1340              	_input_delim_size:
+ 1341 0000 00000000 		.space	4
+ 1342              		.section	.bss._input_delimiter,"aw",%nobits
+ 1343              		.align	2
+ 1344              		.set	.LANCHOR4,. + 0
+ 1347              	_input_delimiter:
+ 1348 0000 00000000 		.space	4
+ 1349              		.section	.bss._oobs,"aw",%nobits
+ 1350              		.align	2
+ 1351              		.set	.LANCHOR2,. + 0
+ 1354              	_oobs:
+ 1355 0000 00000000 		.space	4
+ 1356              		.section	.bss._output_delimiter,"aw",%nobits
+ 1357              		.align	2
+ 1358              		.set	.LANCHOR5,. + 0
+ 1361              	_output_delimiter:
+ 1362 0000 00000000 		.space	4
+ 1363              		.section	.rodata.ATCmdParser_analyse_args.str1.4,"aMS",%progbits,1
+ 1364              		.align	2
+ 1365              	.LC9:
+ 1366 0000 63686563 		.ascii	"check %c, %d\015\012\000"
+ 1366      6B202563 
+ 1366      2C202564 
+ 1366      0D0A00
+ 1367 000f 00       		.space	1
+ 1368              	.LC10:
+ 1369 0010 66696E64 		.ascii	"find ,\015\012\000"
+ 1369      202C0D0A 
+ 1369      00
+ 1370              		.section	.rodata.ATCmdParser_process_oob.str1.4,"aMS",%progbits,1
+ 1371              		.align	2
+ 1372              	.LC6:
+ 1373 0000 41542120 		.ascii	"AT! %s\015\012\000"
+ARM GAS  /tmp/ccsHQQpf.s 			page 33
+
+
+ 1373      25730D0A 
+ 1373      00
+ 1374 0009 000000   		.space	3
+ 1375              	.LC7:
+ 1376 000c 41543C20 		.ascii	"AT< %s, %d\015\012\000"
+ 1376      25732C20 
+ 1376      25640D0A 
+ 1376      00
+ 1377              		.section	.rodata.ATCmdParser_vrecv.str1.4,"aMS",%progbits,1
+ 1378              		.align	2
+ 1379              	.LC0:
+ 1380 0000 41543F20 		.ascii	"AT? %s\012\000"
+ 1380      25730A00 
+ 1381              	.LC1:
+ 1382 0008 41542854 		.ascii	"AT(Timeout)\012\000"
+ 1382      696D656F 
+ 1382      7574290A 
+ 1382      00
+ 1383 0015 000000   		.space	3
+ 1384              	.LC2:
+ 1385 0018 41542120 		.ascii	"AT! %s\012\000"
+ 1385      25730A00 
+ 1386              	.LC3:
+ 1387 0020 25733D3D 		.ascii	"%s=====%s, %d,%d\015\012\000"
+ 1387      3D3D3D25 
+ 1387      732C2025 
+ 1387      642C2564 
+ 1387      0D0A00
+ 1388 0033 00       		.space	1
+ 1389              	.LC4:
+ 1390 0034 41543D20 		.ascii	"AT= %s\012\000"
+ 1390      25730A00 
+ 1391              	.LC5:
+ 1392 003c 41543C20 		.ascii	"AT< %s\000"
+ 1392      257300
+ 1393              		.section	.rodata.ATCmdParser_vsend.str1.4,"aMS",%progbits,1
+ 1394              		.align	2
+ 1395              	.LC8:
+ 1396 0000 41543E20 		.ascii	"AT> %s\012\000"
+ 1396      25730A00 
+ 1397              		.text
+ 1398              	.Letext0:
+ 1399              		.file 2 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/lib/gc
+ 1400              		.file 3 "src/helper/emhost/ATCmdParser/ATCmdParser.h"
+ 1401              		.file 4 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 1402              		.file 5 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 1403              		.file 6 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/lib/gc
+ 1404              		.file 7 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 1405              		.file 8 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 1406              		.file 9 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 1407              		.file 10 "<built-in>"
+ 1408              		.file 11 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-n
+ 1409              		.file 12 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-n
+ 1410              		.file 13 "Platform/STM32F4xx/drivers/CMSIS/Include/core_cm4.h"
+ 1411              		.file 14 "Platform/STM32F4xx/drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ 1412              		.file 15 "Platform/STM32F4xx/drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f411xe.h"
+ 1413              		.file 16 "Platform/STM32F4xx/drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ARM GAS  /tmp/ccsHQQpf.s 			page 34
+
+
+ 1414              		.file 17 "Platform/STM32F4xx/drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 1415              		.file 18 "Platform/STM32F4xx/drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+ 1416              		.file 19 "Platform/STM32F4xx/peripherals/mx_hal.h"
+ 1417              		.file 20 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-n
+ 1418              		.file 21 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-n
+ARM GAS  /tmp/ccsHQQpf.s 			page 35
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 ATCmdParser.c
+     /tmp/ccsHQQpf.s:18     .text.debug_if:0000000000000000 $t
+     /tmp/ccsHQQpf.s:24     .text.debug_if:0000000000000000 debug_if
+     /tmp/ccsHQQpf.s:80     .text.ATCmdParser_vrecv:0000000000000000 $t
+     /tmp/ccsHQQpf.s:87     .text.ATCmdParser_vrecv:0000000000000000 ATCmdParser_vrecv
+     /tmp/ccsHQQpf.s:528    .text.ATCmdParser_vrecv:0000000000000224 $d
+     /tmp/ccsHQQpf.s:541    .text.ATCmdParser_recv:0000000000000000 $t
+     /tmp/ccsHQQpf.s:548    .text.ATCmdParser_recv:0000000000000000 ATCmdParser_recv
+     /tmp/ccsHQQpf.s:597    .text.ATCmdParser_write:0000000000000000 $t
+     /tmp/ccsHQQpf.s:604    .text.ATCmdParser_write:0000000000000000 ATCmdParser_write
+     /tmp/ccsHQQpf.s:650    .text.ATCmdParser_read:0000000000000000 $t
+     /tmp/ccsHQQpf.s:657    .text.ATCmdParser_read:0000000000000000 ATCmdParser_read
+     /tmp/ccsHQQpf.s:709    .text.ATCmdParser_debug:0000000000000000 $t
+     /tmp/ccsHQQpf.s:716    .text.ATCmdParser_debug:0000000000000000 ATCmdParser_debug
+     /tmp/ccsHQQpf.s:732    .text.ATCmdParser_debug:0000000000000008 $d
+     /tmp/ccsHQQpf.s:737    .text.ATCmdParser_add_oob:0000000000000000 $t
+     /tmp/ccsHQQpf.s:744    .text.ATCmdParser_add_oob:0000000000000000 ATCmdParser_add_oob
+     /tmp/ccsHQQpf.s:789    .text.ATCmdParser_add_oob:0000000000000024 $d
+     /tmp/ccsHQQpf.s:794    .text.ATCmdParser_process_oob:0000000000000000 $t
+     /tmp/ccsHQQpf.s:801    .text.ATCmdParser_process_oob:0000000000000000 ATCmdParser_process_oob
+     /tmp/ccsHQQpf.s:925    .text.ATCmdParser_process_oob:0000000000000090 $d
+     /tmp/ccsHQQpf.s:937    .text.ATCmdParser_vsend:0000000000000000 $t
+     /tmp/ccsHQQpf.s:944    .text.ATCmdParser_vsend:0000000000000000 ATCmdParser_vsend
+     /tmp/ccsHQQpf.s:1036   .text.ATCmdParser_vsend:000000000000005c $d
+     /tmp/ccsHQQpf.s:1044   .text.ATCmdParser_send:0000000000000000 $t
+     /tmp/ccsHQQpf.s:1051   .text.ATCmdParser_send:0000000000000000 ATCmdParser_send
+     /tmp/ccsHQQpf.s:1100   .text.ATCmdParser_analyse_args:0000000000000000 $t
+     /tmp/ccsHQQpf.s:1107   .text.ATCmdParser_analyse_args:0000000000000000 ATCmdParser_analyse_args
+     /tmp/ccsHQQpf.s:1231   .text.ATCmdParser_analyse_args:0000000000000090 $d
+     /tmp/ccsHQQpf.s:1238   .text.ATCmdParser_set_timeout:0000000000000000 $t
+     /tmp/ccsHQQpf.s:1245   .text.ATCmdParser_set_timeout:0000000000000000 ATCmdParser_set_timeout
+     /tmp/ccsHQQpf.s:1266   .text.ATCmdParser_init:0000000000000000 $t
+     /tmp/ccsHQQpf.s:1273   .text.ATCmdParser_init:0000000000000000 ATCmdParser_init
+     /tmp/ccsHQQpf.s:1314   .text.ATCmdParser_init:0000000000000024 $d
+     /tmp/ccsHQQpf.s:1333   .bss._dbg_on:0000000000000000 _dbg_on
+     /tmp/ccsHQQpf.s:1323   .bss._buffer:0000000000000000 $d
+     /tmp/ccsHQQpf.s:1327   .bss._buffer:0000000000000000 _buffer
+     /tmp/ccsHQQpf.s:1334   .bss._dbg_on:0000000000000000 $d
+     /tmp/ccsHQQpf.s:1336   .bss._input_delim_size:0000000000000000 $d
+     /tmp/ccsHQQpf.s:1340   .bss._input_delim_size:0000000000000000 _input_delim_size
+     /tmp/ccsHQQpf.s:1343   .bss._input_delimiter:0000000000000000 $d
+     /tmp/ccsHQQpf.s:1347   .bss._input_delimiter:0000000000000000 _input_delimiter
+     /tmp/ccsHQQpf.s:1350   .bss._oobs:0000000000000000 $d
+     /tmp/ccsHQQpf.s:1354   .bss._oobs:0000000000000000 _oobs
+     /tmp/ccsHQQpf.s:1357   .bss._output_delimiter:0000000000000000 $d
+     /tmp/ccsHQQpf.s:1361   .bss._output_delimiter:0000000000000000 _output_delimiter
+     /tmp/ccsHQQpf.s:1364   .rodata.ATCmdParser_analyse_args.str1.4:0000000000000000 $d
+     /tmp/ccsHQQpf.s:1371   .rodata.ATCmdParser_process_oob.str1.4:0000000000000000 $d
+     /tmp/ccsHQQpf.s:1378   .rodata.ATCmdParser_vrecv.str1.4:0000000000000000 $d
+     /tmp/ccsHQQpf.s:1394   .rodata.ATCmdParser_vsend.str1.4:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+vprintf
+memcmp
+sscanf
+mx_hal_serial_getc
+ARM GAS  /tmp/ccsHQQpf.s 			page 36
+
+
+memcpy
+vsscanf
+mx_hal_serial_putc
+malloc
+strlen
+mx_hal_serial_readable
+strcmp
+vsprintf
+mx_hal_serial_set_timeout
+mx_hal_serial_init

@@ -1,0 +1,1657 @@
+ARM GAS  /tmp/ccouaFi6.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"emh_alisds.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.emh_ev_alisds_get_local_atts,"ax",%progbits
+  18              		.align	1
+  19              		.weak	emh_ev_alisds_get_local_atts
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	emh_ev_alisds_get_local_atts:
+  26              	.LFB5:
+  27              		.file 1 "src/helper/emhost/emh_alisds.c"
+   1:src/helper/emhost/emh_alisds.c **** /**
+   2:src/helper/emhost/emh_alisds.c ****  ******************************************************************************
+   3:src/helper/emhost/emh_alisds.c ****  * @file    emh_alisds.c
+   4:src/helper/emhost/emh_alisds.c ****  * @author  William Xu
+   5:src/helper/emhost/emh_alisds.c ****  * @version V1.0.0
+   6:src/helper/emhost/emh_alisds.c ****  * @date    9-Apr-2018
+   7:src/helper/emhost/emh_alisds.c ****  * @brief   Alicloud SDS service AT commands API
+   8:src/helper/emhost/emh_alisds.c ****  ******************************************************************************
+   9:src/helper/emhost/emh_alisds.c ****  *
+  10:src/helper/emhost/emh_alisds.c ****  * Copyright (c) 2009-2018 MXCHIP Co.,Ltd.
+  11:src/helper/emhost/emh_alisds.c ****  *
+  12:src/helper/emhost/emh_alisds.c ****  * Licensed under the Apache License, Version 2.0 (the "License");
+  13:src/helper/emhost/emh_alisds.c ****  * you may not use this file except in compliance with the License.
+  14:src/helper/emhost/emh_alisds.c ****  * You may obtain a copy of the License at
+  15:src/helper/emhost/emh_alisds.c ****  *
+  16:src/helper/emhost/emh_alisds.c ****  *     http://www.apache.org/licenses/LICENSE-2.0
+  17:src/helper/emhost/emh_alisds.c ****  *
+  18:src/helper/emhost/emh_alisds.c ****  * Unless required by applicable law or agreed to in writing, software
+  19:src/helper/emhost/emh_alisds.c ****  * distributed under the License is distributed on an "AS IS" BASIS,
+  20:src/helper/emhost/emh_alisds.c ****  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  21:src/helper/emhost/emh_alisds.c ****  * See the License for the specific language governing permissions and
+  22:src/helper/emhost/emh_alisds.c ****  * limitations under the License.
+  23:src/helper/emhost/emh_alisds.c ****  *
+  24:src/helper/emhost/emh_alisds.c ****  ******************************************************************************
+  25:src/helper/emhost/emh_alisds.c ****  */
+  26:src/helper/emhost/emh_alisds.c **** 
+  27:src/helper/emhost/emh_alisds.c **** 
+  28:src/helper/emhost/emh_alisds.c **** #include <stdlib.h>
+  29:src/helper/emhost/emh_alisds.c **** #include <string.h>
+  30:src/helper/emhost/emh_alisds.c **** 
+  31:src/helper/emhost/emh_alisds.c **** #include "emh_api.h"
+ARM GAS  /tmp/ccouaFi6.s 			page 2
+
+
+  32:src/helper/emhost/emh_alisds.c **** #include "ATCmdParser/ATCmdParser.h"
+  33:src/helper/emhost/emh_alisds.c **** 
+  34:src/helper/emhost/emh_alisds.c **** /******************************************************************************
+  35:src/helper/emhost/emh_alisds.c ****  *                              Function Definitions
+  36:src/helper/emhost/emh_alisds.c ****  ******************************************************************************/
+  37:src/helper/emhost/emh_alisds.c **** 
+  38:src/helper/emhost/emh_alisds.c **** MX_WEAK void emh_ev_alisds_get_local_atts(emh_alisds_msg *attrs)
+  39:src/helper/emhost/emh_alisds.c **** {
+  28              		.loc 1 39 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+  40:src/helper/emhost/emh_alisds.c **** 	return;
+  41:src/helper/emhost/emh_alisds.c **** }
+  34              		.loc 1 41 0
+  35 0000 7047     		bx	lr
+  36              		.cfi_endproc
+  37              	.LFE5:
+  39              		.section	.text.emh_alisds_config,"ax",%progbits
+  40              		.align	1
+  41              		.global	emh_alisds_config
+  42              		.syntax unified
+  43              		.thumb
+  44              		.thumb_func
+  45              		.fpu fpv4-sp-d16
+  47              	emh_alisds_config:
+  48              	.LFB6:
+  42:src/helper/emhost/emh_alisds.c **** 
+  43:src/helper/emhost/emh_alisds.c **** mx_status emh_alisds_config(const emh_alisds_config_t* config)
+  44:src/helper/emhost/emh_alisds.c **** {
+  49              		.loc 1 44 0
+  50              		.cfi_startproc
+  51              		@ args = 0, pretend = 0, frame = 224
+  52              		@ frame_needed = 0, uses_anonymous_args = 0
+  53              	.LVL1:
+  54 0000 70B5     		push	{r4, r5, r6, lr}
+  55              	.LCFI0:
+  56              		.cfi_def_cfa_offset 16
+  57              		.cfi_offset 4, -16
+  58              		.cfi_offset 5, -12
+  59              		.cfi_offset 6, -8
+  60              		.cfi_offset 14, -4
+  61 0002 BAB0     		sub	sp, sp, #232
+  62              	.LCFI1:
+  63              		.cfi_def_cfa_offset 248
+  64 0004 0446     		mov	r4, r0
+  45:src/helper/emhost/emh_alisds.c **** 	char args[200], *arg_list[5];
+  46:src/helper/emhost/emh_alisds.c **** 	const char* format_arg = emh_arg_for_type(EMH_ARG_ALISDS_FORMAT, config->product_info.format);
+  65              		.loc 1 46 0
+  66 0006 017C     		ldrb	r1, [r0, #16]	@ zero_extendqisi2
+  67 0008 4948     		ldr	r0, .L21
+  68              	.LVL2:
+  69 000a FFF7FEFF 		bl	emh_arg_for_type
+  70              	.LVL3:
+  71 000e 0646     		mov	r6, r0
+ARM GAS  /tmp/ccouaFi6.s 			page 3
+
+
+  72              	.LVL4:
+  47:src/helper/emhost/emh_alisds.c **** 	
+  48:src/helper/emhost/emh_alisds.c **** 	/* Check product info*/
+  49:src/helper/emhost/emh_alisds.c **** 	if (!(ATCmdParser_send("AT+ALINKPRODUCT?")
+  73              		.loc 1 49 0
+  74 0010 4848     		ldr	r0, .L21+4
+  75              	.LVL5:
+  76 0012 FFF7FEFF 		bl	ATCmdParser_send
+  77              	.LVL6:
+  78 0016 0028     		cmp	r0, #0
+  79 0018 6BD0     		beq	.L7
+  50:src/helper/emhost/emh_alisds.c **** 	   && ATCmdParser_recv("+ALINKPRODUCT:%200[^\r]\r\n",args)
+  80              		.loc 1 50 0
+  81 001a 08A9     		add	r1, sp, #32
+  82 001c 4648     		ldr	r0, .L21+8
+  83 001e FFF7FEFF 		bl	ATCmdParser_recv
+  84              	.LVL7:
+  85 0022 0028     		cmp	r0, #0
+  86 0024 67D0     		beq	.L8
+  51:src/helper/emhost/emh_alisds.c **** 	   && ATCmdParser_recv("OK\r\n"))) {
+  87              		.loc 1 51 0
+  88 0026 4548     		ldr	r0, .L21+12
+  89 0028 FFF7FEFF 		bl	ATCmdParser_recv
+  90              	.LVL8:
+  49:src/helper/emhost/emh_alisds.c **** 	   && ATCmdParser_recv("+ALINKPRODUCT:%200[^\r]\r\n",args)
+  91              		.loc 1 49 0
+  92 002c 0028     		cmp	r0, #0
+  93 002e 64D0     		beq	.L9
+  52:src/helper/emhost/emh_alisds.c **** 		return kReadErr;
+  53:src/helper/emhost/emh_alisds.c **** 	}
+  54:src/helper/emhost/emh_alisds.c **** 
+  55:src/helper/emhost/emh_alisds.c **** 	if (4 != ATCmdParser_analyse_args(args, arg_list, 4)) {
+  94              		.loc 1 55 0
+  95 0030 0422     		movs	r2, #4
+  96 0032 03A9     		add	r1, sp, #12
+  97 0034 08A8     		add	r0, sp, #32
+  98 0036 FFF7FEFF 		bl	ATCmdParser_analyse_args
+  99              	.LVL9:
+ 100 003a 0428     		cmp	r0, #4
+ 101 003c 5FD1     		bne	.L10
+  56:src/helper/emhost/emh_alisds.c **** 		return kMalformedErr;
+  57:src/helper/emhost/emh_alisds.c **** 	}
+  58:src/helper/emhost/emh_alisds.c **** 
+  59:src/helper/emhost/emh_alisds.c **** 	if (strcmp(arg_list[0], config->product_info.name)
+ 102              		.loc 1 59 0
+ 103 003e 2568     		ldr	r5, [r4]
+ 104 0040 2946     		mov	r1, r5
+ 105 0042 0398     		ldr	r0, [sp, #12]
+ 106 0044 FFF7FEFF 		bl	strcmp
+ 107              	.LVL10:
+ 108 0048 70B9     		cbnz	r0, .L4
+  60:src/helper/emhost/emh_alisds.c **** 	 || strcmp(arg_list[1], config->product_info.module)
+ 109              		.loc 1 60 0
+ 110 004a 6168     		ldr	r1, [r4, #4]
+ 111 004c 0498     		ldr	r0, [sp, #16]
+ 112 004e FFF7FEFF 		bl	strcmp
+ 113              	.LVL11:
+ARM GAS  /tmp/ccouaFi6.s 			page 4
+
+
+ 114 0052 48B9     		cbnz	r0, .L4
+  61:src/helper/emhost/emh_alisds.c **** 	 || strcmp(arg_list[2], config->product_info.key)
+ 115              		.loc 1 61 0
+ 116 0054 A168     		ldr	r1, [r4, #8]
+ 117 0056 0598     		ldr	r0, [sp, #20]
+ 118 0058 FFF7FEFF 		bl	strcmp
+ 119              	.LVL12:
+ 120 005c 20B9     		cbnz	r0, .L4
+  62:src/helper/emhost/emh_alisds.c **** 	 || strcmp(arg_list[3], config->product_info.secret) ){
+ 121              		.loc 1 62 0
+ 122 005e E168     		ldr	r1, [r4, #12]
+ 123 0060 0698     		ldr	r0, [sp, #24]
+ 124 0062 FFF7FEFF 		bl	strcmp
+ 125              	.LVL13:
+ 126 0066 78B1     		cbz	r0, .L5
+ 127              	.L4:
+  63:src/helper/emhost/emh_alisds.c **** 		 
+  64:src/helper/emhost/emh_alisds.c **** 		if (!(ATCmdParser_send("AT+ALINKPRODUCT=%s,%s,%s,%s,%s", 
+ 128              		.loc 1 64 0
+ 129 0068 0196     		str	r6, [sp, #4]
+ 130 006a E368     		ldr	r3, [r4, #12]
+ 131 006c 0093     		str	r3, [sp]
+ 132 006e A368     		ldr	r3, [r4, #8]
+ 133 0070 6268     		ldr	r2, [r4, #4]
+ 134 0072 2946     		mov	r1, r5
+ 135 0074 3248     		ldr	r0, .L21+16
+ 136 0076 FFF7FEFF 		bl	ATCmdParser_send
+ 137              	.LVL14:
+ 138 007a 0028     		cmp	r0, #0
+ 139 007c 41D0     		beq	.L11
+  65:src/helper/emhost/emh_alisds.c **** 							 config->product_info.name, config->product_info.module, 
+  66:src/helper/emhost/emh_alisds.c **** 	                         config->product_info.key,  config->product_info.secret, format_arg )
+  67:src/helper/emhost/emh_alisds.c **** 		  && ATCmdParser_recv("OK\r\n"))) {
+ 140              		.loc 1 67 0 discriminator 1
+ 141 007e 2F48     		ldr	r0, .L21+12
+ 142 0080 FFF7FEFF 		bl	ATCmdParser_recv
+ 143              	.LVL15:
+  64:src/helper/emhost/emh_alisds.c **** 							 config->product_info.name, config->product_info.module, 
+ 144              		.loc 1 64 0 discriminator 1
+ 145 0084 0028     		cmp	r0, #0
+ 146 0086 3FD0     		beq	.L12
+ 147              	.L5:
+  68:src/helper/emhost/emh_alisds.c **** 			return kGeneralErr;
+  69:src/helper/emhost/emh_alisds.c **** 		}
+  70:src/helper/emhost/emh_alisds.c **** 	 }
+  71:src/helper/emhost/emh_alisds.c **** 						
+  72:src/helper/emhost/emh_alisds.c **** 	/* Check device info*/
+  73:src/helper/emhost/emh_alisds.c **** 	if (!(ATCmdParser_send("AT+ALINKDEV?")
+ 148              		.loc 1 73 0
+ 149 0088 2E48     		ldr	r0, .L21+20
+ 150 008a FFF7FEFF 		bl	ATCmdParser_send
+ 151              	.LVL16:
+ 152 008e 0028     		cmp	r0, #0
+ 153 0090 3DD0     		beq	.L13
+  74:src/helper/emhost/emh_alisds.c **** 	   && ATCmdParser_recv("+ALINKDEV:%40[^\r]\r\n",args)
+ 154              		.loc 1 74 0
+ 155 0092 08A9     		add	r1, sp, #32
+ARM GAS  /tmp/ccouaFi6.s 			page 5
+
+
+ 156 0094 2C48     		ldr	r0, .L21+24
+ 157 0096 FFF7FEFF 		bl	ATCmdParser_recv
+ 158              	.LVL17:
+ 159 009a 0028     		cmp	r0, #0
+ 160 009c 39D0     		beq	.L14
+  75:src/helper/emhost/emh_alisds.c **** 	   && ATCmdParser_recv("OK\r\n"))) {
+ 161              		.loc 1 75 0
+ 162 009e 2748     		ldr	r0, .L21+12
+ 163 00a0 FFF7FEFF 		bl	ATCmdParser_recv
+ 164              	.LVL18:
+  73:src/helper/emhost/emh_alisds.c **** 	   && ATCmdParser_recv("+ALINKDEV:%40[^\r]\r\n",args)
+ 165              		.loc 1 73 0
+ 166 00a4 0028     		cmp	r0, #0
+ 167 00a6 36D0     		beq	.L15
+  76:src/helper/emhost/emh_alisds.c **** 		return kReadErr;
+  77:src/helper/emhost/emh_alisds.c **** 	}
+  78:src/helper/emhost/emh_alisds.c **** 	
+  79:src/helper/emhost/emh_alisds.c **** 	if (3 != ATCmdParser_analyse_args(args, arg_list, 3)) {
+ 168              		.loc 1 79 0
+ 169 00a8 0322     		movs	r2, #3
+ 170 00aa 03A9     		add	r1, sp, #12
+ 171 00ac 08A8     		add	r0, sp, #32
+ 172 00ae FFF7FEFF 		bl	ATCmdParser_analyse_args
+ 173              	.LVL19:
+ 174 00b2 0328     		cmp	r0, #3
+ 175 00b4 31D1     		bne	.L16
+  80:src/helper/emhost/emh_alisds.c **** 		return kMalformedErr;
+  81:src/helper/emhost/emh_alisds.c **** 	}
+  82:src/helper/emhost/emh_alisds.c **** 
+  83:src/helper/emhost/emh_alisds.c **** 	if ((strcmp(arg_list[0], config->dev_info.type)
+ 176              		.loc 1 83 0
+ 177 00b6 6569     		ldr	r5, [r4, #20]
+ 178 00b8 2946     		mov	r1, r5
+ 179 00ba 0398     		ldr	r0, [sp, #12]
+ 180 00bc FFF7FEFF 		bl	strcmp
+ 181              	.LVL20:
+ 182 00c0 48B9     		cbnz	r0, .L6
+  84:src/helper/emhost/emh_alisds.c **** 	  || strcmp(arg_list[1], config->dev_info.category)
+ 183              		.loc 1 84 0
+ 184 00c2 A169     		ldr	r1, [r4, #24]
+ 185 00c4 0498     		ldr	r0, [sp, #16]
+ 186 00c6 FFF7FEFF 		bl	strcmp
+ 187              	.LVL21:
+ 188 00ca 20B9     		cbnz	r0, .L6
+  85:src/helper/emhost/emh_alisds.c **** 	  || strcmp(arg_list[2], config->dev_info.manufacture))){
+ 189              		.loc 1 85 0
+ 190 00cc E169     		ldr	r1, [r4, #28]
+ 191 00ce 0598     		ldr	r0, [sp, #20]
+ 192 00d0 FFF7FEFF 		bl	strcmp
+ 193              	.LVL22:
+ 194 00d4 18B3     		cbz	r0, .L17
+ 195              	.L6:
+  86:src/helper/emhost/emh_alisds.c **** 		 
+  87:src/helper/emhost/emh_alisds.c **** 		if (!(ATCmdParser_send("AT+ALINKDEV=%s,%s,%s", 
+ 196              		.loc 1 87 0
+ 197 00d6 E369     		ldr	r3, [r4, #28]
+ 198 00d8 A269     		ldr	r2, [r4, #24]
+ARM GAS  /tmp/ccouaFi6.s 			page 6
+
+
+ 199 00da 2946     		mov	r1, r5
+ 200 00dc 1B48     		ldr	r0, .L21+28
+ 201 00de FFF7FEFF 		bl	ATCmdParser_send
+ 202              	.LVL23:
+ 203 00e2 F0B1     		cbz	r0, .L18
+  88:src/helper/emhost/emh_alisds.c **** 							   config->dev_info.type, config->dev_info.category,
+  89:src/helper/emhost/emh_alisds.c **** 	                           config->dev_info.manufacture )
+  90:src/helper/emhost/emh_alisds.c **** 		  && ATCmdParser_recv("OK\r\n"))) {
+ 204              		.loc 1 90 0 discriminator 1
+ 205 00e4 1548     		ldr	r0, .L21+12
+ 206 00e6 FFF7FEFF 		bl	ATCmdParser_recv
+ 207              	.LVL24:
+  87:src/helper/emhost/emh_alisds.c **** 							   config->dev_info.type, config->dev_info.category,
+ 208              		.loc 1 87 0 discriminator 1
+ 209 00ea E8B1     		cbz	r0, .L19
+  91:src/helper/emhost/emh_alisds.c **** 			return kGeneralErr;
+  92:src/helper/emhost/emh_alisds.c **** 		}
+  93:src/helper/emhost/emh_alisds.c **** 	}
+  94:src/helper/emhost/emh_alisds.c **** 	  
+  95:src/helper/emhost/emh_alisds.c **** 	return kNoErr; 
+ 210              		.loc 1 95 0
+ 211 00ec 0020     		movs	r0, #0
+ 212              	.L2:
+  96:src/helper/emhost/emh_alisds.c **** }
+ 213              		.loc 1 96 0
+ 214 00ee 3AB0     		add	sp, sp, #232
+ 215              	.LCFI2:
+ 216              		.cfi_remember_state
+ 217              		.cfi_def_cfa_offset 16
+ 218              		@ sp needed
+ 219 00f0 70BD     		pop	{r4, r5, r6, pc}
+ 220              	.LVL25:
+ 221              	.L7:
+ 222              	.LCFI3:
+ 223              		.cfi_restore_state
+  52:src/helper/emhost/emh_alisds.c **** 	}
+ 224              		.loc 1 52 0
+ 225 00f2 1748     		ldr	r0, .L21+32
+ 226 00f4 FBE7     		b	.L2
+ 227              	.L8:
+ 228 00f6 1648     		ldr	r0, .L21+32
+ 229 00f8 F9E7     		b	.L2
+ 230              	.L9:
+ 231 00fa 1548     		ldr	r0, .L21+32
+ 232 00fc F7E7     		b	.L2
+ 233              	.L10:
+  56:src/helper/emhost/emh_alisds.c **** 	}
+ 234              		.loc 1 56 0
+ 235 00fe 1548     		ldr	r0, .L21+36
+ 236 0100 F5E7     		b	.L2
+ 237              	.L11:
+  68:src/helper/emhost/emh_alisds.c **** 		}
+ 238              		.loc 1 68 0
+ 239 0102 4FF0FF30 		mov	r0, #-1
+ 240 0106 F2E7     		b	.L2
+ 241              	.L12:
+ 242 0108 4FF0FF30 		mov	r0, #-1
+ARM GAS  /tmp/ccouaFi6.s 			page 7
+
+
+ 243 010c EFE7     		b	.L2
+ 244              	.L13:
+  76:src/helper/emhost/emh_alisds.c **** 	}
+ 245              		.loc 1 76 0
+ 246 010e 1048     		ldr	r0, .L21+32
+ 247 0110 EDE7     		b	.L2
+ 248              	.L14:
+ 249 0112 0F48     		ldr	r0, .L21+32
+ 250 0114 EBE7     		b	.L2
+ 251              	.L15:
+ 252 0116 0E48     		ldr	r0, .L21+32
+ 253 0118 E9E7     		b	.L2
+ 254              	.L16:
+  80:src/helper/emhost/emh_alisds.c **** 	}
+ 255              		.loc 1 80 0
+ 256 011a 0E48     		ldr	r0, .L21+36
+ 257 011c E7E7     		b	.L2
+ 258              	.L17:
+  95:src/helper/emhost/emh_alisds.c **** }
+ 259              		.loc 1 95 0
+ 260 011e 0020     		movs	r0, #0
+ 261 0120 E5E7     		b	.L2
+ 262              	.L18:
+  91:src/helper/emhost/emh_alisds.c **** 		}
+ 263              		.loc 1 91 0
+ 264 0122 4FF0FF30 		mov	r0, #-1
+ 265 0126 E2E7     		b	.L2
+ 266              	.L19:
+ 267 0128 4FF0FF30 		mov	r0, #-1
+ 268 012c DFE7     		b	.L2
+ 269              	.L22:
+ 270 012e 00BF     		.align	2
+ 271              	.L21:
+ 272 0130 00000000 		.word	EMH_ARG_ALISDS_FORMAT
+ 273 0134 00000000 		.word	.LC0
+ 274 0138 14000000 		.word	.LC1
+ 275 013c 30000000 		.word	.LC2
+ 276 0140 38000000 		.word	.LC3
+ 277 0144 58000000 		.word	.LC4
+ 278 0148 68000000 		.word	.LC5
+ 279 014c 7C000000 		.word	.LC6
+ 280 0150 A6E5FFFF 		.word	-6746
+ 281 0154 AAE5FFFF 		.word	-6742
+ 282              		.cfi_endproc
+ 283              	.LFE6:
+ 285              		.section	.text.emh_alisds_set_key,"ax",%progbits
+ 286              		.align	1
+ 287              		.global	emh_alisds_set_key
+ 288              		.syntax unified
+ 289              		.thumb
+ 290              		.thumb_func
+ 291              		.fpu fpv4-sp-d16
+ 293              	emh_alisds_set_key:
+ 294              	.LFB7:
+  97:src/helper/emhost/emh_alisds.c **** 
+  98:src/helper/emhost/emh_alisds.c **** mx_status emh_alisds_set_key (const char *dev_key, const char *dev_sec)
+  99:src/helper/emhost/emh_alisds.c **** {
+ARM GAS  /tmp/ccouaFi6.s 			page 8
+
+
+ 295              		.loc 1 99 0
+ 296              		.cfi_startproc
+ 297              		@ args = 0, pretend = 0, frame = 0
+ 298              		@ frame_needed = 0, uses_anonymous_args = 0
+ 299              	.LVL26:
+ 300 0000 08B5     		push	{r3, lr}
+ 301              	.LCFI4:
+ 302              		.cfi_def_cfa_offset 8
+ 303              		.cfi_offset 3, -8
+ 304              		.cfi_offset 14, -4
+ 100:src/helper/emhost/emh_alisds.c **** 	if (ATCmdParser_send("AT+ALINKSDS=%s,%s", dev_key, dev_sec)
+ 305              		.loc 1 100 0
+ 306 0002 0A46     		mov	r2, r1
+ 307 0004 0146     		mov	r1, r0
+ 308              	.LVL27:
+ 309 0006 0848     		ldr	r0, .L28
+ 310              	.LVL28:
+ 311 0008 FFF7FEFF 		bl	ATCmdParser_send
+ 312              	.LVL29:
+ 313 000c 28B1     		cbz	r0, .L25
+ 101:src/helper/emhost/emh_alisds.c **** 	 && ATCmdParser_recv("OK\r\n")) {
+ 314              		.loc 1 101 0
+ 315 000e 0748     		ldr	r0, .L28+4
+ 316 0010 FFF7FEFF 		bl	ATCmdParser_recv
+ 317              	.LVL30:
+ 318 0014 20B1     		cbz	r0, .L26
+ 102:src/helper/emhost/emh_alisds.c **** 		return kNoErr;
+ 319              		.loc 1 102 0
+ 320 0016 0020     		movs	r0, #0
+ 321              	.L23:
+ 103:src/helper/emhost/emh_alisds.c **** 	}
+ 104:src/helper/emhost/emh_alisds.c **** 	return kGeneralErr;
+ 105:src/helper/emhost/emh_alisds.c **** }
+ 322              		.loc 1 105 0
+ 323 0018 08BD     		pop	{r3, pc}
+ 324              	.L25:
+ 104:src/helper/emhost/emh_alisds.c **** }
+ 325              		.loc 1 104 0
+ 326 001a 4FF0FF30 		mov	r0, #-1
+ 327 001e FBE7     		b	.L23
+ 328              	.L26:
+ 329 0020 4FF0FF30 		mov	r0, #-1
+ 330 0024 F8E7     		b	.L23
+ 331              	.L29:
+ 332 0026 00BF     		.align	2
+ 333              	.L28:
+ 334 0028 00000000 		.word	.LC7
+ 335 002c 30000000 		.word	.LC2
+ 336              		.cfi_endproc
+ 337              	.LFE7:
+ 339              		.section	.text.emh_alisds_start_service,"ax",%progbits
+ 340              		.align	1
+ 341              		.global	emh_alisds_start_service
+ 342              		.syntax unified
+ 343              		.thumb
+ 344              		.thumb_func
+ 345              		.fpu fpv4-sp-d16
+ARM GAS  /tmp/ccouaFi6.s 			page 9
+
+
+ 347              	emh_alisds_start_service:
+ 348              	.LFB8:
+ 106:src/helper/emhost/emh_alisds.c **** 
+ 107:src/helper/emhost/emh_alisds.c **** mx_status emh_alisds_start_service(void)
+ 108:src/helper/emhost/emh_alisds.c **** {
+ 349              		.loc 1 108 0
+ 350              		.cfi_startproc
+ 351              		@ args = 0, pretend = 0, frame = 0
+ 352              		@ frame_needed = 0, uses_anonymous_args = 0
+ 353 0000 08B5     		push	{r3, lr}
+ 354              	.LCFI5:
+ 355              		.cfi_def_cfa_offset 8
+ 356              		.cfi_offset 3, -8
+ 357              		.cfi_offset 14, -4
+ 109:src/helper/emhost/emh_alisds.c **** 	if (ATCmdParser_send("AT+ALINKSTART")
+ 358              		.loc 1 109 0
+ 359 0002 0848     		ldr	r0, .L35
+ 360 0004 FFF7FEFF 		bl	ATCmdParser_send
+ 361              	.LVL31:
+ 362 0008 28B1     		cbz	r0, .L32
+ 110:src/helper/emhost/emh_alisds.c ****      && ATCmdParser_recv("OK\r\n")) {
+ 363              		.loc 1 110 0
+ 364 000a 0748     		ldr	r0, .L35+4
+ 365 000c FFF7FEFF 		bl	ATCmdParser_recv
+ 366              	.LVL32:
+ 367 0010 20B1     		cbz	r0, .L33
+ 111:src/helper/emhost/emh_alisds.c ****         return kNoErr;
+ 368              		.loc 1 111 0
+ 369 0012 0020     		movs	r0, #0
+ 370              	.L30:
+ 112:src/helper/emhost/emh_alisds.c ****     }
+ 113:src/helper/emhost/emh_alisds.c **** 	return kGeneralErr;
+ 114:src/helper/emhost/emh_alisds.c **** }
+ 371              		.loc 1 114 0
+ 372 0014 08BD     		pop	{r3, pc}
+ 373              	.L32:
+ 113:src/helper/emhost/emh_alisds.c **** }
+ 374              		.loc 1 113 0
+ 375 0016 4FF0FF30 		mov	r0, #-1
+ 376 001a FBE7     		b	.L30
+ 377              	.L33:
+ 378 001c 4FF0FF30 		mov	r0, #-1
+ 379 0020 F8E7     		b	.L30
+ 380              	.L36:
+ 381 0022 00BF     		.align	2
+ 382              	.L35:
+ 383 0024 00000000 		.word	.LC8
+ 384 0028 30000000 		.word	.LC2
+ 385              		.cfi_endproc
+ 386              	.LFE8:
+ 388              		.section	.text.emh_alisds_get_status,"ax",%progbits
+ 389              		.align	1
+ 390              		.global	emh_alisds_get_status
+ 391              		.syntax unified
+ 392              		.thumb
+ 393              		.thumb_func
+ 394              		.fpu fpv4-sp-d16
+ARM GAS  /tmp/ccouaFi6.s 			page 10
+
+
+ 396              	emh_alisds_get_status:
+ 397              	.LFB9:
+ 115:src/helper/emhost/emh_alisds.c **** 
+ 116:src/helper/emhost/emh_alisds.c **** emh_arg_alisds_status_t emh_alisds_get_status(void)
+ 117:src/helper/emhost/emh_alisds.c **** {
+ 398              		.loc 1 117 0
+ 399              		.cfi_startproc
+ 400              		@ args = 0, pretend = 0, frame = 24
+ 401              		@ frame_needed = 0, uses_anonymous_args = 0
+ 402 0000 00B5     		push	{lr}
+ 403              	.LCFI6:
+ 404              		.cfi_def_cfa_offset 4
+ 405              		.cfi_offset 14, -4
+ 406 0002 87B0     		sub	sp, sp, #28
+ 407              	.LCFI7:
+ 408              		.cfi_def_cfa_offset 32
+ 118:src/helper/emhost/emh_alisds.c **** 	char arg[20];
+ 119:src/helper/emhost/emh_alisds.c **** 
+ 120:src/helper/emhost/emh_alisds.c **** 	if (!(ATCmdParser_send("AT+ALINKSTATUS?")
+ 409              		.loc 1 120 0
+ 410 0004 0C48     		ldr	r0, .L43
+ 411 0006 FFF7FEFF 		bl	ATCmdParser_send
+ 412              	.LVL33:
+ 413 000a 68B1     		cbz	r0, .L39
+ 121:src/helper/emhost/emh_alisds.c **** 	   && ATCmdParser_recv("+ALINKSTATUS:%20[^\r]\r\n",arg)
+ 414              		.loc 1 121 0
+ 415 000c 01A9     		add	r1, sp, #4
+ 416 000e 0B48     		ldr	r0, .L43+4
+ 417 0010 FFF7FEFF 		bl	ATCmdParser_recv
+ 418              	.LVL34:
+ 419 0014 60B1     		cbz	r0, .L40
+ 122:src/helper/emhost/emh_alisds.c **** 	   && ATCmdParser_recv("OK\r\n"))) {
+ 420              		.loc 1 122 0
+ 421 0016 0A48     		ldr	r0, .L43+8
+ 422 0018 FFF7FEFF 		bl	ATCmdParser_recv
+ 423              	.LVL35:
+ 120:src/helper/emhost/emh_alisds.c **** 	   && ATCmdParser_recv("+ALINKSTATUS:%20[^\r]\r\n",arg)
+ 424              		.loc 1 120 0
+ 425 001c 50B1     		cbz	r0, .L41
+ 123:src/helper/emhost/emh_alisds.c **** 		return EMH_ARG_ERR;
+ 124:src/helper/emhost/emh_alisds.c **** 	}
+ 125:src/helper/emhost/emh_alisds.c **** 	
+ 126:src/helper/emhost/emh_alisds.c **** 	return emh_arg_for_arg( EMH_ARG_ALISDS_STATUS, arg);
+ 426              		.loc 1 126 0
+ 427 001e 01A9     		add	r1, sp, #4
+ 428 0020 0848     		ldr	r0, .L43+12
+ 429 0022 FFF7FEFF 		bl	emh_arg_for_arg
+ 430              	.LVL36:
+ 431 0026 00E0     		b	.L38
+ 432              	.L39:
+ 123:src/helper/emhost/emh_alisds.c **** 		return EMH_ARG_ERR;
+ 433              		.loc 1 123 0
+ 434 0028 FF20     		movs	r0, #255
+ 435              	.L38:
+ 127:src/helper/emhost/emh_alisds.c **** }
+ 436              		.loc 1 127 0
+ 437 002a 07B0     		add	sp, sp, #28
+ARM GAS  /tmp/ccouaFi6.s 			page 11
+
+
+ 438              	.LCFI8:
+ 439              		.cfi_remember_state
+ 440              		.cfi_def_cfa_offset 4
+ 441              		@ sp needed
+ 442 002c 5DF804FB 		ldr	pc, [sp], #4
+ 443              	.L40:
+ 444              	.LCFI9:
+ 445              		.cfi_restore_state
+ 123:src/helper/emhost/emh_alisds.c **** 		return EMH_ARG_ERR;
+ 446              		.loc 1 123 0
+ 447 0030 FF20     		movs	r0, #255
+ 448 0032 FAE7     		b	.L38
+ 449              	.L41:
+ 450 0034 FF20     		movs	r0, #255
+ 451 0036 F8E7     		b	.L38
+ 452              	.L44:
+ 453              		.align	2
+ 454              	.L43:
+ 455 0038 00000000 		.word	.LC9
+ 456 003c 10000000 		.word	.LC10
+ 457 0040 30000000 		.word	.LC2
+ 458 0044 00000000 		.word	EMH_ARG_ALISDS_STATUS
+ 459              		.cfi_endproc
+ 460              	.LFE9:
+ 462              		.section	.text.emh_alisds_provision,"ax",%progbits
+ 463              		.align	1
+ 464              		.global	emh_alisds_provision
+ 465              		.syntax unified
+ 466              		.thumb
+ 467              		.thumb_func
+ 468              		.fpu fpv4-sp-d16
+ 470              	emh_alisds_provision:
+ 471              	.LFB10:
+ 128:src/helper/emhost/emh_alisds.c **** 
+ 129:src/helper/emhost/emh_alisds.c **** mx_status emh_alisds_provision(bool on)
+ 130:src/helper/emhost/emh_alisds.c **** {
+ 472              		.loc 1 130 0
+ 473              		.cfi_startproc
+ 474              		@ args = 0, pretend = 0, frame = 0
+ 475              		@ frame_needed = 0, uses_anonymous_args = 0
+ 476              	.LVL37:
+ 477 0000 08B5     		push	{r3, lr}
+ 478              	.LCFI10:
+ 479              		.cfi_def_cfa_offset 8
+ 480              		.cfi_offset 3, -8
+ 481              		.cfi_offset 14, -4
+ 131:src/helper/emhost/emh_alisds.c **** 	if ((on? ATCmdParser_send("AT+ALINKAWSSTART"):
+ 132:src/helper/emhost/emh_alisds.c **** 		     ATCmdParser_send("AT+ALINKAWSSTOP"))
+ 133:src/helper/emhost/emh_alisds.c **** 		  && ATCmdParser_recv("OK\r\n")) {
+ 482              		.loc 1 133 0
+ 483 0002 48B1     		cbz	r0, .L46
+ 131:src/helper/emhost/emh_alisds.c **** 	if ((on? ATCmdParser_send("AT+ALINKAWSSTART"):
+ 484              		.loc 1 131 0 discriminator 1
+ 485 0004 0948     		ldr	r0, .L52
+ 486              	.LVL38:
+ 487 0006 FFF7FEFF 		bl	ATCmdParser_send
+ 488              	.LVL39:
+ARM GAS  /tmp/ccouaFi6.s 			page 12
+
+
+ 489              	.L47:
+ 131:src/helper/emhost/emh_alisds.c **** 	if ((on? ATCmdParser_send("AT+ALINKAWSSTART"):
+ 490              		.loc 1 131 0 is_stmt 0
+ 491 000a 48B1     		cbz	r0, .L49
+ 492              		.loc 1 133 0 is_stmt 1
+ 493 000c 0848     		ldr	r0, .L52+4
+ 494 000e FFF7FEFF 		bl	ATCmdParser_recv
+ 495              	.LVL40:
+ 496 0012 40B1     		cbz	r0, .L50
+ 134:src/helper/emhost/emh_alisds.c **** 		return kNoErr;
+ 497              		.loc 1 134 0
+ 498 0014 0020     		movs	r0, #0
+ 499              	.L45:
+ 135:src/helper/emhost/emh_alisds.c **** 	}
+ 136:src/helper/emhost/emh_alisds.c **** 	return kGeneralErr;
+ 137:src/helper/emhost/emh_alisds.c **** }
+ 500              		.loc 1 137 0
+ 501 0016 08BD     		pop	{r3, pc}
+ 502              	.LVL41:
+ 503              	.L46:
+ 132:src/helper/emhost/emh_alisds.c **** 		  && ATCmdParser_recv("OK\r\n")) {
+ 504              		.loc 1 132 0 discriminator 2
+ 505 0018 0648     		ldr	r0, .L52+8
+ 506              	.LVL42:
+ 507 001a FFF7FEFF 		bl	ATCmdParser_send
+ 508              	.LVL43:
+ 509 001e F4E7     		b	.L47
+ 510              	.L49:
+ 136:src/helper/emhost/emh_alisds.c **** }
+ 511              		.loc 1 136 0
+ 512 0020 4FF0FF30 		mov	r0, #-1
+ 513 0024 F7E7     		b	.L45
+ 514              	.L50:
+ 515 0026 4FF0FF30 		mov	r0, #-1
+ 516 002a F4E7     		b	.L45
+ 517              	.L53:
+ 518              		.align	2
+ 519              	.L52:
+ 520 002c 00000000 		.word	.LC11
+ 521 0030 30000000 		.word	.LC2
+ 522 0034 14000000 		.word	.LC12
+ 523              		.cfi_endproc
+ 524              	.LFE10:
+ 526              		.section	.text.emh_ali_start_provision,"ax",%progbits
+ 527              		.align	1
+ 528              		.global	emh_ali_start_provision
+ 529              		.syntax unified
+ 530              		.thumb
+ 531              		.thumb_func
+ 532              		.fpu fpv4-sp-d16
+ 534              	emh_ali_start_provision:
+ 535              	.LFB11:
+ 138:src/helper/emhost/emh_alisds.c **** 
+ 139:src/helper/emhost/emh_alisds.c **** mx_status emh_ali_start_provision(void)
+ 140:src/helper/emhost/emh_alisds.c **** {
+ 536              		.loc 1 140 0
+ 537              		.cfi_startproc
+ARM GAS  /tmp/ccouaFi6.s 			page 13
+
+
+ 538              		@ args = 0, pretend = 0, frame = 0
+ 539              		@ frame_needed = 0, uses_anonymous_args = 0
+ 540 0000 08B5     		push	{r3, lr}
+ 541              	.LCFI11:
+ 542              		.cfi_def_cfa_offset 8
+ 543              		.cfi_offset 3, -8
+ 544              		.cfi_offset 14, -4
+ 141:src/helper/emhost/emh_alisds.c **** 	if (ATCmdParser_send("AT+ALINKAWSSTART")
+ 545              		.loc 1 141 0
+ 546 0002 0848     		ldr	r0, .L59
+ 547 0004 FFF7FEFF 		bl	ATCmdParser_send
+ 548              	.LVL44:
+ 549 0008 28B1     		cbz	r0, .L56
+ 142:src/helper/emhost/emh_alisds.c ****      && ATCmdParser_recv("OK\r\n")) {
+ 550              		.loc 1 142 0
+ 551 000a 0748     		ldr	r0, .L59+4
+ 552 000c FFF7FEFF 		bl	ATCmdParser_recv
+ 553              	.LVL45:
+ 554 0010 20B1     		cbz	r0, .L57
+ 143:src/helper/emhost/emh_alisds.c ****         return kNoErr;
+ 555              		.loc 1 143 0
+ 556 0012 0020     		movs	r0, #0
+ 557              	.L54:
+ 144:src/helper/emhost/emh_alisds.c ****     }
+ 145:src/helper/emhost/emh_alisds.c **** 	return kGeneralErr;
+ 146:src/helper/emhost/emh_alisds.c **** }
+ 558              		.loc 1 146 0
+ 559 0014 08BD     		pop	{r3, pc}
+ 560              	.L56:
+ 145:src/helper/emhost/emh_alisds.c **** }
+ 561              		.loc 1 145 0
+ 562 0016 4FF0FF30 		mov	r0, #-1
+ 563 001a FBE7     		b	.L54
+ 564              	.L57:
+ 565 001c 4FF0FF30 		mov	r0, #-1
+ 566 0020 F8E7     		b	.L54
+ 567              	.L60:
+ 568 0022 00BF     		.align	2
+ 569              	.L59:
+ 570 0024 00000000 		.word	.LC11
+ 571 0028 30000000 		.word	.LC2
+ 572              		.cfi_endproc
+ 573              	.LFE11:
+ 575              		.section	.text.emh_alisds_unbound,"ax",%progbits
+ 576              		.align	1
+ 577              		.global	emh_alisds_unbound
+ 578              		.syntax unified
+ 579              		.thumb
+ 580              		.thumb_func
+ 581              		.fpu fpv4-sp-d16
+ 583              	emh_alisds_unbound:
+ 584              	.LFB12:
+ 147:src/helper/emhost/emh_alisds.c **** 
+ 148:src/helper/emhost/emh_alisds.c **** mx_status emh_alisds_unbound(void)
+ 149:src/helper/emhost/emh_alisds.c **** {
+ 585              		.loc 1 149 0
+ 586              		.cfi_startproc
+ARM GAS  /tmp/ccouaFi6.s 			page 14
+
+
+ 587              		@ args = 0, pretend = 0, frame = 0
+ 588              		@ frame_needed = 0, uses_anonymous_args = 0
+ 589 0000 08B5     		push	{r3, lr}
+ 590              	.LCFI12:
+ 591              		.cfi_def_cfa_offset 8
+ 592              		.cfi_offset 3, -8
+ 593              		.cfi_offset 14, -4
+ 150:src/helper/emhost/emh_alisds.c **** 	if (ATCmdParser_send("AT+ALINKUNBIND")
+ 594              		.loc 1 150 0
+ 595 0002 0848     		ldr	r0, .L66
+ 596 0004 FFF7FEFF 		bl	ATCmdParser_send
+ 597              	.LVL46:
+ 598 0008 28B1     		cbz	r0, .L63
+ 151:src/helper/emhost/emh_alisds.c ****      && ATCmdParser_recv("OK\r\n")) {
+ 599              		.loc 1 151 0
+ 600 000a 0748     		ldr	r0, .L66+4
+ 601 000c FFF7FEFF 		bl	ATCmdParser_recv
+ 602              	.LVL47:
+ 603 0010 20B1     		cbz	r0, .L64
+ 152:src/helper/emhost/emh_alisds.c ****         return kNoErr;
+ 604              		.loc 1 152 0
+ 605 0012 0020     		movs	r0, #0
+ 606              	.L61:
+ 153:src/helper/emhost/emh_alisds.c ****     }
+ 154:src/helper/emhost/emh_alisds.c **** 	return kGeneralErr;
+ 155:src/helper/emhost/emh_alisds.c **** }
+ 607              		.loc 1 155 0
+ 608 0014 08BD     		pop	{r3, pc}
+ 609              	.L63:
+ 154:src/helper/emhost/emh_alisds.c **** }
+ 610              		.loc 1 154 0
+ 611 0016 4FF0FF30 		mov	r0, #-1
+ 612 001a FBE7     		b	.L61
+ 613              	.L64:
+ 614 001c 4FF0FF30 		mov	r0, #-1
+ 615 0020 F8E7     		b	.L61
+ 616              	.L67:
+ 617 0022 00BF     		.align	2
+ 618              	.L66:
+ 619 0024 00000000 		.word	.LC13
+ 620 0028 30000000 		.word	.LC2
+ 621              		.cfi_endproc
+ 622              	.LFE12:
+ 624              		.section	.text.emh_ali_stop_provision,"ax",%progbits
+ 625              		.align	1
+ 626              		.global	emh_ali_stop_provision
+ 627              		.syntax unified
+ 628              		.thumb
+ 629              		.thumb_func
+ 630              		.fpu fpv4-sp-d16
+ 632              	emh_ali_stop_provision:
+ 633              	.LFB13:
+ 156:src/helper/emhost/emh_alisds.c **** 
+ 157:src/helper/emhost/emh_alisds.c **** mx_status emh_ali_stop_provision(void)
+ 158:src/helper/emhost/emh_alisds.c **** {
+ 634              		.loc 1 158 0
+ 635              		.cfi_startproc
+ARM GAS  /tmp/ccouaFi6.s 			page 15
+
+
+ 636              		@ args = 0, pretend = 0, frame = 0
+ 637              		@ frame_needed = 0, uses_anonymous_args = 0
+ 638 0000 08B5     		push	{r3, lr}
+ 639              	.LCFI13:
+ 640              		.cfi_def_cfa_offset 8
+ 641              		.cfi_offset 3, -8
+ 642              		.cfi_offset 14, -4
+ 159:src/helper/emhost/emh_alisds.c **** 	if (ATCmdParser_send("AT+ALINKAWSSTOP")
+ 643              		.loc 1 159 0
+ 644 0002 0848     		ldr	r0, .L73
+ 645 0004 FFF7FEFF 		bl	ATCmdParser_send
+ 646              	.LVL48:
+ 647 0008 28B1     		cbz	r0, .L70
+ 160:src/helper/emhost/emh_alisds.c ****      && ATCmdParser_recv("OK\r\n")) {
+ 648              		.loc 1 160 0
+ 649 000a 0748     		ldr	r0, .L73+4
+ 650 000c FFF7FEFF 		bl	ATCmdParser_recv
+ 651              	.LVL49:
+ 652 0010 20B1     		cbz	r0, .L71
+ 161:src/helper/emhost/emh_alisds.c ****         return kNoErr;
+ 653              		.loc 1 161 0
+ 654 0012 0020     		movs	r0, #0
+ 655              	.L68:
+ 162:src/helper/emhost/emh_alisds.c ****     }
+ 163:src/helper/emhost/emh_alisds.c **** 	return kGeneralErr;
+ 164:src/helper/emhost/emh_alisds.c **** }
+ 656              		.loc 1 164 0
+ 657 0014 08BD     		pop	{r3, pc}
+ 658              	.L70:
+ 163:src/helper/emhost/emh_alisds.c **** }
+ 659              		.loc 1 163 0
+ 660 0016 4FF0FF30 		mov	r0, #-1
+ 661 001a FBE7     		b	.L68
+ 662              	.L71:
+ 663 001c 4FF0FF30 		mov	r0, #-1
+ 664 0020 F8E7     		b	.L68
+ 665              	.L74:
+ 666 0022 00BF     		.align	2
+ 667              	.L73:
+ 668 0024 14000000 		.word	.LC12
+ 669 0028 30000000 		.word	.LC2
+ 670              		.cfi_endproc
+ 671              	.LFE13:
+ 673              		.section	.text.emh_alisds_set_cloud_atts,"ax",%progbits
+ 674              		.align	1
+ 675              		.global	emh_alisds_set_cloud_atts
+ 676              		.syntax unified
+ 677              		.thumb
+ 678              		.thumb_func
+ 679              		.fpu fpv4-sp-d16
+ 681              	emh_alisds_set_cloud_atts:
+ 682              	.LFB14:
+ 165:src/helper/emhost/emh_alisds.c **** 
+ 166:src/helper/emhost/emh_alisds.c **** mx_status emh_alisds_set_cloud_atts(emh_arg_alisds_format_t format, uint8_t *data, int32_t len)
+ 167:src/helper/emhost/emh_alisds.c **** {
+ 683              		.loc 1 167 0
+ 684              		.cfi_startproc
+ARM GAS  /tmp/ccouaFi6.s 			page 16
+
+
+ 685              		@ args = 0, pretend = 0, frame = 0
+ 686              		@ frame_needed = 0, uses_anonymous_args = 0
+ 687              	.LVL50:
+ 688 0000 38B5     		push	{r3, r4, r5, lr}
+ 689              	.LCFI14:
+ 690              		.cfi_def_cfa_offset 16
+ 691              		.cfi_offset 3, -16
+ 692              		.cfi_offset 4, -12
+ 693              		.cfi_offset 5, -8
+ 694              		.cfi_offset 14, -4
+ 695 0002 0D46     		mov	r5, r1
+ 696 0004 1446     		mov	r4, r2
+ 168:src/helper/emhost/emh_alisds.c **** 	if (ATCmdParser_send("AT+ALINKSEND=%d", len)
+ 697              		.loc 1 168 0
+ 698 0006 1146     		mov	r1, r2
+ 699              	.LVL51:
+ 700 0008 0F48     		ldr	r0, .L82
+ 701              	.LVL52:
+ 702 000a FFF7FEFF 		bl	ATCmdParser_send
+ 703              	.LVL53:
+ 704 000e 78B1     		cbz	r0, .L77
+ 169:src/helper/emhost/emh_alisds.c **** 	 && ATCmdParser_recv(">")
+ 705              		.loc 1 169 0
+ 706 0010 0E48     		ldr	r0, .L82+4
+ 707 0012 FFF7FEFF 		bl	ATCmdParser_recv
+ 708              	.LVL54:
+ 709 0016 70B1     		cbz	r0, .L78
+ 170:src/helper/emhost/emh_alisds.c **** 	 && ATCmdParser_write((char *)data, len) == len
+ 710              		.loc 1 170 0
+ 711 0018 2146     		mov	r1, r4
+ 712 001a 2846     		mov	r0, r5
+ 713 001c FFF7FEFF 		bl	ATCmdParser_write
+ 714              	.LVL55:
+ 715 0020 A042     		cmp	r0, r4
+ 716 0022 0BD1     		bne	.L79
+ 171:src/helper/emhost/emh_alisds.c **** 	 && ATCmdParser_recv("OK\r\n")) {
+ 717              		.loc 1 171 0
+ 718 0024 0A48     		ldr	r0, .L82+8
+ 719 0026 FFF7FEFF 		bl	ATCmdParser_recv
+ 720              	.LVL56:
+ 721 002a 50B1     		cbz	r0, .L80
+ 172:src/helper/emhost/emh_alisds.c **** 		return kNoErr;
+ 722              		.loc 1 172 0
+ 723 002c 0020     		movs	r0, #0
+ 724              	.L75:
+ 173:src/helper/emhost/emh_alisds.c **** 	}
+ 174:src/helper/emhost/emh_alisds.c **** 	return kGeneralErr;
+ 175:src/helper/emhost/emh_alisds.c **** }
+ 725              		.loc 1 175 0
+ 726 002e 38BD     		pop	{r3, r4, r5, pc}
+ 727              	.LVL57:
+ 728              	.L77:
+ 174:src/helper/emhost/emh_alisds.c **** }
+ 729              		.loc 1 174 0
+ 730 0030 4FF0FF30 		mov	r0, #-1
+ 731 0034 FBE7     		b	.L75
+ 732              	.L78:
+ARM GAS  /tmp/ccouaFi6.s 			page 17
+
+
+ 733 0036 4FF0FF30 		mov	r0, #-1
+ 734 003a F8E7     		b	.L75
+ 735              	.L79:
+ 736 003c 4FF0FF30 		mov	r0, #-1
+ 737 0040 F5E7     		b	.L75
+ 738              	.L80:
+ 739 0042 4FF0FF30 		mov	r0, #-1
+ 740 0046 F2E7     		b	.L75
+ 741              	.L83:
+ 742              		.align	2
+ 743              	.L82:
+ 744 0048 00000000 		.word	.LC14
+ 745 004c 10000000 		.word	.LC15
+ 746 0050 30000000 		.word	.LC2
+ 747              		.cfi_endproc
+ 748              	.LFE14:
+ 750              		.section	.text.emh_alisds_event_handler,"ax",%progbits
+ 751              		.align	1
+ 752              		.global	emh_alisds_event_handler
+ 753              		.syntax unified
+ 754              		.thumb
+ 755              		.thumb_func
+ 756              		.fpu fpv4-sp-d16
+ 758              	emh_alisds_event_handler:
+ 759              	.LFB15:
+ 176:src/helper/emhost/emh_alisds.c **** 
+ 177:src/helper/emhost/emh_alisds.c **** void emh_alisds_event_handler(void)
+ 178:src/helper/emhost/emh_alisds.c **** {
+ 760              		.loc 1 178 0
+ 761              		.cfi_startproc
+ 762              		@ args = 0, pretend = 0, frame = 40
+ 763              		@ frame_needed = 0, uses_anonymous_args = 0
+ 764 0000 30B5     		push	{r4, r5, lr}
+ 765              	.LCFI15:
+ 766              		.cfi_def_cfa_offset 12
+ 767              		.cfi_offset 4, -12
+ 768              		.cfi_offset 5, -8
+ 769              		.cfi_offset 14, -4
+ 770 0002 8DB0     		sub	sp, sp, #52
+ 771              	.LCFI16:
+ 772              		.cfi_def_cfa_offset 64
+ 773              	.LVL58:
+ 179:src/helper/emhost/emh_alisds.c **** 	mx_status err = kNoErr;
+ 180:src/helper/emhost/emh_alisds.c **** 	char arg1[10], arg2[10];
+ 181:src/helper/emhost/emh_alisds.c **** 	emh_arg_alisds_format_t format;
+ 182:src/helper/emhost/emh_alisds.c **** 	emh_arg_alisds_conn_t conn;
+ 183:src/helper/emhost/emh_alisds.c **** 	emh_alisds_msg attrs;
+ 184:src/helper/emhost/emh_alisds.c **** 
+ 185:src/helper/emhost/emh_alisds.c **** 	// parse out the packet
+ 186:src/helper/emhost/emh_alisds.c **** 	require_action(ATCmdParser_recv("%10[^,],", arg1), exit, err = kMalformedErr);
+ 774              		.loc 1 186 0
+ 775 0004 09A9     		add	r1, sp, #36
+ 776 0006 6048     		ldr	r0, .L108
+ 777 0008 FFF7FEFF 		bl	ATCmdParser_recv
+ 778              	.LVL59:
+ 779 000c 58B9     		cbnz	r0, .L85
+ 780              		.loc 1 186 0 is_stmt 0 discriminator 1
+ARM GAS  /tmp/ccouaFi6.s 			page 18
+
+
+ 781 000e 5F4B     		ldr	r3, .L108+4
+ 782 0010 0093     		str	r3, [sp]
+ 783 0012 BA23     		movs	r3, #186
+ 784 0014 5E4A     		ldr	r2, .L108+8
+ 785 0016 5F49     		ldr	r1, .L108+12
+ 786 0018 5F48     		ldr	r0, .L108+16
+ 787 001a FFF7FEFF 		bl	printf
+ 788              	.LVL60:
+ 789              	.L86:
+ 187:src/helper/emhost/emh_alisds.c **** 		
+ 188:src/helper/emhost/emh_alisds.c **** 	emh_arg_alisds_ev_t event = emh_arg_for_arg(EMH_ARG_ALISDS_EV, arg1);
+ 189:src/helper/emhost/emh_alisds.c **** 	require_action(event != EMH_ARG_ERR, exit,  err = kMalformedErr);
+ 190:src/helper/emhost/emh_alisds.c **** 
+ 191:src/helper/emhost/emh_alisds.c **** 	/* ALINK Server connection event */
+ 192:src/helper/emhost/emh_alisds.c **** 	if (event == EMH_ARG_ALISDS_EV_ALINK) {
+ 193:src/helper/emhost/emh_alisds.c **** 		require_action(ATCmdParser_recv("%10[^\r]\r\n", arg2), exit, err = kMalformedErr);
+ 194:src/helper/emhost/emh_alisds.c **** 		conn = emh_arg_for_arg(EMH_ARG_ALISDS_CONN, arg2);
+ 195:src/helper/emhost/emh_alisds.c **** 		require_action(conn != EMH_ARG_ERR, exit, err = kMalformedErr);
+ 196:src/helper/emhost/emh_alisds.c **** 		emh_ev_alisds_connection(conn);
+ 197:src/helper/emhost/emh_alisds.c **** 	}
+ 198:src/helper/emhost/emh_alisds.c **** 	/* ALINK server <=== attribute value=== device */
+ 199:src/helper/emhost/emh_alisds.c **** 	else if (event == EMH_ARG_ALISDS_EV_GET) {
+ 200:src/helper/emhost/emh_alisds.c **** 		require_action(ATCmdParser_recv("%10[^\r]\r\n", arg2), exit, err = kMalformedErr);
+ 201:src/helper/emhost/emh_alisds.c **** 		format =  emh_arg_for_arg(EMH_ARG_ALISDS_FORMAT, arg2);
+ 202:src/helper/emhost/emh_alisds.c **** 		require_action(format != EMH_ARG_ERR, exit, err = kMalformedErr);
+ 203:src/helper/emhost/emh_alisds.c **** 		
+ 204:src/helper/emhost/emh_alisds.c **** 		attrs.format = format;
+ 205:src/helper/emhost/emh_alisds.c **** 		attrs.data = NULL;
+ 206:src/helper/emhost/emh_alisds.c **** 		attrs.len = 0;
+ 207:src/helper/emhost/emh_alisds.c **** 		emh_ev_alisds_get_local_atts(&attrs);
+ 208:src/helper/emhost/emh_alisds.c **** 	}
+ 209:src/helper/emhost/emh_alisds.c **** 	/* ALINK server === attribute value===> device */
+ 210:src/helper/emhost/emh_alisds.c **** 	else if (event == EMH_ARG_ALISDS_EV_SET) {
+ 211:src/helper/emhost/emh_alisds.c **** 		require_action(ATCmdParser_recv("%10[^,],", arg2), exit, err = kMalformedErr);
+ 212:src/helper/emhost/emh_alisds.c **** 		format = emh_arg_for_arg(EMH_ARG_ALISDS_FORMAT, arg2);
+ 213:src/helper/emhost/emh_alisds.c **** 		require_action(format != EMH_ARG_ERR, exit, err = kMalformedErr);
+ 214:src/helper/emhost/emh_alisds.c **** 		
+ 215:src/helper/emhost/emh_alisds.c **** 		/* Read package data */
+ 216:src/helper/emhost/emh_alisds.c **** 		int32_t count;
+ 217:src/helper/emhost/emh_alisds.c **** 		require_action(ATCmdParser_recv("%d,", &count), exit, err = kMalformedErr);
+ 218:src/helper/emhost/emh_alisds.c **** 
+ 219:src/helper/emhost/emh_alisds.c **** 		uint8_t *data = malloc(count);
+ 220:src/helper/emhost/emh_alisds.c **** 		require_action(data, exit, err = kNoMemoryErr);
+ 221:src/helper/emhost/emh_alisds.c **** 		require_action(ATCmdParser_read((char *)data, count) == count, exit, err = kTimeoutErr);
+ 222:src/helper/emhost/emh_alisds.c **** 
+ 223:src/helper/emhost/emh_alisds.c **** 		attrs.data = data;
+ 224:src/helper/emhost/emh_alisds.c **** 		attrs.format = format;
+ 225:src/helper/emhost/emh_alisds.c **** 		attrs.len = count;
+ 226:src/helper/emhost/emh_alisds.c **** 		emh_ev_alisds_set_local_atts(&attrs);
+ 227:src/helper/emhost/emh_alisds.c **** 		free(data);
+ 228:src/helper/emhost/emh_alisds.c **** 	}
+ 229:src/helper/emhost/emh_alisds.c **** 	
+ 230:src/helper/emhost/emh_alisds.c **** exit:
+ 231:src/helper/emhost/emh_alisds.c **** 	if (err == kMalformedErr) emh_ev_unknown();
+ 790              		.loc 1 231 0 is_stmt 1 discriminator 1
+ 791 001e FFF7FEFF 		bl	emh_ev_unknown
+ 792              	.LVL61:
+ARM GAS  /tmp/ccouaFi6.s 			page 19
+
+
+ 793              	.L84:
+ 232:src/helper/emhost/emh_alisds.c **** 	return;
+ 233:src/helper/emhost/emh_alisds.c **** }
+ 794              		.loc 1 233 0
+ 795 0022 0DB0     		add	sp, sp, #52
+ 796              	.LCFI17:
+ 797              		.cfi_remember_state
+ 798              		.cfi_def_cfa_offset 12
+ 799              		@ sp needed
+ 800 0024 30BD     		pop	{r4, r5, pc}
+ 801              	.LVL62:
+ 802              	.L85:
+ 803              	.LCFI18:
+ 804              		.cfi_restore_state
+ 188:src/helper/emhost/emh_alisds.c **** 	require_action(event != EMH_ARG_ERR, exit,  err = kMalformedErr);
+ 805              		.loc 1 188 0
+ 806 0026 09A9     		add	r1, sp, #36
+ 807 0028 5C48     		ldr	r0, .L108+20
+ 808 002a FFF7FEFF 		bl	emh_arg_for_arg
+ 809              	.LVL63:
+ 189:src/helper/emhost/emh_alisds.c **** 
+ 810              		.loc 1 189 0
+ 811 002e FF28     		cmp	r0, #255
+ 812 0030 13D0     		beq	.L101
+ 192:src/helper/emhost/emh_alisds.c **** 		require_action(ATCmdParser_recv("%10[^\r]\r\n", arg2), exit, err = kMalformedErr);
+ 813              		.loc 1 192 0
+ 814 0032 D8B1     		cbz	r0, .L102
+ 199:src/helper/emhost/emh_alisds.c **** 		require_action(ATCmdParser_recv("%10[^\r]\r\n", arg2), exit, err = kMalformedErr);
+ 815              		.loc 1 199 0
+ 816 0034 0228     		cmp	r0, #2
+ 817 0036 39D0     		beq	.L103
+ 210:src/helper/emhost/emh_alisds.c **** 		require_action(ATCmdParser_recv("%10[^,],", arg2), exit, err = kMalformedErr);
+ 818              		.loc 1 210 0
+ 819 0038 0128     		cmp	r0, #1
+ 820 003a F2D1     		bne	.L84
+ 821              	.LBB2:
+ 211:src/helper/emhost/emh_alisds.c **** 		format = emh_arg_for_arg(EMH_ARG_ALISDS_FORMAT, arg2);
+ 822              		.loc 1 211 0
+ 823 003c 06A9     		add	r1, sp, #24
+ 824 003e 5248     		ldr	r0, .L108
+ 825              	.LVL64:
+ 826 0040 FFF7FEFF 		bl	ATCmdParser_recv
+ 827              	.LVL65:
+ 828 0044 0028     		cmp	r0, #0
+ 829 0046 58D1     		bne	.L95
+ 211:src/helper/emhost/emh_alisds.c **** 		format = emh_arg_for_arg(EMH_ARG_ALISDS_FORMAT, arg2);
+ 830              		.loc 1 211 0 is_stmt 0 discriminator 1
+ 831 0048 504B     		ldr	r3, .L108+4
+ 832 004a 0093     		str	r3, [sp]
+ 833 004c D323     		movs	r3, #211
+ 834 004e 504A     		ldr	r2, .L108+8
+ 835 0050 5049     		ldr	r1, .L108+12
+ 836 0052 5148     		ldr	r0, .L108+16
+ 837 0054 FFF7FEFF 		bl	printf
+ 838              	.LVL66:
+ 839 0058 E1E7     		b	.L86
+ 840              	.LVL67:
+ARM GAS  /tmp/ccouaFi6.s 			page 20
+
+
+ 841              	.L101:
+ 842              	.LBE2:
+ 189:src/helper/emhost/emh_alisds.c **** 
+ 843              		.loc 1 189 0 is_stmt 1 discriminator 1
+ 844 005a 4C4B     		ldr	r3, .L108+4
+ 845 005c 0093     		str	r3, [sp]
+ 846 005e BD23     		movs	r3, #189
+ 847 0060 4B4A     		ldr	r2, .L108+8
+ 848 0062 4C49     		ldr	r1, .L108+12
+ 849 0064 4C48     		ldr	r0, .L108+16
+ 850              	.LVL68:
+ 851 0066 FFF7FEFF 		bl	printf
+ 852              	.LVL69:
+ 853 006a D8E7     		b	.L86
+ 854              	.LVL70:
+ 855              	.L102:
+ 193:src/helper/emhost/emh_alisds.c **** 		conn = emh_arg_for_arg(EMH_ARG_ALISDS_CONN, arg2);
+ 856              		.loc 1 193 0
+ 857 006c 06A9     		add	r1, sp, #24
+ 858 006e 4C48     		ldr	r0, .L108+24
+ 859              	.LVL71:
+ 860 0070 FFF7FEFF 		bl	ATCmdParser_recv
+ 861              	.LVL72:
+ 862 0074 40B9     		cbnz	r0, .L89
+ 193:src/helper/emhost/emh_alisds.c **** 		conn = emh_arg_for_arg(EMH_ARG_ALISDS_CONN, arg2);
+ 863              		.loc 1 193 0 is_stmt 0 discriminator 1
+ 864 0076 454B     		ldr	r3, .L108+4
+ 865 0078 0093     		str	r3, [sp]
+ 866 007a C123     		movs	r3, #193
+ 867 007c 444A     		ldr	r2, .L108+8
+ 868 007e 4549     		ldr	r1, .L108+12
+ 869 0080 4548     		ldr	r0, .L108+16
+ 870 0082 FFF7FEFF 		bl	printf
+ 871              	.LVL73:
+ 872 0086 CAE7     		b	.L86
+ 873              	.LVL74:
+ 874              	.L89:
+ 194:src/helper/emhost/emh_alisds.c **** 		require_action(conn != EMH_ARG_ERR, exit, err = kMalformedErr);
+ 875              		.loc 1 194 0 is_stmt 1
+ 876 0088 06A9     		add	r1, sp, #24
+ 877 008a 4648     		ldr	r0, .L108+28
+ 878 008c FFF7FEFF 		bl	emh_arg_for_arg
+ 879              	.LVL75:
+ 195:src/helper/emhost/emh_alisds.c **** 		emh_ev_alisds_connection(conn);
+ 880              		.loc 1 195 0
+ 881 0090 FF28     		cmp	r0, #255
+ 882 0092 02D0     		beq	.L104
+ 196:src/helper/emhost/emh_alisds.c **** 	}
+ 883              		.loc 1 196 0
+ 884 0094 FFF7FEFF 		bl	emh_ev_alisds_connection
+ 885              	.LVL76:
+ 886 0098 C3E7     		b	.L84
+ 887              	.LVL77:
+ 888              	.L104:
+ 195:src/helper/emhost/emh_alisds.c **** 		emh_ev_alisds_connection(conn);
+ 889              		.loc 1 195 0 discriminator 1
+ 890 009a 3C4B     		ldr	r3, .L108+4
+ARM GAS  /tmp/ccouaFi6.s 			page 21
+
+
+ 891 009c 0093     		str	r3, [sp]
+ 892 009e C323     		movs	r3, #195
+ 893 00a0 3B4A     		ldr	r2, .L108+8
+ 894 00a2 3C49     		ldr	r1, .L108+12
+ 895 00a4 3C48     		ldr	r0, .L108+16
+ 896              	.LVL78:
+ 897 00a6 FFF7FEFF 		bl	printf
+ 898              	.LVL79:
+ 899 00aa B8E7     		b	.L86
+ 900              	.LVL80:
+ 901              	.L103:
+ 200:src/helper/emhost/emh_alisds.c **** 		format =  emh_arg_for_arg(EMH_ARG_ALISDS_FORMAT, arg2);
+ 902              		.loc 1 200 0
+ 903 00ac 06A9     		add	r1, sp, #24
+ 904 00ae 3C48     		ldr	r0, .L108+24
+ 905              	.LVL81:
+ 906 00b0 FFF7FEFF 		bl	ATCmdParser_recv
+ 907              	.LVL82:
+ 908 00b4 40B9     		cbnz	r0, .L93
+ 200:src/helper/emhost/emh_alisds.c **** 		format =  emh_arg_for_arg(EMH_ARG_ALISDS_FORMAT, arg2);
+ 909              		.loc 1 200 0 is_stmt 0 discriminator 1
+ 910 00b6 354B     		ldr	r3, .L108+4
+ 911 00b8 0093     		str	r3, [sp]
+ 912 00ba C823     		movs	r3, #200
+ 913 00bc 344A     		ldr	r2, .L108+8
+ 914 00be 3549     		ldr	r1, .L108+12
+ 915 00c0 3548     		ldr	r0, .L108+16
+ 916 00c2 FFF7FEFF 		bl	printf
+ 917              	.LVL83:
+ 918 00c6 AAE7     		b	.L86
+ 919              	.LVL84:
+ 920              	.L93:
+ 201:src/helper/emhost/emh_alisds.c **** 		require_action(format != EMH_ARG_ERR, exit, err = kMalformedErr);
+ 921              		.loc 1 201 0 is_stmt 1
+ 922 00c8 06A9     		add	r1, sp, #24
+ 923 00ca 3748     		ldr	r0, .L108+32
+ 924 00cc FFF7FEFF 		bl	emh_arg_for_arg
+ 925              	.LVL85:
+ 202:src/helper/emhost/emh_alisds.c **** 		
+ 926              		.loc 1 202 0
+ 927 00d0 FF28     		cmp	r0, #255
+ 928 00d2 09D0     		beq	.L105
+ 204:src/helper/emhost/emh_alisds.c **** 		attrs.data = NULL;
+ 929              		.loc 1 204 0
+ 930 00d4 8DF81400 		strb	r0, [sp, #20]
+ 205:src/helper/emhost/emh_alisds.c **** 		attrs.len = 0;
+ 931              		.loc 1 205 0
+ 932 00d8 0023     		movs	r3, #0
+ 933 00da 0493     		str	r3, [sp, #16]
+ 206:src/helper/emhost/emh_alisds.c **** 		emh_ev_alisds_get_local_atts(&attrs);
+ 934              		.loc 1 206 0
+ 935 00dc 0CA8     		add	r0, sp, #48
+ 936              	.LVL86:
+ 937 00de 40F8243D 		str	r3, [r0, #-36]!
+ 207:src/helper/emhost/emh_alisds.c **** 	}
+ 938              		.loc 1 207 0
+ 939 00e2 FFF7FEFF 		bl	emh_ev_alisds_get_local_atts
+ARM GAS  /tmp/ccouaFi6.s 			page 22
+
+
+ 940              	.LVL87:
+ 941 00e6 9CE7     		b	.L84
+ 942              	.LVL88:
+ 943              	.L105:
+ 202:src/helper/emhost/emh_alisds.c **** 		
+ 944              		.loc 1 202 0 discriminator 1
+ 945 00e8 284B     		ldr	r3, .L108+4
+ 946 00ea 0093     		str	r3, [sp]
+ 947 00ec CA23     		movs	r3, #202
+ 948 00ee 284A     		ldr	r2, .L108+8
+ 949 00f0 2849     		ldr	r1, .L108+12
+ 950 00f2 2948     		ldr	r0, .L108+16
+ 951              	.LVL89:
+ 952 00f4 FFF7FEFF 		bl	printf
+ 953              	.LVL90:
+ 954 00f8 91E7     		b	.L86
+ 955              	.LVL91:
+ 956              	.L95:
+ 957              	.LBB3:
+ 212:src/helper/emhost/emh_alisds.c **** 		require_action(format != EMH_ARG_ERR, exit, err = kMalformedErr);
+ 958              		.loc 1 212 0
+ 959 00fa 06A9     		add	r1, sp, #24
+ 960 00fc 2A48     		ldr	r0, .L108+32
+ 961 00fe FFF7FEFF 		bl	emh_arg_for_arg
+ 962              	.LVL92:
+ 963 0102 0446     		mov	r4, r0
+ 964              	.LVL93:
+ 213:src/helper/emhost/emh_alisds.c **** 		
+ 965              		.loc 1 213 0
+ 966 0104 FF28     		cmp	r0, #255
+ 967 0106 0DD0     		beq	.L106
+ 217:src/helper/emhost/emh_alisds.c **** 
+ 968              		.loc 1 217 0
+ 969 0108 02A9     		add	r1, sp, #8
+ 970 010a 2848     		ldr	r0, .L108+36
+ 971              	.LVL94:
+ 972 010c FFF7FEFF 		bl	ATCmdParser_recv
+ 973              	.LVL95:
+ 974 0110 88B9     		cbnz	r0, .L97
+ 217:src/helper/emhost/emh_alisds.c **** 
+ 975              		.loc 1 217 0 is_stmt 0 discriminator 1
+ 976 0112 1E4B     		ldr	r3, .L108+4
+ 977 0114 0093     		str	r3, [sp]
+ 978 0116 D923     		movs	r3, #217
+ 979 0118 1D4A     		ldr	r2, .L108+8
+ 980 011a 1E49     		ldr	r1, .L108+12
+ 981 011c 1E48     		ldr	r0, .L108+16
+ 982 011e FFF7FEFF 		bl	printf
+ 983              	.LVL96:
+ 984 0122 7CE7     		b	.L86
+ 985              	.LVL97:
+ 986              	.L106:
+ 213:src/helper/emhost/emh_alisds.c **** 		
+ 987              		.loc 1 213 0 is_stmt 1 discriminator 1
+ 988 0124 194B     		ldr	r3, .L108+4
+ 989 0126 0093     		str	r3, [sp]
+ 990 0128 D523     		movs	r3, #213
+ARM GAS  /tmp/ccouaFi6.s 			page 23
+
+
+ 991 012a 194A     		ldr	r2, .L108+8
+ 992 012c 1949     		ldr	r1, .L108+12
+ 993 012e 1A48     		ldr	r0, .L108+16
+ 994              	.LVL98:
+ 995 0130 FFF7FEFF 		bl	printf
+ 996              	.LVL99:
+ 997 0134 73E7     		b	.L86
+ 998              	.LVL100:
+ 999              	.L97:
+ 219:src/helper/emhost/emh_alisds.c **** 		require_action(data, exit, err = kNoMemoryErr);
+ 1000              		.loc 1 219 0
+ 1001 0136 0298     		ldr	r0, [sp, #8]
+ 1002 0138 FFF7FEFF 		bl	malloc
+ 1003              	.LVL101:
+ 220:src/helper/emhost/emh_alisds.c **** 		require_action(ATCmdParser_read((char *)data, count) == count, exit, err = kTimeoutErr);
+ 1004              		.loc 1 220 0
+ 1005 013c 0546     		mov	r5, r0
+ 1006 013e 70B1     		cbz	r0, .L107
+ 221:src/helper/emhost/emh_alisds.c **** 
+ 1007              		.loc 1 221 0
+ 1008 0140 0299     		ldr	r1, [sp, #8]
+ 1009 0142 FFF7FEFF 		bl	ATCmdParser_read
+ 1010              	.LVL102:
+ 1011 0146 029B     		ldr	r3, [sp, #8]
+ 1012 0148 9842     		cmp	r0, r3
+ 1013 014a 11D0     		beq	.L99
+ 221:src/helper/emhost/emh_alisds.c **** 
+ 1014              		.loc 1 221 0 is_stmt 0 discriminator 1
+ 1015 014c 0F4B     		ldr	r3, .L108+4
+ 1016 014e 0093     		str	r3, [sp]
+ 1017 0150 DD23     		movs	r3, #221
+ 1018 0152 0F4A     		ldr	r2, .L108+8
+ 1019 0154 0F49     		ldr	r1, .L108+12
+ 1020 0156 1048     		ldr	r0, .L108+16
+ 1021 0158 FFF7FEFF 		bl	printf
+ 1022              	.LVL103:
+ 1023 015c 61E7     		b	.L84
+ 1024              	.LVL104:
+ 1025              	.L107:
+ 220:src/helper/emhost/emh_alisds.c **** 		require_action(ATCmdParser_read((char *)data, count) == count, exit, err = kTimeoutErr);
+ 1026              		.loc 1 220 0 is_stmt 1 discriminator 1
+ 1027 015e 0B4B     		ldr	r3, .L108+4
+ 1028 0160 0093     		str	r3, [sp]
+ 1029 0162 DC23     		movs	r3, #220
+ 1030 0164 0A4A     		ldr	r2, .L108+8
+ 1031 0166 0B49     		ldr	r1, .L108+12
+ 1032 0168 0B48     		ldr	r0, .L108+16
+ 1033              	.LVL105:
+ 1034 016a FFF7FEFF 		bl	printf
+ 1035              	.LVL106:
+ 1036 016e 58E7     		b	.L84
+ 1037              	.LVL107:
+ 1038              	.L99:
+ 223:src/helper/emhost/emh_alisds.c **** 		attrs.format = format;
+ 1039              		.loc 1 223 0
+ 1040 0170 0495     		str	r5, [sp, #16]
+ 224:src/helper/emhost/emh_alisds.c **** 		attrs.len = count;
+ARM GAS  /tmp/ccouaFi6.s 			page 24
+
+
+ 1041              		.loc 1 224 0
+ 1042 0172 8DF81440 		strb	r4, [sp, #20]
+ 225:src/helper/emhost/emh_alisds.c **** 		emh_ev_alisds_set_local_atts(&attrs);
+ 1043              		.loc 1 225 0
+ 1044 0176 0CA8     		add	r0, sp, #48
+ 1045 0178 40F8243D 		str	r3, [r0, #-36]!
+ 226:src/helper/emhost/emh_alisds.c **** 		free(data);
+ 1046              		.loc 1 226 0
+ 1047 017c FFF7FEFF 		bl	emh_ev_alisds_set_local_atts
+ 1048              	.LVL108:
+ 227:src/helper/emhost/emh_alisds.c **** 	}
+ 1049              		.loc 1 227 0
+ 1050 0180 2846     		mov	r0, r5
+ 1051 0182 FFF7FEFF 		bl	free
+ 1052              	.LVL109:
+ 1053 0186 4CE7     		b	.L84
+ 1054              	.L109:
+ 1055              		.align	2
+ 1056              	.L108:
+ 1057 0188 00000000 		.word	.LC16
+ 1058 018c 4C000000 		.word	.LC19
+ 1059 0190 00000000 		.word	.LANCHOR0
+ 1060 0194 12000000 		.word	.LC17+18
+ 1061 0198 2C000000 		.word	.LC18
+ 1062 019c 00000000 		.word	EMH_ARG_ALISDS_EV
+ 1063 01a0 50000000 		.word	.LC20
+ 1064 01a4 00000000 		.word	EMH_ARG_ALISDS_CONN
+ 1065 01a8 00000000 		.word	EMH_ARG_ALISDS_FORMAT
+ 1066 01ac 5C000000 		.word	.LC21
+ 1067              	.LBE3:
+ 1068              		.cfi_endproc
+ 1069              	.LFE15:
+ 1071              		.section	.rodata.__PRETTY_FUNCTION__.7446,"a",%progbits
+ 1072              		.align	2
+ 1073              		.set	.LANCHOR0,. + 0
+ 1076              	__PRETTY_FUNCTION__.7446:
+ 1077 0000 656D685F 		.ascii	"emh_alisds_event_handler\000"
+ 1077      616C6973 
+ 1077      64735F65 
+ 1077      76656E74 
+ 1077      5F68616E 
+ 1078              		.section	.rodata.emh_alisds_config.str1.4,"aMS",%progbits,1
+ 1079              		.align	2
+ 1080              	.LC0:
+ 1081 0000 41542B41 		.ascii	"AT+ALINKPRODUCT?\000"
+ 1081      4C494E4B 
+ 1081      50524F44 
+ 1081      5543543F 
+ 1081      00
+ 1082 0011 000000   		.space	3
+ 1083              	.LC1:
+ 1084 0014 2B414C49 		.ascii	"+ALINKPRODUCT:%200[^\015]\015\012\000"
+ 1084      4E4B5052 
+ 1084      4F445543 
+ 1084      543A2532 
+ 1084      30305B5E 
+ 1085 002d 000000   		.space	3
+ARM GAS  /tmp/ccouaFi6.s 			page 25
+
+
+ 1086              	.LC2:
+ 1087 0030 4F4B0D0A 		.ascii	"OK\015\012\000"
+ 1087      00
+ 1088 0035 000000   		.space	3
+ 1089              	.LC3:
+ 1090 0038 41542B41 		.ascii	"AT+ALINKPRODUCT=%s,%s,%s,%s,%s\000"
+ 1090      4C494E4B 
+ 1090      50524F44 
+ 1090      5543543D 
+ 1090      25732C25 
+ 1091 0057 00       		.space	1
+ 1092              	.LC4:
+ 1093 0058 41542B41 		.ascii	"AT+ALINKDEV?\000"
+ 1093      4C494E4B 
+ 1093      4445563F 
+ 1093      00
+ 1094 0065 000000   		.space	3
+ 1095              	.LC5:
+ 1096 0068 2B414C49 		.ascii	"+ALINKDEV:%40[^\015]\015\012\000"
+ 1096      4E4B4445 
+ 1096      563A2534 
+ 1096      305B5E0D 
+ 1096      5D0D0A00 
+ 1097              	.LC6:
+ 1098 007c 41542B41 		.ascii	"AT+ALINKDEV=%s,%s,%s\000"
+ 1098      4C494E4B 
+ 1098      4445563D 
+ 1098      25732C25 
+ 1098      732C2573 
+ 1099              		.section	.rodata.emh_alisds_event_handler.str1.4,"aMS",%progbits,1
+ 1100              		.align	2
+ 1101              	.LC16:
+ 1102 0000 2531305B 		.ascii	"%10[^,],\000"
+ 1102      5E2C5D2C 
+ 1102      00
+ 1103 0009 000000   		.space	3
+ 1104              	.LC17:
+ 1105 000c 7372632F 		.ascii	"src/helper/emhost/emh_alisds.c\000"
+ 1105      68656C70 
+ 1105      65722F65 
+ 1105      6D686F73 
+ 1105      742F656D 
+ 1106 002b 00       		.space	1
+ 1107              	.LC18:
+ 1108 002c 5B4D583A 		.ascii	"[MX:%s:%s:%4d] **ASSERT** %s\015\012\000"
+ 1108      25733A25 
+ 1108      733A2534 
+ 1108      645D202A 
+ 1108      2A415353 
+ 1109 004b 00       		.space	1
+ 1110              	.LC19:
+ 1111 004c 00       		.ascii	"\000"
+ 1112 004d 000000   		.space	3
+ 1113              	.LC20:
+ 1114 0050 2531305B 		.ascii	"%10[^\015]\015\012\000"
+ 1114      5E0D5D0D 
+ 1114      0A00
+ARM GAS  /tmp/ccouaFi6.s 			page 26
+
+
+ 1115 005a 0000     		.space	2
+ 1116              	.LC21:
+ 1117 005c 25642C00 		.ascii	"%d,\000"
+ 1118              		.section	.rodata.emh_alisds_get_status.str1.4,"aMS",%progbits,1
+ 1119              		.align	2
+ 1120              	.LC9:
+ 1121 0000 41542B41 		.ascii	"AT+ALINKSTATUS?\000"
+ 1121      4C494E4B 
+ 1121      53544154 
+ 1121      55533F00 
+ 1122              	.LC10:
+ 1123 0010 2B414C49 		.ascii	"+ALINKSTATUS:%20[^\015]\015\012\000"
+ 1123      4E4B5354 
+ 1123      41545553 
+ 1123      3A253230 
+ 1123      5B5E0D5D 
+ 1124              		.section	.rodata.emh_alisds_provision.str1.4,"aMS",%progbits,1
+ 1125              		.align	2
+ 1126              	.LC11:
+ 1127 0000 41542B41 		.ascii	"AT+ALINKAWSSTART\000"
+ 1127      4C494E4B 
+ 1127      41575353 
+ 1127      54415254 
+ 1127      00
+ 1128 0011 000000   		.space	3
+ 1129              	.LC12:
+ 1130 0014 41542B41 		.ascii	"AT+ALINKAWSSTOP\000"
+ 1130      4C494E4B 
+ 1130      41575353 
+ 1130      544F5000 
+ 1131              		.section	.rodata.emh_alisds_set_cloud_atts.str1.4,"aMS",%progbits,1
+ 1132              		.align	2
+ 1133              	.LC14:
+ 1134 0000 41542B41 		.ascii	"AT+ALINKSEND=%d\000"
+ 1134      4C494E4B 
+ 1134      53454E44 
+ 1134      3D256400 
+ 1135              	.LC15:
+ 1136 0010 3E00     		.ascii	">\000"
+ 1137              		.section	.rodata.emh_alisds_set_key.str1.4,"aMS",%progbits,1
+ 1138              		.align	2
+ 1139              	.LC7:
+ 1140 0000 41542B41 		.ascii	"AT+ALINKSDS=%s,%s\000"
+ 1140      4C494E4B 
+ 1140      5344533D 
+ 1140      25732C25 
+ 1140      7300
+ 1141              		.section	.rodata.emh_alisds_start_service.str1.4,"aMS",%progbits,1
+ 1142              		.align	2
+ 1143              	.LC8:
+ 1144 0000 41542B41 		.ascii	"AT+ALINKSTART\000"
+ 1144      4C494E4B 
+ 1144      53544152 
+ 1144      5400
+ 1145              		.section	.rodata.emh_alisds_unbound.str1.4,"aMS",%progbits,1
+ 1146              		.align	2
+ 1147              	.LC13:
+ARM GAS  /tmp/ccouaFi6.s 			page 27
+
+
+ 1148 0000 41542B41 		.ascii	"AT+ALINKUNBIND\000"
+ 1148      4C494E4B 
+ 1148      554E4249 
+ 1148      4E4400
+ 1149              		.weak	emh_ev_alisds_set_local_atts
+ 1150              		.weak	emh_ev_alisds_connection
+ 1151              		.weak	emh_ev_unknown
+ 1152              		.text
+ 1153              	.Letext0:
+ 1154              		.file 2 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 1155              		.file 3 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 1156              		.file 4 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 1157              		.file 5 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/lib/gc
+ 1158              		.file 6 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 1159              		.file 7 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 1160              		.file 8 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 1161              		.file 9 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 1162              		.file 10 "src/helper/mx_common.h"
+ 1163              		.file 11 "src/helper/emhost/emh_arg.h"
+ 1164              		.file 12 "src/helper/emhost/emh_api.h"
+ 1165              		.file 13 "src/helper/emhost/ATCmdParser/ATCmdParser.h"
+ 1166              		.file 14 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-n
+ 1167              		.file 15 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-n
+ARM GAS  /tmp/ccouaFi6.s 			page 28
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 emh_alisds.c
+     /tmp/ccouaFi6.s:18     .text.emh_ev_alisds_get_local_atts:0000000000000000 $t
+     /tmp/ccouaFi6.s:25     .text.emh_ev_alisds_get_local_atts:0000000000000000 emh_ev_alisds_get_local_atts
+     /tmp/ccouaFi6.s:40     .text.emh_alisds_config:0000000000000000 $t
+     /tmp/ccouaFi6.s:47     .text.emh_alisds_config:0000000000000000 emh_alisds_config
+     /tmp/ccouaFi6.s:272    .text.emh_alisds_config:0000000000000130 $d
+     /tmp/ccouaFi6.s:286    .text.emh_alisds_set_key:0000000000000000 $t
+     /tmp/ccouaFi6.s:293    .text.emh_alisds_set_key:0000000000000000 emh_alisds_set_key
+     /tmp/ccouaFi6.s:334    .text.emh_alisds_set_key:0000000000000028 $d
+     /tmp/ccouaFi6.s:340    .text.emh_alisds_start_service:0000000000000000 $t
+     /tmp/ccouaFi6.s:347    .text.emh_alisds_start_service:0000000000000000 emh_alisds_start_service
+     /tmp/ccouaFi6.s:383    .text.emh_alisds_start_service:0000000000000024 $d
+     /tmp/ccouaFi6.s:389    .text.emh_alisds_get_status:0000000000000000 $t
+     /tmp/ccouaFi6.s:396    .text.emh_alisds_get_status:0000000000000000 emh_alisds_get_status
+     /tmp/ccouaFi6.s:455    .text.emh_alisds_get_status:0000000000000038 $d
+     /tmp/ccouaFi6.s:463    .text.emh_alisds_provision:0000000000000000 $t
+     /tmp/ccouaFi6.s:470    .text.emh_alisds_provision:0000000000000000 emh_alisds_provision
+     /tmp/ccouaFi6.s:520    .text.emh_alisds_provision:000000000000002c $d
+     /tmp/ccouaFi6.s:527    .text.emh_ali_start_provision:0000000000000000 $t
+     /tmp/ccouaFi6.s:534    .text.emh_ali_start_provision:0000000000000000 emh_ali_start_provision
+     /tmp/ccouaFi6.s:570    .text.emh_ali_start_provision:0000000000000024 $d
+     /tmp/ccouaFi6.s:576    .text.emh_alisds_unbound:0000000000000000 $t
+     /tmp/ccouaFi6.s:583    .text.emh_alisds_unbound:0000000000000000 emh_alisds_unbound
+     /tmp/ccouaFi6.s:619    .text.emh_alisds_unbound:0000000000000024 $d
+     /tmp/ccouaFi6.s:625    .text.emh_ali_stop_provision:0000000000000000 $t
+     /tmp/ccouaFi6.s:632    .text.emh_ali_stop_provision:0000000000000000 emh_ali_stop_provision
+     /tmp/ccouaFi6.s:668    .text.emh_ali_stop_provision:0000000000000024 $d
+     /tmp/ccouaFi6.s:674    .text.emh_alisds_set_cloud_atts:0000000000000000 $t
+     /tmp/ccouaFi6.s:681    .text.emh_alisds_set_cloud_atts:0000000000000000 emh_alisds_set_cloud_atts
+     /tmp/ccouaFi6.s:744    .text.emh_alisds_set_cloud_atts:0000000000000048 $d
+     /tmp/ccouaFi6.s:751    .text.emh_alisds_event_handler:0000000000000000 $t
+     /tmp/ccouaFi6.s:758    .text.emh_alisds_event_handler:0000000000000000 emh_alisds_event_handler
+     /tmp/ccouaFi6.s:1057   .text.emh_alisds_event_handler:0000000000000188 $d
+     /tmp/ccouaFi6.s:1072   .rodata.__PRETTY_FUNCTION__.7446:0000000000000000 $d
+     /tmp/ccouaFi6.s:1076   .rodata.__PRETTY_FUNCTION__.7446:0000000000000000 __PRETTY_FUNCTION__.7446
+     /tmp/ccouaFi6.s:1079   .rodata.emh_alisds_config.str1.4:0000000000000000 $d
+     /tmp/ccouaFi6.s:1100   .rodata.emh_alisds_event_handler.str1.4:0000000000000000 $d
+     /tmp/ccouaFi6.s:1104   .rodata.emh_alisds_event_handler.str1.4:000000000000000c .LC17
+     /tmp/ccouaFi6.s:1119   .rodata.emh_alisds_get_status.str1.4:0000000000000000 $d
+     /tmp/ccouaFi6.s:1125   .rodata.emh_alisds_provision.str1.4:0000000000000000 $d
+     /tmp/ccouaFi6.s:1132   .rodata.emh_alisds_set_cloud_atts.str1.4:0000000000000000 $d
+     /tmp/ccouaFi6.s:1138   .rodata.emh_alisds_set_key.str1.4:0000000000000000 $d
+     /tmp/ccouaFi6.s:1142   .rodata.emh_alisds_start_service.str1.4:0000000000000000 $d
+     /tmp/ccouaFi6.s:1146   .rodata.emh_alisds_unbound.str1.4:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+emh_arg_for_type
+ATCmdParser_send
+ATCmdParser_recv
+ATCmdParser_analyse_args
+strcmp
+EMH_ARG_ALISDS_FORMAT
+emh_arg_for_arg
+EMH_ARG_ALISDS_STATUS
+ATCmdParser_write
+printf
+ARM GAS  /tmp/ccouaFi6.s 			page 29
+
+
+emh_ev_unknown
+emh_ev_alisds_connection
+malloc
+ATCmdParser_read
+emh_ev_alisds_set_local_atts
+free
+EMH_ARG_ALISDS_EV
+EMH_ARG_ALISDS_CONN

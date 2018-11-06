@@ -1,0 +1,187 @@
+ARM GAS  /tmp/ccZMWROX.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"mx_tick.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.mx_hal_ms_ticker_init,"ax",%progbits
+  18              		.align	1
+  19              		.global	mx_hal_ms_ticker_init
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	mx_hal_ms_ticker_init:
+  26              	.LFB128:
+  27              		.file 1 "Platform/STM32F4xx/peripherals/mx_tick.c"
+   1:Platform/STM32F4xx/peripherals/mx_tick.c **** /**
+   2:Platform/STM32F4xx/peripherals/mx_tick.c ****  ******************************************************************************
+   3:Platform/STM32F4xx/peripherals/mx_tick.c ****  * @file    mx_tick.c
+   4:Platform/STM32F4xx/peripherals/mx_tick.c ****  * @author  QQ Ding
+   5:Platform/STM32F4xx/peripherals/mx_tick.c ****  * @version V1.0.0
+   6:Platform/STM32F4xx/peripherals/mx_tick.c ****  * @date    3-Sept-2018
+   7:Platform/STM32F4xx/peripherals/mx_tick.c ****  * @brief   Tick for delay and timeout
+   8:Platform/STM32F4xx/peripherals/mx_tick.c ****  ******************************************************************************
+   9:Platform/STM32F4xx/peripherals/mx_tick.c ****  *
+  10:Platform/STM32F4xx/peripherals/mx_tick.c ****  * Copyright (c) 2009-2018 MXCHIP Co.,Ltd.
+  11:Platform/STM32F4xx/peripherals/mx_tick.c ****  *
+  12:Platform/STM32F4xx/peripherals/mx_tick.c ****  * Licensed under the Apache License, Version 2.0 (the "License");
+  13:Platform/STM32F4xx/peripherals/mx_tick.c ****  * you may not use this file except in compliance with the License.
+  14:Platform/STM32F4xx/peripherals/mx_tick.c ****  * You may obtain a copy of the License at
+  15:Platform/STM32F4xx/peripherals/mx_tick.c ****  *
+  16:Platform/STM32F4xx/peripherals/mx_tick.c ****  *     http://www.apache.org/licenses/LICENSE-2.0
+  17:Platform/STM32F4xx/peripherals/mx_tick.c ****  *
+  18:Platform/STM32F4xx/peripherals/mx_tick.c ****  * Unless required by applicable law or agreed to in writing, software
+  19:Platform/STM32F4xx/peripherals/mx_tick.c ****  * distributed under the License is distributed on an "AS IS" BASIS,
+  20:Platform/STM32F4xx/peripherals/mx_tick.c ****  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  21:Platform/STM32F4xx/peripherals/mx_tick.c ****  * See the License for the specific language governing permissions and
+  22:Platform/STM32F4xx/peripherals/mx_tick.c ****  * limitations under the License.
+  23:Platform/STM32F4xx/peripherals/mx_tick.c ****  *
+  24:Platform/STM32F4xx/peripherals/mx_tick.c ****  ******************************************************************************
+  25:Platform/STM32F4xx/peripherals/mx_tick.c ****  */
+  26:Platform/STM32F4xx/peripherals/mx_tick.c **** 
+  27:Platform/STM32F4xx/peripherals/mx_tick.c **** #include <time.h>
+  28:Platform/STM32F4xx/peripherals/mx_tick.c **** #include "mx_common.h"
+  29:Platform/STM32F4xx/peripherals/mx_tick.c **** #include "stm32f4xx_hal.h"
+  30:Platform/STM32F4xx/peripherals/mx_tick.c **** /******************************************************************************
+  31:Platform/STM32F4xx/peripherals/mx_tick.c ****  *                              Variable Definitions
+ARM GAS  /tmp/ccZMWROX.s 			page 2
+
+
+  32:Platform/STM32F4xx/peripherals/mx_tick.c ****  ******************************************************************************/
+  33:Platform/STM32F4xx/peripherals/mx_tick.c **** 
+  34:Platform/STM32F4xx/peripherals/mx_tick.c **** /******************************************************************************
+  35:Platform/STM32F4xx/peripherals/mx_tick.c ****  *                              Function Definitions
+  36:Platform/STM32F4xx/peripherals/mx_tick.c ****  ******************************************************************************/
+  37:Platform/STM32F4xx/peripherals/mx_tick.c **** 
+  38:Platform/STM32F4xx/peripherals/mx_tick.c **** void mx_hal_ms_ticker_init(void)
+  39:Platform/STM32F4xx/peripherals/mx_tick.c **** {
+  28              		.loc 1 39 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  40:Platform/STM32F4xx/peripherals/mx_tick.c ****     return;
+  41:Platform/STM32F4xx/peripherals/mx_tick.c **** }
+  33              		.loc 1 41 0
+  34 0000 7047     		bx	lr
+  35              		.cfi_endproc
+  36              	.LFE128:
+  38              		.section	.text.mx_hal_ms_ticker_read,"ax",%progbits
+  39              		.align	1
+  40              		.global	mx_hal_ms_ticker_read
+  41              		.syntax unified
+  42              		.thumb
+  43              		.thumb_func
+  44              		.fpu fpv4-sp-d16
+  46              	mx_hal_ms_ticker_read:
+  47              	.LFB129:
+  42:Platform/STM32F4xx/peripherals/mx_tick.c **** 
+  43:Platform/STM32F4xx/peripherals/mx_tick.c **** uint32_t mx_hal_ms_ticker_read(void)
+  44:Platform/STM32F4xx/peripherals/mx_tick.c **** {
+  48              		.loc 1 44 0
+  49              		.cfi_startproc
+  50              		@ args = 0, pretend = 0, frame = 0
+  51              		@ frame_needed = 0, uses_anonymous_args = 0
+  52 0000 08B5     		push	{r3, lr}
+  53              	.LCFI0:
+  54              		.cfi_def_cfa_offset 8
+  55              		.cfi_offset 3, -8
+  56              		.cfi_offset 14, -4
+  45:Platform/STM32F4xx/peripherals/mx_tick.c ****     uint32_t ms;
+  46:Platform/STM32F4xx/peripherals/mx_tick.c ****     ms = HAL_GetTick();
+  57              		.loc 1 46 0
+  58 0002 FFF7FEFF 		bl	HAL_GetTick
+  59              	.LVL0:
+  47:Platform/STM32F4xx/peripherals/mx_tick.c **** //    printf("-[%d]\r\n",ms);
+  48:Platform/STM32F4xx/peripherals/mx_tick.c ****     return ms;
+  49:Platform/STM32F4xx/peripherals/mx_tick.c **** }
+  60              		.loc 1 49 0
+  61 0006 08BD     		pop	{r3, pc}
+  62              		.cfi_endproc
+  63              	.LFE129:
+  65              		.section	.text.mx_hal_delay_ms,"ax",%progbits
+  66              		.align	1
+  67              		.global	mx_hal_delay_ms
+  68              		.syntax unified
+  69              		.thumb
+ARM GAS  /tmp/ccZMWROX.s 			page 3
+
+
+  70              		.thumb_func
+  71              		.fpu fpv4-sp-d16
+  73              	mx_hal_delay_ms:
+  74              	.LFB130:
+  50:Platform/STM32F4xx/peripherals/mx_tick.c **** 
+  51:Platform/STM32F4xx/peripherals/mx_tick.c **** void mx_hal_delay_ms(volatile uint32_t delay)
+  52:Platform/STM32F4xx/peripherals/mx_tick.c **** {
+  75              		.loc 1 52 0
+  76              		.cfi_startproc
+  77              		@ args = 0, pretend = 0, frame = 8
+  78              		@ frame_needed = 0, uses_anonymous_args = 0
+  79              	.LVL1:
+  80 0000 00B5     		push	{lr}
+  81              	.LCFI1:
+  82              		.cfi_def_cfa_offset 4
+  83              		.cfi_offset 14, -4
+  84 0002 83B0     		sub	sp, sp, #12
+  85              	.LCFI2:
+  86              		.cfi_def_cfa_offset 16
+  87 0004 0190     		str	r0, [sp, #4]
+  53:Platform/STM32F4xx/peripherals/mx_tick.c ****     HAL_Delay(delay);
+  88              		.loc 1 53 0
+  89 0006 0198     		ldr	r0, [sp, #4]
+  90              	.LVL2:
+  91 0008 FFF7FEFF 		bl	HAL_Delay
+  92              	.LVL3:
+  54:Platform/STM32F4xx/peripherals/mx_tick.c **** }
+  93              		.loc 1 54 0
+  94 000c 03B0     		add	sp, sp, #12
+  95              	.LCFI3:
+  96              		.cfi_def_cfa_offset 4
+  97              		@ sp needed
+  98 000e 5DF804FB 		ldr	pc, [sp], #4
+  99              		.cfi_endproc
+ 100              	.LFE130:
+ 102              		.text
+ 103              	.Letext0:
+ 104              		.file 2 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 105              		.file 3 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 106              		.file 4 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 107              		.file 5 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/lib/gc
+ 108              		.file 6 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 109              		.file 7 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 110              		.file 8 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 111              		.file 9 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 112              		.file 10 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-n
+ 113              		.file 11 "Platform/STM32F4xx/drivers/CMSIS/Include/core_cm4.h"
+ 114              		.file 12 "Platform/STM32F4xx/drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ 115              		.file 13 "Platform/STM32F4xx/drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
+ARM GAS  /tmp/ccZMWROX.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 mx_tick.c
+     /tmp/ccZMWROX.s:18     .text.mx_hal_ms_ticker_init:0000000000000000 $t
+     /tmp/ccZMWROX.s:25     .text.mx_hal_ms_ticker_init:0000000000000000 mx_hal_ms_ticker_init
+     /tmp/ccZMWROX.s:39     .text.mx_hal_ms_ticker_read:0000000000000000 $t
+     /tmp/ccZMWROX.s:46     .text.mx_hal_ms_ticker_read:0000000000000000 mx_hal_ms_ticker_read
+     /tmp/ccZMWROX.s:66     .text.mx_hal_delay_ms:0000000000000000 $t
+     /tmp/ccZMWROX.s:73     .text.mx_hal_delay_ms:0000000000000000 mx_hal_delay_ms
+
+UNDEFINED SYMBOLS
+HAL_GetTick
+HAL_Delay

@@ -1,0 +1,705 @@
+ARM GAS  /tmp/ccTQuzze.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"mx_stdio.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.at_async_read,"ax",%progbits
+  18              		.align	1
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  24              	at_async_read:
+  25              	.LFB128:
+  26              		.file 1 "Platform/STM32F4xx/peripherals/mx_stdio.c"
+   1:Platform/STM32F4xx/peripherals/mx_stdio.c **** /**
+   2:Platform/STM32F4xx/peripherals/mx_stdio.c ****  ******************************************************************************
+   3:Platform/STM32F4xx/peripherals/mx_stdio.c ****  * @file    mx_stdio.c
+   4:Platform/STM32F4xx/peripherals/mx_stdio.c ****  * @author  QQ Ding
+   5:Platform/STM32F4xx/peripherals/mx_stdio.c ****  * @version V1.0.0
+   6:Platform/STM32F4xx/peripherals/mx_stdio.c ****  * @date    3-Sept-2018
+   7:Platform/STM32F4xx/peripherals/mx_stdio.c ****  * @brief   Initialize uart for printf output
+   8:Platform/STM32F4xx/peripherals/mx_stdio.c ****  ******************************************************************************
+   9:Platform/STM32F4xx/peripherals/mx_stdio.c ****  *
+  10:Platform/STM32F4xx/peripherals/mx_stdio.c ****  * Copyright (c) 2009-2018 MXCHIP Co.,Ltd.
+  11:Platform/STM32F4xx/peripherals/mx_stdio.c ****  *
+  12:Platform/STM32F4xx/peripherals/mx_stdio.c ****  * Licensed under the Apache License, Version 2.0 (the "License");
+  13:Platform/STM32F4xx/peripherals/mx_stdio.c ****  * you may not use this file except in compliance with the License.
+  14:Platform/STM32F4xx/peripherals/mx_stdio.c ****  * You may obtain a copy of the License at
+  15:Platform/STM32F4xx/peripherals/mx_stdio.c ****  *
+  16:Platform/STM32F4xx/peripherals/mx_stdio.c ****  *     http://www.apache.org/licenses/LICENSE-2.0
+  17:Platform/STM32F4xx/peripherals/mx_stdio.c ****  *
+  18:Platform/STM32F4xx/peripherals/mx_stdio.c ****  * Unless required by applicable law or agreed to in writing, software
+  19:Platform/STM32F4xx/peripherals/mx_stdio.c ****  * distributed under the License is distributed on an "AS IS" BASIS,
+  20:Platform/STM32F4xx/peripherals/mx_stdio.c ****  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  21:Platform/STM32F4xx/peripherals/mx_stdio.c ****  * See the License for the specific language governing permissions and
+  22:Platform/STM32F4xx/peripherals/mx_stdio.c ****  * limitations under the License.
+  23:Platform/STM32F4xx/peripherals/mx_stdio.c ****  *
+  24:Platform/STM32F4xx/peripherals/mx_stdio.c ****  ******************************************************************************
+  25:Platform/STM32F4xx/peripherals/mx_stdio.c ****  */
+  26:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+  27:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+  28:Platform/STM32F4xx/peripherals/mx_stdio.c **** #include "mx_common.h"
+  29:Platform/STM32F4xx/peripherals/mx_stdio.c **** #include "mx_hal.h"
+  30:Platform/STM32F4xx/peripherals/mx_stdio.c **** #include "mx_ringbuffer.h"
+  31:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+  32:Platform/STM32F4xx/peripherals/mx_stdio.c **** /******************************************************************************
+ARM GAS  /tmp/ccTQuzze.s 			page 2
+
+
+  33:Platform/STM32F4xx/peripherals/mx_stdio.c ****  *                              Variable Definitions
+  34:Platform/STM32F4xx/peripherals/mx_stdio.c ****  ******************************************************************************/
+  35:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+  36:Platform/STM32F4xx/peripherals/mx_stdio.c **** static uint8_t cli_buffer[MX_CLI_RX_BUF_SIZE];
+  37:Platform/STM32F4xx/peripherals/mx_stdio.c **** static struct ringbuffer stdio_rx;
+  38:Platform/STM32F4xx/peripherals/mx_stdio.c **** extern int cli_init(void);
+  39:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+  40:Platform/STM32F4xx/peripherals/mx_stdio.c **** /******************************************************************************
+  41:Platform/STM32F4xx/peripherals/mx_stdio.c ****  *                               Type Definitions
+  42:Platform/STM32F4xx/peripherals/mx_stdio.c ****  ******************************************************************************/
+  43:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+  44:Platform/STM32F4xx/peripherals/mx_stdio.c **** static uart_dev_t cli_uart_dev = {
+  45:Platform/STM32F4xx/peripherals/mx_stdio.c ****     STDIO_UART_PORT,
+  46:Platform/STM32F4xx/peripherals/mx_stdio.c ****     {
+  47:Platform/STM32F4xx/peripherals/mx_stdio.c ****         STDIO_UART_BAUDRATE,
+  48:Platform/STM32F4xx/peripherals/mx_stdio.c ****         DATA_WIDTH_8BIT,
+  49:Platform/STM32F4xx/peripherals/mx_stdio.c ****         NO_PARITY,
+  50:Platform/STM32F4xx/peripherals/mx_stdio.c ****         STOP_BITS_1,
+  51:Platform/STM32F4xx/peripherals/mx_stdio.c ****         FLOW_CONTROL_DISABLED,
+  52:Platform/STM32F4xx/peripherals/mx_stdio.c ****         MODE_TX_RX,
+  53:Platform/STM32F4xx/peripherals/mx_stdio.c ****     },
+  54:Platform/STM32F4xx/peripherals/mx_stdio.c **** };
+  55:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+  56:Platform/STM32F4xx/peripherals/mx_stdio.c **** /******************************************************************************
+  57:Platform/STM32F4xx/peripherals/mx_stdio.c ****  *                              Function Definitions
+  58:Platform/STM32F4xx/peripherals/mx_stdio.c ****  ******************************************************************************/
+  59:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+  60:Platform/STM32F4xx/peripherals/mx_stdio.c **** #ifdef MX_CLI_ENABLE
+  61:Platform/STM32F4xx/peripherals/mx_stdio.c **** static int32_t at_async_read(uint8_t* const buf, const uint16_t length)
+  62:Platform/STM32F4xx/peripherals/mx_stdio.c **** {
+  27              		.loc 1 62 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 8
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              	.LVL0:
+  63:Platform/STM32F4xx/peripherals/mx_stdio.c ****     uint16_t was_read = 0;
+  64:Platform/STM32F4xx/peripherals/mx_stdio.c ****     uint32_t num;
+  65:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+  66:Platform/STM32F4xx/peripherals/mx_stdio.c ****     if (buf == 0 || length == 0)
+  32              		.loc 1 66 0
+  33 0000 00B3     		cbz	r0, .L6
+  62:Platform/STM32F4xx/peripherals/mx_stdio.c ****     uint16_t was_read = 0;
+  34              		.loc 1 62 0 discriminator 1
+  35 0002 F0B5     		push	{r4, r5, r6, r7, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 20
+  38              		.cfi_offset 4, -20
+  39              		.cfi_offset 5, -16
+  40              		.cfi_offset 6, -12
+  41              		.cfi_offset 7, -8
+  42              		.cfi_offset 14, -4
+  43 0004 83B0     		sub	sp, sp, #12
+  44              	.LCFI1:
+  45              		.cfi_def_cfa_offset 32
+  46 0006 0646     		mov	r6, r0
+  47              		.loc 1 66 0 discriminator 1
+  48 0008 11B9     		cbnz	r1, .L12
+ARM GAS  /tmp/ccTQuzze.s 			page 3
+
+
+  67:Platform/STM32F4xx/peripherals/mx_stdio.c ****         return 0;
+  49              		.loc 1 67 0
+  50 000a 0020     		movs	r0, #0
+  51              	.LVL1:
+  52              	.L1:
+  68:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+  69:Platform/STM32F4xx/peripherals/mx_stdio.c ****     CRITICAL_SECTION_ENTER()
+  70:Platform/STM32F4xx/peripherals/mx_stdio.c ****     num = ringbuffer_num(&stdio_rx);
+  71:Platform/STM32F4xx/peripherals/mx_stdio.c ****     CRITICAL_SECTION_LEAVE()
+  72:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+  73:Platform/STM32F4xx/peripherals/mx_stdio.c ****     while ((was_read < num) && (was_read < length)) {
+  74:Platform/STM32F4xx/peripherals/mx_stdio.c ****         ringbuffer_get(&stdio_rx, &buf[was_read++]);
+  75:Platform/STM32F4xx/peripherals/mx_stdio.c ****     }
+  76:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+  77:Platform/STM32F4xx/peripherals/mx_stdio.c ****     return (int32_t)was_read;
+  78:Platform/STM32F4xx/peripherals/mx_stdio.c **** }
+  53              		.loc 1 78 0
+  54 000c 03B0     		add	sp, sp, #12
+  55              	.LCFI2:
+  56              		.cfi_remember_state
+  57              		.cfi_def_cfa_offset 20
+  58              		@ sp needed
+  59 000e F0BD     		pop	{r4, r5, r6, r7, pc}
+  60              	.LVL2:
+  61              	.L12:
+  62              	.LCFI3:
+  63              		.cfi_restore_state
+  64 0010 0D46     		mov	r5, r1
+  65              	.LBB2:
+  69:Platform/STM32F4xx/peripherals/mx_stdio.c ****     num = ringbuffer_num(&stdio_rx);
+  66              		.loc 1 69 0
+  67 0012 01A8     		add	r0, sp, #4
+  68              	.LVL3:
+  69 0014 FFF7FEFF 		bl	atomic_enter_critical
+  70              	.LVL4:
+  70:Platform/STM32F4xx/peripherals/mx_stdio.c ****     CRITICAL_SECTION_LEAVE()
+  71              		.loc 1 70 0
+  72 0018 0B48     		ldr	r0, .L13
+  73 001a FFF7FEFF 		bl	ringbuffer_num
+  74              	.LVL5:
+  75 001e 0746     		mov	r7, r0
+  76              	.LVL6:
+  71:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+  77              		.loc 1 71 0
+  78 0020 01A8     		add	r0, sp, #4
+  79              	.LVL7:
+  80 0022 FFF7FEFF 		bl	atomic_leave_critical
+  81              	.LVL8:
+  82              	.LBE2:
+  63:Platform/STM32F4xx/peripherals/mx_stdio.c ****     uint32_t num;
+  83              		.loc 1 63 0
+  84 0026 0024     		movs	r4, #0
+  73:Platform/STM32F4xx/peripherals/mx_stdio.c ****         ringbuffer_get(&stdio_rx, &buf[was_read++]);
+  85              		.loc 1 73 0
+  86 0028 05E0     		b	.L3
+  87              	.LVL9:
+  88              	.L5:
+ARM GAS  /tmp/ccTQuzze.s 			page 4
+
+
+  74:Platform/STM32F4xx/peripherals/mx_stdio.c ****     }
+  89              		.loc 1 74 0
+  90 002a 0134     		adds	r4, r4, #1
+  91              	.LVL10:
+  92 002c A4B2     		uxth	r4, r4
+  93              	.LVL11:
+  94 002e 3144     		add	r1, r1, r6
+  95 0030 0548     		ldr	r0, .L13
+  96 0032 FFF7FEFF 		bl	ringbuffer_get
+  97              	.LVL12:
+  98              	.L3:
+  73:Platform/STM32F4xx/peripherals/mx_stdio.c ****         ringbuffer_get(&stdio_rx, &buf[was_read++]);
+  99              		.loc 1 73 0
+ 100 0036 2146     		mov	r1, r4
+ 101 0038 BC42     		cmp	r4, r7
+ 102 003a 01D2     		bcs	.L4
+  73:Platform/STM32F4xx/peripherals/mx_stdio.c ****         ringbuffer_get(&stdio_rx, &buf[was_read++]);
+ 103              		.loc 1 73 0 is_stmt 0 discriminator 1
+ 104 003c AC42     		cmp	r4, r5
+ 105 003e F4D3     		bcc	.L5
+ 106              	.L4:
+  77:Platform/STM32F4xx/peripherals/mx_stdio.c **** }
+ 107              		.loc 1 77 0 is_stmt 1
+ 108 0040 2046     		mov	r0, r4
+ 109 0042 E3E7     		b	.L1
+ 110              	.LVL13:
+ 111              	.L6:
+ 112              	.LCFI4:
+ 113              		.cfi_def_cfa_offset 0
+ 114              		.cfi_restore 4
+ 115              		.cfi_restore 5
+ 116              		.cfi_restore 6
+ 117              		.cfi_restore 7
+ 118              		.cfi_restore 14
+  67:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+ 119              		.loc 1 67 0
+ 120 0044 0020     		movs	r0, #0
+ 121              	.LVL14:
+ 122              		.loc 1 78 0
+ 123 0046 7047     		bx	lr
+ 124              	.L14:
+ 125              		.align	2
+ 126              	.L13:
+ 127 0048 00000000 		.word	.LANCHOR0
+ 128              		.cfi_endproc
+ 129              	.LFE128:
+ 131              		.section	.text.mx_hal_stdio_init,"ax",%progbits
+ 132              		.align	1
+ 133              		.global	mx_hal_stdio_init
+ 134              		.syntax unified
+ 135              		.thumb
+ 136              		.thumb_func
+ 137              		.fpu fpv4-sp-d16
+ 139              	mx_hal_stdio_init:
+ 140              	.LFB129:
+  79:Platform/STM32F4xx/peripherals/mx_stdio.c **** #endif
+  80:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+ARM GAS  /tmp/ccTQuzze.s 			page 5
+
+
+  81:Platform/STM32F4xx/peripherals/mx_stdio.c **** void mx_hal_stdio_init(void)
+  82:Platform/STM32F4xx/peripherals/mx_stdio.c **** {
+ 141              		.loc 1 82 0
+ 142              		.cfi_startproc
+ 143              		@ args = 0, pretend = 0, frame = 0
+ 144              		@ frame_needed = 0, uses_anonymous_args = 0
+ 145 0000 00B5     		push	{lr}
+ 146              	.LCFI5:
+ 147              		.cfi_def_cfa_offset 4
+ 148              		.cfi_offset 14, -4
+ 149 0002 83B0     		sub	sp, sp, #12
+ 150              	.LCFI6:
+ 151              		.cfi_def_cfa_offset 16
+  83:Platform/STM32F4xx/peripherals/mx_stdio.c ****     mx_status err;
+  84:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+  85:Platform/STM32F4xx/peripherals/mx_stdio.c ****     ringbuffer_init(&stdio_rx, cli_buffer, MX_CLI_RX_BUF_SIZE);
+ 152              		.loc 1 85 0
+ 153 0004 8022     		movs	r2, #128
+ 154 0006 1049     		ldr	r1, .L20
+ 155 0008 1048     		ldr	r0, .L20+4
+ 156 000a FFF7FEFF 		bl	ringbuffer_init
+ 157              	.LVL15:
+  86:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+  87:Platform/STM32F4xx/peripherals/mx_stdio.c ****     err = mx_hal_uart_init(&cli_uart_dev);
+ 158              		.loc 1 87 0
+ 159 000e 1048     		ldr	r0, .L20+8
+ 160 0010 FFF7FEFF 		bl	mx_hal_uart_init
+ 161              	.LVL16:
+ 162              	.LBB3:
+  88:Platform/STM32F4xx/peripherals/mx_stdio.c ****     require_noerr(err, exit);
+ 163              		.loc 1 88 0
+ 164 0014 68B9     		cbnz	r0, .L19
+ 165              	.LBE3:
+  89:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+  90:Platform/STM32F4xx/peripherals/mx_stdio.c ****     mx_hal_stdio_iaq_set();
+ 166              		.loc 1 90 0
+ 167 0016 FFF7FEFF 		bl	mx_hal_stdio_iaq_set
+ 168              	.LVL17:
+  91:Platform/STM32F4xx/peripherals/mx_stdio.c **** #ifdef MX_CLI_ENABLE
+  92:Platform/STM32F4xx/peripherals/mx_stdio.c ****     err = cli_init();
+ 169              		.loc 1 92 0
+ 170 001a FFF7FEFF 		bl	cli_init
+ 171              	.LVL18:
+ 172              	.LBB4:
+  93:Platform/STM32F4xx/peripherals/mx_stdio.c ****     require_noerr(err, exit);
+ 173              		.loc 1 93 0
+ 174 001e 80B1     		cbz	r0, .L15
+ 175              		.loc 1 93 0 is_stmt 0 discriminator 1
+ 176 0020 0C4B     		ldr	r3, .L20+12
+ 177 0022 0093     		str	r3, [sp]
+ 178 0024 5D23     		movs	r3, #93
+ 179 0026 0C4A     		ldr	r2, .L20+16
+ 180 0028 0C49     		ldr	r1, .L20+20
+ 181 002a 0D48     		ldr	r0, .L20+24
+ 182              	.LVL19:
+ 183 002c FFF7FEFF 		bl	printf
+ 184              	.LVL20:
+ARM GAS  /tmp/ccTQuzze.s 			page 6
+
+
+ 185              	.LBE4:
+  94:Platform/STM32F4xx/peripherals/mx_stdio.c **** #endif
+  95:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+  96:Platform/STM32F4xx/peripherals/mx_stdio.c **** exit:
+  97:Platform/STM32F4xx/peripherals/mx_stdio.c ****     return;
+ 186              		.loc 1 97 0 is_stmt 1 discriminator 1
+ 187 0030 07E0     		b	.L15
+ 188              	.LVL21:
+ 189              	.L19:
+ 190              	.LBB5:
+  88:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+ 191              		.loc 1 88 0 discriminator 1
+ 192 0032 084B     		ldr	r3, .L20+12
+ 193 0034 0093     		str	r3, [sp]
+ 194 0036 5823     		movs	r3, #88
+ 195 0038 074A     		ldr	r2, .L20+16
+ 196 003a 0849     		ldr	r1, .L20+20
+ 197 003c 0848     		ldr	r0, .L20+24
+ 198              	.LVL22:
+ 199 003e FFF7FEFF 		bl	printf
+ 200              	.LVL23:
+ 201              	.L17:
+ 202              	.L15:
+ 203              	.LBE5:
+  98:Platform/STM32F4xx/peripherals/mx_stdio.c **** }
+ 204              		.loc 1 98 0
+ 205 0042 03B0     		add	sp, sp, #12
+ 206              	.LCFI7:
+ 207              		.cfi_def_cfa_offset 4
+ 208              		@ sp needed
+ 209 0044 5DF804FB 		ldr	pc, [sp], #4
+ 210              	.L21:
+ 211              		.align	2
+ 212              	.L20:
+ 213 0048 00000000 		.word	.LANCHOR1
+ 214 004c 00000000 		.word	.LANCHOR0
+ 215 0050 00000000 		.word	.LANCHOR2
+ 216 0054 4C000000 		.word	.LC2
+ 217 0058 00000000 		.word	.LANCHOR3
+ 218 005c 1F000000 		.word	.LC0+31
+ 219 0060 2C000000 		.word	.LC1
+ 220              		.cfi_endproc
+ 221              	.LFE129:
+ 223              		.section	.text.mx_hal_cli_putstr,"ax",%progbits
+ 224              		.align	1
+ 225              		.global	mx_hal_cli_putstr
+ 226              		.syntax unified
+ 227              		.thumb
+ 228              		.thumb_func
+ 229              		.fpu fpv4-sp-d16
+ 231              	mx_hal_cli_putstr:
+ 232              	.LFB130:
+  99:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+ 100:Platform/STM32F4xx/peripherals/mx_stdio.c **** #ifdef MX_CLI_ENABLE
+ 101:Platform/STM32F4xx/peripherals/mx_stdio.c **** int mx_hal_cli_putstr(const char* str, uint32_t strlen)
+ 102:Platform/STM32F4xx/peripherals/mx_stdio.c **** {
+ 233              		.loc 1 102 0
+ARM GAS  /tmp/ccTQuzze.s 			page 7
+
+
+ 234              		.cfi_startproc
+ 235              		@ args = 0, pretend = 0, frame = 0
+ 236              		@ frame_needed = 0, uses_anonymous_args = 0
+ 237              	.LVL24:
+ 238 0000 08B5     		push	{r3, lr}
+ 239              	.LCFI8:
+ 240              		.cfi_def_cfa_offset 8
+ 241              		.cfi_offset 3, -8
+ 242              		.cfi_offset 14, -4
+ 243              	.LVL25:
+ 103:Platform/STM32F4xx/peripherals/mx_stdio.c ****     int ret = 0;
+ 104:Platform/STM32F4xx/peripherals/mx_stdio.c ****     ret = mx_hal_uart_send(&cli_uart_dev, str, strlen, 100);
+ 244              		.loc 1 104 0
+ 245 0002 6423     		movs	r3, #100
+ 246 0004 0A46     		mov	r2, r1
+ 247 0006 0146     		mov	r1, r0
+ 248              	.LVL26:
+ 249 0008 0148     		ldr	r0, .L24
+ 250              	.LVL27:
+ 251 000a FFF7FEFF 		bl	mx_hal_uart_send
+ 252              	.LVL28:
+ 105:Platform/STM32F4xx/peripherals/mx_stdio.c ****     return ret;
+ 106:Platform/STM32F4xx/peripherals/mx_stdio.c **** }
+ 253              		.loc 1 106 0
+ 254 000e 08BD     		pop	{r3, pc}
+ 255              	.L25:
+ 256              		.align	2
+ 257              	.L24:
+ 258 0010 00000000 		.word	.LANCHOR2
+ 259              		.cfi_endproc
+ 260              	.LFE130:
+ 262              		.section	.text.mx_hal_cli_getc,"ax",%progbits
+ 263              		.align	1
+ 264              		.global	mx_hal_cli_getc
+ 265              		.syntax unified
+ 266              		.thumb
+ 267              		.thumb_func
+ 268              		.fpu fpv4-sp-d16
+ 270              	mx_hal_cli_getc:
+ 271              	.LFB131:
+ 107:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+ 108:Platform/STM32F4xx/peripherals/mx_stdio.c **** int mx_hal_cli_getc(void)
+ 109:Platform/STM32F4xx/peripherals/mx_stdio.c **** {
+ 272              		.loc 1 109 0
+ 273              		.cfi_startproc
+ 274              		@ args = 0, pretend = 0, frame = 8
+ 275              		@ frame_needed = 0, uses_anonymous_args = 0
+ 276 0000 00B5     		push	{lr}
+ 277              	.LCFI9:
+ 278              		.cfi_def_cfa_offset 4
+ 279              		.cfi_offset 14, -4
+ 280 0002 83B0     		sub	sp, sp, #12
+ 281              	.LCFI10:
+ 282              		.cfi_def_cfa_offset 16
+ 110:Platform/STM32F4xx/peripherals/mx_stdio.c ****     uint8_t ch;
+ 111:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+ 112:Platform/STM32F4xx/peripherals/mx_stdio.c ****     if (at_async_read(&ch, 1) == 1) {
+ARM GAS  /tmp/ccTQuzze.s 			page 8
+
+
+ 283              		.loc 1 112 0
+ 284 0004 0121     		movs	r1, #1
+ 285 0006 0DF10700 		add	r0, sp, #7
+ 286 000a FFF7FEFF 		bl	at_async_read
+ 287              	.LVL29:
+ 288 000e 0128     		cmp	r0, #1
+ 289 0010 04D1     		bne	.L28
+ 113:Platform/STM32F4xx/peripherals/mx_stdio.c ****         return ch;
+ 290              		.loc 1 113 0
+ 291 0012 9DF80700 		ldrb	r0, [sp, #7]	@ zero_extendqisi2
+ 292              	.L26:
+ 114:Platform/STM32F4xx/peripherals/mx_stdio.c ****     } else {
+ 115:Platform/STM32F4xx/peripherals/mx_stdio.c ****         return -1;
+ 116:Platform/STM32F4xx/peripherals/mx_stdio.c ****     }
+ 117:Platform/STM32F4xx/peripherals/mx_stdio.c **** }
+ 293              		.loc 1 117 0
+ 294 0016 03B0     		add	sp, sp, #12
+ 295              	.LCFI11:
+ 296              		.cfi_remember_state
+ 297              		.cfi_def_cfa_offset 4
+ 298              		@ sp needed
+ 299 0018 5DF804FB 		ldr	pc, [sp], #4
+ 300              	.L28:
+ 301              	.LCFI12:
+ 302              		.cfi_restore_state
+ 115:Platform/STM32F4xx/peripherals/mx_stdio.c ****     }
+ 303              		.loc 1 115 0
+ 304 001c 4FF0FF30 		mov	r0, #-1
+ 305 0020 F9E7     		b	.L26
+ 306              		.cfi_endproc
+ 307              	.LFE131:
+ 309              		.section	.text.set_stdio_ringbuffer,"ax",%progbits
+ 310              		.align	1
+ 311              		.global	set_stdio_ringbuffer
+ 312              		.syntax unified
+ 313              		.thumb
+ 314              		.thumb_func
+ 315              		.fpu fpv4-sp-d16
+ 317              	set_stdio_ringbuffer:
+ 318              	.LFB132:
+ 118:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+ 119:Platform/STM32F4xx/peripherals/mx_stdio.c **** void set_stdio_ringbuffer( uint8_t data)
+ 120:Platform/STM32F4xx/peripherals/mx_stdio.c **** {
+ 319              		.loc 1 120 0
+ 320              		.cfi_startproc
+ 321              		@ args = 0, pretend = 0, frame = 8
+ 322              		@ frame_needed = 0, uses_anonymous_args = 0
+ 323              	.LVL30:
+ 324 0000 10B5     		push	{r4, lr}
+ 325              	.LCFI13:
+ 326              		.cfi_def_cfa_offset 8
+ 327              		.cfi_offset 4, -8
+ 328              		.cfi_offset 14, -4
+ 329 0002 82B0     		sub	sp, sp, #8
+ 330              	.LCFI14:
+ 331              		.cfi_def_cfa_offset 16
+ 332 0004 0446     		mov	r4, r0
+ARM GAS  /tmp/ccTQuzze.s 			page 9
+
+
+ 333              	.LBB6:
+ 121:Platform/STM32F4xx/peripherals/mx_stdio.c ****   CRITICAL_SECTION_ENTER()
+ 334              		.loc 1 121 0
+ 335 0006 01A8     		add	r0, sp, #4
+ 336              	.LVL31:
+ 337 0008 FFF7FEFF 		bl	atomic_enter_critical
+ 338              	.LVL32:
+ 122:Platform/STM32F4xx/peripherals/mx_stdio.c ****   ringbuffer_put(&stdio_rx, data);
+ 339              		.loc 1 122 0
+ 340 000c 2146     		mov	r1, r4
+ 341 000e 0448     		ldr	r0, .L32
+ 342 0010 FFF7FEFF 		bl	ringbuffer_put
+ 343              	.LVL33:
+ 123:Platform/STM32F4xx/peripherals/mx_stdio.c ****   CRITICAL_SECTION_LEAVE()
+ 344              		.loc 1 123 0
+ 345 0014 01A8     		add	r0, sp, #4
+ 346 0016 FFF7FEFF 		bl	atomic_leave_critical
+ 347              	.LVL34:
+ 348              	.LBE6:
+ 124:Platform/STM32F4xx/peripherals/mx_stdio.c **** }
+ 349              		.loc 1 124 0
+ 350 001a 02B0     		add	sp, sp, #8
+ 351              	.LCFI15:
+ 352              		.cfi_def_cfa_offset 8
+ 353              		@ sp needed
+ 354 001c 10BD     		pop	{r4, pc}
+ 355              	.L33:
+ 356 001e 00BF     		.align	2
+ 357              	.L32:
+ 358 0020 00000000 		.word	.LANCHOR0
+ 359              		.cfi_endproc
+ 360              	.LFE132:
+ 362              		.section	.text.USART1_IRQHandler,"ax",%progbits
+ 363              		.align	1
+ 364              		.global	USART1_IRQHandler
+ 365              		.syntax unified
+ 366              		.thumb
+ 367              		.thumb_func
+ 368              		.fpu fpv4-sp-d16
+ 370              	USART1_IRQHandler:
+ 371              	.LFB133:
+ 125:Platform/STM32F4xx/peripherals/mx_stdio.c **** #endif
+ 126:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+ 127:Platform/STM32F4xx/peripherals/mx_stdio.c **** /******************************************************************************/
+ 128:Platform/STM32F4xx/peripherals/mx_stdio.c **** /* STM32F4xx Peripheral Interrupt Handlers                                    */
+ 129:Platform/STM32F4xx/peripherals/mx_stdio.c **** /* Add here the Interrupt Handlers for the used peripherals.                  */
+ 130:Platform/STM32F4xx/peripherals/mx_stdio.c **** /* For the available peripheral interrupt handler names,                      */
+ 131:Platform/STM32F4xx/peripherals/mx_stdio.c **** /* please refer to the startup file (startup_stm32f4xx.s).                    */
+ 132:Platform/STM32F4xx/peripherals/mx_stdio.c **** /******************************************************************************/
+ 133:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+ 134:Platform/STM32F4xx/peripherals/mx_stdio.c **** /**
+ 135:Platform/STM32F4xx/peripherals/mx_stdio.c **** * @brief This function handles USART1 global interrupt.
+ 136:Platform/STM32F4xx/peripherals/mx_stdio.c **** */
+ 137:Platform/STM32F4xx/peripherals/mx_stdio.c **** void USART1_IRQHandler(void)
+ 138:Platform/STM32F4xx/peripherals/mx_stdio.c **** {
+ 372              		.loc 1 138 0
+ 373              		.cfi_startproc
+ARM GAS  /tmp/ccTQuzze.s 			page 10
+
+
+ 374              		@ args = 0, pretend = 0, frame = 0
+ 375              		@ frame_needed = 0, uses_anonymous_args = 0
+ 376 0000 08B5     		push	{r3, lr}
+ 377              	.LCFI16:
+ 378              		.cfi_def_cfa_offset 8
+ 379              		.cfi_offset 3, -8
+ 380              		.cfi_offset 14, -4
+ 139:Platform/STM32F4xx/peripherals/mx_stdio.c ****   /* USER CODE BEGIN USART1_IRQn 0 */
+ 140:Platform/STM32F4xx/peripherals/mx_stdio.c **** #ifdef MX_CLI_ENABLE
+ 141:Platform/STM32F4xx/peripherals/mx_stdio.c ****   uint8_t ch;
+ 142:Platform/STM32F4xx/peripherals/mx_stdio.c ****   ch =(uint8_t)(stdio_uart.Instance->DR&(uint8_t)0x00FF);
+ 381              		.loc 1 142 0
+ 382 0002 034B     		ldr	r3, .L36
+ 383 0004 1B68     		ldr	r3, [r3]
+ 384 0006 5868     		ldr	r0, [r3, #4]
+ 385              	.LVL35:
+ 143:Platform/STM32F4xx/peripherals/mx_stdio.c ****   set_stdio_ringbuffer( ch );
+ 386              		.loc 1 143 0
+ 387 0008 C0B2     		uxtb	r0, r0
+ 388 000a FFF7FEFF 		bl	set_stdio_ringbuffer
+ 389              	.LVL36:
+ 144:Platform/STM32F4xx/peripherals/mx_stdio.c **** #endif
+ 145:Platform/STM32F4xx/peripherals/mx_stdio.c ****   /* USER CODE END USART1_IRQn 0 */
+ 146:Platform/STM32F4xx/peripherals/mx_stdio.c **** //  HAL_UART_IRQHandler(&huart1);
+ 147:Platform/STM32F4xx/peripherals/mx_stdio.c ****   /* USER CODE BEGIN USART1_IRQn 1 */
+ 148:Platform/STM32F4xx/peripherals/mx_stdio.c **** 
+ 149:Platform/STM32F4xx/peripherals/mx_stdio.c ****   /* USER CODE END USART1_IRQn 1 */
+ 150:Platform/STM32F4xx/peripherals/mx_stdio.c **** }
+ 390              		.loc 1 150 0
+ 391 000e 08BD     		pop	{r3, pc}
+ 392              	.L37:
+ 393              		.align	2
+ 394              	.L36:
+ 395 0010 00000000 		.word	stdio_uart
+ 396              		.cfi_endproc
+ 397              	.LFE133:
+ 399              		.section	.bss.cli_buffer,"aw",%nobits
+ 400              		.align	2
+ 401              		.set	.LANCHOR1,. + 0
+ 404              	cli_buffer:
+ 405 0000 00000000 		.space	128
+ 405      00000000 
+ 405      00000000 
+ 405      00000000 
+ 405      00000000 
+ 406              		.section	.bss.stdio_rx,"aw",%nobits
+ 407              		.align	2
+ 408              		.set	.LANCHOR0,. + 0
+ 411              	stdio_rx:
+ 412 0000 00000000 		.space	16
+ 412      00000000 
+ 412      00000000 
+ 412      00000000 
+ 413              		.section	.data.cli_uart_dev,"aw",%progbits
+ 414              		.align	2
+ 415              		.set	.LANCHOR2,. + 0
+ 418              	cli_uart_dev:
+ARM GAS  /tmp/ccTQuzze.s 			page 11
+
+
+ 419 0000 01       		.byte	1
+ 420 0001 000000   		.space	3
+ 421 0004 00C20100 		.word	115200
+ 422 0008 03       		.byte	3
+ 423 0009 00       		.byte	0
+ 424 000a 00       		.byte	0
+ 425 000b 00       		.byte	0
+ 426 000c 02       		.byte	2
+ 427 000d 000000   		.space	3
+ 428              		.section	.rodata.__PRETTY_FUNCTION__.9117,"a",%progbits
+ 429              		.align	2
+ 430              		.set	.LANCHOR3,. + 0
+ 433              	__PRETTY_FUNCTION__.9117:
+ 434 0000 6D785F68 		.ascii	"mx_hal_stdio_init\000"
+ 434      616C5F73 
+ 434      7464696F 
+ 434      5F696E69 
+ 434      7400
+ 435              		.section	.rodata.mx_hal_stdio_init.str1.4,"aMS",%progbits,1
+ 436              		.align	2
+ 437              	.LC0:
+ 438 0000 506C6174 		.ascii	"Platform/STM32F4xx/peripherals/mx_stdio.c\000"
+ 438      666F726D 
+ 438      2F53544D 
+ 438      33324634 
+ 438      78782F70 
+ 439 002a 0000     		.space	2
+ 440              	.LC1:
+ 441 002c 5B4D583A 		.ascii	"[MX:%s:%s:%4d] **ASSERT** %s\015\012\000"
+ 441      25733A25 
+ 441      733A2534 
+ 441      645D202A 
+ 441      2A415353 
+ 442 004b 00       		.space	1
+ 443              	.LC2:
+ 444 004c 00       		.ascii	"\000"
+ 445              		.text
+ 446              	.Letext0:
+ 447              		.file 2 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 448              		.file 3 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 449              		.file 4 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 450              		.file 5 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 451              		.file 6 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/lib/gc
+ 452              		.file 7 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 453              		.file 8 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 454              		.file 9 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 455              		.file 10 "src/helper/mx_common.h"
+ 456              		.file 11 "Platform/STM32F4xx/drivers/CMSIS/Include/core_cm4.h"
+ 457              		.file 12 "Platform/STM32F4xx/drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ 458              		.file 13 "Platform/STM32F4xx/drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f411xe.h"
+ 459              		.file 14 "Platform/STM32F4xx/drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 460              		.file 15 "Platform/STM32F4xx/drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 461              		.file 16 "Platform/STM32F4xx/drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+ 462              		.file 17 "Platform/STM32F4xx/peripherals/mx_hal.h"
+ 463              		.file 18 "src/helper/mx_utils/mx_ringbuffer.h"
+ 464              		.file 19 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-n
+ARM GAS  /tmp/ccTQuzze.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 mx_stdio.c
+     /tmp/ccTQuzze.s:18     .text.at_async_read:0000000000000000 $t
+     /tmp/ccTQuzze.s:24     .text.at_async_read:0000000000000000 at_async_read
+     /tmp/ccTQuzze.s:127    .text.at_async_read:0000000000000048 $d
+     /tmp/ccTQuzze.s:132    .text.mx_hal_stdio_init:0000000000000000 $t
+     /tmp/ccTQuzze.s:139    .text.mx_hal_stdio_init:0000000000000000 mx_hal_stdio_init
+     /tmp/ccTQuzze.s:213    .text.mx_hal_stdio_init:0000000000000048 $d
+     /tmp/ccTQuzze.s:224    .text.mx_hal_cli_putstr:0000000000000000 $t
+     /tmp/ccTQuzze.s:231    .text.mx_hal_cli_putstr:0000000000000000 mx_hal_cli_putstr
+     /tmp/ccTQuzze.s:258    .text.mx_hal_cli_putstr:0000000000000010 $d
+     /tmp/ccTQuzze.s:263    .text.mx_hal_cli_getc:0000000000000000 $t
+     /tmp/ccTQuzze.s:270    .text.mx_hal_cli_getc:0000000000000000 mx_hal_cli_getc
+     /tmp/ccTQuzze.s:310    .text.set_stdio_ringbuffer:0000000000000000 $t
+     /tmp/ccTQuzze.s:317    .text.set_stdio_ringbuffer:0000000000000000 set_stdio_ringbuffer
+     /tmp/ccTQuzze.s:358    .text.set_stdio_ringbuffer:0000000000000020 $d
+     /tmp/ccTQuzze.s:363    .text.USART1_IRQHandler:0000000000000000 $t
+     /tmp/ccTQuzze.s:370    .text.USART1_IRQHandler:0000000000000000 USART1_IRQHandler
+     /tmp/ccTQuzze.s:395    .text.USART1_IRQHandler:0000000000000010 $d
+     /tmp/ccTQuzze.s:400    .bss.cli_buffer:0000000000000000 $d
+     /tmp/ccTQuzze.s:404    .bss.cli_buffer:0000000000000000 cli_buffer
+     /tmp/ccTQuzze.s:407    .bss.stdio_rx:0000000000000000 $d
+     /tmp/ccTQuzze.s:411    .bss.stdio_rx:0000000000000000 stdio_rx
+     /tmp/ccTQuzze.s:414    .data.cli_uart_dev:0000000000000000 $d
+     /tmp/ccTQuzze.s:418    .data.cli_uart_dev:0000000000000000 cli_uart_dev
+     /tmp/ccTQuzze.s:429    .rodata.__PRETTY_FUNCTION__.9117:0000000000000000 $d
+     /tmp/ccTQuzze.s:433    .rodata.__PRETTY_FUNCTION__.9117:0000000000000000 __PRETTY_FUNCTION__.9117
+     /tmp/ccTQuzze.s:436    .rodata.mx_hal_stdio_init.str1.4:0000000000000000 $d
+     /tmp/ccTQuzze.s:437    .rodata.mx_hal_stdio_init.str1.4:0000000000000000 .LC0
+
+UNDEFINED SYMBOLS
+atomic_enter_critical
+ringbuffer_num
+atomic_leave_critical
+ringbuffer_get
+ringbuffer_init
+mx_hal_uart_init
+mx_hal_stdio_iaq_set
+cli_init
+printf
+mx_hal_uart_send
+ringbuffer_put
+stdio_uart

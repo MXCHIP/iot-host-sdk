@@ -1,0 +1,2048 @@
+ARM GAS  /tmp/ccUj0n4c.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"emh_ilop.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.emh_ilop_set_tsl,"ax",%progbits
+  18              		.align	1
+  19              		.global	emh_ilop_set_tsl
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	emh_ilop_set_tsl:
+  26              	.LFB6:
+  27              		.file 1 "src/helper/emhost/emh_ilop.c"
+   1:src/helper/emhost/emh_ilop.c **** /**
+   2:src/helper/emhost/emh_ilop.c ****  ******************************************************************************
+   3:src/helper/emhost/emh_ilop.c ****  * @file    emh_ilop.c
+   4:src/helper/emhost/emh_ilop.c ****  * @author  QQ Ding
+   5:src/helper/emhost/emh_ilop.c ****  * @version V1.0.0
+   6:src/helper/emhost/emh_ilop.c ****  * @date    3-Sept-2018
+   7:src/helper/emhost/emh_ilop.c ****  * @brief   Alicloud ILOP service AT commands API
+   8:src/helper/emhost/emh_ilop.c ****  ******************************************************************************
+   9:src/helper/emhost/emh_ilop.c ****  *
+  10:src/helper/emhost/emh_ilop.c ****  * Copyright (c) 2009-2018 MXCHIP Co.,Ltd.
+  11:src/helper/emhost/emh_ilop.c ****  *
+  12:src/helper/emhost/emh_ilop.c ****  * Licensed under the Apache License, Version 2.0 (the "License");
+  13:src/helper/emhost/emh_ilop.c ****  * you may not use this file except in compliance with the License.
+  14:src/helper/emhost/emh_ilop.c ****  * You may obtain a copy of the License at
+  15:src/helper/emhost/emh_ilop.c ****  *
+  16:src/helper/emhost/emh_ilop.c ****  *     http://www.apache.org/licenses/LICENSE-2.0
+  17:src/helper/emhost/emh_ilop.c ****  *
+  18:src/helper/emhost/emh_ilop.c ****  * Unless required by applicable law or agreed to in writing, software
+  19:src/helper/emhost/emh_ilop.c ****  * distributed under the License is distributed on an "AS IS" BASIS,
+  20:src/helper/emhost/emh_ilop.c ****  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  21:src/helper/emhost/emh_ilop.c ****  * See the License for the specific language governing permissions and
+  22:src/helper/emhost/emh_ilop.c ****  * limitations under the License.
+  23:src/helper/emhost/emh_ilop.c ****  *
+  24:src/helper/emhost/emh_ilop.c ****  ******************************************************************************
+  25:src/helper/emhost/emh_ilop.c ****  */
+  26:src/helper/emhost/emh_ilop.c **** 
+  27:src/helper/emhost/emh_ilop.c **** 
+  28:src/helper/emhost/emh_ilop.c **** #include <stdlib.h>
+  29:src/helper/emhost/emh_ilop.c **** #include <string.h>
+  30:src/helper/emhost/emh_ilop.c **** 
+  31:src/helper/emhost/emh_ilop.c **** #include "emh_api.h"
+ARM GAS  /tmp/ccUj0n4c.s 			page 2
+
+
+  32:src/helper/emhost/emh_ilop.c **** #include "ATCmdParser/ATCmdParser.h"
+  33:src/helper/emhost/emh_ilop.c **** 
+  34:src/helper/emhost/emh_ilop.c **** 
+  35:src/helper/emhost/emh_ilop.c **** 
+  36:src/helper/emhost/emh_ilop.c **** /******************************************************************************
+  37:src/helper/emhost/emh_ilop.c ****  *                              Function Definitions
+  38:src/helper/emhost/emh_ilop.c ****  ******************************************************************************/
+  39:src/helper/emhost/emh_ilop.c **** // MX_WEAK void emh_ev_ilop_connection(emh_arg_ilop_conn_t conn)
+  40:src/helper/emhost/emh_ilop.c **** // {
+  41:src/helper/emhost/emh_ilop.c **** //     printf("conn=%d\r\n", conn);
+  42:src/helper/emhost/emh_ilop.c **** //     return;
+  43:src/helper/emhost/emh_ilop.c **** // }
+  44:src/helper/emhost/emh_ilop.c **** 
+  45:src/helper/emhost/emh_ilop.c **** // MX_WEAK void emh_ev_ilop_set_local_attr(emh_ilop_msg *msg)
+  46:src/helper/emhost/emh_ilop.c **** // {
+  47:src/helper/emhost/emh_ilop.c **** //     if( msg->format == EMH_ARG_ILOP_FORMAT_ICA){
+  48:src/helper/emhost/emh_ilop.c **** //         printf("msg=%s\r\n", msg->data);
+  49:src/helper/emhost/emh_ilop.c **** //     }
+  50:src/helper/emhost/emh_ilop.c **** //     return;
+  51:src/helper/emhost/emh_ilop.c **** // }
+  52:src/helper/emhost/emh_ilop.c **** 
+  53:src/helper/emhost/emh_ilop.c **** mx_status emh_ilop_config( emh_ilop_config_t *config, bool force )
+  54:src/helper/emhost/emh_ilop.c **** {
+  55:src/helper/emhost/emh_ilop.c ****     if( config == NULL ) return kParamErr;
+  56:src/helper/emhost/emh_ilop.c **** 
+  57:src/helper/emhost/emh_ilop.c ****     char arg[10];
+  58:src/helper/emhost/emh_ilop.c **** 
+  59:src/helper/emhost/emh_ilop.c ****     if( config->dm == EMH_ARG_ILOP_DM_ICA_BY_LOCAL )
+  60:src/helper/emhost/emh_ilop.c ****     {
+  61:src/helper/emhost/emh_ilop.c ****         if( config->tsl_thing == NULL )
+  62:src/helper/emhost/emh_ilop.c ****             return kParamErr;
+  63:src/helper/emhost/emh_ilop.c ****     }
+  64:src/helper/emhost/emh_ilop.c **** 
+  65:src/helper/emhost/emh_ilop.c ****     //check data format
+  66:src/helper/emhost/emh_ilop.c ****     if (!(ATCmdParser_send("AT+ILOPDM?")
+  67:src/helper/emhost/emh_ilop.c **** 	   && ATCmdParser_recv("+ILOPDM:%10[^\r]\r\n",arg)
+  68:src/helper/emhost/emh_ilop.c **** 	   && ATCmdParser_recv("OK\r\n"))) {
+  69:src/helper/emhost/emh_ilop.c **** 		return kReadErr;
+  70:src/helper/emhost/emh_ilop.c **** 	}
+  71:src/helper/emhost/emh_ilop.c **** 
+  72:src/helper/emhost/emh_ilop.c ****     //if dm value different, we need to be set
+  73:src/helper/emhost/emh_ilop.c ****     if( emh_arg_for_arg( EMH_ARG_ILOP_DM, arg) != config->dm )
+  74:src/helper/emhost/emh_ilop.c ****     {
+  75:src/helper/emhost/emh_ilop.c ****         if ( !(ATCmdParser_send("AT+ILOPDM=%s", emh_arg_for_type(EMH_ARG_ILOP_DM, config->dm))
+  76:src/helper/emhost/emh_ilop.c **** 	        && ATCmdParser_recv("OK\r\n"))) {
+  77:src/helper/emhost/emh_ilop.c **** 		    return kReadErr;
+  78:src/helper/emhost/emh_ilop.c **** 	    }
+  79:src/helper/emhost/emh_ilop.c ****     }
+  80:src/helper/emhost/emh_ilop.c **** 
+  81:src/helper/emhost/emh_ilop.c ****     //if dm value is raw, we shuold check tls setting
+  82:src/helper/emhost/emh_ilop.c ****     if( config->dm == EMH_ARG_ILOP_DM_ICA_BY_LOCAL )
+  83:src/helper/emhost/emh_ilop.c ****     {
+  84:src/helper/emhost/emh_ilop.c ****         //check tls setting
+  85:src/helper/emhost/emh_ilop.c ****         if ( !(ATCmdParser_send("AT+ILOPCONFIG?")
+  86:src/helper/emhost/emh_ilop.c **** 	        && ATCmdParser_recv("+ILOPCONFIG:%10[^\r]\r\n",arg)
+  87:src/helper/emhost/emh_ilop.c **** 	        && ATCmdParser_recv("OK\r\n"))) {
+  88:src/helper/emhost/emh_ilop.c **** 		    return kReadErr;
+ARM GAS  /tmp/ccUj0n4c.s 			page 3
+
+
+  89:src/helper/emhost/emh_ilop.c **** 	    }
+  90:src/helper/emhost/emh_ilop.c **** 
+  91:src/helper/emhost/emh_ilop.c ****         if( (force == true) || (emh_arg_for_arg( EMH_ARG_ILOP_CONFIG, arg ) != EMH_ARG_ILOP_CONFIG_
+  92:src/helper/emhost/emh_ilop.c ****         {
+  93:src/helper/emhost/emh_ilop.c ****             if( emh_ilop_set_tsl( config->tsl_thing, config->tsl_len ) != kNoErr)
+  94:src/helper/emhost/emh_ilop.c ****                 return kWriteErr;
+  95:src/helper/emhost/emh_ilop.c ****         }
+  96:src/helper/emhost/emh_ilop.c ****     }
+  97:src/helper/emhost/emh_ilop.c ****     return kNoErr;
+  98:src/helper/emhost/emh_ilop.c **** }
+  99:src/helper/emhost/emh_ilop.c **** 
+ 100:src/helper/emhost/emh_ilop.c **** mx_status emh_ilop_set_tsl( const char* tsl_thing, uint32_t tls_len )
+ 101:src/helper/emhost/emh_ilop.c **** {
+  28              		.loc 1 101 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 32
+  36              		.cfi_offset 3, -32
+  37              		.cfi_offset 4, -28
+  38              		.cfi_offset 5, -24
+  39              		.cfi_offset 6, -20
+  40              		.cfi_offset 7, -16
+  41              		.cfi_offset 8, -12
+  42              		.cfi_offset 9, -8
+  43              		.cfi_offset 14, -4
+  44 0004 0746     		mov	r7, r0
+  45 0006 8846     		mov	r8, r1
+  46              	.LVL1:
+ 102:src/helper/emhost/emh_ilop.c ****     int id_count=0, last = 0, i=0;
+ 103:src/helper/emhost/emh_ilop.c ****     last =  (tls_len%4096 == 0) ? 0 : 1;
+  47              		.loc 1 103 0
+  48 0008 C1F30B09 		ubfx	r9, r1, #0, #12
+  49 000c 19F10005 		adds	r5, r9, #0
+  50 0010 18BF     		it	ne
+  51 0012 0125     		movne	r5, #1
+  52              	.LVL2:
+ 104:src/helper/emhost/emh_ilop.c ****     id_count = tls_len/4096 + last;
+  53              		.loc 1 104 0
+  54 0014 05EB1136 		add	r6, r5, r1, lsr #12
+  55              	.LVL3:
+ 105:src/helper/emhost/emh_ilop.c **** 
+ 106:src/helper/emhost/emh_ilop.c ****     if ( !(ATCmdParser_send("AT+ILOPTSLPRE=%d,%d", tls_len, id_count)
+  56              		.loc 1 106 0
+  57 0018 3246     		mov	r2, r6
+  58 001a 2B48     		ldr	r0, .L20
+  59              	.LVL4:
+  60 001c FFF7FEFF 		bl	ATCmdParser_send
+  61              	.LVL5:
+  62 0020 0028     		cmp	r0, #0
+  63 0022 3ED0     		beq	.L5
+ 107:src/helper/emhost/emh_ilop.c ****         && ATCmdParser_recv("OK\r\n"))) {
+  64              		.loc 1 107 0 discriminator 1
+  65 0024 2948     		ldr	r0, .L20+4
+ARM GAS  /tmp/ccUj0n4c.s 			page 4
+
+
+  66 0026 FFF7FEFF 		bl	ATCmdParser_recv
+  67              	.LVL6:
+ 106:src/helper/emhost/emh_ilop.c ****         && ATCmdParser_recv("OK\r\n"))) {
+  68              		.loc 1 106 0 discriminator 1
+  69 002a D8B1     		cbz	r0, .L17
+ 108:src/helper/emhost/emh_ilop.c ****         return kReadErr;
+ 109:src/helper/emhost/emh_ilop.c ****     }
+ 110:src/helper/emhost/emh_ilop.c **** 
+ 111:src/helper/emhost/emh_ilop.c ****     for( i=0; i<id_count-last; i++ )
+  70              		.loc 1 111 0
+  71 002c 0024     		movs	r4, #0
+  72              	.LVL7:
+  73              	.L3:
+  74              		.loc 1 111 0 is_stmt 0 discriminator 1
+  75 002e 731B     		subs	r3, r6, r5
+  76 0030 A342     		cmp	r3, r4
+  77 0032 19DD     		ble	.L18
+ 112:src/helper/emhost/emh_ilop.c ****     {
+ 113:src/helper/emhost/emh_ilop.c ****         if ( !(ATCmdParser_send("AT+ILOPTSL=%d", i)
+  78              		.loc 1 113 0 is_stmt 1
+  79 0034 2146     		mov	r1, r4
+  80 0036 2648     		ldr	r0, .L20+8
+  81 0038 FFF7FEFF 		bl	ATCmdParser_send
+  82              	.LVL8:
+  83 003c 98B3     		cbz	r0, .L7
+ 114:src/helper/emhost/emh_ilop.c **** 	        && ATCmdParser_recv(">")
+  84              		.loc 1 114 0
+  85 003e 2548     		ldr	r0, .L20+12
+  86 0040 FFF7FEFF 		bl	ATCmdParser_recv
+  87              	.LVL9:
+  88 0044 90B3     		cbz	r0, .L8
+ 115:src/helper/emhost/emh_ilop.c **** 	        && ATCmdParser_write((char *)tsl_thing + (i*4096) , 4096) == 4096
+  89              		.loc 1 115 0
+  90 0046 4FF48051 		mov	r1, #4096
+  91 004a 07EB0430 		add	r0, r7, r4, lsl #12
+  92 004e FFF7FEFF 		bl	ATCmdParser_write
+  93              	.LVL10:
+  94 0052 B0F5805F 		cmp	r0, #4096
+  95 0056 2BD1     		bne	.L9
+ 116:src/helper/emhost/emh_ilop.c **** 	        && ATCmdParser_recv("OK\r\n")
+  96              		.loc 1 116 0
+  97 0058 1C48     		ldr	r0, .L20+4
+  98 005a FFF7FEFF 		bl	ATCmdParser_recv
+  99              	.LVL11:
+ 113:src/helper/emhost/emh_ilop.c **** 	        && ATCmdParser_recv(">")
+ 100              		.loc 1 113 0
+ 101 005e 48B3     		cbz	r0, .L10
+ 111:src/helper/emhost/emh_ilop.c ****     {
+ 102              		.loc 1 111 0 discriminator 2
+ 103 0060 0134     		adds	r4, r4, #1
+ 104              	.LVL12:
+ 105 0062 E4E7     		b	.L3
+ 106              	.LVL13:
+ 107              	.L17:
+ 108:src/helper/emhost/emh_ilop.c ****     }
+ 108              		.loc 1 108 0
+ 109 0064 1C48     		ldr	r0, .L20+16
+ARM GAS  /tmp/ccUj0n4c.s 			page 5
+
+
+ 110 0066 1FE0     		b	.L1
+ 111              	.LVL14:
+ 112              	.L18:
+ 117:src/helper/emhost/emh_ilop.c ****             )) {
+ 118:src/helper/emhost/emh_ilop.c ****                 return kReadErr;
+ 119:src/helper/emhost/emh_ilop.c ****         }
+ 120:src/helper/emhost/emh_ilop.c ****     }
+ 121:src/helper/emhost/emh_ilop.c **** 
+ 122:src/helper/emhost/emh_ilop.c ****     if( last )
+ 113              		.loc 1 122 0
+ 114 0068 B9F1000F 		cmp	r9, #0
+ 115 006c 01D1     		bne	.L19
+ 123:src/helper/emhost/emh_ilop.c ****     {
+ 124:src/helper/emhost/emh_ilop.c ****         if ( !(ATCmdParser_send("AT+ILOPTSL=%d", i)
+ 125:src/helper/emhost/emh_ilop.c **** 	        && ATCmdParser_recv(">")
+ 126:src/helper/emhost/emh_ilop.c **** 	        && ATCmdParser_write((char *)tsl_thing + (i*4096) , tls_len -i*4096) == (tls_len -i*4096)
+ 127:src/helper/emhost/emh_ilop.c **** 	        && ATCmdParser_recv("OK\r\n")
+ 128:src/helper/emhost/emh_ilop.c ****             )) {
+ 129:src/helper/emhost/emh_ilop.c ****                 return kReadErr;
+ 130:src/helper/emhost/emh_ilop.c ****         }
+ 131:src/helper/emhost/emh_ilop.c ****     }
+ 132:src/helper/emhost/emh_ilop.c **** 
+ 133:src/helper/emhost/emh_ilop.c ****     return kNoErr;
+ 116              		.loc 1 133 0
+ 117 006e 0020     		movs	r0, #0
+ 118 0070 1AE0     		b	.L1
+ 119              	.L19:
+ 124:src/helper/emhost/emh_ilop.c **** 	        && ATCmdParser_recv(">")
+ 120              		.loc 1 124 0
+ 121 0072 2146     		mov	r1, r4
+ 122 0074 1648     		ldr	r0, .L20+8
+ 123 0076 FFF7FEFF 		bl	ATCmdParser_send
+ 124              	.LVL15:
+ 125 007a E8B1     		cbz	r0, .L12
+ 125:src/helper/emhost/emh_ilop.c **** 	        && ATCmdParser_write((char *)tsl_thing + (i*4096) , tls_len -i*4096) == (tls_len -i*4096)
+ 126              		.loc 1 125 0
+ 127 007c 1548     		ldr	r0, .L20+12
+ 128 007e FFF7FEFF 		bl	ATCmdParser_recv
+ 129              	.LVL16:
+ 130 0082 D8B1     		cbz	r0, .L13
+ 126:src/helper/emhost/emh_ilop.c **** 	        && ATCmdParser_recv("OK\r\n")
+ 131              		.loc 1 126 0
+ 132 0084 2003     		lsls	r0, r4, #12
+ 133 0086 A8EB0008 		sub	r8, r8, r0
+ 134              	.LVL17:
+ 135 008a 4146     		mov	r1, r8
+ 136 008c 3844     		add	r0, r0, r7
+ 137 008e FFF7FEFF 		bl	ATCmdParser_write
+ 138              	.LVL18:
+ 139 0092 8045     		cmp	r8, r0
+ 140 0094 14D1     		bne	.L14
+ 127:src/helper/emhost/emh_ilop.c ****             )) {
+ 141              		.loc 1 127 0
+ 142 0096 0D48     		ldr	r0, .L20+4
+ 143 0098 FFF7FEFF 		bl	ATCmdParser_recv
+ 144              	.LVL19:
+ 124:src/helper/emhost/emh_ilop.c **** 	        && ATCmdParser_recv(">")
+ARM GAS  /tmp/ccUj0n4c.s 			page 6
+
+
+ 145              		.loc 1 124 0
+ 146 009c 90B1     		cbz	r0, .L15
+ 147              		.loc 1 133 0
+ 148 009e 0020     		movs	r0, #0
+ 149 00a0 02E0     		b	.L1
+ 150              	.LVL20:
+ 151              	.L5:
+ 108:src/helper/emhost/emh_ilop.c ****     }
+ 152              		.loc 1 108 0
+ 153 00a2 0D48     		ldr	r0, .L20+16
+ 154 00a4 00E0     		b	.L1
+ 155              	.LVL21:
+ 156              	.L7:
+ 118:src/helper/emhost/emh_ilop.c ****         }
+ 157              		.loc 1 118 0
+ 158 00a6 0C48     		ldr	r0, .L20+16
+ 159              	.LVL22:
+ 160              	.L1:
+ 134:src/helper/emhost/emh_ilop.c **** }
+ 161              		.loc 1 134 0
+ 162 00a8 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 163              	.LVL23:
+ 164              	.L8:
+ 118:src/helper/emhost/emh_ilop.c ****         }
+ 165              		.loc 1 118 0
+ 166 00ac 0A48     		ldr	r0, .L20+16
+ 167 00ae FBE7     		b	.L1
+ 168              	.L9:
+ 169 00b0 0948     		ldr	r0, .L20+16
+ 170 00b2 F9E7     		b	.L1
+ 171              	.L10:
+ 172 00b4 0848     		ldr	r0, .L20+16
+ 173 00b6 F7E7     		b	.L1
+ 174              	.L12:
+ 129:src/helper/emhost/emh_ilop.c ****         }
+ 175              		.loc 1 129 0
+ 176 00b8 0748     		ldr	r0, .L20+16
+ 177 00ba F5E7     		b	.L1
+ 178              	.L13:
+ 179 00bc 0648     		ldr	r0, .L20+16
+ 180 00be F3E7     		b	.L1
+ 181              	.LVL24:
+ 182              	.L14:
+ 183 00c0 0548     		ldr	r0, .L20+16
+ 184 00c2 F1E7     		b	.L1
+ 185              	.L15:
+ 186 00c4 0448     		ldr	r0, .L20+16
+ 187 00c6 EFE7     		b	.L1
+ 188              	.L21:
+ 189              		.align	2
+ 190              	.L20:
+ 191 00c8 00000000 		.word	.LC0
+ 192 00cc 14000000 		.word	.LC1
+ 193 00d0 1C000000 		.word	.LC2
+ 194 00d4 2C000000 		.word	.LC3
+ 195 00d8 A6E5FFFF 		.word	-6746
+ 196              		.cfi_endproc
+ARM GAS  /tmp/ccUj0n4c.s 			page 7
+
+
+ 197              	.LFE6:
+ 199              		.section	.text.emh_ilop_config,"ax",%progbits
+ 200              		.align	1
+ 201              		.global	emh_ilop_config
+ 202              		.syntax unified
+ 203              		.thumb
+ 204              		.thumb_func
+ 205              		.fpu fpv4-sp-d16
+ 207              	emh_ilop_config:
+ 208              	.LFB5:
+  54:src/helper/emhost/emh_ilop.c ****     if( config == NULL ) return kParamErr;
+ 209              		.loc 1 54 0
+ 210              		.cfi_startproc
+ 211              		@ args = 0, pretend = 0, frame = 16
+ 212              		@ frame_needed = 0, uses_anonymous_args = 0
+ 213              	.LVL25:
+  55:src/helper/emhost/emh_ilop.c **** 
+ 214              		.loc 1 55 0
+ 215 0000 0028     		cmp	r0, #0
+ 216 0002 54D0     		beq	.L27
+  54:src/helper/emhost/emh_ilop.c ****     if( config == NULL ) return kParamErr;
+ 217              		.loc 1 54 0
+ 218 0004 30B5     		push	{r4, r5, lr}
+ 219              	.LCFI1:
+ 220              		.cfi_def_cfa_offset 12
+ 221              		.cfi_offset 4, -12
+ 222              		.cfi_offset 5, -8
+ 223              		.cfi_offset 14, -4
+ 224 0006 85B0     		sub	sp, sp, #20
+ 225              	.LCFI2:
+ 226              		.cfi_def_cfa_offset 32
+ 227 0008 0446     		mov	r4, r0
+  59:src/helper/emhost/emh_ilop.c ****     {
+ 228              		.loc 1 59 0
+ 229 000a 027A     		ldrb	r2, [r0, #8]	@ zero_extendqisi2
+ 230 000c 022A     		cmp	r2, #2
+ 231 000e 02D1     		bne	.L24
+  61:src/helper/emhost/emh_ilop.c ****             return kParamErr;
+ 232              		.loc 1 61 0
+ 233 0010 0268     		ldr	r2, [r0]
+ 234 0012 002A     		cmp	r2, #0
+ 235 0014 4ED0     		beq	.L28
+ 236              	.L24:
+ 237 0016 0D46     		mov	r5, r1
+  66:src/helper/emhost/emh_ilop.c **** 	   && ATCmdParser_recv("+ILOPDM:%10[^\r]\r\n",arg)
+ 238              		.loc 1 66 0
+ 239 0018 2F48     		ldr	r0, .L45
+ 240              	.LVL26:
+ 241 001a FFF7FEFF 		bl	ATCmdParser_send
+ 242              	.LVL27:
+ 243 001e 0028     		cmp	r0, #0
+ 244 0020 4AD0     		beq	.L29
+  67:src/helper/emhost/emh_ilop.c **** 	   && ATCmdParser_recv("OK\r\n"))) {
+ 245              		.loc 1 67 0
+ 246 0022 01A9     		add	r1, sp, #4
+ 247 0024 2D48     		ldr	r0, .L45+4
+ 248 0026 FFF7FEFF 		bl	ATCmdParser_recv
+ARM GAS  /tmp/ccUj0n4c.s 			page 8
+
+
+ 249              	.LVL28:
+ 250 002a 0028     		cmp	r0, #0
+ 251 002c 46D0     		beq	.L30
+  68:src/helper/emhost/emh_ilop.c **** 		return kReadErr;
+ 252              		.loc 1 68 0
+ 253 002e 2C48     		ldr	r0, .L45+8
+ 254 0030 FFF7FEFF 		bl	ATCmdParser_recv
+ 255              	.LVL29:
+  66:src/helper/emhost/emh_ilop.c **** 	   && ATCmdParser_recv("+ILOPDM:%10[^\r]\r\n",arg)
+ 256              		.loc 1 66 0
+ 257 0034 0028     		cmp	r0, #0
+ 258 0036 43D0     		beq	.L31
+  73:src/helper/emhost/emh_ilop.c ****     {
+ 259              		.loc 1 73 0
+ 260 0038 01A9     		add	r1, sp, #4
+ 261 003a 2A48     		ldr	r0, .L45+12
+ 262 003c FFF7FEFF 		bl	emh_arg_for_arg
+ 263              	.LVL30:
+ 264 0040 217A     		ldrb	r1, [r4, #8]	@ zero_extendqisi2
+ 265 0042 8842     		cmp	r0, r1
+ 266 0044 06D1     		bne	.L43
+ 267              	.L25:
+  82:src/helper/emhost/emh_ilop.c ****     {
+ 268              		.loc 1 82 0
+ 269 0046 237A     		ldrb	r3, [r4, #8]	@ zero_extendqisi2
+ 270 0048 022B     		cmp	r3, #2
+ 271 004a 13D0     		beq	.L44
+  97:src/helper/emhost/emh_ilop.c **** }
+ 272              		.loc 1 97 0
+ 273 004c 0023     		movs	r3, #0
+ 274              	.L22:
+  98:src/helper/emhost/emh_ilop.c **** 
+ 275              		.loc 1 98 0
+ 276 004e 1846     		mov	r0, r3
+ 277 0050 05B0     		add	sp, sp, #20
+ 278              	.LCFI3:
+ 279              		.cfi_remember_state
+ 280              		.cfi_def_cfa_offset 12
+ 281              		@ sp needed
+ 282 0052 30BD     		pop	{r4, r5, pc}
+ 283              	.LVL31:
+ 284              	.L43:
+ 285              	.LCFI4:
+ 286              		.cfi_restore_state
+  75:src/helper/emhost/emh_ilop.c **** 	        && ATCmdParser_recv("OK\r\n"))) {
+ 287              		.loc 1 75 0
+ 288 0054 2348     		ldr	r0, .L45+12
+ 289 0056 FFF7FEFF 		bl	emh_arg_for_type
+ 290              	.LVL32:
+ 291 005a 0146     		mov	r1, r0
+ 292 005c 2248     		ldr	r0, .L45+16
+ 293 005e FFF7FEFF 		bl	ATCmdParser_send
+ 294              	.LVL33:
+ 295 0062 0028     		cmp	r0, #0
+ 296 0064 2ED0     		beq	.L32
+  76:src/helper/emhost/emh_ilop.c **** 		    return kReadErr;
+ 297              		.loc 1 76 0 discriminator 1
+ARM GAS  /tmp/ccUj0n4c.s 			page 9
+
+
+ 298 0066 1E48     		ldr	r0, .L45+8
+ 299 0068 FFF7FEFF 		bl	ATCmdParser_recv
+ 300              	.LVL34:
+  75:src/helper/emhost/emh_ilop.c **** 	        && ATCmdParser_recv("OK\r\n"))) {
+ 301              		.loc 1 75 0 discriminator 1
+ 302 006c 0028     		cmp	r0, #0
+ 303 006e EAD1     		bne	.L25
+  77:src/helper/emhost/emh_ilop.c **** 	    }
+ 304              		.loc 1 77 0
+ 305 0070 1E4B     		ldr	r3, .L45+20
+ 306 0072 ECE7     		b	.L22
+ 307              	.L44:
+  85:src/helper/emhost/emh_ilop.c **** 	        && ATCmdParser_recv("+ILOPCONFIG:%10[^\r]\r\n",arg)
+ 308              		.loc 1 85 0
+ 309 0074 1E48     		ldr	r0, .L45+24
+ 310 0076 FFF7FEFF 		bl	ATCmdParser_send
+ 311              	.LVL35:
+ 312 007a 28B3     		cbz	r0, .L35
+  86:src/helper/emhost/emh_ilop.c **** 	        && ATCmdParser_recv("OK\r\n"))) {
+ 313              		.loc 1 86 0
+ 314 007c 01A9     		add	r1, sp, #4
+ 315 007e 1D48     		ldr	r0, .L45+28
+ 316 0080 FFF7FEFF 		bl	ATCmdParser_recv
+ 317              	.LVL36:
+ 318 0084 10B3     		cbz	r0, .L36
+  87:src/helper/emhost/emh_ilop.c **** 		    return kReadErr;
+ 319              		.loc 1 87 0
+ 320 0086 1648     		ldr	r0, .L45+8
+ 321 0088 FFF7FEFF 		bl	ATCmdParser_recv
+ 322              	.LVL37:
+  85:src/helper/emhost/emh_ilop.c **** 	        && ATCmdParser_recv("+ILOPCONFIG:%10[^\r]\r\n",arg)
+ 323              		.loc 1 85 0
+ 324 008c 00B3     		cbz	r0, .L37
+  91:src/helper/emhost/emh_ilop.c ****         {
+ 325              		.loc 1 91 0
+ 326 008e 2DB9     		cbnz	r5, .L26
+  91:src/helper/emhost/emh_ilop.c ****         {
+ 327              		.loc 1 91 0 is_stmt 0 discriminator 1
+ 328 0090 01A9     		add	r1, sp, #4
+ 329 0092 1948     		ldr	r0, .L45+32
+ 330 0094 FFF7FEFF 		bl	emh_arg_for_arg
+ 331              	.LVL38:
+ 332 0098 0128     		cmp	r0, #1
+ 333 009a 1BD0     		beq	.L38
+ 334              	.L26:
+  93:src/helper/emhost/emh_ilop.c ****                 return kWriteErr;
+ 335              		.loc 1 93 0 is_stmt 1
+ 336 009c 6168     		ldr	r1, [r4, #4]
+ 337 009e 2068     		ldr	r0, [r4]
+ 338 00a0 FFF7FEFF 		bl	emh_ilop_set_tsl
+ 339              	.LVL39:
+ 340 00a4 0346     		mov	r3, r0
+ 341 00a6 0028     		cmp	r0, #0
+ 342 00a8 D1D0     		beq	.L22
+  94:src/helper/emhost/emh_ilop.c ****         }
+ 343              		.loc 1 94 0
+ 344 00aa 144B     		ldr	r3, .L45+36
+ARM GAS  /tmp/ccUj0n4c.s 			page 10
+
+
+ 345 00ac CFE7     		b	.L22
+ 346              	.LVL40:
+ 347              	.L27:
+ 348              	.LCFI5:
+ 349              		.cfi_def_cfa_offset 0
+ 350              		.cfi_restore 4
+ 351              		.cfi_restore 5
+ 352              		.cfi_restore 14
+  55:src/helper/emhost/emh_ilop.c **** 
+ 353              		.loc 1 55 0
+ 354 00ae 144B     		ldr	r3, .L45+40
+  98:src/helper/emhost/emh_ilop.c **** 
+ 355              		.loc 1 98 0
+ 356 00b0 1846     		mov	r0, r3
+ 357              	.LVL41:
+ 358 00b2 7047     		bx	lr
+ 359              	.LVL42:
+ 360              	.L28:
+ 361              	.LCFI6:
+ 362              		.cfi_def_cfa_offset 32
+ 363              		.cfi_offset 4, -12
+ 364              		.cfi_offset 5, -8
+ 365              		.cfi_offset 14, -4
+  62:src/helper/emhost/emh_ilop.c ****     }
+ 366              		.loc 1 62 0
+ 367 00b4 124B     		ldr	r3, .L45+40
+ 368 00b6 CAE7     		b	.L22
+ 369              	.LVL43:
+ 370              	.L29:
+  69:src/helper/emhost/emh_ilop.c **** 	}
+ 371              		.loc 1 69 0
+ 372 00b8 0C4B     		ldr	r3, .L45+20
+ 373 00ba C8E7     		b	.L22
+ 374              	.L30:
+ 375 00bc 0B4B     		ldr	r3, .L45+20
+ 376 00be C6E7     		b	.L22
+ 377              	.L31:
+ 378 00c0 0A4B     		ldr	r3, .L45+20
+ 379 00c2 C4E7     		b	.L22
+ 380              	.L32:
+  77:src/helper/emhost/emh_ilop.c **** 	    }
+ 381              		.loc 1 77 0
+ 382 00c4 094B     		ldr	r3, .L45+20
+ 383 00c6 C2E7     		b	.L22
+ 384              	.L35:
+  88:src/helper/emhost/emh_ilop.c **** 	    }
+ 385              		.loc 1 88 0
+ 386 00c8 084B     		ldr	r3, .L45+20
+ 387 00ca C0E7     		b	.L22
+ 388              	.L36:
+ 389 00cc 074B     		ldr	r3, .L45+20
+ 390 00ce BEE7     		b	.L22
+ 391              	.L37:
+ 392 00d0 064B     		ldr	r3, .L45+20
+ 393 00d2 BCE7     		b	.L22
+ 394              	.L38:
+  97:src/helper/emhost/emh_ilop.c **** }
+ARM GAS  /tmp/ccUj0n4c.s 			page 11
+
+
+ 395              		.loc 1 97 0
+ 396 00d4 0023     		movs	r3, #0
+ 397 00d6 BAE7     		b	.L22
+ 398              	.L46:
+ 399              		.align	2
+ 400              	.L45:
+ 401 00d8 00000000 		.word	.LC4
+ 402 00dc 0C000000 		.word	.LC5
+ 403 00e0 14000000 		.word	.LC1
+ 404 00e4 00000000 		.word	EMH_ARG_ILOP_DM
+ 405 00e8 20000000 		.word	.LC6
+ 406 00ec A6E5FFFF 		.word	-6746
+ 407 00f0 30000000 		.word	.LC7
+ 408 00f4 40000000 		.word	.LC8
+ 409 00f8 00000000 		.word	EMH_ARG_ILOP_CONFIG
+ 410 00fc A5E5FFFF 		.word	-6747
+ 411 0100 CFE5FFFF 		.word	-6705
+ 412              		.cfi_endproc
+ 413              	.LFE5:
+ 415              		.section	.text.emh_ilop_set_key,"ax",%progbits
+ 416              		.align	1
+ 417              		.global	emh_ilop_set_key
+ 418              		.syntax unified
+ 419              		.thumb
+ 420              		.thumb_func
+ 421              		.fpu fpv4-sp-d16
+ 423              	emh_ilop_set_key:
+ 424              	.LFB7:
+ 135:src/helper/emhost/emh_ilop.c **** 
+ 136:src/helper/emhost/emh_ilop.c **** mx_status emh_ilop_set_key( const char *pk, const char *ps, const char *ds, const char *dn )
+ 137:src/helper/emhost/emh_ilop.c **** {
+ 425              		.loc 1 137 0
+ 426              		.cfi_startproc
+ 427              		@ args = 0, pretend = 0, frame = 0
+ 428              		@ frame_needed = 0, uses_anonymous_args = 0
+ 429              	.LVL44:
+ 430 0000 00B5     		push	{lr}
+ 431              	.LCFI7:
+ 432              		.cfi_def_cfa_offset 4
+ 433              		.cfi_offset 14, -4
+ 434 0002 83B0     		sub	sp, sp, #12
+ 435              	.LCFI8:
+ 436              		.cfi_def_cfa_offset 16
+ 138:src/helper/emhost/emh_ilop.c ****     if (ATCmdParser_send("AT+ILOPSET=%s,%s,%s,%s", pk, ps, ds, dn)
+ 437              		.loc 1 138 0
+ 438 0004 0093     		str	r3, [sp]
+ 439 0006 1346     		mov	r3, r2
+ 440              	.LVL45:
+ 441 0008 0A46     		mov	r2, r1
+ 442              	.LVL46:
+ 443 000a 0146     		mov	r1, r0
+ 444              	.LVL47:
+ 445 000c 0848     		ldr	r0, .L52
+ 446              	.LVL48:
+ 447 000e FFF7FEFF 		bl	ATCmdParser_send
+ 448              	.LVL49:
+ 449 0012 38B1     		cbz	r0, .L49
+ARM GAS  /tmp/ccUj0n4c.s 			page 12
+
+
+ 139:src/helper/emhost/emh_ilop.c **** 	 && ATCmdParser_recv("OK\r\n")) {
+ 450              		.loc 1 139 0
+ 451 0014 0748     		ldr	r0, .L52+4
+ 452 0016 FFF7FEFF 		bl	ATCmdParser_recv
+ 453              	.LVL50:
+ 454 001a 30B1     		cbz	r0, .L50
+ 140:src/helper/emhost/emh_ilop.c **** 		return kNoErr;
+ 455              		.loc 1 140 0
+ 456 001c 0020     		movs	r0, #0
+ 457              	.L47:
+ 141:src/helper/emhost/emh_ilop.c **** 	}
+ 142:src/helper/emhost/emh_ilop.c **** 	return kGeneralErr;
+ 143:src/helper/emhost/emh_ilop.c **** }
+ 458              		.loc 1 143 0
+ 459 001e 03B0     		add	sp, sp, #12
+ 460              	.LCFI9:
+ 461              		.cfi_remember_state
+ 462              		.cfi_def_cfa_offset 4
+ 463              		@ sp needed
+ 464 0020 5DF804FB 		ldr	pc, [sp], #4
+ 465              	.L49:
+ 466              	.LCFI10:
+ 467              		.cfi_restore_state
+ 142:src/helper/emhost/emh_ilop.c **** }
+ 468              		.loc 1 142 0
+ 469 0024 4FF0FF30 		mov	r0, #-1
+ 470 0028 F9E7     		b	.L47
+ 471              	.L50:
+ 472 002a 4FF0FF30 		mov	r0, #-1
+ 473 002e F6E7     		b	.L47
+ 474              	.L53:
+ 475              		.align	2
+ 476              	.L52:
+ 477 0030 00000000 		.word	.LC9
+ 478 0034 14000000 		.word	.LC1
+ 479              		.cfi_endproc
+ 480              	.LFE7:
+ 482              		.section	.text.emh_ilop_get_key,"ax",%progbits
+ 483              		.align	1
+ 484              		.global	emh_ilop_get_key
+ 485              		.syntax unified
+ 486              		.thumb
+ 487              		.thumb_func
+ 488              		.fpu fpv4-sp-d16
+ 490              	emh_ilop_get_key:
+ 491              	.LFB8:
+ 144:src/helper/emhost/emh_ilop.c **** 
+ 145:src/helper/emhost/emh_ilop.c **** mx_status emh_ilop_get_key( char pk[EMH_ILOP_PRODUCT_KEY_MAXLEN], char ps[EMH_ILOP_PRODUCT_SECRET_M
+ 146:src/helper/emhost/emh_ilop.c **** {
+ 492              		.loc 1 146 0
+ 493              		.cfi_startproc
+ 494              		@ args = 0, pretend = 0, frame = 224
+ 495              		@ frame_needed = 0, uses_anonymous_args = 0
+ 496              	.LVL51:
+ 497 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 498              	.LCFI11:
+ 499              		.cfi_def_cfa_offset 20
+ARM GAS  /tmp/ccUj0n4c.s 			page 13
+
+
+ 500              		.cfi_offset 4, -20
+ 501              		.cfi_offset 5, -16
+ 502              		.cfi_offset 6, -12
+ 503              		.cfi_offset 7, -8
+ 504              		.cfi_offset 14, -4
+ 505 0002 B9B0     		sub	sp, sp, #228
+ 506              	.LCFI12:
+ 507              		.cfi_def_cfa_offset 248
+ 508 0004 0746     		mov	r7, r0
+ 509 0006 0E46     		mov	r6, r1
+ 510 0008 1546     		mov	r5, r2
+ 511 000a 1C46     		mov	r4, r3
+ 147:src/helper/emhost/emh_ilop.c ****     char args[200], *arg_list[5];
+ 148:src/helper/emhost/emh_ilop.c **** 
+ 149:src/helper/emhost/emh_ilop.c **** 	if (!(ATCmdParser_send("AT+ILOPSET?")
+ 512              		.loc 1 149 0
+ 513 000c 1948     		ldr	r0, .L61
+ 514              	.LVL52:
+ 515 000e FFF7FEFF 		bl	ATCmdParser_send
+ 516              	.LVL53:
+ 517 0012 38B3     		cbz	r0, .L56
+ 150:src/helper/emhost/emh_ilop.c **** 	   && ATCmdParser_recv("+ILOPSET:%200[^\r]\r\n",args)
+ 518              		.loc 1 150 0
+ 519 0014 06A9     		add	r1, sp, #24
+ 520 0016 1848     		ldr	r0, .L61+4
+ 521 0018 FFF7FEFF 		bl	ATCmdParser_recv
+ 522              	.LVL54:
+ 523 001c 20B3     		cbz	r0, .L57
+ 151:src/helper/emhost/emh_ilop.c **** 	   && ATCmdParser_recv("OK\r\n"))) {
+ 524              		.loc 1 151 0
+ 525 001e 1748     		ldr	r0, .L61+8
+ 526 0020 FFF7FEFF 		bl	ATCmdParser_recv
+ 527              	.LVL55:
+ 149:src/helper/emhost/emh_ilop.c **** 	   && ATCmdParser_recv("+ILOPSET:%200[^\r]\r\n",args)
+ 528              		.loc 1 149 0
+ 529 0024 10B3     		cbz	r0, .L58
+ 152:src/helper/emhost/emh_ilop.c **** 		return kReadErr;
+ 153:src/helper/emhost/emh_ilop.c **** 	}
+ 154:src/helper/emhost/emh_ilop.c **** 
+ 155:src/helper/emhost/emh_ilop.c ****     if (4 != ATCmdParser_analyse_args(args, arg_list, 4)) {
+ 530              		.loc 1 155 0
+ 531 0026 0422     		movs	r2, #4
+ 532 0028 0DEB0201 		add	r1, sp, r2
+ 533 002c 06A8     		add	r0, sp, #24
+ 534 002e FFF7FEFF 		bl	ATCmdParser_analyse_args
+ 535              	.LVL56:
+ 536 0032 0428     		cmp	r0, #4
+ 537 0034 1CD1     		bne	.L59
+ 156:src/helper/emhost/emh_ilop.c **** 		return kMalformedErr;
+ 157:src/helper/emhost/emh_ilop.c **** 	}
+ 158:src/helper/emhost/emh_ilop.c **** 
+ 159:src/helper/emhost/emh_ilop.c ****     strncpy( pk, arg_list[0], EMH_ILOP_PRODUCT_KEY_MAXLEN );
+ 538              		.loc 1 159 0
+ 539 0036 1522     		movs	r2, #21
+ 540 0038 0199     		ldr	r1, [sp, #4]
+ 541 003a 3846     		mov	r0, r7
+ 542 003c FFF7FEFF 		bl	strncpy
+ARM GAS  /tmp/ccUj0n4c.s 			page 14
+
+
+ 543              	.LVL57:
+ 160:src/helper/emhost/emh_ilop.c ****     strncpy( ps, arg_list[1], EMH_ILOP_PRODUCT_SECRET_MAXLEN );
+ 544              		.loc 1 160 0
+ 545 0040 4122     		movs	r2, #65
+ 546 0042 0299     		ldr	r1, [sp, #8]
+ 547 0044 3046     		mov	r0, r6
+ 548 0046 FFF7FEFF 		bl	strncpy
+ 549              	.LVL58:
+ 161:src/helper/emhost/emh_ilop.c ****     strncpy( ds, arg_list[2], EMH_ILOP_DEVICE_SECRET_MAXLEN );
+ 550              		.loc 1 161 0
+ 551 004a 4122     		movs	r2, #65
+ 552 004c 0399     		ldr	r1, [sp, #12]
+ 553 004e 2846     		mov	r0, r5
+ 554 0050 FFF7FEFF 		bl	strncpy
+ 555              	.LVL59:
+ 162:src/helper/emhost/emh_ilop.c ****     strncpy( dn, arg_list[3], EMH_ILOP_DEVICE_NAME_MAXLEN );
+ 556              		.loc 1 162 0
+ 557 0054 2122     		movs	r2, #33
+ 558 0056 0499     		ldr	r1, [sp, #16]
+ 559 0058 2046     		mov	r0, r4
+ 560 005a FFF7FEFF 		bl	strncpy
+ 561              	.LVL60:
+ 163:src/helper/emhost/emh_ilop.c **** 
+ 164:src/helper/emhost/emh_ilop.c ****     return kNoErr;
+ 562              		.loc 1 164 0
+ 563 005e 0020     		movs	r0, #0
+ 564              	.L54:
+ 165:src/helper/emhost/emh_ilop.c **** }
+ 565              		.loc 1 165 0
+ 566 0060 39B0     		add	sp, sp, #228
+ 567              	.LCFI13:
+ 568              		.cfi_remember_state
+ 569              		.cfi_def_cfa_offset 20
+ 570              		@ sp needed
+ 571 0062 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 572              	.LVL61:
+ 573              	.L56:
+ 574              	.LCFI14:
+ 575              		.cfi_restore_state
+ 152:src/helper/emhost/emh_ilop.c **** 	}
+ 576              		.loc 1 152 0
+ 577 0064 0648     		ldr	r0, .L61+12
+ 578 0066 FBE7     		b	.L54
+ 579              	.L57:
+ 580 0068 0548     		ldr	r0, .L61+12
+ 581 006a F9E7     		b	.L54
+ 582              	.L58:
+ 583 006c 0448     		ldr	r0, .L61+12
+ 584 006e F7E7     		b	.L54
+ 585              	.L59:
+ 156:src/helper/emhost/emh_ilop.c **** 	}
+ 586              		.loc 1 156 0
+ 587 0070 0448     		ldr	r0, .L61+16
+ 588 0072 F5E7     		b	.L54
+ 589              	.L62:
+ 590              		.align	2
+ 591              	.L61:
+ARM GAS  /tmp/ccUj0n4c.s 			page 15
+
+
+ 592 0074 00000000 		.word	.LC10
+ 593 0078 0C000000 		.word	.LC11
+ 594 007c 14000000 		.word	.LC1
+ 595 0080 A6E5FFFF 		.word	-6746
+ 596 0084 AAE5FFFF 		.word	-6742
+ 597              		.cfi_endproc
+ 598              	.LFE8:
+ 600              		.section	.text.emh_ilop_awss_start,"ax",%progbits
+ 601              		.align	1
+ 602              		.global	emh_ilop_awss_start
+ 603              		.syntax unified
+ 604              		.thumb
+ 605              		.thumb_func
+ 606              		.fpu fpv4-sp-d16
+ 608              	emh_ilop_awss_start:
+ 609              	.LFB9:
+ 166:src/helper/emhost/emh_ilop.c **** 
+ 167:src/helper/emhost/emh_ilop.c **** mx_status emh_ilop_awss_start( void )
+ 168:src/helper/emhost/emh_ilop.c **** {
+ 610              		.loc 1 168 0
+ 611              		.cfi_startproc
+ 612              		@ args = 0, pretend = 0, frame = 0
+ 613              		@ frame_needed = 0, uses_anonymous_args = 0
+ 614 0000 08B5     		push	{r3, lr}
+ 615              	.LCFI15:
+ 616              		.cfi_def_cfa_offset 8
+ 617              		.cfi_offset 3, -8
+ 618              		.cfi_offset 14, -4
+ 169:src/helper/emhost/emh_ilop.c ****     if (ATCmdParser_send("AT+ILOPAWSSTART")
+ 619              		.loc 1 169 0
+ 620 0002 0848     		ldr	r0, .L68
+ 621 0004 FFF7FEFF 		bl	ATCmdParser_send
+ 622              	.LVL62:
+ 623 0008 28B1     		cbz	r0, .L65
+ 170:src/helper/emhost/emh_ilop.c ****      && ATCmdParser_recv("OK\r\n")) {
+ 624              		.loc 1 170 0
+ 625 000a 0748     		ldr	r0, .L68+4
+ 626 000c FFF7FEFF 		bl	ATCmdParser_recv
+ 627              	.LVL63:
+ 628 0010 20B1     		cbz	r0, .L66
+ 171:src/helper/emhost/emh_ilop.c ****         return kNoErr;
+ 629              		.loc 1 171 0
+ 630 0012 0020     		movs	r0, #0
+ 631              	.L63:
+ 172:src/helper/emhost/emh_ilop.c ****     }
+ 173:src/helper/emhost/emh_ilop.c **** 	return kGeneralErr;
+ 174:src/helper/emhost/emh_ilop.c **** }
+ 632              		.loc 1 174 0
+ 633 0014 08BD     		pop	{r3, pc}
+ 634              	.L65:
+ 173:src/helper/emhost/emh_ilop.c **** }
+ 635              		.loc 1 173 0
+ 636 0016 4FF0FF30 		mov	r0, #-1
+ 637 001a FBE7     		b	.L63
+ 638              	.L66:
+ 639 001c 4FF0FF30 		mov	r0, #-1
+ 640 0020 F8E7     		b	.L63
+ARM GAS  /tmp/ccUj0n4c.s 			page 16
+
+
+ 641              	.L69:
+ 642 0022 00BF     		.align	2
+ 643              	.L68:
+ 644 0024 00000000 		.word	.LC12
+ 645 0028 14000000 		.word	.LC1
+ 646              		.cfi_endproc
+ 647              	.LFE9:
+ 649              		.section	.text.emh_ilop_awss_press,"ax",%progbits
+ 650              		.align	1
+ 651              		.global	emh_ilop_awss_press
+ 652              		.syntax unified
+ 653              		.thumb
+ 654              		.thumb_func
+ 655              		.fpu fpv4-sp-d16
+ 657              	emh_ilop_awss_press:
+ 658              	.LFB10:
+ 175:src/helper/emhost/emh_ilop.c **** 
+ 176:src/helper/emhost/emh_ilop.c **** mx_status emh_ilop_awss_press( void )
+ 177:src/helper/emhost/emh_ilop.c **** {
+ 659              		.loc 1 177 0
+ 660              		.cfi_startproc
+ 661              		@ args = 0, pretend = 0, frame = 0
+ 662              		@ frame_needed = 0, uses_anonymous_args = 0
+ 663 0000 08B5     		push	{r3, lr}
+ 664              	.LCFI16:
+ 665              		.cfi_def_cfa_offset 8
+ 666              		.cfi_offset 3, -8
+ 667              		.cfi_offset 14, -4
+ 178:src/helper/emhost/emh_ilop.c ****     if (ATCmdParser_send("AT+ILOPAWSPRESS")
+ 668              		.loc 1 178 0
+ 669 0002 0848     		ldr	r0, .L75
+ 670 0004 FFF7FEFF 		bl	ATCmdParser_send
+ 671              	.LVL64:
+ 672 0008 28B1     		cbz	r0, .L72
+ 179:src/helper/emhost/emh_ilop.c ****      && ATCmdParser_recv("OK\r\n")) {
+ 673              		.loc 1 179 0
+ 674 000a 0748     		ldr	r0, .L75+4
+ 675 000c FFF7FEFF 		bl	ATCmdParser_recv
+ 676              	.LVL65:
+ 677 0010 20B1     		cbz	r0, .L73
+ 180:src/helper/emhost/emh_ilop.c ****         return kNoErr;
+ 678              		.loc 1 180 0
+ 679 0012 0020     		movs	r0, #0
+ 680              	.L70:
+ 181:src/helper/emhost/emh_ilop.c ****     }
+ 182:src/helper/emhost/emh_ilop.c **** 	return kGeneralErr;
+ 183:src/helper/emhost/emh_ilop.c **** }
+ 681              		.loc 1 183 0
+ 682 0014 08BD     		pop	{r3, pc}
+ 683              	.L72:
+ 182:src/helper/emhost/emh_ilop.c **** }
+ 684              		.loc 1 182 0
+ 685 0016 4FF0FF30 		mov	r0, #-1
+ 686 001a FBE7     		b	.L70
+ 687              	.L73:
+ 688 001c 4FF0FF30 		mov	r0, #-1
+ 689 0020 F8E7     		b	.L70
+ARM GAS  /tmp/ccUj0n4c.s 			page 17
+
+
+ 690              	.L76:
+ 691 0022 00BF     		.align	2
+ 692              	.L75:
+ 693 0024 00000000 		.word	.LC13
+ 694 0028 14000000 		.word	.LC1
+ 695              		.cfi_endproc
+ 696              	.LFE10:
+ 698              		.section	.text.emh_ilop_service_start,"ax",%progbits
+ 699              		.align	1
+ 700              		.global	emh_ilop_service_start
+ 701              		.syntax unified
+ 702              		.thumb
+ 703              		.thumb_func
+ 704              		.fpu fpv4-sp-d16
+ 706              	emh_ilop_service_start:
+ 707              	.LFB11:
+ 184:src/helper/emhost/emh_ilop.c **** 
+ 185:src/helper/emhost/emh_ilop.c **** mx_status emh_ilop_service_start( void )
+ 186:src/helper/emhost/emh_ilop.c **** {
+ 708              		.loc 1 186 0
+ 709              		.cfi_startproc
+ 710              		@ args = 0, pretend = 0, frame = 0
+ 711              		@ frame_needed = 0, uses_anonymous_args = 0
+ 712 0000 08B5     		push	{r3, lr}
+ 713              	.LCFI17:
+ 714              		.cfi_def_cfa_offset 8
+ 715              		.cfi_offset 3, -8
+ 716              		.cfi_offset 14, -4
+ 187:src/helper/emhost/emh_ilop.c ****     if (ATCmdParser_send("AT+ILOPSTART")
+ 717              		.loc 1 187 0
+ 718 0002 0848     		ldr	r0, .L82
+ 719 0004 FFF7FEFF 		bl	ATCmdParser_send
+ 720              	.LVL66:
+ 721 0008 28B1     		cbz	r0, .L79
+ 188:src/helper/emhost/emh_ilop.c ****      && ATCmdParser_recv("OK\r\n")) {
+ 722              		.loc 1 188 0
+ 723 000a 0748     		ldr	r0, .L82+4
+ 724 000c FFF7FEFF 		bl	ATCmdParser_recv
+ 725              	.LVL67:
+ 726 0010 20B1     		cbz	r0, .L80
+ 189:src/helper/emhost/emh_ilop.c ****         return kNoErr;
+ 727              		.loc 1 189 0
+ 728 0012 0020     		movs	r0, #0
+ 729              	.L77:
+ 190:src/helper/emhost/emh_ilop.c ****     }
+ 191:src/helper/emhost/emh_ilop.c **** 	return kGeneralErr;
+ 192:src/helper/emhost/emh_ilop.c **** }
+ 730              		.loc 1 192 0
+ 731 0014 08BD     		pop	{r3, pc}
+ 732              	.L79:
+ 191:src/helper/emhost/emh_ilop.c **** }
+ 733              		.loc 1 191 0
+ 734 0016 4FF0FF30 		mov	r0, #-1
+ 735 001a FBE7     		b	.L77
+ 736              	.L80:
+ 737 001c 4FF0FF30 		mov	r0, #-1
+ 738 0020 F8E7     		b	.L77
+ARM GAS  /tmp/ccUj0n4c.s 			page 18
+
+
+ 739              	.L83:
+ 740 0022 00BF     		.align	2
+ 741              	.L82:
+ 742 0024 00000000 		.word	.LC14
+ 743 0028 14000000 		.word	.LC1
+ 744              		.cfi_endproc
+ 745              	.LFE11:
+ 747              		.section	.text.emh_ilop_get_stauts,"ax",%progbits
+ 748              		.align	1
+ 749              		.global	emh_ilop_get_stauts
+ 750              		.syntax unified
+ 751              		.thumb
+ 752              		.thumb_func
+ 753              		.fpu fpv4-sp-d16
+ 755              	emh_ilop_get_stauts:
+ 756              	.LFB12:
+ 193:src/helper/emhost/emh_ilop.c **** 
+ 194:src/helper/emhost/emh_ilop.c **** emh_arg_ilop_status_t emh_ilop_get_stauts( void )
+ 195:src/helper/emhost/emh_ilop.c **** {
+ 757              		.loc 1 195 0
+ 758              		.cfi_startproc
+ 759              		@ args = 0, pretend = 0, frame = 24
+ 760              		@ frame_needed = 0, uses_anonymous_args = 0
+ 761 0000 00B5     		push	{lr}
+ 762              	.LCFI18:
+ 763              		.cfi_def_cfa_offset 4
+ 764              		.cfi_offset 14, -4
+ 765 0002 87B0     		sub	sp, sp, #28
+ 766              	.LCFI19:
+ 767              		.cfi_def_cfa_offset 32
+ 196:src/helper/emhost/emh_ilop.c **** 	char arg[20];
+ 197:src/helper/emhost/emh_ilop.c **** 
+ 198:src/helper/emhost/emh_ilop.c **** 	if (!(ATCmdParser_send("AT+ILOPSTATUS?")
+ 768              		.loc 1 198 0
+ 769 0004 0C48     		ldr	r0, .L90
+ 770 0006 FFF7FEFF 		bl	ATCmdParser_send
+ 771              	.LVL68:
+ 772 000a 68B1     		cbz	r0, .L86
+ 199:src/helper/emhost/emh_ilop.c **** 	   && ATCmdParser_recv("+ILOPSTATUS:%20[^\r]\r\n",arg)
+ 773              		.loc 1 199 0
+ 774 000c 01A9     		add	r1, sp, #4
+ 775 000e 0B48     		ldr	r0, .L90+4
+ 776 0010 FFF7FEFF 		bl	ATCmdParser_recv
+ 777              	.LVL69:
+ 778 0014 60B1     		cbz	r0, .L87
+ 200:src/helper/emhost/emh_ilop.c **** 	   && ATCmdParser_recv("OK\r\n"))) {
+ 779              		.loc 1 200 0
+ 780 0016 0A48     		ldr	r0, .L90+8
+ 781 0018 FFF7FEFF 		bl	ATCmdParser_recv
+ 782              	.LVL70:
+ 198:src/helper/emhost/emh_ilop.c **** 	   && ATCmdParser_recv("+ILOPSTATUS:%20[^\r]\r\n",arg)
+ 783              		.loc 1 198 0
+ 784 001c 50B1     		cbz	r0, .L88
+ 201:src/helper/emhost/emh_ilop.c **** 		return EMH_ARG_ERR;
+ 202:src/helper/emhost/emh_ilop.c **** 	}
+ 203:src/helper/emhost/emh_ilop.c **** 	
+ 204:src/helper/emhost/emh_ilop.c **** 	return emh_arg_for_arg( EMH_ARG_ILOP_STATUS, arg);
+ARM GAS  /tmp/ccUj0n4c.s 			page 19
+
+
+ 785              		.loc 1 204 0
+ 786 001e 01A9     		add	r1, sp, #4
+ 787 0020 0848     		ldr	r0, .L90+12
+ 788 0022 FFF7FEFF 		bl	emh_arg_for_arg
+ 789              	.LVL71:
+ 790 0026 00E0     		b	.L85
+ 791              	.L86:
+ 201:src/helper/emhost/emh_ilop.c **** 		return EMH_ARG_ERR;
+ 792              		.loc 1 201 0
+ 793 0028 FF20     		movs	r0, #255
+ 794              	.L85:
+ 205:src/helper/emhost/emh_ilop.c **** }
+ 795              		.loc 1 205 0
+ 796 002a 07B0     		add	sp, sp, #28
+ 797              	.LCFI20:
+ 798              		.cfi_remember_state
+ 799              		.cfi_def_cfa_offset 4
+ 800              		@ sp needed
+ 801 002c 5DF804FB 		ldr	pc, [sp], #4
+ 802              	.L87:
+ 803              	.LCFI21:
+ 804              		.cfi_restore_state
+ 201:src/helper/emhost/emh_ilop.c **** 		return EMH_ARG_ERR;
+ 805              		.loc 1 201 0
+ 806 0030 FF20     		movs	r0, #255
+ 807 0032 FAE7     		b	.L85
+ 808              	.L88:
+ 809 0034 FF20     		movs	r0, #255
+ 810 0036 F8E7     		b	.L85
+ 811              	.L91:
+ 812              		.align	2
+ 813              	.L90:
+ 814 0038 00000000 		.word	.LC15
+ 815 003c 10000000 		.word	.LC16
+ 816 0040 14000000 		.word	.LC1
+ 817 0044 00000000 		.word	EMH_ARG_ILOP_STATUS
+ 818              		.cfi_endproc
+ 819              	.LFE12:
+ 821              		.section	.text.emh_ilop_unbind,"ax",%progbits
+ 822              		.align	1
+ 823              		.global	emh_ilop_unbind
+ 824              		.syntax unified
+ 825              		.thumb
+ 826              		.thumb_func
+ 827              		.fpu fpv4-sp-d16
+ 829              	emh_ilop_unbind:
+ 830              	.LFB13:
+ 206:src/helper/emhost/emh_ilop.c **** 
+ 207:src/helper/emhost/emh_ilop.c **** mx_status emh_ilop_unbind( void )
+ 208:src/helper/emhost/emh_ilop.c **** {
+ 831              		.loc 1 208 0
+ 832              		.cfi_startproc
+ 833              		@ args = 0, pretend = 0, frame = 0
+ 834              		@ frame_needed = 0, uses_anonymous_args = 0
+ 835 0000 08B5     		push	{r3, lr}
+ 836              	.LCFI22:
+ 837              		.cfi_def_cfa_offset 8
+ARM GAS  /tmp/ccUj0n4c.s 			page 20
+
+
+ 838              		.cfi_offset 3, -8
+ 839              		.cfi_offset 14, -4
+ 209:src/helper/emhost/emh_ilop.c **** 	if (ATCmdParser_send("AT+ILOPRESET")
+ 840              		.loc 1 209 0
+ 841 0002 0848     		ldr	r0, .L97
+ 842 0004 FFF7FEFF 		bl	ATCmdParser_send
+ 843              	.LVL72:
+ 844 0008 28B1     		cbz	r0, .L94
+ 210:src/helper/emhost/emh_ilop.c ****      && ATCmdParser_recv("OK\r\n")) {
+ 845              		.loc 1 210 0
+ 846 000a 0748     		ldr	r0, .L97+4
+ 847 000c FFF7FEFF 		bl	ATCmdParser_recv
+ 848              	.LVL73:
+ 849 0010 20B1     		cbz	r0, .L95
+ 211:src/helper/emhost/emh_ilop.c ****         return kNoErr;
+ 850              		.loc 1 211 0
+ 851 0012 0020     		movs	r0, #0
+ 852              	.L92:
+ 212:src/helper/emhost/emh_ilop.c ****     }
+ 213:src/helper/emhost/emh_ilop.c **** 	return kGeneralErr;
+ 214:src/helper/emhost/emh_ilop.c **** }
+ 853              		.loc 1 214 0
+ 854 0014 08BD     		pop	{r3, pc}
+ 855              	.L94:
+ 213:src/helper/emhost/emh_ilop.c **** }
+ 856              		.loc 1 213 0
+ 857 0016 4FF0FF30 		mov	r0, #-1
+ 858 001a FBE7     		b	.L92
+ 859              	.L95:
+ 860 001c 4FF0FF30 		mov	r0, #-1
+ 861 0020 F8E7     		b	.L92
+ 862              	.L98:
+ 863 0022 00BF     		.align	2
+ 864              	.L97:
+ 865 0024 00000000 		.word	.LC17
+ 866 0028 14000000 		.word	.LC1
+ 867              		.cfi_endproc
+ 868              	.LFE13:
+ 870              		.section	.text.emh_ilop_service_stop,"ax",%progbits
+ 871              		.align	1
+ 872              		.global	emh_ilop_service_stop
+ 873              		.syntax unified
+ 874              		.thumb
+ 875              		.thumb_func
+ 876              		.fpu fpv4-sp-d16
+ 878              	emh_ilop_service_stop:
+ 879              	.LFB14:
+ 215:src/helper/emhost/emh_ilop.c **** 
+ 216:src/helper/emhost/emh_ilop.c **** mx_status emh_ilop_service_stop( void )
+ 217:src/helper/emhost/emh_ilop.c **** {
+ 880              		.loc 1 217 0
+ 881              		.cfi_startproc
+ 882              		@ args = 0, pretend = 0, frame = 0
+ 883              		@ frame_needed = 0, uses_anonymous_args = 0
+ 884 0000 08B5     		push	{r3, lr}
+ 885              	.LCFI23:
+ 886              		.cfi_def_cfa_offset 8
+ARM GAS  /tmp/ccUj0n4c.s 			page 21
+
+
+ 887              		.cfi_offset 3, -8
+ 888              		.cfi_offset 14, -4
+ 218:src/helper/emhost/emh_ilop.c ****     if (ATCmdParser_send("AT+ILOPSTOP")
+ 889              		.loc 1 218 0
+ 890 0002 0848     		ldr	r0, .L104
+ 891 0004 FFF7FEFF 		bl	ATCmdParser_send
+ 892              	.LVL74:
+ 893 0008 28B1     		cbz	r0, .L101
+ 219:src/helper/emhost/emh_ilop.c ****      && ATCmdParser_recv("OK\r\n")) {
+ 894              		.loc 1 219 0
+ 895 000a 0748     		ldr	r0, .L104+4
+ 896 000c FFF7FEFF 		bl	ATCmdParser_recv
+ 897              	.LVL75:
+ 898 0010 20B1     		cbz	r0, .L102
+ 220:src/helper/emhost/emh_ilop.c ****         return kNoErr;
+ 899              		.loc 1 220 0
+ 900 0012 0020     		movs	r0, #0
+ 901              	.L99:
+ 221:src/helper/emhost/emh_ilop.c ****     }
+ 222:src/helper/emhost/emh_ilop.c **** 	return kGeneralErr;
+ 223:src/helper/emhost/emh_ilop.c **** }
+ 902              		.loc 1 223 0
+ 903 0014 08BD     		pop	{r3, pc}
+ 904              	.L101:
+ 222:src/helper/emhost/emh_ilop.c **** }
+ 905              		.loc 1 222 0
+ 906 0016 4FF0FF30 		mov	r0, #-1
+ 907 001a FBE7     		b	.L99
+ 908              	.L102:
+ 909 001c 4FF0FF30 		mov	r0, #-1
+ 910 0020 F8E7     		b	.L99
+ 911              	.L105:
+ 912 0022 00BF     		.align	2
+ 913              	.L104:
+ 914 0024 00000000 		.word	.LC18
+ 915 0028 14000000 		.word	.LC1
+ 916              		.cfi_endproc
+ 917              	.LFE14:
+ 919              		.section	.text.emh_ilop_send_ica_to_cloud,"ax",%progbits
+ 920              		.align	1
+ 921              		.global	emh_ilop_send_ica_to_cloud
+ 922              		.syntax unified
+ 923              		.thumb
+ 924              		.thumb_func
+ 925              		.fpu fpv4-sp-d16
+ 927              	emh_ilop_send_ica_to_cloud:
+ 928              	.LFB15:
+ 224:src/helper/emhost/emh_ilop.c **** 
+ 225:src/helper/emhost/emh_ilop.c **** mx_status emh_ilop_send_ica_to_cloud( const char *type, char *attr )
+ 226:src/helper/emhost/emh_ilop.c **** {
+ 929              		.loc 1 226 0
+ 930              		.cfi_startproc
+ 931              		@ args = 0, pretend = 0, frame = 0
+ 932              		@ frame_needed = 0, uses_anonymous_args = 0
+ 933              	.LVL76:
+ 934 0000 08B5     		push	{r3, lr}
+ 935              	.LCFI24:
+ARM GAS  /tmp/ccUj0n4c.s 			page 22
+
+
+ 936              		.cfi_def_cfa_offset 8
+ 937              		.cfi_offset 3, -8
+ 938              		.cfi_offset 14, -4
+ 227:src/helper/emhost/emh_ilop.c ****     if (ATCmdParser_send("AT+ILOPSENDICA=%s,%s", type, attr)
+ 939              		.loc 1 227 0
+ 940 0002 0A46     		mov	r2, r1
+ 941 0004 0146     		mov	r1, r0
+ 942              	.LVL77:
+ 943 0006 0848     		ldr	r0, .L111
+ 944              	.LVL78:
+ 945 0008 FFF7FEFF 		bl	ATCmdParser_send
+ 946              	.LVL79:
+ 947 000c 28B1     		cbz	r0, .L108
+ 228:src/helper/emhost/emh_ilop.c ****      && ATCmdParser_recv("OK\r\n")) {
+ 948              		.loc 1 228 0
+ 949 000e 0748     		ldr	r0, .L111+4
+ 950 0010 FFF7FEFF 		bl	ATCmdParser_recv
+ 951              	.LVL80:
+ 952 0014 20B1     		cbz	r0, .L109
+ 229:src/helper/emhost/emh_ilop.c ****         return kNoErr;
+ 953              		.loc 1 229 0
+ 954 0016 0020     		movs	r0, #0
+ 955              	.L106:
+ 230:src/helper/emhost/emh_ilop.c ****     }
+ 231:src/helper/emhost/emh_ilop.c **** 
+ 232:src/helper/emhost/emh_ilop.c **** 	return kGeneralErr;
+ 233:src/helper/emhost/emh_ilop.c **** }
+ 956              		.loc 1 233 0
+ 957 0018 08BD     		pop	{r3, pc}
+ 958              	.L108:
+ 232:src/helper/emhost/emh_ilop.c **** }
+ 959              		.loc 1 232 0
+ 960 001a 4FF0FF30 		mov	r0, #-1
+ 961 001e FBE7     		b	.L106
+ 962              	.L109:
+ 963 0020 4FF0FF30 		mov	r0, #-1
+ 964 0024 F8E7     		b	.L106
+ 965              	.L112:
+ 966 0026 00BF     		.align	2
+ 967              	.L111:
+ 968 0028 00000000 		.word	.LC19
+ 969 002c 14000000 		.word	.LC1
+ 970              		.cfi_endproc
+ 971              	.LFE15:
+ 973              		.section	.text.emh_ilop_send_raw_to_cloud,"ax",%progbits
+ 974              		.align	1
+ 975              		.global	emh_ilop_send_raw_to_cloud
+ 976              		.syntax unified
+ 977              		.thumb
+ 978              		.thumb_func
+ 979              		.fpu fpv4-sp-d16
+ 981              	emh_ilop_send_raw_to_cloud:
+ 982              	.LFB16:
+ 234:src/helper/emhost/emh_ilop.c **** 
+ 235:src/helper/emhost/emh_ilop.c **** mx_status emh_ilop_send_raw_to_cloud( uint8_t *data, uint32_t len )
+ 236:src/helper/emhost/emh_ilop.c **** {
+ 983              		.loc 1 236 0
+ARM GAS  /tmp/ccUj0n4c.s 			page 23
+
+
+ 984              		.cfi_startproc
+ 985              		@ args = 0, pretend = 0, frame = 0
+ 986              		@ frame_needed = 0, uses_anonymous_args = 0
+ 987              	.LVL81:
+ 988 0000 38B5     		push	{r3, r4, r5, lr}
+ 989              	.LCFI25:
+ 990              		.cfi_def_cfa_offset 16
+ 991              		.cfi_offset 3, -16
+ 992              		.cfi_offset 4, -12
+ 993              		.cfi_offset 5, -8
+ 994              		.cfi_offset 14, -4
+ 995 0002 0546     		mov	r5, r0
+ 996 0004 0C46     		mov	r4, r1
+ 237:src/helper/emhost/emh_ilop.c ****     if (ATCmdParser_send("AT+ILOPSENDRAW=%d", len)
+ 997              		.loc 1 237 0
+ 998 0006 1048     		ldr	r0, .L120
+ 999              	.LVL82:
+ 1000 0008 FFF7FEFF 		bl	ATCmdParser_send
+ 1001              	.LVL83:
+ 1002 000c 78B1     		cbz	r0, .L115
+ 238:src/helper/emhost/emh_ilop.c **** 	 && ATCmdParser_recv(">")
+ 1003              		.loc 1 238 0
+ 1004 000e 0F48     		ldr	r0, .L120+4
+ 1005 0010 FFF7FEFF 		bl	ATCmdParser_recv
+ 1006              	.LVL84:
+ 1007 0014 70B1     		cbz	r0, .L116
+ 239:src/helper/emhost/emh_ilop.c **** 	 && ATCmdParser_write((char *)data, len) == len
+ 1008              		.loc 1 239 0
+ 1009 0016 2146     		mov	r1, r4
+ 1010 0018 2846     		mov	r0, r5
+ 1011 001a FFF7FEFF 		bl	ATCmdParser_write
+ 1012              	.LVL85:
+ 1013 001e A042     		cmp	r0, r4
+ 1014 0020 0BD1     		bne	.L117
+ 240:src/helper/emhost/emh_ilop.c **** 	 && ATCmdParser_recv("OK\r\n")) {
+ 1015              		.loc 1 240 0
+ 1016 0022 0B48     		ldr	r0, .L120+8
+ 1017 0024 FFF7FEFF 		bl	ATCmdParser_recv
+ 1018              	.LVL86:
+ 1019 0028 50B1     		cbz	r0, .L118
+ 241:src/helper/emhost/emh_ilop.c **** 		return kNoErr;
+ 1020              		.loc 1 241 0
+ 1021 002a 0020     		movs	r0, #0
+ 1022              	.L113:
+ 242:src/helper/emhost/emh_ilop.c **** 	}
+ 243:src/helper/emhost/emh_ilop.c **** 	return kGeneralErr;
+ 244:src/helper/emhost/emh_ilop.c **** }
+ 1023              		.loc 1 244 0
+ 1024 002c 38BD     		pop	{r3, r4, r5, pc}
+ 1025              	.LVL87:
+ 1026              	.L115:
+ 243:src/helper/emhost/emh_ilop.c **** }
+ 1027              		.loc 1 243 0
+ 1028 002e 4FF0FF30 		mov	r0, #-1
+ 1029 0032 FBE7     		b	.L113
+ 1030              	.L116:
+ 1031 0034 4FF0FF30 		mov	r0, #-1
+ARM GAS  /tmp/ccUj0n4c.s 			page 24
+
+
+ 1032 0038 F8E7     		b	.L113
+ 1033              	.L117:
+ 1034 003a 4FF0FF30 		mov	r0, #-1
+ 1035 003e F5E7     		b	.L113
+ 1036              	.L118:
+ 1037 0040 4FF0FF30 		mov	r0, #-1
+ 1038 0044 F2E7     		b	.L113
+ 1039              	.L121:
+ 1040 0046 00BF     		.align	2
+ 1041              	.L120:
+ 1042 0048 00000000 		.word	.LC20
+ 1043 004c 2C000000 		.word	.LC3
+ 1044 0050 14000000 		.word	.LC1
+ 1045              		.cfi_endproc
+ 1046              	.LFE16:
+ 1048              		.section	.text.emh_ilop_event_handler,"ax",%progbits
+ 1049              		.align	1
+ 1050              		.global	emh_ilop_event_handler
+ 1051              		.syntax unified
+ 1052              		.thumb
+ 1053              		.thumb_func
+ 1054              		.fpu fpv4-sp-d16
+ 1056              	emh_ilop_event_handler:
+ 1057              	.LFB17:
+ 245:src/helper/emhost/emh_ilop.c **** 
+ 246:src/helper/emhost/emh_ilop.c **** void emh_ilop_event_handler(void)
+ 247:src/helper/emhost/emh_ilop.c **** {
+ 1058              		.loc 1 247 0
+ 1059              		.cfi_startproc
+ 1060              		@ args = 0, pretend = 0, frame = 288
+ 1061              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1062 0000 10B5     		push	{r4, lr}
+ 1063              	.LCFI26:
+ 1064              		.cfi_def_cfa_offset 8
+ 1065              		.cfi_offset 4, -8
+ 1066              		.cfi_offset 14, -4
+ 1067 0002 CAB0     		sub	sp, sp, #296
+ 1068              	.LCFI27:
+ 1069              		.cfi_def_cfa_offset 304
+ 1070              	.LVL88:
+ 248:src/helper/emhost/emh_ilop.c **** 	mx_status err = kNoErr;
+ 249:src/helper/emhost/emh_ilop.c ****     char arg1[10], arg2[256];
+ 250:src/helper/emhost/emh_ilop.c ****     emh_arg_ilop_conn_t conn;
+ 251:src/helper/emhost/emh_ilop.c ****     emh_ilop_msg msg;
+ 252:src/helper/emhost/emh_ilop.c **** 
+ 253:src/helper/emhost/emh_ilop.c ****     require_action(ATCmdParser_recv("%10[^,],", arg1), exit, err = kMalformedErr);
+ 1071              		.loc 1 253 0
+ 1072 0004 47A9     		add	r1, sp, #284
+ 1073 0006 4E48     		ldr	r0, .L141
+ 1074 0008 FFF7FEFF 		bl	ATCmdParser_recv
+ 1075              	.LVL89:
+ 1076 000c 58B9     		cbnz	r0, .L123
+ 1077              		.loc 1 253 0 is_stmt 0 discriminator 1
+ 1078 000e 4D4B     		ldr	r3, .L141+4
+ 1079 0010 0093     		str	r3, [sp]
+ 1080 0012 FD23     		movs	r3, #253
+ 1081 0014 4C4A     		ldr	r2, .L141+8
+ARM GAS  /tmp/ccUj0n4c.s 			page 25
+
+
+ 1082 0016 4D49     		ldr	r1, .L141+12
+ 1083 0018 4D48     		ldr	r0, .L141+16
+ 1084 001a FFF7FEFF 		bl	printf
+ 1085              	.LVL90:
+ 1086              	.L124:
+ 254:src/helper/emhost/emh_ilop.c **** 
+ 255:src/helper/emhost/emh_ilop.c **** 	emh_arg_ilop_ev_t event = emh_arg_for_arg(EMH_ARG_ILOP_EV, arg1);
+ 256:src/helper/emhost/emh_ilop.c **** 	require_action(event != EMH_ARG_ERR, exit,  err = kMalformedErr);
+ 257:src/helper/emhost/emh_ilop.c **** 
+ 258:src/helper/emhost/emh_ilop.c ****     /* ILOP Server connection event */
+ 259:src/helper/emhost/emh_ilop.c **** 	if (event == EMH_ARG_ILOP_EV_ILOP) {
+ 260:src/helper/emhost/emh_ilop.c **** 		require_action(ATCmdParser_recv("%20[^\r]\r\n", arg2), exit, err = kMalformedErr);
+ 261:src/helper/emhost/emh_ilop.c **** 		conn = emh_arg_for_arg(EMH_ARG_ILOP_CONN, arg2);
+ 262:src/helper/emhost/emh_ilop.c **** 		require_action(conn != EMH_ARG_ERR, exit, err = kMalformedErr);
+ 263:src/helper/emhost/emh_ilop.c **** 		emh_ev_ilop_connection(conn);
+ 264:src/helper/emhost/emh_ilop.c **** 	}
+ 265:src/helper/emhost/emh_ilop.c ****     /* ALINK server === ICA value===> device */
+ 266:src/helper/emhost/emh_ilop.c ****     else if(event == EMH_ARG_ILOP_EV_SETICA)
+ 267:src/helper/emhost/emh_ilop.c ****     {
+ 268:src/helper/emhost/emh_ilop.c ****         require_action(ATCmdParser_recv("%256[^\r]\r\n", arg2), exit, err = kMalformedErr);
+ 269:src/helper/emhost/emh_ilop.c ****         msg.format = EMH_ARG_ILOP_FORMAT_ICA;
+ 270:src/helper/emhost/emh_ilop.c ****         msg.data = (uint8_t *)&arg2;
+ 271:src/helper/emhost/emh_ilop.c ****         msg.len = strlen(arg2);
+ 272:src/helper/emhost/emh_ilop.c ****         emh_ev_ilop_set_local_attr( &msg );
+ 273:src/helper/emhost/emh_ilop.c ****     }
+ 274:src/helper/emhost/emh_ilop.c ****     /* ALINK server === RAW value===> device */
+ 275:src/helper/emhost/emh_ilop.c ****     else if(event == EMH_ARG_ILOP_EV_SETRAW)
+ 276:src/helper/emhost/emh_ilop.c ****     {	
+ 277:src/helper/emhost/emh_ilop.c **** 		/* Read package data */
+ 278:src/helper/emhost/emh_ilop.c **** 		int32_t count;
+ 279:src/helper/emhost/emh_ilop.c **** 		require_action(ATCmdParser_recv("%d,", &count), exit, err = kMalformedErr);
+ 280:src/helper/emhost/emh_ilop.c **** 
+ 281:src/helper/emhost/emh_ilop.c ****         uint8_t *data = malloc(count);
+ 282:src/helper/emhost/emh_ilop.c **** 		require_action(data, exit, err = kNoMemoryErr);
+ 283:src/helper/emhost/emh_ilop.c **** 		require_action(ATCmdParser_read((char *)data, count) == count, exit, err = kTimeoutErr);
+ 284:src/helper/emhost/emh_ilop.c **** 
+ 285:src/helper/emhost/emh_ilop.c **** 		msg.data = data;
+ 286:src/helper/emhost/emh_ilop.c **** 		msg.format = EMH_ARG_ILOP_FORMAT_RAW;
+ 287:src/helper/emhost/emh_ilop.c **** 		msg.len = count;
+ 288:src/helper/emhost/emh_ilop.c **** 		emh_ev_ilop_set_local_attr(&msg);
+ 289:src/helper/emhost/emh_ilop.c **** 		free(data);
+ 290:src/helper/emhost/emh_ilop.c ****     }
+ 291:src/helper/emhost/emh_ilop.c **** 
+ 292:src/helper/emhost/emh_ilop.c **** exit:
+ 293:src/helper/emhost/emh_ilop.c ****     if (err == kMalformedErr) emh_ev_unknown();
+ 1087              		.loc 1 293 0 is_stmt 1 discriminator 1
+ 1088 001e FFF7FEFF 		bl	emh_ev_unknown
+ 1089              	.LVL91:
+ 1090              	.L122:
+ 294:src/helper/emhost/emh_ilop.c ****     return;
+ 295:src/helper/emhost/emh_ilop.c **** }
+ 1091              		.loc 1 295 0
+ 1092 0022 4AB0     		add	sp, sp, #296
+ 1093              	.LCFI28:
+ 1094              		.cfi_remember_state
+ 1095              		.cfi_def_cfa_offset 8
+ 1096              		@ sp needed
+ARM GAS  /tmp/ccUj0n4c.s 			page 26
+
+
+ 1097 0024 10BD     		pop	{r4, pc}
+ 1098              	.LVL92:
+ 1099              	.L123:
+ 1100              	.LCFI29:
+ 1101              		.cfi_restore_state
+ 255:src/helper/emhost/emh_ilop.c **** 	require_action(event != EMH_ARG_ERR, exit,  err = kMalformedErr);
+ 1102              		.loc 1 255 0
+ 1103 0026 47A9     		add	r1, sp, #284
+ 1104 0028 4A48     		ldr	r0, .L141+20
+ 1105 002a FFF7FEFF 		bl	emh_arg_for_arg
+ 1106              	.LVL93:
+ 256:src/helper/emhost/emh_ilop.c **** 
+ 1107              		.loc 1 256 0
+ 1108 002e FF28     		cmp	r0, #255
+ 1109 0030 14D0     		beq	.L136
+ 259:src/helper/emhost/emh_ilop.c **** 		require_action(ATCmdParser_recv("%20[^\r]\r\n", arg2), exit, err = kMalformedErr);
+ 1110              		.loc 1 259 0
+ 1111 0032 E8B1     		cbz	r0, .L137
+ 266:src/helper/emhost/emh_ilop.c ****     {
+ 1112              		.loc 1 266 0
+ 1113 0034 0128     		cmp	r0, #1
+ 1114 0036 3DD0     		beq	.L138
+ 275:src/helper/emhost/emh_ilop.c ****     {	
+ 1115              		.loc 1 275 0
+ 1116 0038 0228     		cmp	r0, #2
+ 1117 003a F2D1     		bne	.L122
+ 1118              	.LBB2:
+ 279:src/helper/emhost/emh_ilop.c **** 
+ 1119              		.loc 1 279 0
+ 1120 003c 03A9     		add	r1, sp, #12
+ 1121 003e 4648     		ldr	r0, .L141+24
+ 1122              	.LVL94:
+ 1123 0040 FFF7FEFF 		bl	ATCmdParser_recv
+ 1124              	.LVL95:
+ 1125 0044 0028     		cmp	r0, #0
+ 1126 0046 50D1     		bne	.L132
+ 279:src/helper/emhost/emh_ilop.c **** 
+ 1127              		.loc 1 279 0 is_stmt 0 discriminator 1
+ 1128 0048 3E4B     		ldr	r3, .L141+4
+ 1129 004a 0093     		str	r3, [sp]
+ 1130 004c 40F21713 		movw	r3, #279
+ 1131 0050 3D4A     		ldr	r2, .L141+8
+ 1132 0052 3E49     		ldr	r1, .L141+12
+ 1133 0054 3E48     		ldr	r0, .L141+16
+ 1134 0056 FFF7FEFF 		bl	printf
+ 1135              	.LVL96:
+ 1136 005a E0E7     		b	.L124
+ 1137              	.LVL97:
+ 1138              	.L136:
+ 1139              	.LBE2:
+ 256:src/helper/emhost/emh_ilop.c **** 
+ 1140              		.loc 1 256 0 is_stmt 1 discriminator 1
+ 1141 005c 394B     		ldr	r3, .L141+4
+ 1142 005e 0093     		str	r3, [sp]
+ 1143 0060 4FF48073 		mov	r3, #256
+ 1144 0064 384A     		ldr	r2, .L141+8
+ 1145 0066 3949     		ldr	r1, .L141+12
+ARM GAS  /tmp/ccUj0n4c.s 			page 27
+
+
+ 1146 0068 3948     		ldr	r0, .L141+16
+ 1147              	.LVL98:
+ 1148 006a FFF7FEFF 		bl	printf
+ 1149              	.LVL99:
+ 1150 006e D6E7     		b	.L124
+ 1151              	.LVL100:
+ 1152              	.L137:
+ 260:src/helper/emhost/emh_ilop.c **** 		conn = emh_arg_for_arg(EMH_ARG_ILOP_CONN, arg2);
+ 1153              		.loc 1 260 0
+ 1154 0070 07A9     		add	r1, sp, #28
+ 1155 0072 3A48     		ldr	r0, .L141+28
+ 1156              	.LVL101:
+ 1157 0074 FFF7FEFF 		bl	ATCmdParser_recv
+ 1158              	.LVL102:
+ 1159 0078 48B9     		cbnz	r0, .L127
+ 260:src/helper/emhost/emh_ilop.c **** 		conn = emh_arg_for_arg(EMH_ARG_ILOP_CONN, arg2);
+ 1160              		.loc 1 260 0 is_stmt 0 discriminator 1
+ 1161 007a 324B     		ldr	r3, .L141+4
+ 1162 007c 0093     		str	r3, [sp]
+ 1163 007e 4FF48273 		mov	r3, #260
+ 1164 0082 314A     		ldr	r2, .L141+8
+ 1165 0084 3149     		ldr	r1, .L141+12
+ 1166 0086 3248     		ldr	r0, .L141+16
+ 1167 0088 FFF7FEFF 		bl	printf
+ 1168              	.LVL103:
+ 1169 008c C7E7     		b	.L124
+ 1170              	.LVL104:
+ 1171              	.L127:
+ 261:src/helper/emhost/emh_ilop.c **** 		require_action(conn != EMH_ARG_ERR, exit, err = kMalformedErr);
+ 1172              		.loc 1 261 0 is_stmt 1
+ 1173 008e 07A9     		add	r1, sp, #28
+ 1174 0090 3348     		ldr	r0, .L141+32
+ 1175 0092 FFF7FEFF 		bl	emh_arg_for_arg
+ 1176              	.LVL105:
+ 262:src/helper/emhost/emh_ilop.c **** 		emh_ev_ilop_connection(conn);
+ 1177              		.loc 1 262 0
+ 1178 0096 FF28     		cmp	r0, #255
+ 1179 0098 02D0     		beq	.L139
+ 263:src/helper/emhost/emh_ilop.c **** 	}
+ 1180              		.loc 1 263 0
+ 1181 009a FFF7FEFF 		bl	emh_ev_ilop_connection
+ 1182              	.LVL106:
+ 1183 009e C0E7     		b	.L122
+ 1184              	.LVL107:
+ 1185              	.L139:
+ 262:src/helper/emhost/emh_ilop.c **** 		emh_ev_ilop_connection(conn);
+ 1186              		.loc 1 262 0 discriminator 1
+ 1187 00a0 284B     		ldr	r3, .L141+4
+ 1188 00a2 0093     		str	r3, [sp]
+ 1189 00a4 4FF48373 		mov	r3, #262
+ 1190 00a8 274A     		ldr	r2, .L141+8
+ 1191 00aa 2849     		ldr	r1, .L141+12
+ 1192 00ac 2848     		ldr	r0, .L141+16
+ 1193              	.LVL108:
+ 1194 00ae FFF7FEFF 		bl	printf
+ 1195              	.LVL109:
+ 1196 00b2 B4E7     		b	.L124
+ARM GAS  /tmp/ccUj0n4c.s 			page 28
+
+
+ 1197              	.LVL110:
+ 1198              	.L138:
+ 268:src/helper/emhost/emh_ilop.c ****         msg.format = EMH_ARG_ILOP_FORMAT_ICA;
+ 1199              		.loc 1 268 0
+ 1200 00b4 07A9     		add	r1, sp, #28
+ 1201 00b6 2B48     		ldr	r0, .L141+36
+ 1202              	.LVL111:
+ 1203 00b8 FFF7FEFF 		bl	ATCmdParser_recv
+ 1204              	.LVL112:
+ 1205 00bc 48B9     		cbnz	r0, .L131
+ 268:src/helper/emhost/emh_ilop.c ****         msg.format = EMH_ARG_ILOP_FORMAT_ICA;
+ 1206              		.loc 1 268 0 is_stmt 0 discriminator 1
+ 1207 00be 214B     		ldr	r3, .L141+4
+ 1208 00c0 0093     		str	r3, [sp]
+ 1209 00c2 4FF48673 		mov	r3, #268
+ 1210 00c6 204A     		ldr	r2, .L141+8
+ 1211 00c8 2049     		ldr	r1, .L141+12
+ 1212 00ca 2148     		ldr	r0, .L141+16
+ 1213 00cc FFF7FEFF 		bl	printf
+ 1214              	.LVL113:
+ 1215 00d0 A5E7     		b	.L124
+ 1216              	.LVL114:
+ 1217              	.L131:
+ 269:src/helper/emhost/emh_ilop.c ****         msg.data = (uint8_t *)&arg2;
+ 1218              		.loc 1 269 0 is_stmt 1
+ 1219 00d2 0023     		movs	r3, #0
+ 1220 00d4 8DF81830 		strb	r3, [sp, #24]
+ 270:src/helper/emhost/emh_ilop.c ****         msg.len = strlen(arg2);
+ 1221              		.loc 1 270 0
+ 1222 00d8 07A8     		add	r0, sp, #28
+ 1223 00da 0590     		str	r0, [sp, #20]
+ 271:src/helper/emhost/emh_ilop.c ****         emh_ev_ilop_set_local_attr( &msg );
+ 1224              		.loc 1 271 0
+ 1225 00dc FFF7FEFF 		bl	strlen
+ 1226              	.LVL115:
+ 1227 00e0 0490     		str	r0, [sp, #16]
+ 272:src/helper/emhost/emh_ilop.c ****     }
+ 1228              		.loc 1 272 0
+ 1229 00e2 04A8     		add	r0, sp, #16
+ 1230 00e4 FFF7FEFF 		bl	emh_ev_ilop_set_local_attr
+ 1231              	.LVL116:
+ 1232 00e8 9BE7     		b	.L122
+ 1233              	.L132:
+ 1234              	.LBB3:
+ 281:src/helper/emhost/emh_ilop.c **** 		require_action(data, exit, err = kNoMemoryErr);
+ 1235              		.loc 1 281 0
+ 1236 00ea 0398     		ldr	r0, [sp, #12]
+ 1237 00ec FFF7FEFF 		bl	malloc
+ 1238              	.LVL117:
+ 282:src/helper/emhost/emh_ilop.c **** 		require_action(ATCmdParser_read((char *)data, count) == count, exit, err = kTimeoutErr);
+ 1239              		.loc 1 282 0
+ 1240 00f0 0446     		mov	r4, r0
+ 1241 00f2 78B1     		cbz	r0, .L140
+ 283:src/helper/emhost/emh_ilop.c **** 
+ 1242              		.loc 1 283 0
+ 1243 00f4 0399     		ldr	r1, [sp, #12]
+ 1244 00f6 FFF7FEFF 		bl	ATCmdParser_read
+ARM GAS  /tmp/ccUj0n4c.s 			page 29
+
+
+ 1245              	.LVL118:
+ 1246 00fa 039B     		ldr	r3, [sp, #12]
+ 1247 00fc 9842     		cmp	r0, r3
+ 1248 00fe 13D0     		beq	.L134
+ 283:src/helper/emhost/emh_ilop.c **** 
+ 1249              		.loc 1 283 0 is_stmt 0 discriminator 1
+ 1250 0100 104B     		ldr	r3, .L141+4
+ 1251 0102 0093     		str	r3, [sp]
+ 1252 0104 40F21B13 		movw	r3, #283
+ 1253 0108 0F4A     		ldr	r2, .L141+8
+ 1254 010a 1049     		ldr	r1, .L141+12
+ 1255 010c 1048     		ldr	r0, .L141+16
+ 1256 010e FFF7FEFF 		bl	printf
+ 1257              	.LVL119:
+ 1258 0112 86E7     		b	.L122
+ 1259              	.LVL120:
+ 1260              	.L140:
+ 282:src/helper/emhost/emh_ilop.c **** 		require_action(ATCmdParser_read((char *)data, count) == count, exit, err = kTimeoutErr);
+ 1261              		.loc 1 282 0 is_stmt 1 discriminator 1
+ 1262 0114 0B4B     		ldr	r3, .L141+4
+ 1263 0116 0093     		str	r3, [sp]
+ 1264 0118 4FF48D73 		mov	r3, #282
+ 1265 011c 0A4A     		ldr	r2, .L141+8
+ 1266 011e 0B49     		ldr	r1, .L141+12
+ 1267 0120 0B48     		ldr	r0, .L141+16
+ 1268              	.LVL121:
+ 1269 0122 FFF7FEFF 		bl	printf
+ 1270              	.LVL122:
+ 1271 0126 7CE7     		b	.L122
+ 1272              	.LVL123:
+ 1273              	.L134:
+ 285:src/helper/emhost/emh_ilop.c **** 		msg.format = EMH_ARG_ILOP_FORMAT_RAW;
+ 1274              		.loc 1 285 0
+ 1275 0128 0594     		str	r4, [sp, #20]
+ 286:src/helper/emhost/emh_ilop.c **** 		msg.len = count;
+ 1276              		.loc 1 286 0
+ 1277 012a 0122     		movs	r2, #1
+ 1278 012c 8DF81820 		strb	r2, [sp, #24]
+ 287:src/helper/emhost/emh_ilop.c **** 		emh_ev_ilop_set_local_attr(&msg);
+ 1279              		.loc 1 287 0
+ 1280 0130 0493     		str	r3, [sp, #16]
+ 288:src/helper/emhost/emh_ilop.c **** 		free(data);
+ 1281              		.loc 1 288 0
+ 1282 0132 04A8     		add	r0, sp, #16
+ 1283 0134 FFF7FEFF 		bl	emh_ev_ilop_set_local_attr
+ 1284              	.LVL124:
+ 289:src/helper/emhost/emh_ilop.c ****     }
+ 1285              		.loc 1 289 0
+ 1286 0138 2046     		mov	r0, r4
+ 1287 013a FFF7FEFF 		bl	free
+ 1288              	.LVL125:
+ 1289 013e 70E7     		b	.L122
+ 1290              	.L142:
+ 1291              		.align	2
+ 1292              	.L141:
+ 1293 0140 00000000 		.word	.LC21
+ 1294 0144 4C000000 		.word	.LC24
+ARM GAS  /tmp/ccUj0n4c.s 			page 30
+
+
+ 1295 0148 00000000 		.word	.LANCHOR0
+ 1296 014c 12000000 		.word	.LC22+18
+ 1297 0150 2C000000 		.word	.LC23
+ 1298 0154 00000000 		.word	EMH_ARG_ILOP_EV
+ 1299 0158 68000000 		.word	.LC27
+ 1300 015c 50000000 		.word	.LC25
+ 1301 0160 00000000 		.word	EMH_ARG_ILOP_CONN
+ 1302 0164 5C000000 		.word	.LC26
+ 1303              	.LBE3:
+ 1304              		.cfi_endproc
+ 1305              	.LFE17:
+ 1307              		.section	.rodata.__PRETTY_FUNCTION__.7464,"a",%progbits
+ 1308              		.align	2
+ 1309              		.set	.LANCHOR0,. + 0
+ 1312              	__PRETTY_FUNCTION__.7464:
+ 1313 0000 656D685F 		.ascii	"emh_ilop_event_handler\000"
+ 1313      696C6F70 
+ 1313      5F657665 
+ 1313      6E745F68 
+ 1313      616E646C 
+ 1314              		.section	.rodata.emh_ilop_awss_press.str1.4,"aMS",%progbits,1
+ 1315              		.align	2
+ 1316              	.LC13:
+ 1317 0000 41542B49 		.ascii	"AT+ILOPAWSPRESS\000"
+ 1317      4C4F5041 
+ 1317      57535052 
+ 1317      45535300 
+ 1318              		.section	.rodata.emh_ilop_awss_start.str1.4,"aMS",%progbits,1
+ 1319              		.align	2
+ 1320              	.LC12:
+ 1321 0000 41542B49 		.ascii	"AT+ILOPAWSSTART\000"
+ 1321      4C4F5041 
+ 1321      57535354 
+ 1321      41525400 
+ 1322              		.section	.rodata.emh_ilop_config.str1.4,"aMS",%progbits,1
+ 1323              		.align	2
+ 1324              	.LC4:
+ 1325 0000 41542B49 		.ascii	"AT+ILOPDM?\000"
+ 1325      4C4F5044 
+ 1325      4D3F00
+ 1326 000b 00       		.space	1
+ 1327              	.LC5:
+ 1328 000c 2B494C4F 		.ascii	"+ILOPDM:%10[^\015]\015\012\000"
+ 1328      50444D3A 
+ 1328      2531305B 
+ 1328      5E0D5D0D 
+ 1328      0A00
+ 1329 001e 0000     		.space	2
+ 1330              	.LC6:
+ 1331 0020 41542B49 		.ascii	"AT+ILOPDM=%s\000"
+ 1331      4C4F5044 
+ 1331      4D3D2573 
+ 1331      00
+ 1332 002d 000000   		.space	3
+ 1333              	.LC7:
+ 1334 0030 41542B49 		.ascii	"AT+ILOPCONFIG?\000"
+ 1334      4C4F5043 
+ARM GAS  /tmp/ccUj0n4c.s 			page 31
+
+
+ 1334      4F4E4649 
+ 1334      473F00
+ 1335 003f 00       		.space	1
+ 1336              	.LC8:
+ 1337 0040 2B494C4F 		.ascii	"+ILOPCONFIG:%10[^\015]\015\012\000"
+ 1337      50434F4E 
+ 1337      4649473A 
+ 1337      2531305B 
+ 1337      5E0D5D0D 
+ 1338              		.section	.rodata.emh_ilop_event_handler.str1.4,"aMS",%progbits,1
+ 1339              		.align	2
+ 1340              	.LC21:
+ 1341 0000 2531305B 		.ascii	"%10[^,],\000"
+ 1341      5E2C5D2C 
+ 1341      00
+ 1342 0009 000000   		.space	3
+ 1343              	.LC22:
+ 1344 000c 7372632F 		.ascii	"src/helper/emhost/emh_ilop.c\000"
+ 1344      68656C70 
+ 1344      65722F65 
+ 1344      6D686F73 
+ 1344      742F656D 
+ 1345 0029 000000   		.space	3
+ 1346              	.LC23:
+ 1347 002c 5B4D583A 		.ascii	"[MX:%s:%s:%4d] **ASSERT** %s\015\012\000"
+ 1347      25733A25 
+ 1347      733A2534 
+ 1347      645D202A 
+ 1347      2A415353 
+ 1348 004b 00       		.space	1
+ 1349              	.LC24:
+ 1350 004c 00       		.ascii	"\000"
+ 1351 004d 000000   		.space	3
+ 1352              	.LC25:
+ 1353 0050 2532305B 		.ascii	"%20[^\015]\015\012\000"
+ 1353      5E0D5D0D 
+ 1353      0A00
+ 1354 005a 0000     		.space	2
+ 1355              	.LC26:
+ 1356 005c 25323536 		.ascii	"%256[^\015]\015\012\000"
+ 1356      5B5E0D5D 
+ 1356      0D0A00
+ 1357 0067 00       		.space	1
+ 1358              	.LC27:
+ 1359 0068 25642C00 		.ascii	"%d,\000"
+ 1360              		.section	.rodata.emh_ilop_get_key.str1.4,"aMS",%progbits,1
+ 1361              		.align	2
+ 1362              	.LC10:
+ 1363 0000 41542B49 		.ascii	"AT+ILOPSET?\000"
+ 1363      4C4F5053 
+ 1363      45543F00 
+ 1364              	.LC11:
+ 1365 000c 2B494C4F 		.ascii	"+ILOPSET:%200[^\015]\015\012\000"
+ 1365      50534554 
+ 1365      3A253230 
+ 1365      305B5E0D 
+ 1365      5D0D0A00 
+ARM GAS  /tmp/ccUj0n4c.s 			page 32
+
+
+ 1366              		.section	.rodata.emh_ilop_get_stauts.str1.4,"aMS",%progbits,1
+ 1367              		.align	2
+ 1368              	.LC15:
+ 1369 0000 41542B49 		.ascii	"AT+ILOPSTATUS?\000"
+ 1369      4C4F5053 
+ 1369      54415455 
+ 1369      533F00
+ 1370 000f 00       		.space	1
+ 1371              	.LC16:
+ 1372 0010 2B494C4F 		.ascii	"+ILOPSTATUS:%20[^\015]\015\012\000"
+ 1372      50535441 
+ 1372      5455533A 
+ 1372      2532305B 
+ 1372      5E0D5D0D 
+ 1373              		.section	.rodata.emh_ilop_send_ica_to_cloud.str1.4,"aMS",%progbits,1
+ 1374              		.align	2
+ 1375              	.LC19:
+ 1376 0000 41542B49 		.ascii	"AT+ILOPSENDICA=%s,%s\000"
+ 1376      4C4F5053 
+ 1376      454E4449 
+ 1376      43413D25 
+ 1376      732C2573 
+ 1377              		.section	.rodata.emh_ilop_send_raw_to_cloud.str1.4,"aMS",%progbits,1
+ 1378              		.align	2
+ 1379              	.LC20:
+ 1380 0000 41542B49 		.ascii	"AT+ILOPSENDRAW=%d\000"
+ 1380      4C4F5053 
+ 1380      454E4452 
+ 1380      41573D25 
+ 1380      6400
+ 1381              		.section	.rodata.emh_ilop_service_start.str1.4,"aMS",%progbits,1
+ 1382              		.align	2
+ 1383              	.LC14:
+ 1384 0000 41542B49 		.ascii	"AT+ILOPSTART\000"
+ 1384      4C4F5053 
+ 1384      54415254 
+ 1384      00
+ 1385              		.section	.rodata.emh_ilop_service_stop.str1.4,"aMS",%progbits,1
+ 1386              		.align	2
+ 1387              	.LC18:
+ 1388 0000 41542B49 		.ascii	"AT+ILOPSTOP\000"
+ 1388      4C4F5053 
+ 1388      544F5000 
+ 1389              		.section	.rodata.emh_ilop_set_key.str1.4,"aMS",%progbits,1
+ 1390              		.align	2
+ 1391              	.LC9:
+ 1392 0000 41542B49 		.ascii	"AT+ILOPSET=%s,%s,%s,%s\000"
+ 1392      4C4F5053 
+ 1392      45543D25 
+ 1392      732C2573 
+ 1392      2C25732C 
+ 1393              		.section	.rodata.emh_ilop_set_tsl.str1.4,"aMS",%progbits,1
+ 1394              		.align	2
+ 1395              	.LC0:
+ 1396 0000 41542B49 		.ascii	"AT+ILOPTSLPRE=%d,%d\000"
+ 1396      4C4F5054 
+ 1396      534C5052 
+ARM GAS  /tmp/ccUj0n4c.s 			page 33
+
+
+ 1396      453D2564 
+ 1396      2C256400 
+ 1397              	.LC1:
+ 1398 0014 4F4B0D0A 		.ascii	"OK\015\012\000"
+ 1398      00
+ 1399 0019 000000   		.space	3
+ 1400              	.LC2:
+ 1401 001c 41542B49 		.ascii	"AT+ILOPTSL=%d\000"
+ 1401      4C4F5054 
+ 1401      534C3D25 
+ 1401      6400
+ 1402 002a 0000     		.space	2
+ 1403              	.LC3:
+ 1404 002c 3E00     		.ascii	">\000"
+ 1405              		.section	.rodata.emh_ilop_unbind.str1.4,"aMS",%progbits,1
+ 1406              		.align	2
+ 1407              	.LC17:
+ 1408 0000 41542B49 		.ascii	"AT+ILOPRESET\000"
+ 1408      4C4F5052 
+ 1408      45534554 
+ 1408      00
+ 1409              		.weak	emh_ev_ilop_set_local_attr
+ 1410              		.weak	emh_ev_ilop_connection
+ 1411              		.weak	emh_ev_unknown
+ 1412              		.text
+ 1413              	.Letext0:
+ 1414              		.file 2 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 1415              		.file 3 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 1416              		.file 4 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 1417              		.file 5 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/lib/gc
+ 1418              		.file 6 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 1419              		.file 7 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 1420              		.file 8 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 1421              		.file 9 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 1422              		.file 10 "src/helper/mx_common.h"
+ 1423              		.file 11 "src/helper/emhost/emh_arg.h"
+ 1424              		.file 12 "src/helper/emhost/emh_api.h"
+ 1425              		.file 13 "src/helper/emhost/ATCmdParser/ATCmdParser.h"
+ 1426              		.file 14 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-n
+ 1427              		.file 15 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-n
+ARM GAS  /tmp/ccUj0n4c.s 			page 34
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 emh_ilop.c
+     /tmp/ccUj0n4c.s:18     .text.emh_ilop_set_tsl:0000000000000000 $t
+     /tmp/ccUj0n4c.s:25     .text.emh_ilop_set_tsl:0000000000000000 emh_ilop_set_tsl
+     /tmp/ccUj0n4c.s:191    .text.emh_ilop_set_tsl:00000000000000c8 $d
+     /tmp/ccUj0n4c.s:200    .text.emh_ilop_config:0000000000000000 $t
+     /tmp/ccUj0n4c.s:207    .text.emh_ilop_config:0000000000000000 emh_ilop_config
+     /tmp/ccUj0n4c.s:401    .text.emh_ilop_config:00000000000000d8 $d
+     /tmp/ccUj0n4c.s:416    .text.emh_ilop_set_key:0000000000000000 $t
+     /tmp/ccUj0n4c.s:423    .text.emh_ilop_set_key:0000000000000000 emh_ilop_set_key
+     /tmp/ccUj0n4c.s:477    .text.emh_ilop_set_key:0000000000000030 $d
+     /tmp/ccUj0n4c.s:483    .text.emh_ilop_get_key:0000000000000000 $t
+     /tmp/ccUj0n4c.s:490    .text.emh_ilop_get_key:0000000000000000 emh_ilop_get_key
+     /tmp/ccUj0n4c.s:592    .text.emh_ilop_get_key:0000000000000074 $d
+     /tmp/ccUj0n4c.s:601    .text.emh_ilop_awss_start:0000000000000000 $t
+     /tmp/ccUj0n4c.s:608    .text.emh_ilop_awss_start:0000000000000000 emh_ilop_awss_start
+     /tmp/ccUj0n4c.s:644    .text.emh_ilop_awss_start:0000000000000024 $d
+     /tmp/ccUj0n4c.s:650    .text.emh_ilop_awss_press:0000000000000000 $t
+     /tmp/ccUj0n4c.s:657    .text.emh_ilop_awss_press:0000000000000000 emh_ilop_awss_press
+     /tmp/ccUj0n4c.s:693    .text.emh_ilop_awss_press:0000000000000024 $d
+     /tmp/ccUj0n4c.s:699    .text.emh_ilop_service_start:0000000000000000 $t
+     /tmp/ccUj0n4c.s:706    .text.emh_ilop_service_start:0000000000000000 emh_ilop_service_start
+     /tmp/ccUj0n4c.s:742    .text.emh_ilop_service_start:0000000000000024 $d
+     /tmp/ccUj0n4c.s:748    .text.emh_ilop_get_stauts:0000000000000000 $t
+     /tmp/ccUj0n4c.s:755    .text.emh_ilop_get_stauts:0000000000000000 emh_ilop_get_stauts
+     /tmp/ccUj0n4c.s:814    .text.emh_ilop_get_stauts:0000000000000038 $d
+     /tmp/ccUj0n4c.s:822    .text.emh_ilop_unbind:0000000000000000 $t
+     /tmp/ccUj0n4c.s:829    .text.emh_ilop_unbind:0000000000000000 emh_ilop_unbind
+     /tmp/ccUj0n4c.s:865    .text.emh_ilop_unbind:0000000000000024 $d
+     /tmp/ccUj0n4c.s:871    .text.emh_ilop_service_stop:0000000000000000 $t
+     /tmp/ccUj0n4c.s:878    .text.emh_ilop_service_stop:0000000000000000 emh_ilop_service_stop
+     /tmp/ccUj0n4c.s:914    .text.emh_ilop_service_stop:0000000000000024 $d
+     /tmp/ccUj0n4c.s:920    .text.emh_ilop_send_ica_to_cloud:0000000000000000 $t
+     /tmp/ccUj0n4c.s:927    .text.emh_ilop_send_ica_to_cloud:0000000000000000 emh_ilop_send_ica_to_cloud
+     /tmp/ccUj0n4c.s:968    .text.emh_ilop_send_ica_to_cloud:0000000000000028 $d
+     /tmp/ccUj0n4c.s:974    .text.emh_ilop_send_raw_to_cloud:0000000000000000 $t
+     /tmp/ccUj0n4c.s:981    .text.emh_ilop_send_raw_to_cloud:0000000000000000 emh_ilop_send_raw_to_cloud
+     /tmp/ccUj0n4c.s:1042   .text.emh_ilop_send_raw_to_cloud:0000000000000048 $d
+     /tmp/ccUj0n4c.s:1049   .text.emh_ilop_event_handler:0000000000000000 $t
+     /tmp/ccUj0n4c.s:1056   .text.emh_ilop_event_handler:0000000000000000 emh_ilop_event_handler
+     /tmp/ccUj0n4c.s:1293   .text.emh_ilop_event_handler:0000000000000140 $d
+     /tmp/ccUj0n4c.s:1308   .rodata.__PRETTY_FUNCTION__.7464:0000000000000000 $d
+     /tmp/ccUj0n4c.s:1312   .rodata.__PRETTY_FUNCTION__.7464:0000000000000000 __PRETTY_FUNCTION__.7464
+     /tmp/ccUj0n4c.s:1315   .rodata.emh_ilop_awss_press.str1.4:0000000000000000 $d
+     /tmp/ccUj0n4c.s:1319   .rodata.emh_ilop_awss_start.str1.4:0000000000000000 $d
+     /tmp/ccUj0n4c.s:1323   .rodata.emh_ilop_config.str1.4:0000000000000000 $d
+     /tmp/ccUj0n4c.s:1339   .rodata.emh_ilop_event_handler.str1.4:0000000000000000 $d
+     /tmp/ccUj0n4c.s:1343   .rodata.emh_ilop_event_handler.str1.4:000000000000000c .LC22
+     /tmp/ccUj0n4c.s:1361   .rodata.emh_ilop_get_key.str1.4:0000000000000000 $d
+     /tmp/ccUj0n4c.s:1367   .rodata.emh_ilop_get_stauts.str1.4:0000000000000000 $d
+     /tmp/ccUj0n4c.s:1374   .rodata.emh_ilop_send_ica_to_cloud.str1.4:0000000000000000 $d
+     /tmp/ccUj0n4c.s:1378   .rodata.emh_ilop_send_raw_to_cloud.str1.4:0000000000000000 $d
+     /tmp/ccUj0n4c.s:1382   .rodata.emh_ilop_service_start.str1.4:0000000000000000 $d
+     /tmp/ccUj0n4c.s:1386   .rodata.emh_ilop_service_stop.str1.4:0000000000000000 $d
+     /tmp/ccUj0n4c.s:1390   .rodata.emh_ilop_set_key.str1.4:0000000000000000 $d
+     /tmp/ccUj0n4c.s:1394   .rodata.emh_ilop_set_tsl.str1.4:0000000000000000 $d
+     /tmp/ccUj0n4c.s:1406   .rodata.emh_ilop_unbind.str1.4:0000000000000000 $d
+ARM GAS  /tmp/ccUj0n4c.s 			page 35
+
+
+
+UNDEFINED SYMBOLS
+ATCmdParser_send
+ATCmdParser_recv
+ATCmdParser_write
+emh_arg_for_arg
+emh_arg_for_type
+EMH_ARG_ILOP_DM
+EMH_ARG_ILOP_CONFIG
+ATCmdParser_analyse_args
+strncpy
+EMH_ARG_ILOP_STATUS
+printf
+emh_ev_unknown
+emh_ev_ilop_connection
+strlen
+emh_ev_ilop_set_local_attr
+malloc
+ATCmdParser_read
+free
+EMH_ARG_ILOP_EV
+EMH_ARG_ILOP_CONN

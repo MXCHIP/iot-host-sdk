@@ -1,0 +1,2861 @@
+ARM GAS  /tmp/ccUDA1XO.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"mx_cli.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.lookup_command,"ax",%progbits
+  18              		.align	1
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  24              	lookup_command:
+  25              	.LFB128:
+  26              		.file 1 "src/helper/cli/mx_cli.c"
+   1:src/helper/cli/mx_cli.c **** /**
+   2:src/helper/cli/mx_cli.c ****  *  UNPUBLISHED PROPRIETARY SOURCE CODE
+   3:src/helper/cli/mx_cli.c ****  *  Copyright (c) 2016 MXCHIP Inc.
+   4:src/helper/cli/mx_cli.c ****  *
+   5:src/helper/cli/mx_cli.c ****  *  The contents of this file may not be disclosed to third parties, copied or
+   6:src/helper/cli/mx_cli.c ****  *  duplicated in any form, in whole or in part, without the prior written
+   7:src/helper/cli/mx_cli.c ****  *  permission of MXCHIP Corporation.
+   8:src/helper/cli/mx_cli.c ****  *
+   9:src/helper/cli/mx_cli.c ****  */
+  10:src/helper/cli/mx_cli.c **** 
+  11:src/helper/cli/mx_cli.c **** #include "mx_cli.h"
+  12:src/helper/cli/mx_cli.c **** #include "mx_common.h"
+  13:src/helper/cli/mx_cli.c **** #include "mx_hal.h"
+  14:src/helper/cli/mx_cli.c **** #include "stdarg.h"
+  15:src/helper/cli/mx_cli.c **** 
+  16:src/helper/cli/mx_cli.c **** #ifdef MX_CLI_ENABLE
+  17:src/helper/cli/mx_cli.c **** 
+  18:src/helper/cli/mx_cli.c **** /// CLI ///
+  19:src/helper/cli/mx_cli.c **** #define RX_WAIT 0xFFFFFFFF
+  20:src/helper/cli/mx_cli.c **** #define SEND_WAIT 0xFFFFFFFF
+  21:src/helper/cli/mx_cli.c **** 
+  22:src/helper/cli/mx_cli.c **** #define RET_CHAR '\n'
+  23:src/helper/cli/mx_cli.c **** #define END_CHAR '\r'
+  24:src/helper/cli/mx_cli.c **** #define PROMPT "\r\n# "
+  25:src/helper/cli/mx_cli.c **** #define EXIT_MSG "exit"
+  26:src/helper/cli/mx_cli.c **** #define NUM_BUFFERS 1
+  27:src/helper/cli/mx_cli.c **** #define MAX_COMMANDS 50
+  28:src/helper/cli/mx_cli.c **** #define INBUF_SIZE 80
+  29:src/helper/cli/mx_cli.c **** #define OUTBUF_SIZE 1024
+  30:src/helper/cli/mx_cli.c **** 
+  31:src/helper/cli/mx_cli.c **** struct cli_st {
+  32:src/helper/cli/mx_cli.c ****     int initialized;
+ARM GAS  /tmp/ccUDA1XO.s 			page 2
+
+
+  33:src/helper/cli/mx_cli.c **** 
+  34:src/helper/cli/mx_cli.c ****     unsigned int bp; /* buffer pointer */
+  35:src/helper/cli/mx_cli.c ****     char inbuf[INBUF_SIZE];
+  36:src/helper/cli/mx_cli.c ****     char outbuf[OUTBUF_SIZE];
+  37:src/helper/cli/mx_cli.c ****     const struct cli_command* commands[MAX_COMMANDS];
+  38:src/helper/cli/mx_cli.c ****     unsigned int num_commands;
+  39:src/helper/cli/mx_cli.c ****     int echo_disabled;
+  40:src/helper/cli/mx_cli.c **** };
+  41:src/helper/cli/mx_cli.c **** 
+  42:src/helper/cli/mx_cli.c **** static struct cli_st pCli;
+  43:src/helper/cli/mx_cli.c **** 
+  44:src/helper/cli/mx_cli.c **** static int cli_putstr(const char* msg);
+  45:src/helper/cli/mx_cli.c **** 
+  46:src/helper/cli/mx_cli.c **** /* Find the command 'name' in the cli commands table.
+  47:src/helper/cli/mx_cli.c ****  * If len is 0 then full match will be performed else upto len bytes.
+  48:src/helper/cli/mx_cli.c ****  * Returns: a pointer to the corresponding cli_command struct or NULL.
+  49:src/helper/cli/mx_cli.c ****  */
+  50:src/helper/cli/mx_cli.c **** static const struct cli_command* lookup_command(char* name, int len)
+  51:src/helper/cli/mx_cli.c **** {
+  27              		.loc 1 51 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              	.LVL0:
+  32 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 24
+  35              		.cfi_offset 4, -24
+  36              		.cfi_offset 5, -20
+  37              		.cfi_offset 6, -16
+  38              		.cfi_offset 7, -12
+  39              		.cfi_offset 8, -8
+  40              		.cfi_offset 14, -4
+  41 0004 8046     		mov	r8, r0
+  42 0006 0F46     		mov	r7, r1
+  43              	.LVL1:
+  52:src/helper/cli/mx_cli.c ****     int i = 0;
+  53:src/helper/cli/mx_cli.c ****     int n = 0;
+  44              		.loc 1 53 0
+  45 0008 0025     		movs	r5, #0
+  52:src/helper/cli/mx_cli.c ****     int i = 0;
+  46              		.loc 1 52 0
+  47 000a 2C46     		mov	r4, r5
+  54:src/helper/cli/mx_cli.c **** 
+  55:src/helper/cli/mx_cli.c ****     while (i < MAX_COMMANDS && n < pCli.num_commands) {
+  48              		.loc 1 55 0
+  49 000c 07E0     		b	.L2
+  50              	.LVL2:
+  51              	.L12:
+  56:src/helper/cli/mx_cli.c ****         if (pCli.commands[i] -> name == NULL) {
+  57:src/helper/cli/mx_cli.c ****             i++;
+  52              		.loc 1 57 0
+  53 000e 0134     		adds	r4, r4, #1
+  54              	.LVL3:
+  58:src/helper/cli/mx_cli.c ****             continue;
+  55              		.loc 1 58 0
+  56 0010 05E0     		b	.L2
+ARM GAS  /tmp/ccUDA1XO.s 			page 3
+
+
+  57              	.L5:
+  59:src/helper/cli/mx_cli.c ****         }
+  60:src/helper/cli/mx_cli.c ****         /* See if partial or full match is expected */
+  61:src/helper/cli/mx_cli.c ****         if (len != 0) {
+  62:src/helper/cli/mx_cli.c ****             if (!strncmp(pCli.commands[i] -> name, name, len))
+  63:src/helper/cli/mx_cli.c ****                 return pCli.commands[i];
+  64:src/helper/cli/mx_cli.c ****         } else {
+  65:src/helper/cli/mx_cli.c ****             if (!strcmp(pCli.commands[i] -> name, name))
+  58              		.loc 1 65 0
+  59 0012 4146     		mov	r1, r8
+  60 0014 FFF7FEFF 		bl	strcmp
+  61              	.LVL4:
+  62 0018 D0B1     		cbz	r0, .L1
+  63              	.L7:
+  66:src/helper/cli/mx_cli.c ****                 return pCli.commands[i];
+  67:src/helper/cli/mx_cli.c ****         }
+  68:src/helper/cli/mx_cli.c **** 
+  69:src/helper/cli/mx_cli.c ****         i++;
+  64              		.loc 1 69 0
+  65 001a 0134     		adds	r4, r4, #1
+  66              	.LVL5:
+  70:src/helper/cli/mx_cli.c ****         n++;
+  67              		.loc 1 70 0
+  68 001c 0135     		adds	r5, r5, #1
+  69              	.LVL6:
+  70              	.L2:
+  55:src/helper/cli/mx_cli.c ****         if (pCli.commands[i] -> name == NULL) {
+  71              		.loc 1 55 0
+  72 001e 312C     		cmp	r4, #49
+  73 0020 19DC     		bgt	.L9
+  55:src/helper/cli/mx_cli.c ****         if (pCli.commands[i] -> name == NULL) {
+  74              		.loc 1 55 0 is_stmt 0 discriminator 1
+  75 0022 0E4B     		ldr	r3, .L13
+  76 0024 D3F82035 		ldr	r3, [r3, #1312]
+  77 0028 AB42     		cmp	r3, r5
+  78 002a 10D9     		bls	.L11
+  56:src/helper/cli/mx_cli.c ****             i++;
+  79              		.loc 1 56 0 is_stmt 1
+  80 002c 04F58B73 		add	r3, r4, #278
+  81 0030 0A4A     		ldr	r2, .L13
+  82 0032 52F82360 		ldr	r6, [r2, r3, lsl #2]
+  83 0036 3068     		ldr	r0, [r6]
+  84 0038 0028     		cmp	r0, #0
+  85 003a E8D0     		beq	.L12
+  61:src/helper/cli/mx_cli.c ****             if (!strncmp(pCli.commands[i] -> name, name, len))
+  86              		.loc 1 61 0
+  87 003c 002F     		cmp	r7, #0
+  88 003e E8D0     		beq	.L5
+  62:src/helper/cli/mx_cli.c ****                 return pCli.commands[i];
+  89              		.loc 1 62 0
+  90 0040 3A46     		mov	r2, r7
+  91 0042 4146     		mov	r1, r8
+  92 0044 FFF7FEFF 		bl	strncmp
+  93              	.LVL7:
+  94 0048 0028     		cmp	r0, #0
+  95 004a E6D1     		bne	.L7
+  96 004c 00E0     		b	.L1
+ARM GAS  /tmp/ccUDA1XO.s 			page 4
+
+
+  97              	.L11:
+  71:src/helper/cli/mx_cli.c ****     }
+  72:src/helper/cli/mx_cli.c **** 
+  73:src/helper/cli/mx_cli.c ****     return NULL;
+  98              		.loc 1 73 0
+  99 004e 0026     		movs	r6, #0
+ 100              	.L1:
+  74:src/helper/cli/mx_cli.c **** }
+ 101              		.loc 1 74 0
+ 102 0050 3046     		mov	r0, r6
+ 103 0052 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 104              	.LVL8:
+ 105              	.L9:
+  73:src/helper/cli/mx_cli.c **** }
+ 106              		.loc 1 73 0
+ 107 0056 0026     		movs	r6, #0
+ 108 0058 FAE7     		b	.L1
+ 109              	.L14:
+ 110 005a 00BF     		.align	2
+ 111              	.L13:
+ 112 005c 00000000 		.word	.LANCHOR0
+ 113              		.cfi_endproc
+ 114              	.LFE128:
+ 116              		.section	.text.cli_putstr,"ax",%progbits
+ 117              		.align	1
+ 118              		.syntax unified
+ 119              		.thumb
+ 120              		.thumb_func
+ 121              		.fpu fpv4-sp-d16
+ 123              	cli_putstr:
+ 124              	.LFB142:
+  75:src/helper/cli/mx_cli.c **** 
+  76:src/helper/cli/mx_cli.c **** /* Parse input line and locate arguments (if any), keeping count of the number
+  77:src/helper/cli/mx_cli.c ****  * of arguments and their locations.  Look up and call the corresponding cli
+  78:src/helper/cli/mx_cli.c ****  * function if one is found and pass it the argv array.
+  79:src/helper/cli/mx_cli.c ****  *
+  80:src/helper/cli/mx_cli.c ****  * Returns: 0 on success: the input line contained at least a function name and
+  81:src/helper/cli/mx_cli.c ****  *          that function exists and was called.
+  82:src/helper/cli/mx_cli.c ****  *          1 on lookup failure: there is no corresponding function for the
+  83:src/helper/cli/mx_cli.c ****  *          input line.
+  84:src/helper/cli/mx_cli.c ****  *          2 on invalid syntax: the arguments list couldn't be parsed
+  85:src/helper/cli/mx_cli.c ****  */
+  86:src/helper/cli/mx_cli.c **** static int handle_input(char* inbuf)
+  87:src/helper/cli/mx_cli.c **** {
+  88:src/helper/cli/mx_cli.c ****     struct {
+  89:src/helper/cli/mx_cli.c ****         unsigned inArg : 1;
+  90:src/helper/cli/mx_cli.c ****         unsigned inQuote : 1;
+  91:src/helper/cli/mx_cli.c ****         unsigned done : 1;
+  92:src/helper/cli/mx_cli.c ****     } stat;
+  93:src/helper/cli/mx_cli.c ****     static char* argv[16];
+  94:src/helper/cli/mx_cli.c ****     int argc = 0;
+  95:src/helper/cli/mx_cli.c ****     int i = 0;
+  96:src/helper/cli/mx_cli.c ****     const struct cli_command* command = NULL;
+  97:src/helper/cli/mx_cli.c ****     const char* p;
+  98:src/helper/cli/mx_cli.c **** 
+  99:src/helper/cli/mx_cli.c ****     memset((void*)&argv, 0, sizeof(argv));
+ 100:src/helper/cli/mx_cli.c ****     memset(&stat, 0, sizeof(stat));
+ARM GAS  /tmp/ccUDA1XO.s 			page 5
+
+
+ 101:src/helper/cli/mx_cli.c **** 
+ 102:src/helper/cli/mx_cli.c ****     do {
+ 103:src/helper/cli/mx_cli.c ****         switch (inbuf[i]) {
+ 104:src/helper/cli/mx_cli.c ****         case '\0':
+ 105:src/helper/cli/mx_cli.c ****             if (stat.inQuote)
+ 106:src/helper/cli/mx_cli.c ****                 return 2;
+ 107:src/helper/cli/mx_cli.c ****             stat.done = 1;
+ 108:src/helper/cli/mx_cli.c ****             break;
+ 109:src/helper/cli/mx_cli.c **** 
+ 110:src/helper/cli/mx_cli.c ****         case '"':
+ 111:src/helper/cli/mx_cli.c ****             if (i > 0 && inbuf[i - 1] == '\\' && stat.inArg) {
+ 112:src/helper/cli/mx_cli.c ****                 memcpy(&inbuf[i - 1], &inbuf[i], strlen(&inbuf[i]) + 1);
+ 113:src/helper/cli/mx_cli.c ****                 --i;
+ 114:src/helper/cli/mx_cli.c ****                 break;
+ 115:src/helper/cli/mx_cli.c ****             }
+ 116:src/helper/cli/mx_cli.c ****             if (!stat.inQuote && stat.inArg)
+ 117:src/helper/cli/mx_cli.c ****                 break;
+ 118:src/helper/cli/mx_cli.c ****             if (stat.inQuote && !stat.inArg)
+ 119:src/helper/cli/mx_cli.c ****                 return 2;
+ 120:src/helper/cli/mx_cli.c **** 
+ 121:src/helper/cli/mx_cli.c ****             if (!stat.inQuote && !stat.inArg) {
+ 122:src/helper/cli/mx_cli.c ****                 stat.inArg = 1;
+ 123:src/helper/cli/mx_cli.c ****                 stat.inQuote = 1;
+ 124:src/helper/cli/mx_cli.c ****                 argc++;
+ 125:src/helper/cli/mx_cli.c ****                 argv[argc - 1] = &inbuf[i + 1];
+ 126:src/helper/cli/mx_cli.c ****             } else if (stat.inQuote && stat.inArg) {
+ 127:src/helper/cli/mx_cli.c ****                 stat.inArg = 0;
+ 128:src/helper/cli/mx_cli.c ****                 stat.inQuote = 0;
+ 129:src/helper/cli/mx_cli.c ****                 inbuf[i] = '\0';
+ 130:src/helper/cli/mx_cli.c ****             }
+ 131:src/helper/cli/mx_cli.c ****             break;
+ 132:src/helper/cli/mx_cli.c **** 
+ 133:src/helper/cli/mx_cli.c ****         case ' ':
+ 134:src/helper/cli/mx_cli.c ****             if (i > 0 && inbuf[i - 1] == '\\' && stat.inArg) {
+ 135:src/helper/cli/mx_cli.c ****                 memcpy(&inbuf[i - 1], &inbuf[i], strlen(&inbuf[i]) + 1);
+ 136:src/helper/cli/mx_cli.c ****                 --i;
+ 137:src/helper/cli/mx_cli.c ****                 break;
+ 138:src/helper/cli/mx_cli.c ****             }
+ 139:src/helper/cli/mx_cli.c ****             if (!stat.inQuote && stat.inArg) {
+ 140:src/helper/cli/mx_cli.c ****                 stat.inArg = 0;
+ 141:src/helper/cli/mx_cli.c ****                 inbuf[i] = '\0';
+ 142:src/helper/cli/mx_cli.c ****             }
+ 143:src/helper/cli/mx_cli.c ****             break;
+ 144:src/helper/cli/mx_cli.c **** 
+ 145:src/helper/cli/mx_cli.c ****         default:
+ 146:src/helper/cli/mx_cli.c ****             if (!stat.inArg) {
+ 147:src/helper/cli/mx_cli.c ****                 stat.inArg = 1;
+ 148:src/helper/cli/mx_cli.c ****                 argc++;
+ 149:src/helper/cli/mx_cli.c ****                 argv[argc - 1] = &inbuf[i];
+ 150:src/helper/cli/mx_cli.c ****             }
+ 151:src/helper/cli/mx_cli.c ****             break;
+ 152:src/helper/cli/mx_cli.c ****         }
+ 153:src/helper/cli/mx_cli.c ****     } while (!stat.done && ++i < INBUF_SIZE);
+ 154:src/helper/cli/mx_cli.c **** 
+ 155:src/helper/cli/mx_cli.c ****     if (stat.inQuote)
+ 156:src/helper/cli/mx_cli.c ****         return 2;
+ 157:src/helper/cli/mx_cli.c **** 
+ARM GAS  /tmp/ccUDA1XO.s 			page 6
+
+
+ 158:src/helper/cli/mx_cli.c ****     if (argc < 1)
+ 159:src/helper/cli/mx_cli.c ****         return 0;
+ 160:src/helper/cli/mx_cli.c **** 
+ 161:src/helper/cli/mx_cli.c ****     if (!pCli.echo_disabled)
+ 162:src/helper/cli/mx_cli.c ****         cli_printf("\r\n");
+ 163:src/helper/cli/mx_cli.c **** 
+ 164:src/helper/cli/mx_cli.c ****     /*
+ 165:src/helper/cli/mx_cli.c ****    * Some comamands can allow extensions like foo.a, foo.b and hence
+ 166:src/helper/cli/mx_cli.c ****    * compare commands before first dot.
+ 167:src/helper/cli/mx_cli.c ****    */
+ 168:src/helper/cli/mx_cli.c ****     i = ((p = strchr(argv[0], '.')) == NULL) ? 0 : (p - argv[0]);
+ 169:src/helper/cli/mx_cli.c ****     command = lookup_command(argv[0], i);
+ 170:src/helper/cli/mx_cli.c ****     if (command == NULL)
+ 171:src/helper/cli/mx_cli.c ****         return 1;
+ 172:src/helper/cli/mx_cli.c **** 
+ 173:src/helper/cli/mx_cli.c ****     memset(pCli.outbuf, 0, OUTBUF_SIZE);
+ 174:src/helper/cli/mx_cli.c ****     cli_putstr("\r\n");
+ 175:src/helper/cli/mx_cli.c ****     command->function(pCli.outbuf, OUTBUF_SIZE, argc, argv);
+ 176:src/helper/cli/mx_cli.c ****     cli_putstr(pCli.outbuf);
+ 177:src/helper/cli/mx_cli.c ****     return 0;
+ 178:src/helper/cli/mx_cli.c **** }
+ 179:src/helper/cli/mx_cli.c **** 
+ 180:src/helper/cli/mx_cli.c **** /* Perform basic tab-completion on the input buffer by string-matching the
+ 181:src/helper/cli/mx_cli.c ****  * current input line against the cli functions table.  The current input line
+ 182:src/helper/cli/mx_cli.c ****  * is assumed to be NULL-terminated. */
+ 183:src/helper/cli/mx_cli.c **** static void tab_complete(char* inbuf, unsigned int* bp)
+ 184:src/helper/cli/mx_cli.c **** {
+ 185:src/helper/cli/mx_cli.c ****     int i, n, m;
+ 186:src/helper/cli/mx_cli.c ****     const char* fm = NULL;
+ 187:src/helper/cli/mx_cli.c **** 
+ 188:src/helper/cli/mx_cli.c ****     cli_printf("\r\n");
+ 189:src/helper/cli/mx_cli.c **** 
+ 190:src/helper/cli/mx_cli.c ****     /* show matching commands */
+ 191:src/helper/cli/mx_cli.c ****     for (i = 0, n = 0, m = 0; i < MAX_COMMANDS && n < pCli.num_commands; i++) {
+ 192:src/helper/cli/mx_cli.c ****         if (pCli.commands[i]->name != NULL) {
+ 193:src/helper/cli/mx_cli.c ****             if (!strncmp(inbuf, pCli.commands[i]->name, *bp)) {
+ 194:src/helper/cli/mx_cli.c ****                 m++;
+ 195:src/helper/cli/mx_cli.c ****                 if (m == 1)
+ 196:src/helper/cli/mx_cli.c ****                     fm = pCli.commands[i]->name;
+ 197:src/helper/cli/mx_cli.c ****                 else if (m == 2)
+ 198:src/helper/cli/mx_cli.c ****                     cli_printf(" % s % s ", fm, pCli.commands[i]->name);
+ 199:src/helper/cli/mx_cli.c ****                 else
+ 200:src/helper/cli/mx_cli.c ****                     cli_printf(" % s ", pCli.commands[i]->name);
+ 201:src/helper/cli/mx_cli.c ****             }
+ 202:src/helper/cli/mx_cli.c ****             n++;
+ 203:src/helper/cli/mx_cli.c ****         }
+ 204:src/helper/cli/mx_cli.c ****     }
+ 205:src/helper/cli/mx_cli.c **** 
+ 206:src/helper/cli/mx_cli.c ****     /* there's only one match, so complete the line */
+ 207:src/helper/cli/mx_cli.c ****     if (m == 1 && fm) {
+ 208:src/helper/cli/mx_cli.c ****         n = strlen(fm) - *bp;
+ 209:src/helper/cli/mx_cli.c ****         if (*bp + n < INBUF_SIZE) {
+ 210:src/helper/cli/mx_cli.c ****             memcpy(inbuf + *bp, fm + *bp, n);
+ 211:src/helper/cli/mx_cli.c ****             *bp += n;
+ 212:src/helper/cli/mx_cli.c ****             inbuf[(*bp)++] = ' ';
+ 213:src/helper/cli/mx_cli.c ****             inbuf[*bp] = '\0';
+ 214:src/helper/cli/mx_cli.c ****         }
+ARM GAS  /tmp/ccUDA1XO.s 			page 7
+
+
+ 215:src/helper/cli/mx_cli.c ****     }
+ 216:src/helper/cli/mx_cli.c **** 
+ 217:src/helper/cli/mx_cli.c ****     /* just redraw input line */
+ 218:src/helper/cli/mx_cli.c ****     cli_printf(" % s % s", PROMPT, inbuf);
+ 219:src/helper/cli/mx_cli.c **** }
+ 220:src/helper/cli/mx_cli.c **** 
+ 221:src/helper/cli/mx_cli.c **** /* Get an input line.
+ 222:src/helper/cli/mx_cli.c ****  *
+ 223:src/helper/cli/mx_cli.c ****  * Returns: 1 if there is input, 0 if the line should be ignored. */
+ 224:src/helper/cli/mx_cli.c **** static int get_input(char* inbuf, unsigned int* bp)
+ 225:src/helper/cli/mx_cli.c **** {
+ 226:src/helper/cli/mx_cli.c ****     if (inbuf == NULL) {
+ 227:src/helper/cli/mx_cli.c ****         return 0;
+ 228:src/helper/cli/mx_cli.c ****     }
+ 229:src/helper/cli/mx_cli.c ****     while (cli_getchar(&inbuf[*bp]) == 1) {
+ 230:src/helper/cli/mx_cli.c ****         if (inbuf[*bp] == RET_CHAR)
+ 231:src/helper/cli/mx_cli.c ****             continue;
+ 232:src/helper/cli/mx_cli.c ****         if (inbuf[*bp] == END_CHAR) { /* end of input line */
+ 233:src/helper/cli/mx_cli.c ****             inbuf[*bp] = '\0';
+ 234:src/helper/cli/mx_cli.c ****             *bp = 0;
+ 235:src/helper/cli/mx_cli.c ****             return 1;
+ 236:src/helper/cli/mx_cli.c ****         }
+ 237:src/helper/cli/mx_cli.c **** 
+ 238:src/helper/cli/mx_cli.c ****         if ((inbuf[*bp] == 0x08) || /* backspace */
+ 239:src/helper/cli/mx_cli.c ****             (inbuf[*bp] == 0x7f)) { /* DEL */
+ 240:src/helper/cli/mx_cli.c ****             if (*bp > 0) {
+ 241:src/helper/cli/mx_cli.c ****                 (*bp)--;
+ 242:src/helper/cli/mx_cli.c ****                 if (!pCli.echo_disabled)
+ 243:src/helper/cli/mx_cli.c ****                     cli_printf("%c%c", 0x08, 0x08);
+ 244:src/helper/cli/mx_cli.c ****             }
+ 245:src/helper/cli/mx_cli.c ****             continue;
+ 246:src/helper/cli/mx_cli.c ****         }
+ 247:src/helper/cli/mx_cli.c **** 
+ 248:src/helper/cli/mx_cli.c ****         if (inbuf[*bp] == '\t') {
+ 249:src/helper/cli/mx_cli.c ****             inbuf[*bp] = '\0';
+ 250:src/helper/cli/mx_cli.c ****             tab_complete(inbuf, bp);
+ 251:src/helper/cli/mx_cli.c ****             continue;
+ 252:src/helper/cli/mx_cli.c ****         }
+ 253:src/helper/cli/mx_cli.c **** 
+ 254:src/helper/cli/mx_cli.c ****         if (!pCli.echo_disabled)
+ 255:src/helper/cli/mx_cli.c ****             cli_printf("%c", inbuf[*bp]);
+ 256:src/helper/cli/mx_cli.c **** 
+ 257:src/helper/cli/mx_cli.c ****         (*bp)++;
+ 258:src/helper/cli/mx_cli.c ****         if (*bp >= INBUF_SIZE) {
+ 259:src/helper/cli/mx_cli.c ****             cli_printf("Error:input buffer overflow\r\n");
+ 260:src/helper/cli/mx_cli.c ****             cli_printf(PROMPT);
+ 261:src/helper/cli/mx_cli.c ****             *bp = 0;
+ 262:src/helper/cli/mx_cli.c ****             return 0;
+ 263:src/helper/cli/mx_cli.c ****         }
+ 264:src/helper/cli/mx_cli.c ****     }
+ 265:src/helper/cli/mx_cli.c **** 
+ 266:src/helper/cli/mx_cli.c ****     return 0;
+ 267:src/helper/cli/mx_cli.c **** }
+ 268:src/helper/cli/mx_cli.c **** 
+ 269:src/helper/cli/mx_cli.c **** /* Print out a bad command string, including a hex
+ 270:src/helper/cli/mx_cli.c ****  * representation of non-printable characters.
+ 271:src/helper/cli/mx_cli.c ****  * Non-printable characters show as "\0xXX".
+ARM GAS  /tmp/ccUDA1XO.s 			page 8
+
+
+ 272:src/helper/cli/mx_cli.c ****  */
+ 273:src/helper/cli/mx_cli.c **** static void print_bad_command(char* cmd_string)
+ 274:src/helper/cli/mx_cli.c **** {
+ 275:src/helper/cli/mx_cli.c ****     if (cmd_string != NULL) {
+ 276:src/helper/cli/mx_cli.c ****         char* c = cmd_string;
+ 277:src/helper/cli/mx_cli.c ****         cli_printf("command '");
+ 278:src/helper/cli/mx_cli.c ****         while (*c != '\0') {
+ 279:src/helper/cli/mx_cli.c ****             if (isprint(*c)) {
+ 280:src/helper/cli/mx_cli.c ****                 cli_printf("%c", *c);
+ 281:src/helper/cli/mx_cli.c ****             } else {
+ 282:src/helper/cli/mx_cli.c ****                 cli_printf("\\0x%x", *c);
+ 283:src/helper/cli/mx_cli.c ****             }
+ 284:src/helper/cli/mx_cli.c ****             ++c;
+ 285:src/helper/cli/mx_cli.c ****         }
+ 286:src/helper/cli/mx_cli.c ****         cli_printf("' not found\r\n");
+ 287:src/helper/cli/mx_cli.c ****     }
+ 288:src/helper/cli/mx_cli.c **** }
+ 289:src/helper/cli/mx_cli.c **** 
+ 290:src/helper/cli/mx_cli.c **** static void help_command(char* pcWriteBuffer, int xWriteBufferLen, int argc,
+ 291:src/helper/cli/mx_cli.c ****     char** argv);
+ 292:src/helper/cli/mx_cli.c **** 
+ 293:src/helper/cli/mx_cli.c **** /*
+ 294:src/helper/cli/mx_cli.c ****  *  Command buffer API
+ 295:src/helper/cli/mx_cli.c ****  */
+ 296:src/helper/cli/mx_cli.c **** 
+ 297:src/helper/cli/mx_cli.c **** static void echo_cmd_handler(char* pcWriteBuffer, int xWriteBufferLen, int argc,
+ 298:src/helper/cli/mx_cli.c ****     char** argv)
+ 299:src/helper/cli/mx_cli.c **** {
+ 300:src/helper/cli/mx_cli.c ****     if (argc == 1) {
+ 301:src/helper/cli/mx_cli.c ****         cmd_printf("Usage:echo on/off. Echo is currently %s\r\n", 
+ 302:src/helper/cli/mx_cli.c ****         pCli.echo_disabled ? "Disabled" : "Enabled");
+ 303:src/helper/cli/mx_cli.c ****         return;
+ 304:src/helper/cli/mx_cli.c ****     }
+ 305:src/helper/cli/mx_cli.c **** 
+ 306:src/helper/cli/mx_cli.c ****     if (!strcasecmp(argv[1], "on")) {
+ 307:src/helper/cli/mx_cli.c ****         cmd_printf("Enable echo\r\n");
+ 308:src/helper/cli/mx_cli.c ****         pCli.echo_disabled = 0;
+ 309:src/helper/cli/mx_cli.c ****     } else if (!strcasecmp(argv[1], "off")) {
+ 310:src/helper/cli/mx_cli.c ****         cmd_printf("Disable echo\r\n");
+ 311:src/helper/cli/mx_cli.c ****         pCli.echo_disabled = 1;
+ 312:src/helper/cli/mx_cli.c ****     }
+ 313:src/helper/cli/mx_cli.c **** }
+ 314:src/helper/cli/mx_cli.c **** 
+ 315:src/helper/cli/mx_cli.c **** static const struct cli_command built_ins[] = {
+ 316:src/helper/cli/mx_cli.c ****     { "help", NULL, help_command }, 
+ 317:src/helper/cli/mx_cli.c ****     { "echo", NULL, echo_cmd_handler },
+ 318:src/helper/cli/mx_cli.c ****     // others
+ 319:src/helper/cli/mx_cli.c **** };
+ 320:src/helper/cli/mx_cli.c **** 
+ 321:src/helper/cli/mx_cli.c **** /* Built-in "help" command: prints all registered commands and their help
+ 322:src/helper/cli/mx_cli.c ****  * text string, if any. */
+ 323:src/helper/cli/mx_cli.c **** static void help_command(char* pcWriteBuffer, int xWriteBufferLen, int argc,
+ 324:src/helper/cli/mx_cli.c ****     char** argv)
+ 325:src/helper/cli/mx_cli.c **** {
+ 326:src/helper/cli/mx_cli.c ****     int i, n;
+ 327:src/helper/cli/mx_cli.c ****     uint32_t build_in_count = sizeof(built_ins) / sizeof(struct cli_command);
+ 328:src/helper/cli/mx_cli.c **** 
+ARM GAS  /tmp/ccUDA1XO.s 			page 9
+
+
+ 329:src/helper/cli/mx_cli.c ****     cmd_printf(" ==== Build - in Commands ==== \r\n");
+ 330:src/helper/cli/mx_cli.c ****     for (i = 0, n = 0; i < MAX_COMMANDS && n < pCli.num_commands; i++) {
+ 331:src/helper/cli/mx_cli.c ****         if (pCli.commands[i]->name) {
+ 332:src/helper/cli/mx_cli.c ****             cmd_printf(" %s: %s\r\n", pCli.commands[i]->name,
+ 333:src/helper/cli/mx_cli.c ****                 pCli.commands[i]->help ? pCli.commands[i]->help : "");
+ 334:src/helper/cli/mx_cli.c ****             n++;
+ 335:src/helper/cli/mx_cli.c ****             if (n == build_in_count) {
+ 336:src/helper/cli/mx_cli.c ****                 cmd_printf("\r\n ==== User Commands ==== \r\n");
+ 337:src/helper/cli/mx_cli.c ****             }
+ 338:src/helper/cli/mx_cli.c ****         }
+ 339:src/helper/cli/mx_cli.c ****     }
+ 340:src/helper/cli/mx_cli.c **** }
+ 341:src/helper/cli/mx_cli.c **** 
+ 342:src/helper/cli/mx_cli.c **** int cli_register_command(const struct cli_command* command)
+ 343:src/helper/cli/mx_cli.c **** {
+ 344:src/helper/cli/mx_cli.c ****     int i;
+ 345:src/helper/cli/mx_cli.c ****     if (!command->name || !command->function)
+ 346:src/helper/cli/mx_cli.c ****         return 1;
+ 347:src/helper/cli/mx_cli.c **** 
+ 348:src/helper/cli/mx_cli.c ****     if (pCli.num_commands < MAX_COMMANDS) {
+ 349:src/helper/cli/mx_cli.c ****         /* Check if the command has already been registered.
+ 350:src/helper/cli/mx_cli.c ****      * Return 0, if it has been registered.
+ 351:src/helper/cli/mx_cli.c ****      */
+ 352:src/helper/cli/mx_cli.c ****         for (i = 0; i < pCli.num_commands; i++) {
+ 353:src/helper/cli/mx_cli.c ****             if (pCli.commands[i] == command)
+ 354:src/helper/cli/mx_cli.c ****                 return 0;
+ 355:src/helper/cli/mx_cli.c ****         }
+ 356:src/helper/cli/mx_cli.c ****         pCli.commands[pCli.num_commands++] = command;
+ 357:src/helper/cli/mx_cli.c ****         return 0;
+ 358:src/helper/cli/mx_cli.c ****     }
+ 359:src/helper/cli/mx_cli.c **** 
+ 360:src/helper/cli/mx_cli.c ****     return 1;
+ 361:src/helper/cli/mx_cli.c **** }
+ 362:src/helper/cli/mx_cli.c **** 
+ 363:src/helper/cli/mx_cli.c **** int cli_unregister_command(const struct cli_command* command)
+ 364:src/helper/cli/mx_cli.c **** {
+ 365:src/helper/cli/mx_cli.c ****     int i;
+ 366:src/helper/cli/mx_cli.c ****     if (!command->name || !command->function)
+ 367:src/helper/cli/mx_cli.c ****         return 1;
+ 368:src/helper/cli/mx_cli.c **** 
+ 369:src/helper/cli/mx_cli.c ****     for (i = 0; i < pCli.num_commands; i++) {
+ 370:src/helper/cli/mx_cli.c ****         if (pCli.commands[i] == command) {
+ 371:src/helper/cli/mx_cli.c ****             pCli.num_commands--;
+ 372:src/helper/cli/mx_cli.c ****             int remaining_cmds = pCli.num_commands - i;
+ 373:src/helper/cli/mx_cli.c ****             if (remaining_cmds > 0) {
+ 374:src/helper/cli/mx_cli.c ****                 memmove(&pCli.commands[i], &pCli.commands[i + 1],
+ 375:src/helper/cli/mx_cli.c ****                     (remaining_cmds * sizeof(struct cli_command*)));
+ 376:src/helper/cli/mx_cli.c ****             }
+ 377:src/helper/cli/mx_cli.c ****             pCli.commands[pCli.num_commands] = NULL;
+ 378:src/helper/cli/mx_cli.c ****             return 0;
+ 379:src/helper/cli/mx_cli.c ****         }
+ 380:src/helper/cli/mx_cli.c ****     }
+ 381:src/helper/cli/mx_cli.c **** 
+ 382:src/helper/cli/mx_cli.c ****     return 1;
+ 383:src/helper/cli/mx_cli.c **** }
+ 384:src/helper/cli/mx_cli.c **** 
+ 385:src/helper/cli/mx_cli.c **** int cli_register_commands(const struct cli_command* commands,
+ARM GAS  /tmp/ccUDA1XO.s 			page 10
+
+
+ 386:src/helper/cli/mx_cli.c ****     int num_commands)
+ 387:src/helper/cli/mx_cli.c **** {
+ 388:src/helper/cli/mx_cli.c ****     int i;
+ 389:src/helper/cli/mx_cli.c ****     for (i = 0; i < num_commands; i++)
+ 390:src/helper/cli/mx_cli.c ****         if (cli_register_command(commands++))
+ 391:src/helper/cli/mx_cli.c ****             return 1;
+ 392:src/helper/cli/mx_cli.c ****     return 0;
+ 393:src/helper/cli/mx_cli.c **** }
+ 394:src/helper/cli/mx_cli.c **** 
+ 395:src/helper/cli/mx_cli.c **** int cli_unregister_commands(const struct cli_command* commands,
+ 396:src/helper/cli/mx_cli.c ****     int num_commands)
+ 397:src/helper/cli/mx_cli.c **** {
+ 398:src/helper/cli/mx_cli.c ****     int i;
+ 399:src/helper/cli/mx_cli.c ****     for (i = 0; i < num_commands; i++)
+ 400:src/helper/cli/mx_cli.c ****         if (cli_unregister_command(commands++))
+ 401:src/helper/cli/mx_cli.c ****             return 1;
+ 402:src/helper/cli/mx_cli.c **** 
+ 403:src/helper/cli/mx_cli.c ****     return 0;
+ 404:src/helper/cli/mx_cli.c **** }
+ 405:src/helper/cli/mx_cli.c **** 
+ 406:src/helper/cli/mx_cli.c **** /* Main CLI processing thread
+ 407:src/helper/cli/mx_cli.c ****  *
+ 408:src/helper/cli/mx_cli.c ****  * Waits to receive a command buffer pointer from an input collector, and
+ 409:src/helper/cli/mx_cli.c ****  * then processes.  Note that it must cleanup the buffer when done with it.
+ 410:src/helper/cli/mx_cli.c ****  *
+ 411:src/helper/cli/mx_cli.c ****  * Input collectors handle their own lexical analysis and must pass complete
+ 412:src/helper/cli/mx_cli.c ****  * command lines to CLI.
+ 413:src/helper/cli/mx_cli.c ****  */
+ 414:src/helper/cli/mx_cli.c **** void cli_loop(void)
+ 415:src/helper/cli/mx_cli.c **** {
+ 416:src/helper/cli/mx_cli.c ****     int ret;
+ 417:src/helper/cli/mx_cli.c ****     char* msg = NULL;
+ 418:src/helper/cli/mx_cli.c **** 
+ 419:src/helper/cli/mx_cli.c ****     if (pCli.initialized != 1)
+ 420:src/helper/cli/mx_cli.c ****         return;
+ 421:src/helper/cli/mx_cli.c **** 
+ 422:src/helper/cli/mx_cli.c ****     if (!get_input(pCli.inbuf, &pCli.bp))
+ 423:src/helper/cli/mx_cli.c ****         return;
+ 424:src/helper/cli/mx_cli.c **** 
+ 425:src/helper/cli/mx_cli.c ****     msg = pCli.inbuf;
+ 426:src/helper/cli/mx_cli.c **** //    printf("\r\n%s:%s:%04d\r\n",SHORT_FILE,__PRETTY_FUNCTION__,__LINE__);
+ 427:src/helper/cli/mx_cli.c **** //    printf("-msg[%s]\r\n",msg);
+ 428:src/helper/cli/mx_cli.c ****     if (msg != NULL) {
+ 429:src/helper/cli/mx_cli.c ****         if (strcmp(msg, EXIT_MSG) == 0)
+ 430:src/helper/cli/mx_cli.c ****             return;
+ 431:src/helper/cli/mx_cli.c ****         ret = handle_input(msg);
+ 432:src/helper/cli/mx_cli.c ****         if (ret == 1)
+ 433:src/helper/cli/mx_cli.c ****             print_bad_command(msg);
+ 434:src/helper/cli/mx_cli.c ****         else if (ret == 2)
+ 435:src/helper/cli/mx_cli.c ****             cli_printf("syntax error\r\n");
+ 436:src/helper/cli/mx_cli.c ****         cli_printf(PROMPT);
+ 437:src/helper/cli/mx_cli.c ****     }
+ 438:src/helper/cli/mx_cli.c **** }
+ 439:src/helper/cli/mx_cli.c **** 
+ 440:src/helper/cli/mx_cli.c **** int cli_init(void)
+ 441:src/helper/cli/mx_cli.c **** {
+ 442:src/helper/cli/mx_cli.c ****     memset(&pCli, 0, sizeof(struct cli_st));
+ARM GAS  /tmp/ccUDA1XO.s 			page 11
+
+
+ 443:src/helper/cli/mx_cli.c **** 
+ 444:src/helper/cli/mx_cli.c ****     /* add our built-in commands */
+ 445:src/helper/cli/mx_cli.c ****     if (cli_register_commands(&built_ins[0],
+ 446:src/helper/cli/mx_cli.c ****             sizeof(built_ins) / sizeof(struct cli_command))) {
+ 447:src/helper/cli/mx_cli.c ****         printf("cli err\r\n");
+ 448:src/helper/cli/mx_cli.c ****         return kGeneralErr;
+ 449:src/helper/cli/mx_cli.c ****     }
+ 450:src/helper/cli/mx_cli.c **** 
+ 451:src/helper/cli/mx_cli.c ****     pCli.initialized = 1;
+ 452:src/helper/cli/mx_cli.c **** 
+ 453:src/helper/cli/mx_cli.c ****     return kNoErr;
+ 454:src/helper/cli/mx_cli.c **** }
+ 455:src/helper/cli/mx_cli.c **** 
+ 456:src/helper/cli/mx_cli.c **** /* ========= CLI input&output APIs ============ */
+ 457:src/helper/cli/mx_cli.c **** 
+ 458:src/helper/cli/mx_cli.c **** int cli_printf(const char* msg, ...)
+ 459:src/helper/cli/mx_cli.c **** {
+ 460:src/helper/cli/mx_cli.c ****     va_list ap;
+ 461:src/helper/cli/mx_cli.c ****     char *pos, message[256];
+ 462:src/helper/cli/mx_cli.c ****     int sz;
+ 463:src/helper/cli/mx_cli.c ****     int nMessageLen = 0;
+ 464:src/helper/cli/mx_cli.c **** 
+ 465:src/helper/cli/mx_cli.c ****     memset(message, 0, 256);
+ 466:src/helper/cli/mx_cli.c ****     pos = message;
+ 467:src/helper/cli/mx_cli.c **** 
+ 468:src/helper/cli/mx_cli.c ****     sz = 0;
+ 469:src/helper/cli/mx_cli.c ****     va_start(ap, msg);
+ 470:src/helper/cli/mx_cli.c ****     nMessageLen = vsnprintf(pos, 256 - sz, msg, ap);
+ 471:src/helper/cli/mx_cli.c ****     va_end(ap);
+ 472:src/helper/cli/mx_cli.c **** 
+ 473:src/helper/cli/mx_cli.c ****     if (nMessageLen <= 0)
+ 474:src/helper/cli/mx_cli.c ****         return 0;
+ 475:src/helper/cli/mx_cli.c **** 
+ 476:src/helper/cli/mx_cli.c ****     cli_putstr((const char*)message);
+ 477:src/helper/cli/mx_cli.c ****     return 0;
+ 478:src/helper/cli/mx_cli.c **** }
+ 479:src/helper/cli/mx_cli.c **** 
+ 480:src/helper/cli/mx_cli.c **** int cli_putstr(const char* msg)
+ 481:src/helper/cli/mx_cli.c **** {
+ 125              		.loc 1 481 0
+ 126              		.cfi_startproc
+ 127              		@ args = 0, pretend = 0, frame = 0
+ 128              		@ frame_needed = 0, uses_anonymous_args = 0
+ 129              	.LVL9:
+ 482:src/helper/cli/mx_cli.c ****     if (msg[0] != 0)
+ 130              		.loc 1 482 0
+ 131 0000 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 132 0002 0BB9     		cbnz	r3, .L21
+ 483:src/helper/cli/mx_cli.c ****         mx_hal_cli_putstr((const char*)msg, strlen(msg));
+ 484:src/helper/cli/mx_cli.c **** 
+ 485:src/helper/cli/mx_cli.c ****     return 0;
+ 486:src/helper/cli/mx_cli.c **** }
+ 133              		.loc 1 486 0
+ 134 0004 0020     		movs	r0, #0
+ 135              	.LVL10:
+ 136 0006 7047     		bx	lr
+ 137              	.LVL11:
+ARM GAS  /tmp/ccUDA1XO.s 			page 12
+
+
+ 138              	.L21:
+ 481:src/helper/cli/mx_cli.c ****     if (msg[0] != 0)
+ 139              		.loc 1 481 0
+ 140 0008 10B5     		push	{r4, lr}
+ 141              	.LCFI1:
+ 142              		.cfi_def_cfa_offset 8
+ 143              		.cfi_offset 4, -8
+ 144              		.cfi_offset 14, -4
+ 145 000a 0446     		mov	r4, r0
+ 483:src/helper/cli/mx_cli.c ****         mx_hal_cli_putstr((const char*)msg, strlen(msg));
+ 146              		.loc 1 483 0
+ 147 000c FFF7FEFF 		bl	strlen
+ 148              	.LVL12:
+ 149 0010 0146     		mov	r1, r0
+ 150 0012 2046     		mov	r0, r4
+ 151 0014 FFF7FEFF 		bl	mx_hal_cli_putstr
+ 152              	.LVL13:
+ 153              		.loc 1 486 0
+ 154 0018 0020     		movs	r0, #0
+ 155 001a 10BD     		pop	{r4, pc}
+ 156              		.cfi_endproc
+ 157              	.LFE142:
+ 159              		.section	.text.help_command,"ax",%progbits
+ 160              		.align	1
+ 161              		.syntax unified
+ 162              		.thumb
+ 163              		.thumb_func
+ 164              		.fpu fpv4-sp-d16
+ 166              	help_command:
+ 167              	.LFB134:
+ 325:src/helper/cli/mx_cli.c ****     int i, n;
+ 168              		.loc 1 325 0
+ 169              		.cfi_startproc
+ 170              		@ args = 0, pretend = 0, frame = 0
+ 171              		@ frame_needed = 0, uses_anonymous_args = 0
+ 172              	.LVL14:
+ 173 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 174              	.LCFI2:
+ 175              		.cfi_def_cfa_offset 20
+ 176              		.cfi_offset 4, -20
+ 177              		.cfi_offset 5, -16
+ 178              		.cfi_offset 6, -12
+ 179              		.cfi_offset 7, -8
+ 180              		.cfi_offset 14, -4
+ 181 0002 83B0     		sub	sp, sp, #12
+ 182              	.LCFI3:
+ 183              		.cfi_def_cfa_offset 32
+ 184 0004 0746     		mov	r7, r0
+ 185              	.LVL15:
+ 329:src/helper/cli/mx_cli.c ****     for (i = 0, n = 0; i < MAX_COMMANDS && n < pCli.num_commands; i++) {
+ 186              		.loc 1 329 0
+ 187 0006 0D1E     		subs	r5, r1, #0
+ 188 0008 02DC     		bgt	.L31
+ 189              	.LVL16:
+ 190              	.L23:
+ 332:src/helper/cli/mx_cli.c ****                 pCli.commands[i]->help ? pCli.commands[i]->help : "");
+ 191              		.loc 1 332 0 discriminator 1
+ARM GAS  /tmp/ccUDA1XO.s 			page 13
+
+
+ 192 000a 0026     		movs	r6, #0
+ 193 000c 3446     		mov	r4, r6
+ 194 000e 18E0     		b	.L27
+ 195              	.LVL17:
+ 196              	.L31:
+ 329:src/helper/cli/mx_cli.c ****     for (i = 0, n = 0; i < MAX_COMMANDS && n < pCli.num_commands; i++) {
+ 197              		.loc 1 329 0 discriminator 1
+ 198 0010 1E4A     		ldr	r2, .L33
+ 199              	.LVL18:
+ 200 0012 2946     		mov	r1, r5
+ 201              	.LVL19:
+ 202 0014 FFF7FEFF 		bl	snprintf
+ 203              	.LVL20:
+ 204 0018 3846     		mov	r0, r7
+ 205 001a FFF7FEFF 		bl	strlen
+ 206              	.LVL21:
+ 207 001e 2D1A     		subs	r5, r5, r0
+ 208              	.LVL22:
+ 209 0020 0744     		add	r7, r7, r0
+ 210              	.LVL23:
+ 211 0022 F2E7     		b	.L23
+ 212              	.LVL24:
+ 213              	.L26:
+ 332:src/helper/cli/mx_cli.c ****                 pCli.commands[i]->help ? pCli.commands[i]->help : "");
+ 214              		.loc 1 332 0 discriminator 5
+ 215 0024 0092     		str	r2, [sp]
+ 216 0026 1A4A     		ldr	r2, .L33+4
+ 217 0028 2946     		mov	r1, r5
+ 218 002a 3846     		mov	r0, r7
+ 219 002c FFF7FEFF 		bl	snprintf
+ 220              	.LVL25:
+ 221 0030 3846     		mov	r0, r7
+ 222 0032 FFF7FEFF 		bl	strlen
+ 223              	.LVL26:
+ 224 0036 2D1A     		subs	r5, r5, r0
+ 225              	.LVL27:
+ 226 0038 0744     		add	r7, r7, r0
+ 227              	.LVL28:
+ 228              	.L25:
+ 334:src/helper/cli/mx_cli.c ****             if (n == build_in_count) {
+ 229              		.loc 1 334 0
+ 230 003a 0136     		adds	r6, r6, #1
+ 231              	.LVL29:
+ 335:src/helper/cli/mx_cli.c ****                 cmd_printf("\r\n ==== User Commands ==== \r\n");
+ 232              		.loc 1 335 0
+ 233 003c 022E     		cmp	r6, #2
+ 234 003e 16D0     		beq	.L32
+ 235              	.L24:
+ 330:src/helper/cli/mx_cli.c ****         if (pCli.commands[i]->name) {
+ 236              		.loc 1 330 0 discriminator 2
+ 237 0040 0134     		adds	r4, r4, #1
+ 238              	.LVL30:
+ 239              	.L27:
+ 330:src/helper/cli/mx_cli.c ****         if (pCli.commands[i]->name) {
+ 240              		.loc 1 330 0 is_stmt 0 discriminator 1
+ 241 0042 312C     		cmp	r4, #49
+ 242 0044 20DC     		bgt	.L22
+ARM GAS  /tmp/ccUDA1XO.s 			page 14
+
+
+ 330:src/helper/cli/mx_cli.c ****         if (pCli.commands[i]->name) {
+ 243              		.loc 1 330 0 discriminator 3
+ 244 0046 134B     		ldr	r3, .L33+8
+ 245 0048 D3F82035 		ldr	r3, [r3, #1312]
+ 246 004c B342     		cmp	r3, r6
+ 247 004e 1BD9     		bls	.L22
+ 331:src/helper/cli/mx_cli.c ****             cmd_printf(" %s: %s\r\n", pCli.commands[i]->name,
+ 248              		.loc 1 331 0 is_stmt 1
+ 249 0050 04F58B73 		add	r3, r4, #278
+ 250 0054 0F4A     		ldr	r2, .L33+8
+ 251 0056 52F82320 		ldr	r2, [r2, r3, lsl #2]
+ 252 005a 1368     		ldr	r3, [r2]
+ 253 005c 002B     		cmp	r3, #0
+ 254 005e EFD0     		beq	.L24
+ 332:src/helper/cli/mx_cli.c ****                 pCli.commands[i]->help ? pCli.commands[i]->help : "");
+ 255              		.loc 1 332 0
+ 256 0060 002D     		cmp	r5, #0
+ 257 0062 EADD     		ble	.L25
+ 332:src/helper/cli/mx_cli.c ****                 pCli.commands[i]->help ? pCli.commands[i]->help : "");
+ 258              		.loc 1 332 0 is_stmt 0 discriminator 1
+ 259 0064 5268     		ldr	r2, [r2, #4]
+ 260 0066 002A     		cmp	r2, #0
+ 261 0068 DCD1     		bne	.L26
+ 332:src/helper/cli/mx_cli.c ****                 pCli.commands[i]->help ? pCli.commands[i]->help : "");
+ 262              		.loc 1 332 0
+ 263 006a 0B4A     		ldr	r2, .L33+12
+ 264 006c DAE7     		b	.L26
+ 265              	.L32:
+ 336:src/helper/cli/mx_cli.c ****             }
+ 266              		.loc 1 336 0 is_stmt 1
+ 267 006e 002D     		cmp	r5, #0
+ 268 0070 E6DD     		ble	.L24
+ 336:src/helper/cli/mx_cli.c ****             }
+ 269              		.loc 1 336 0 is_stmt 0 discriminator 1
+ 270 0072 0A4A     		ldr	r2, .L33+16
+ 271 0074 2946     		mov	r1, r5
+ 272 0076 3846     		mov	r0, r7
+ 273 0078 FFF7FEFF 		bl	snprintf
+ 274              	.LVL31:
+ 275 007c 3846     		mov	r0, r7
+ 276 007e FFF7FEFF 		bl	strlen
+ 277              	.LVL32:
+ 278 0082 2D1A     		subs	r5, r5, r0
+ 279              	.LVL33:
+ 280 0084 0744     		add	r7, r7, r0
+ 281              	.LVL34:
+ 282 0086 DBE7     		b	.L24
+ 283              	.L22:
+ 340:src/helper/cli/mx_cli.c **** 
+ 284              		.loc 1 340 0 is_stmt 1
+ 285 0088 03B0     		add	sp, sp, #12
+ 286              	.LCFI4:
+ 287              		.cfi_def_cfa_offset 20
+ 288              		@ sp needed
+ 289 008a F0BD     		pop	{r4, r5, r6, r7, pc}
+ 290              	.LVL35:
+ 291              	.L34:
+ARM GAS  /tmp/ccUDA1XO.s 			page 15
+
+
+ 292              		.align	2
+ 293              	.L33:
+ 294 008c 04000000 		.word	.LC1
+ 295 0090 28000000 		.word	.LC2
+ 296 0094 00000000 		.word	.LANCHOR0
+ 297 0098 00000000 		.word	.LC0
+ 298 009c 34000000 		.word	.LC3
+ 299              		.cfi_endproc
+ 300              	.LFE134:
+ 302              		.section	.text.echo_cmd_handler,"ax",%progbits
+ 303              		.align	1
+ 304              		.syntax unified
+ 305              		.thumb
+ 306              		.thumb_func
+ 307              		.fpu fpv4-sp-d16
+ 309              	echo_cmd_handler:
+ 310              	.LFB133:
+ 299:src/helper/cli/mx_cli.c ****     if (argc == 1) {
+ 311              		.loc 1 299 0
+ 312              		.cfi_startproc
+ 313              		@ args = 0, pretend = 0, frame = 0
+ 314              		@ frame_needed = 0, uses_anonymous_args = 0
+ 315              	.LVL36:
+ 316 0000 70B5     		push	{r4, r5, r6, lr}
+ 317              	.LCFI5:
+ 318              		.cfi_def_cfa_offset 16
+ 319              		.cfi_offset 4, -16
+ 320              		.cfi_offset 5, -12
+ 321              		.cfi_offset 6, -8
+ 322              		.cfi_offset 14, -4
+ 323 0002 0646     		mov	r6, r0
+ 324 0004 0C46     		mov	r4, r1
+ 300:src/helper/cli/mx_cli.c ****         cmd_printf("Usage:echo on/off. Echo is currently %s\r\n", 
+ 325              		.loc 1 300 0
+ 326 0006 012A     		cmp	r2, #1
+ 327 0008 11D0     		beq	.L44
+ 306:src/helper/cli/mx_cli.c ****         cmd_printf("Enable echo\r\n");
+ 328              		.loc 1 306 0
+ 329 000a 5D68     		ldr	r5, [r3, #4]
+ 330 000c 1949     		ldr	r1, .L47
+ 331              	.LVL37:
+ 332 000e 2846     		mov	r0, r5
+ 333              	.LVL38:
+ 334 0010 FFF7FEFF 		bl	strcasecmp
+ 335              	.LVL39:
+ 336 0014 D0B9     		cbnz	r0, .L39
+ 307:src/helper/cli/mx_cli.c ****         pCli.echo_disabled = 0;
+ 337              		.loc 1 307 0
+ 338 0016 002C     		cmp	r4, #0
+ 339 0018 04DD     		ble	.L40
+ 307:src/helper/cli/mx_cli.c ****         pCli.echo_disabled = 0;
+ 340              		.loc 1 307 0 is_stmt 0 discriminator 1
+ 341 001a 174A     		ldr	r2, .L47+4
+ 342 001c 2146     		mov	r1, r4
+ 343 001e 3046     		mov	r0, r6
+ 344 0020 FFF7FEFF 		bl	snprintf
+ 345              	.LVL40:
+ARM GAS  /tmp/ccUDA1XO.s 			page 16
+
+
+ 346              	.L40:
+ 308:src/helper/cli/mx_cli.c ****     } else if (!strcasecmp(argv[1], "off")) {
+ 347              		.loc 1 308 0 is_stmt 1
+ 348 0024 154B     		ldr	r3, .L47+8
+ 349 0026 0022     		movs	r2, #0
+ 350 0028 C3F82425 		str	r2, [r3, #1316]
+ 351              	.L35:
+ 313:src/helper/cli/mx_cli.c **** 
+ 352              		.loc 1 313 0
+ 353 002c 70BD     		pop	{r4, r5, r6, pc}
+ 354              	.LVL41:
+ 355              	.L44:
+ 301:src/helper/cli/mx_cli.c ****         pCli.echo_disabled ? "Disabled" : "Enabled");
+ 356              		.loc 1 301 0
+ 357 002e 0029     		cmp	r1, #0
+ 358 0030 FCDD     		ble	.L35
+ 301:src/helper/cli/mx_cli.c ****         pCli.echo_disabled ? "Disabled" : "Enabled");
+ 359              		.loc 1 301 0 is_stmt 0 discriminator 1
+ 360 0032 124B     		ldr	r3, .L47+8
+ 361              	.LVL42:
+ 362 0034 D3F82435 		ldr	r3, [r3, #1316]
+ 363 0038 33B9     		cbnz	r3, .L45
+ 301:src/helper/cli/mx_cli.c ****         pCli.echo_disabled ? "Disabled" : "Enabled");
+ 364              		.loc 1 301 0
+ 365 003a 114B     		ldr	r3, .L47+12
+ 366              	.L38:
+ 301:src/helper/cli/mx_cli.c ****         pCli.echo_disabled ? "Disabled" : "Enabled");
+ 367              		.loc 1 301 0 discriminator 5
+ 368 003c 114A     		ldr	r2, .L47+16
+ 369              	.LVL43:
+ 370 003e 2146     		mov	r1, r4
+ 371              	.LVL44:
+ 372 0040 3046     		mov	r0, r6
+ 373              	.LVL45:
+ 374 0042 FFF7FEFF 		bl	snprintf
+ 375              	.LVL46:
+ 376 0046 F1E7     		b	.L35
+ 377              	.LVL47:
+ 378              	.L45:
+ 301:src/helper/cli/mx_cli.c ****         pCli.echo_disabled ? "Disabled" : "Enabled");
+ 379              		.loc 1 301 0
+ 380 0048 0F4B     		ldr	r3, .L47+20
+ 381 004a F7E7     		b	.L38
+ 382              	.LVL48:
+ 383              	.L39:
+ 309:src/helper/cli/mx_cli.c ****         cmd_printf("Disable echo\r\n");
+ 384              		.loc 1 309 0 is_stmt 1
+ 385 004c 0F49     		ldr	r1, .L47+24
+ 386 004e 2846     		mov	r0, r5
+ 387 0050 FFF7FEFF 		bl	strcasecmp
+ 388              	.LVL49:
+ 389 0054 0028     		cmp	r0, #0
+ 390 0056 E9D1     		bne	.L35
+ 310:src/helper/cli/mx_cli.c ****         pCli.echo_disabled = 1;
+ 391              		.loc 1 310 0
+ 392 0058 002C     		cmp	r4, #0
+ 393 005a 04DC     		bgt	.L46
+ARM GAS  /tmp/ccUDA1XO.s 			page 17
+
+
+ 394              	.LVL50:
+ 395              	.L41:
+ 311:src/helper/cli/mx_cli.c ****     }
+ 396              		.loc 1 311 0
+ 397 005c 074B     		ldr	r3, .L47+8
+ 398 005e 0122     		movs	r2, #1
+ 399 0060 C3F82425 		str	r2, [r3, #1316]
+ 400 0064 E2E7     		b	.L35
+ 401              	.LVL51:
+ 402              	.L46:
+ 310:src/helper/cli/mx_cli.c ****         pCli.echo_disabled = 1;
+ 403              		.loc 1 310 0 discriminator 1
+ 404 0066 0A4A     		ldr	r2, .L47+28
+ 405 0068 2146     		mov	r1, r4
+ 406 006a 3046     		mov	r0, r6
+ 407 006c FFF7FEFF 		bl	snprintf
+ 408              	.LVL52:
+ 409 0070 F4E7     		b	.L41
+ 410              	.L48:
+ 411 0072 00BF     		.align	2
+ 412              	.L47:
+ 413 0074 40000000 		.word	.LC7
+ 414 0078 44000000 		.word	.LC8
+ 415 007c 00000000 		.word	.LANCHOR0
+ 416 0080 0C000000 		.word	.LC5
+ 417 0084 14000000 		.word	.LC6
+ 418 0088 00000000 		.word	.LC4
+ 419 008c 54000000 		.word	.LC9
+ 420 0090 58000000 		.word	.LC10
+ 421              		.cfi_endproc
+ 422              	.LFE133:
+ 424              		.section	.text.cli_register_command,"ax",%progbits
+ 425              		.align	1
+ 426              		.global	cli_register_command
+ 427              		.syntax unified
+ 428              		.thumb
+ 429              		.thumb_func
+ 430              		.fpu fpv4-sp-d16
+ 432              	cli_register_command:
+ 433              	.LFB135:
+ 343:src/helper/cli/mx_cli.c ****     int i;
+ 434              		.loc 1 343 0
+ 435              		.cfi_startproc
+ 436              		@ args = 0, pretend = 0, frame = 0
+ 437              		@ frame_needed = 0, uses_anonymous_args = 0
+ 438              		@ link register save eliminated.
+ 439              	.LVL53:
+ 345:src/helper/cli/mx_cli.c ****         return 1;
+ 440              		.loc 1 345 0
+ 441 0000 0368     		ldr	r3, [r0]
+ 442 0002 0BB3     		cbz	r3, .L53
+ 345:src/helper/cli/mx_cli.c ****         return 1;
+ 443              		.loc 1 345 0 is_stmt 0 discriminator 1
+ 444 0004 8368     		ldr	r3, [r0, #8]
+ 445 0006 0BB3     		cbz	r3, .L54
+ 343:src/helper/cli/mx_cli.c ****     int i;
+ 446              		.loc 1 343 0 is_stmt 1
+ARM GAS  /tmp/ccUDA1XO.s 			page 18
+
+
+ 447 0008 10B4     		push	{r4}
+ 448              	.LCFI6:
+ 449              		.cfi_def_cfa_offset 4
+ 450              		.cfi_offset 4, -4
+ 348:src/helper/cli/mx_cli.c ****         /* Check if the command has already been registered.
+ 451              		.loc 1 348 0
+ 452 000a 124B     		ldr	r3, .L63
+ 453 000c D3F82045 		ldr	r4, [r3, #1312]
+ 454 0010 312C     		cmp	r4, #49
+ 455 0012 0BD8     		bhi	.L61
+ 352:src/helper/cli/mx_cli.c ****             if (pCli.commands[i] == command)
+ 456              		.loc 1 352 0
+ 457 0014 0023     		movs	r3, #0
+ 458              	.L51:
+ 459              	.LVL54:
+ 352:src/helper/cli/mx_cli.c ****             if (pCli.commands[i] == command)
+ 460              		.loc 1 352 0 is_stmt 0 discriminator 1
+ 461 0016 9C42     		cmp	r4, r3
+ 462 0018 0CD9     		bls	.L62
+ 353:src/helper/cli/mx_cli.c ****                 return 0;
+ 463              		.loc 1 353 0 is_stmt 1
+ 464 001a 03F58B72 		add	r2, r3, #278
+ 465 001e 0D49     		ldr	r1, .L63
+ 466 0020 51F82220 		ldr	r2, [r1, r2, lsl #2]
+ 467 0024 8242     		cmp	r2, r0
+ 468 0026 13D0     		beq	.L56
+ 352:src/helper/cli/mx_cli.c ****             if (pCli.commands[i] == command)
+ 469              		.loc 1 352 0 discriminator 2
+ 470 0028 0133     		adds	r3, r3, #1
+ 471              	.LVL55:
+ 472 002a F4E7     		b	.L51
+ 473              	.LVL56:
+ 474              	.L61:
+ 360:src/helper/cli/mx_cli.c **** }
+ 475              		.loc 1 360 0
+ 476 002c 0120     		movs	r0, #1
+ 477              	.LVL57:
+ 478              	.L49:
+ 361:src/helper/cli/mx_cli.c **** 
+ 479              		.loc 1 361 0
+ 480 002e 5DF8044B 		ldr	r4, [sp], #4
+ 481              	.LCFI7:
+ 482              		.cfi_remember_state
+ 483              		.cfi_restore 4
+ 484              		.cfi_def_cfa_offset 0
+ 485 0032 7047     		bx	lr
+ 486              	.LVL58:
+ 487              	.L62:
+ 488              	.LCFI8:
+ 489              		.cfi_restore_state
+ 356:src/helper/cli/mx_cli.c ****         return 0;
+ 490              		.loc 1 356 0
+ 491 0034 074B     		ldr	r3, .L63
+ 492              	.LVL59:
+ 493 0036 621C     		adds	r2, r4, #1
+ 494 0038 C3F82025 		str	r2, [r3, #1312]
+ 495 003c 04F58B74 		add	r4, r4, #278
+ARM GAS  /tmp/ccUDA1XO.s 			page 19
+
+
+ 496 0040 43F82400 		str	r0, [r3, r4, lsl #2]
+ 357:src/helper/cli/mx_cli.c ****     }
+ 497              		.loc 1 357 0
+ 498 0044 0020     		movs	r0, #0
+ 499              	.LVL60:
+ 500 0046 F2E7     		b	.L49
+ 501              	.LVL61:
+ 502              	.L53:
+ 503              	.LCFI9:
+ 504              		.cfi_def_cfa_offset 0
+ 505              		.cfi_restore 4
+ 346:src/helper/cli/mx_cli.c **** 
+ 506              		.loc 1 346 0
+ 507 0048 0120     		movs	r0, #1
+ 508              	.LVL62:
+ 509 004a 7047     		bx	lr
+ 510              	.LVL63:
+ 511              	.L54:
+ 512 004c 0120     		movs	r0, #1
+ 513              	.LVL64:
+ 361:src/helper/cli/mx_cli.c **** 
+ 514              		.loc 1 361 0
+ 515 004e 7047     		bx	lr
+ 516              	.LVL65:
+ 517              	.L56:
+ 518              	.LCFI10:
+ 519              		.cfi_def_cfa_offset 4
+ 520              		.cfi_offset 4, -4
+ 354:src/helper/cli/mx_cli.c ****         }
+ 521              		.loc 1 354 0
+ 522 0050 0020     		movs	r0, #0
+ 523              	.LVL66:
+ 524 0052 ECE7     		b	.L49
+ 525              	.L64:
+ 526              		.align	2
+ 527              	.L63:
+ 528 0054 00000000 		.word	.LANCHOR0
+ 529              		.cfi_endproc
+ 530              	.LFE135:
+ 532              		.section	.text.cli_unregister_command,"ax",%progbits
+ 533              		.align	1
+ 534              		.global	cli_unregister_command
+ 535              		.syntax unified
+ 536              		.thumb
+ 537              		.thumb_func
+ 538              		.fpu fpv4-sp-d16
+ 540              	cli_unregister_command:
+ 541              	.LFB136:
+ 364:src/helper/cli/mx_cli.c ****     int i;
+ 542              		.loc 1 364 0
+ 543              		.cfi_startproc
+ 544              		@ args = 0, pretend = 0, frame = 0
+ 545              		@ frame_needed = 0, uses_anonymous_args = 0
+ 546              	.LVL67:
+ 547 0000 38B5     		push	{r3, r4, r5, lr}
+ 548              	.LCFI11:
+ 549              		.cfi_def_cfa_offset 16
+ARM GAS  /tmp/ccUDA1XO.s 			page 20
+
+
+ 550              		.cfi_offset 3, -16
+ 551              		.cfi_offset 4, -12
+ 552              		.cfi_offset 5, -8
+ 553              		.cfi_offset 14, -4
+ 366:src/helper/cli/mx_cli.c ****         return 1;
+ 554              		.loc 1 366 0
+ 555 0002 0368     		ldr	r3, [r0]
+ 556 0004 6BB3     		cbz	r3, .L71
+ 366:src/helper/cli/mx_cli.c ****         return 1;
+ 557              		.loc 1 366 0 is_stmt 0 discriminator 1
+ 558 0006 8368     		ldr	r3, [r0, #8]
+ 559 0008 6BB3     		cbz	r3, .L72
+ 369:src/helper/cli/mx_cli.c ****         if (pCli.commands[i] == command) {
+ 560              		.loc 1 369 0 is_stmt 1
+ 561 000a 0021     		movs	r1, #0
+ 562              	.L67:
+ 563              	.LVL68:
+ 369:src/helper/cli/mx_cli.c ****         if (pCli.commands[i] == command) {
+ 564              		.loc 1 369 0 is_stmt 0 discriminator 1
+ 565 000c 174B     		ldr	r3, .L76
+ 566 000e D3F82025 		ldr	r2, [r3, #1312]
+ 567 0012 0D46     		mov	r5, r1
+ 568 0014 8A42     		cmp	r2, r1
+ 569 0016 22D9     		bls	.L74
+ 370:src/helper/cli/mx_cli.c ****             pCli.num_commands--;
+ 570              		.loc 1 370 0 is_stmt 1
+ 571 0018 01F58B73 		add	r3, r1, #278
+ 572 001c 134C     		ldr	r4, .L76
+ 573 001e 54F82330 		ldr	r3, [r4, r3, lsl #2]
+ 574 0022 8342     		cmp	r3, r0
+ 575 0024 01D0     		beq	.L75
+ 369:src/helper/cli/mx_cli.c ****         if (pCli.commands[i] == command) {
+ 576              		.loc 1 369 0 discriminator 2
+ 577 0026 0131     		adds	r1, r1, #1
+ 578              	.LVL69:
+ 579 0028 F0E7     		b	.L67
+ 580              	.L75:
+ 581              	.LBB2:
+ 371:src/helper/cli/mx_cli.c ****             int remaining_cmds = pCli.num_commands - i;
+ 582              		.loc 1 371 0
+ 583 002a 013A     		subs	r2, r2, #1
+ 584 002c C4F82025 		str	r2, [r4, #1312]
+ 372:src/helper/cli/mx_cli.c ****             if (remaining_cmds > 0) {
+ 585              		.loc 1 372 0
+ 586 0030 521B     		subs	r2, r2, r5
+ 587              	.LVL70:
+ 373:src/helper/cli/mx_cli.c ****                 memmove(&pCli.commands[i], &pCli.commands[i + 1],
+ 588              		.loc 1 373 0
+ 589 0032 002A     		cmp	r2, #0
+ 590 0034 0ADD     		ble	.L69
+ 374:src/helper/cli/mx_cli.c ****                     (remaining_cmds * sizeof(struct cli_command*)));
+ 591              		.loc 1 374 0
+ 592 0036 01F58B70 		add	r0, r1, #278
+ 593              	.LVL71:
+ 594 003a 01F21711 		addw	r1, r1, #279
+ 595              	.LVL72:
+ 596 003e 9200     		lsls	r2, r2, #2
+ARM GAS  /tmp/ccUDA1XO.s 			page 21
+
+
+ 597              	.LVL73:
+ 598 0040 04EB8101 		add	r1, r4, r1, lsl #2
+ 599 0044 04EB8000 		add	r0, r4, r0, lsl #2
+ 600 0048 FFF7FEFF 		bl	memmove
+ 601              	.LVL74:
+ 602              	.L69:
+ 377:src/helper/cli/mx_cli.c ****             return 0;
+ 603              		.loc 1 377 0
+ 604 004c 074A     		ldr	r2, .L76
+ 605 004e D2F82035 		ldr	r3, [r2, #1312]
+ 606 0052 03F58B73 		add	r3, r3, #278
+ 607 0056 0020     		movs	r0, #0
+ 608 0058 42F82300 		str	r0, [r2, r3, lsl #2]
+ 378:src/helper/cli/mx_cli.c ****         }
+ 609              		.loc 1 378 0
+ 610 005c 00E0     		b	.L65
+ 611              	.LVL75:
+ 612              	.L74:
+ 613              	.LBE2:
+ 382:src/helper/cli/mx_cli.c **** }
+ 614              		.loc 1 382 0
+ 615 005e 0120     		movs	r0, #1
+ 616              	.LVL76:
+ 617              	.L65:
+ 383:src/helper/cli/mx_cli.c **** 
+ 618              		.loc 1 383 0
+ 619 0060 38BD     		pop	{r3, r4, r5, pc}
+ 620              	.LVL77:
+ 621              	.L71:
+ 367:src/helper/cli/mx_cli.c **** 
+ 622              		.loc 1 367 0
+ 623 0062 0120     		movs	r0, #1
+ 624              	.LVL78:
+ 625 0064 FCE7     		b	.L65
+ 626              	.LVL79:
+ 627              	.L72:
+ 628 0066 0120     		movs	r0, #1
+ 629              	.LVL80:
+ 630 0068 FAE7     		b	.L65
+ 631              	.L77:
+ 632 006a 00BF     		.align	2
+ 633              	.L76:
+ 634 006c 00000000 		.word	.LANCHOR0
+ 635              		.cfi_endproc
+ 636              	.LFE136:
+ 638              		.section	.text.cli_register_commands,"ax",%progbits
+ 639              		.align	1
+ 640              		.global	cli_register_commands
+ 641              		.syntax unified
+ 642              		.thumb
+ 643              		.thumb_func
+ 644              		.fpu fpv4-sp-d16
+ 646              	cli_register_commands:
+ 647              	.LFB137:
+ 387:src/helper/cli/mx_cli.c ****     int i;
+ 648              		.loc 1 387 0
+ 649              		.cfi_startproc
+ARM GAS  /tmp/ccUDA1XO.s 			page 22
+
+
+ 650              		@ args = 0, pretend = 0, frame = 0
+ 651              		@ frame_needed = 0, uses_anonymous_args = 0
+ 652              	.LVL81:
+ 653 0000 70B5     		push	{r4, r5, r6, lr}
+ 654              	.LCFI12:
+ 655              		.cfi_def_cfa_offset 16
+ 656              		.cfi_offset 4, -16
+ 657              		.cfi_offset 5, -12
+ 658              		.cfi_offset 6, -8
+ 659              		.cfi_offset 14, -4
+ 660 0002 0E46     		mov	r6, r1
+ 661              	.LVL82:
+ 389:src/helper/cli/mx_cli.c ****         if (cli_register_command(commands++))
+ 662              		.loc 1 389 0
+ 663 0004 0024     		movs	r4, #0
+ 664              	.LVL83:
+ 665              	.L79:
+ 389:src/helper/cli/mx_cli.c ****         if (cli_register_command(commands++))
+ 666              		.loc 1 389 0 is_stmt 0 discriminator 1
+ 667 0006 B442     		cmp	r4, r6
+ 668 0008 07DA     		bge	.L84
+ 390:src/helper/cli/mx_cli.c ****             return 1;
+ 669              		.loc 1 390 0 is_stmt 1
+ 670 000a 00F10C05 		add	r5, r0, #12
+ 671              	.LVL84:
+ 672 000e FFF7FEFF 		bl	cli_register_command
+ 673              	.LVL85:
+ 674 0012 20B9     		cbnz	r0, .L82
+ 389:src/helper/cli/mx_cli.c ****         if (cli_register_command(commands++))
+ 675              		.loc 1 389 0 discriminator 2
+ 676 0014 0134     		adds	r4, r4, #1
+ 677              	.LVL86:
+ 390:src/helper/cli/mx_cli.c ****             return 1;
+ 678              		.loc 1 390 0 discriminator 2
+ 679 0016 2846     		mov	r0, r5
+ 680 0018 F5E7     		b	.L79
+ 681              	.LVL87:
+ 682              	.L84:
+ 392:src/helper/cli/mx_cli.c **** }
+ 683              		.loc 1 392 0
+ 684 001a 0020     		movs	r0, #0
+ 685              	.LVL88:
+ 686              	.L78:
+ 393:src/helper/cli/mx_cli.c **** 
+ 687              		.loc 1 393 0
+ 688 001c 70BD     		pop	{r4, r5, r6, pc}
+ 689              	.LVL89:
+ 690              	.L82:
+ 391:src/helper/cli/mx_cli.c ****     return 0;
+ 691              		.loc 1 391 0
+ 692 001e 0120     		movs	r0, #1
+ 693 0020 FCE7     		b	.L78
+ 694              		.cfi_endproc
+ 695              	.LFE137:
+ 697              		.section	.text.cli_unregister_commands,"ax",%progbits
+ 698              		.align	1
+ 699              		.global	cli_unregister_commands
+ARM GAS  /tmp/ccUDA1XO.s 			page 23
+
+
+ 700              		.syntax unified
+ 701              		.thumb
+ 702              		.thumb_func
+ 703              		.fpu fpv4-sp-d16
+ 705              	cli_unregister_commands:
+ 706              	.LFB138:
+ 397:src/helper/cli/mx_cli.c ****     int i;
+ 707              		.loc 1 397 0
+ 708              		.cfi_startproc
+ 709              		@ args = 0, pretend = 0, frame = 0
+ 710              		@ frame_needed = 0, uses_anonymous_args = 0
+ 711              	.LVL90:
+ 712 0000 70B5     		push	{r4, r5, r6, lr}
+ 713              	.LCFI13:
+ 714              		.cfi_def_cfa_offset 16
+ 715              		.cfi_offset 4, -16
+ 716              		.cfi_offset 5, -12
+ 717              		.cfi_offset 6, -8
+ 718              		.cfi_offset 14, -4
+ 719 0002 0E46     		mov	r6, r1
+ 720              	.LVL91:
+ 399:src/helper/cli/mx_cli.c ****         if (cli_unregister_command(commands++))
+ 721              		.loc 1 399 0
+ 722 0004 0024     		movs	r4, #0
+ 723              	.LVL92:
+ 724              	.L86:
+ 399:src/helper/cli/mx_cli.c ****         if (cli_unregister_command(commands++))
+ 725              		.loc 1 399 0 is_stmt 0 discriminator 1
+ 726 0006 B442     		cmp	r4, r6
+ 727 0008 07DA     		bge	.L91
+ 400:src/helper/cli/mx_cli.c ****             return 1;
+ 728              		.loc 1 400 0 is_stmt 1
+ 729 000a 00F10C05 		add	r5, r0, #12
+ 730              	.LVL93:
+ 731 000e FFF7FEFF 		bl	cli_unregister_command
+ 732              	.LVL94:
+ 733 0012 20B9     		cbnz	r0, .L89
+ 399:src/helper/cli/mx_cli.c ****         if (cli_unregister_command(commands++))
+ 734              		.loc 1 399 0 discriminator 2
+ 735 0014 0134     		adds	r4, r4, #1
+ 736              	.LVL95:
+ 400:src/helper/cli/mx_cli.c ****             return 1;
+ 737              		.loc 1 400 0 discriminator 2
+ 738 0016 2846     		mov	r0, r5
+ 739 0018 F5E7     		b	.L86
+ 740              	.LVL96:
+ 741              	.L91:
+ 403:src/helper/cli/mx_cli.c **** }
+ 742              		.loc 1 403 0
+ 743 001a 0020     		movs	r0, #0
+ 744              	.LVL97:
+ 745              	.L85:
+ 404:src/helper/cli/mx_cli.c **** 
+ 746              		.loc 1 404 0
+ 747 001c 70BD     		pop	{r4, r5, r6, pc}
+ 748              	.LVL98:
+ 749              	.L89:
+ARM GAS  /tmp/ccUDA1XO.s 			page 24
+
+
+ 401:src/helper/cli/mx_cli.c **** 
+ 750              		.loc 1 401 0
+ 751 001e 0120     		movs	r0, #1
+ 752 0020 FCE7     		b	.L85
+ 753              		.cfi_endproc
+ 754              	.LFE138:
+ 756              		.section	.text.cli_init,"ax",%progbits
+ 757              		.align	1
+ 758              		.global	cli_init
+ 759              		.syntax unified
+ 760              		.thumb
+ 761              		.thumb_func
+ 762              		.fpu fpv4-sp-d16
+ 764              	cli_init:
+ 765              	.LFB140:
+ 441:src/helper/cli/mx_cli.c ****     memset(&pCli, 0, sizeof(struct cli_st));
+ 766              		.loc 1 441 0
+ 767              		.cfi_startproc
+ 768              		@ args = 0, pretend = 0, frame = 0
+ 769              		@ frame_needed = 0, uses_anonymous_args = 0
+ 770 0000 08B5     		push	{r3, lr}
+ 771              	.LCFI14:
+ 772              		.cfi_def_cfa_offset 8
+ 773              		.cfi_offset 3, -8
+ 774              		.cfi_offset 14, -4
+ 442:src/helper/cli/mx_cli.c **** 
+ 775              		.loc 1 442 0
+ 776 0002 4FF4A562 		mov	r2, #1320
+ 777 0006 0021     		movs	r1, #0
+ 778 0008 0948     		ldr	r0, .L97
+ 779 000a FFF7FEFF 		bl	memset
+ 780              	.LVL99:
+ 445:src/helper/cli/mx_cli.c ****             sizeof(built_ins) / sizeof(struct cli_command))) {
+ 781              		.loc 1 445 0
+ 782 000e 0221     		movs	r1, #2
+ 783 0010 0848     		ldr	r0, .L97+4
+ 784 0012 FFF7FEFF 		bl	cli_register_commands
+ 785              	.LVL100:
+ 786 0016 28B9     		cbnz	r0, .L96
+ 787 0018 0346     		mov	r3, r0
+ 451:src/helper/cli/mx_cli.c **** 
+ 788              		.loc 1 451 0
+ 789 001a 054A     		ldr	r2, .L97
+ 790 001c 0121     		movs	r1, #1
+ 791 001e 1160     		str	r1, [r2]
+ 792              	.L92:
+ 454:src/helper/cli/mx_cli.c **** 
+ 793              		.loc 1 454 0
+ 794 0020 1846     		mov	r0, r3
+ 795 0022 08BD     		pop	{r3, pc}
+ 796              	.L96:
+ 447:src/helper/cli/mx_cli.c ****         return kGeneralErr;
+ 797              		.loc 1 447 0
+ 798 0024 0448     		ldr	r0, .L97+8
+ 799 0026 FFF7FEFF 		bl	puts
+ 800              	.LVL101:
+ 448:src/helper/cli/mx_cli.c ****     }
+ARM GAS  /tmp/ccUDA1XO.s 			page 25
+
+
+ 801              		.loc 1 448 0
+ 802 002a 4FF0FF33 		mov	r3, #-1
+ 803 002e F7E7     		b	.L92
+ 804              	.L98:
+ 805              		.align	2
+ 806              	.L97:
+ 807 0030 00000000 		.word	.LANCHOR0
+ 808 0034 00000000 		.word	.LANCHOR1
+ 809 0038 00000000 		.word	.LC11
+ 810              		.cfi_endproc
+ 811              	.LFE140:
+ 813              		.section	.text.cli_printf,"ax",%progbits
+ 814              		.align	1
+ 815              		.global	cli_printf
+ 816              		.syntax unified
+ 817              		.thumb
+ 818              		.thumb_func
+ 819              		.fpu fpv4-sp-d16
+ 821              	cli_printf:
+ 822              	.LFB141:
+ 459:src/helper/cli/mx_cli.c ****     va_list ap;
+ 823              		.loc 1 459 0
+ 824              		.cfi_startproc
+ 825              		@ args = 4, pretend = 16, frame = 264
+ 826              		@ frame_needed = 0, uses_anonymous_args = 1
+ 827              	.LVL102:
+ 828 0000 0FB4     		push	{r0, r1, r2, r3}
+ 829              	.LCFI15:
+ 830              		.cfi_def_cfa_offset 16
+ 831              		.cfi_offset 0, -16
+ 832              		.cfi_offset 1, -12
+ 833              		.cfi_offset 2, -8
+ 834              		.cfi_offset 3, -4
+ 835 0002 70B5     		push	{r4, r5, r6, lr}
+ 836              	.LCFI16:
+ 837              		.cfi_def_cfa_offset 32
+ 838              		.cfi_offset 4, -32
+ 839              		.cfi_offset 5, -28
+ 840              		.cfi_offset 6, -24
+ 841              		.cfi_offset 14, -20
+ 842 0004 C2B0     		sub	sp, sp, #264
+ 843              	.LCFI17:
+ 844              		.cfi_def_cfa_offset 296
+ 845 0006 46AC     		add	r4, sp, #280
+ 846 0008 54F8046B 		ldr	r6, [r4], #4
+ 847              	.LVL103:
+ 465:src/helper/cli/mx_cli.c ****     pos = message;
+ 848              		.loc 1 465 0
+ 849 000c 4FF48075 		mov	r5, #256
+ 850 0010 2A46     		mov	r2, r5
+ 851 0012 0021     		movs	r1, #0
+ 852 0014 01A8     		add	r0, sp, #4
+ 853 0016 FFF7FEFF 		bl	memset
+ 854              	.LVL104:
+ 469:src/helper/cli/mx_cli.c ****     nMessageLen = vsnprintf(pos, 256 - sz, msg, ap);
+ 855              		.loc 1 469 0
+ 856 001a 4194     		str	r4, [sp, #260]
+ARM GAS  /tmp/ccUDA1XO.s 			page 26
+
+
+ 470:src/helper/cli/mx_cli.c ****     va_end(ap);
+ 857              		.loc 1 470 0
+ 858 001c 2346     		mov	r3, r4
+ 859 001e 3246     		mov	r2, r6
+ 860 0020 2946     		mov	r1, r5
+ 861 0022 01A8     		add	r0, sp, #4
+ 862              	.LVL105:
+ 863 0024 FFF7FEFF 		bl	vsnprintf
+ 864              	.LVL106:
+ 473:src/helper/cli/mx_cli.c ****         return 0;
+ 865              		.loc 1 473 0
+ 866 0028 0028     		cmp	r0, #0
+ 867 002a 02DD     		ble	.L100
+ 476:src/helper/cli/mx_cli.c ****     return 0;
+ 868              		.loc 1 476 0
+ 869 002c 01A8     		add	r0, sp, #4
+ 870              	.LVL107:
+ 871 002e FFF7FEFF 		bl	cli_putstr
+ 872              	.LVL108:
+ 873              	.L100:
+ 478:src/helper/cli/mx_cli.c **** 
+ 874              		.loc 1 478 0
+ 875 0032 0020     		movs	r0, #0
+ 876 0034 42B0     		add	sp, sp, #264
+ 877              	.LCFI18:
+ 878              		.cfi_def_cfa_offset 32
+ 879              		@ sp needed
+ 880 0036 BDE87040 		pop	{r4, r5, r6, lr}
+ 881              	.LCFI19:
+ 882              		.cfi_restore 14
+ 883              		.cfi_restore 6
+ 884              		.cfi_restore 5
+ 885              		.cfi_restore 4
+ 886              		.cfi_def_cfa_offset 16
+ 887 003a 04B0     		add	sp, sp, #16
+ 888              	.LCFI20:
+ 889              		.cfi_restore 3
+ 890              		.cfi_restore 2
+ 891              		.cfi_restore 1
+ 892              		.cfi_restore 0
+ 893              		.cfi_def_cfa_offset 0
+ 894 003c 7047     		bx	lr
+ 895              		.cfi_endproc
+ 896              	.LFE141:
+ 898              		.section	.text.tab_complete,"ax",%progbits
+ 899              		.align	1
+ 900              		.syntax unified
+ 901              		.thumb
+ 902              		.thumb_func
+ 903              		.fpu fpv4-sp-d16
+ 905              	tab_complete:
+ 906              	.LFB130:
+ 184:src/helper/cli/mx_cli.c ****     int i, n, m;
+ 907              		.loc 1 184 0
+ 908              		.cfi_startproc
+ 909              		@ args = 0, pretend = 0, frame = 0
+ 910              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/ccUDA1XO.s 			page 27
+
+
+ 911              	.LVL109:
+ 912 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 913              	.LCFI21:
+ 914              		.cfi_def_cfa_offset 32
+ 915              		.cfi_offset 4, -32
+ 916              		.cfi_offset 5, -28
+ 917              		.cfi_offset 6, -24
+ 918              		.cfi_offset 7, -20
+ 919              		.cfi_offset 8, -16
+ 920              		.cfi_offset 9, -12
+ 921              		.cfi_offset 10, -8
+ 922              		.cfi_offset 14, -4
+ 923 0004 8246     		mov	r10, r0
+ 924 0006 8846     		mov	r8, r1
+ 925              	.LVL110:
+ 188:src/helper/cli/mx_cli.c **** 
+ 926              		.loc 1 188 0
+ 927 0008 2E48     		ldr	r0, .L114
+ 928              	.LVL111:
+ 929 000a FFF7FEFF 		bl	cli_printf
+ 930              	.LVL112:
+ 186:src/helper/cli/mx_cli.c **** 
+ 931              		.loc 1 186 0
+ 932 000e 4FF00009 		mov	r9, #0
+ 191:src/helper/cli/mx_cli.c ****         if (pCli.commands[i]->name != NULL) {
+ 933              		.loc 1 191 0
+ 934 0012 4E46     		mov	r6, r9
+ 935 0014 4D46     		mov	r5, r9
+ 936 0016 4C46     		mov	r4, r9
+ 937 0018 08E0     		b	.L103
+ 938              	.LVL113:
+ 939              	.L112:
+ 198:src/helper/cli/mx_cli.c ****                 else
+ 940              		.loc 1 198 0
+ 941 001a 3A46     		mov	r2, r7
+ 942 001c 4946     		mov	r1, r9
+ 943 001e 2A48     		ldr	r0, .L114+4
+ 944 0020 FFF7FEFF 		bl	cli_printf
+ 945              	.LVL114:
+ 946 0024 00E0     		b	.L105
+ 947              	.L110:
+ 196:src/helper/cli/mx_cli.c ****                 else if (m == 2)
+ 948              		.loc 1 196 0
+ 949 0026 B946     		mov	r9, r7
+ 950              	.LVL115:
+ 951              	.L105:
+ 202:src/helper/cli/mx_cli.c ****         }
+ 952              		.loc 1 202 0
+ 953 0028 0135     		adds	r5, r5, #1
+ 954              	.LVL116:
+ 955              	.L104:
+ 191:src/helper/cli/mx_cli.c ****         if (pCli.commands[i]->name != NULL) {
+ 956              		.loc 1 191 0 discriminator 2
+ 957 002a 0134     		adds	r4, r4, #1
+ 958              	.LVL117:
+ 959              	.L103:
+ 191:src/helper/cli/mx_cli.c ****         if (pCli.commands[i]->name != NULL) {
+ARM GAS  /tmp/ccUDA1XO.s 			page 28
+
+
+ 960              		.loc 1 191 0 is_stmt 0 discriminator 1
+ 961 002c 312C     		cmp	r4, #49
+ 962 002e 1EDC     		bgt	.L107
+ 191:src/helper/cli/mx_cli.c ****         if (pCli.commands[i]->name != NULL) {
+ 963              		.loc 1 191 0 discriminator 3
+ 964 0030 264B     		ldr	r3, .L114+8
+ 965 0032 D3F82035 		ldr	r3, [r3, #1312]
+ 966 0036 AB42     		cmp	r3, r5
+ 967 0038 19D9     		bls	.L107
+ 192:src/helper/cli/mx_cli.c ****             if (!strncmp(inbuf, pCli.commands[i]->name, *bp)) {
+ 968              		.loc 1 192 0 is_stmt 1
+ 969 003a 04F58B73 		add	r3, r4, #278
+ 970 003e 234A     		ldr	r2, .L114+8
+ 971 0040 52F82330 		ldr	r3, [r2, r3, lsl #2]
+ 972 0044 1F68     		ldr	r7, [r3]
+ 973 0046 002F     		cmp	r7, #0
+ 974 0048 EFD0     		beq	.L104
+ 193:src/helper/cli/mx_cli.c ****                 m++;
+ 975              		.loc 1 193 0
+ 976 004a D8F80020 		ldr	r2, [r8]
+ 977 004e 3946     		mov	r1, r7
+ 978 0050 5046     		mov	r0, r10
+ 979 0052 FFF7FEFF 		bl	strncmp
+ 980              	.LVL118:
+ 981 0056 0028     		cmp	r0, #0
+ 982 0058 E6D1     		bne	.L105
+ 194:src/helper/cli/mx_cli.c ****                 if (m == 1)
+ 983              		.loc 1 194 0
+ 984 005a 0136     		adds	r6, r6, #1
+ 985              	.LVL119:
+ 195:src/helper/cli/mx_cli.c ****                     fm = pCli.commands[i]->name;
+ 986              		.loc 1 195 0
+ 987 005c 012E     		cmp	r6, #1
+ 988 005e E2D0     		beq	.L110
+ 197:src/helper/cli/mx_cli.c ****                     cli_printf(" % s % s ", fm, pCli.commands[i]->name);
+ 989              		.loc 1 197 0
+ 990 0060 022E     		cmp	r6, #2
+ 991 0062 DAD0     		beq	.L112
+ 200:src/helper/cli/mx_cli.c ****             }
+ 992              		.loc 1 200 0
+ 993 0064 3946     		mov	r1, r7
+ 994 0066 1A48     		ldr	r0, .L114+12
+ 995 0068 FFF7FEFF 		bl	cli_printf
+ 996              	.LVL120:
+ 997 006c DCE7     		b	.L105
+ 998              	.L107:
+ 207:src/helper/cli/mx_cli.c ****         n = strlen(fm) - *bp;
+ 999              		.loc 1 207 0
+ 1000 006e 012E     		cmp	r6, #1
+ 1001 0070 06D0     		beq	.L113
+ 1002              	.LVL121:
+ 1003              	.L109:
+ 218:src/helper/cli/mx_cli.c **** }
+ 1004              		.loc 1 218 0
+ 1005 0072 5246     		mov	r2, r10
+ 1006 0074 1749     		ldr	r1, .L114+16
+ 1007 0076 1848     		ldr	r0, .L114+20
+ARM GAS  /tmp/ccUDA1XO.s 			page 29
+
+
+ 1008 0078 FFF7FEFF 		bl	cli_printf
+ 1009              	.LVL122:
+ 219:src/helper/cli/mx_cli.c **** 
+ 1010              		.loc 1 219 0
+ 1011 007c BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 1012              	.LVL123:
+ 1013              	.L113:
+ 207:src/helper/cli/mx_cli.c ****         n = strlen(fm) - *bp;
+ 1014              		.loc 1 207 0 discriminator 1
+ 1015 0080 B9F1000F 		cmp	r9, #0
+ 1016 0084 F5D0     		beq	.L109
+ 208:src/helper/cli/mx_cli.c ****         if (*bp + n < INBUF_SIZE) {
+ 1017              		.loc 1 208 0
+ 1018 0086 4846     		mov	r0, r9
+ 1019 0088 FFF7FEFF 		bl	strlen
+ 1020              	.LVL124:
+ 1021 008c D8F80030 		ldr	r3, [r8]
+ 1022 0090 C41A     		subs	r4, r0, r3
+ 1023              	.LVL125:
+ 209:src/helper/cli/mx_cli.c ****             memcpy(inbuf + *bp, fm + *bp, n);
+ 1024              		.loc 1 209 0
+ 1025 0092 4F28     		cmp	r0, #79
+ 1026 0094 EDD8     		bhi	.L109
+ 210:src/helper/cli/mx_cli.c ****             *bp += n;
+ 1027              		.loc 1 210 0
+ 1028 0096 2246     		mov	r2, r4
+ 1029 0098 09EB0301 		add	r1, r9, r3
+ 1030 009c 0AEB0300 		add	r0, r10, r3
+ 1031 00a0 FFF7FEFF 		bl	memcpy
+ 1032              	.LVL126:
+ 211:src/helper/cli/mx_cli.c ****             inbuf[(*bp)++] = ' ';
+ 1033              		.loc 1 211 0
+ 1034 00a4 D8F80030 		ldr	r3, [r8]
+ 1035 00a8 1C44     		add	r4, r4, r3
+ 1036              	.LVL127:
+ 212:src/helper/cli/mx_cli.c ****             inbuf[*bp] = '\0';
+ 1037              		.loc 1 212 0
+ 1038 00aa 631C     		adds	r3, r4, #1
+ 1039 00ac C8F80030 		str	r3, [r8]
+ 1040 00b0 2023     		movs	r3, #32
+ 1041 00b2 0AF80430 		strb	r3, [r10, r4]
+ 213:src/helper/cli/mx_cli.c ****         }
+ 1042              		.loc 1 213 0
+ 1043 00b6 D8F80030 		ldr	r3, [r8]
+ 1044 00ba 0022     		movs	r2, #0
+ 1045 00bc 0AF80320 		strb	r2, [r10, r3]
+ 1046 00c0 D7E7     		b	.L109
+ 1047              	.L115:
+ 1048 00c2 00BF     		.align	2
+ 1049              	.L114:
+ 1050 00c4 00000000 		.word	.LC12
+ 1051 00c8 04000000 		.word	.LC13
+ 1052 00cc 00000000 		.word	.LANCHOR0
+ 1053 00d0 10000000 		.word	.LC14
+ 1054 00d4 18000000 		.word	.LC15
+ 1055 00d8 20000000 		.word	.LC16
+ 1056              		.cfi_endproc
+ARM GAS  /tmp/ccUDA1XO.s 			page 30
+
+
+ 1057              	.LFE130:
+ 1059              		.section	.text.handle_input,"ax",%progbits
+ 1060              		.align	1
+ 1061              		.syntax unified
+ 1062              		.thumb
+ 1063              		.thumb_func
+ 1064              		.fpu fpv4-sp-d16
+ 1066              	handle_input:
+ 1067              	.LFB129:
+  87:src/helper/cli/mx_cli.c ****     struct {
+ 1068              		.loc 1 87 0
+ 1069              		.cfi_startproc
+ 1070              		@ args = 0, pretend = 0, frame = 8
+ 1071              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1072              	.LVL128:
+ 1073 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 1074              	.LCFI22:
+ 1075              		.cfi_def_cfa_offset 24
+ 1076              		.cfi_offset 4, -24
+ 1077              		.cfi_offset 5, -20
+ 1078              		.cfi_offset 6, -16
+ 1079              		.cfi_offset 7, -12
+ 1080              		.cfi_offset 8, -8
+ 1081              		.cfi_offset 14, -4
+ 1082 0004 82B0     		sub	sp, sp, #8
+ 1083              	.LCFI23:
+ 1084              		.cfi_def_cfa_offset 32
+ 1085 0006 0546     		mov	r5, r0
+ 1086              	.LVL129:
+  99:src/helper/cli/mx_cli.c ****     memset(&stat, 0, sizeof(stat));
+ 1087              		.loc 1 99 0
+ 1088 0008 4022     		movs	r2, #64
+ 1089 000a 0021     		movs	r1, #0
+ 1090 000c 6748     		ldr	r0, .L142
+ 1091              	.LVL130:
+ 1092 000e FFF7FEFF 		bl	memset
+ 1093              	.LVL131:
+ 100:src/helper/cli/mx_cli.c **** 
+ 1094              		.loc 1 100 0
+ 1095 0012 0026     		movs	r6, #0
+ 1096 0014 0196     		str	r6, [sp, #4]
+  95:src/helper/cli/mx_cli.c ****     const struct cli_command* command = NULL;
+ 1097              		.loc 1 95 0
+ 1098 0016 3446     		mov	r4, r6
+ 1099 0018 11E0     		b	.L127
+ 1100              	.LVL132:
+ 1101              	.L138:
+ 105:src/helper/cli/mx_cli.c ****                 return 2;
+ 1102              		.loc 1 105 0
+ 1103 001a 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+ 1104 001e 13F0020F 		tst	r3, #2
+ 1105 0022 40F0B680 		bne	.L130
+ 107:src/helper/cli/mx_cli.c ****             break;
+ 1106              		.loc 1 107 0
+ 1107 0026 43F00403 		orr	r3, r3, #4
+ 1108 002a 8DF80430 		strb	r3, [sp, #4]
+ 1109              	.LVL133:
+ARM GAS  /tmp/ccUDA1XO.s 			page 31
+
+
+ 1110              	.L122:
+ 153:src/helper/cli/mx_cli.c **** 
+ 1111              		.loc 1 153 0
+ 1112 002e 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+ 1113 0032 13F0040F 		tst	r3, #4
+ 1114 0036 7AD1     		bne	.L126
+ 153:src/helper/cli/mx_cli.c **** 
+ 1115              		.loc 1 153 0 is_stmt 0 discriminator 1
+ 1116 0038 0134     		adds	r4, r4, #1
+ 1117              	.LVL134:
+ 1118 003a 4F2C     		cmp	r4, #79
+ 1119 003c 77DC     		bgt	.L126
+ 1120              	.LVL135:
+ 1121              	.L127:
+ 103:src/helper/cli/mx_cli.c ****         case '\0':
+ 1122              		.loc 1 103 0 is_stmt 1
+ 1123 003e 2246     		mov	r2, r4
+ 1124 0040 2F19     		adds	r7, r5, r4
+ 1125 0042 2B5D     		ldrb	r3, [r5, r4]	@ zero_extendqisi2
+ 1126 0044 202B     		cmp	r3, #32
+ 1127 0046 4CD0     		beq	.L118
+ 1128 0048 222B     		cmp	r3, #34
+ 1129 004a 0FD0     		beq	.L119
+ 1130 004c 002B     		cmp	r3, #0
+ 1131 004e E4D0     		beq	.L138
+ 146:src/helper/cli/mx_cli.c ****                 stat.inArg = 1;
+ 1132              		.loc 1 146 0
+ 1133 0050 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+ 1134 0054 13F0010F 		tst	r3, #1
+ 1135 0058 E9D1     		bne	.L122
+ 147:src/helper/cli/mx_cli.c ****                 argc++;
+ 1136              		.loc 1 147 0
+ 1137 005a 43F00103 		orr	r3, r3, #1
+ 1138 005e 8DF80430 		strb	r3, [sp, #4]
+ 1139              	.LVL136:
+ 149:src/helper/cli/mx_cli.c ****             }
+ 1140              		.loc 1 149 0
+ 1141 0062 524B     		ldr	r3, .L142
+ 1142 0064 43F82670 		str	r7, [r3, r6, lsl #2]
+ 148:src/helper/cli/mx_cli.c ****                 argv[argc - 1] = &inbuf[i];
+ 1143              		.loc 1 148 0
+ 1144 0068 0136     		adds	r6, r6, #1
+ 1145              	.LVL137:
+ 1146 006a E0E7     		b	.L122
+ 1147              	.L119:
+ 111:src/helper/cli/mx_cli.c ****                 memcpy(&inbuf[i - 1], &inbuf[i], strlen(&inbuf[i]) + 1);
+ 1148              		.loc 1 111 0
+ 1149 006c 002C     		cmp	r4, #0
+ 1150 006e 05DD     		ble	.L123
+ 111:src/helper/cli/mx_cli.c ****                 memcpy(&inbuf[i - 1], &inbuf[i], strlen(&inbuf[i]) + 1);
+ 1151              		.loc 1 111 0 is_stmt 0 discriminator 1
+ 1152 0070 631E     		subs	r3, r4, #1
+ 1153 0072 05EB0308 		add	r8, r5, r3
+ 1154 0076 EB5C     		ldrb	r3, [r5, r3]	@ zero_extendqisi2
+ 1155 0078 5C2B     		cmp	r3, #92
+ 1156 007a 16D0     		beq	.L139
+ 1157              	.L123:
+ARM GAS  /tmp/ccUDA1XO.s 			page 32
+
+
+ 116:src/helper/cli/mx_cli.c ****                 break;
+ 1158              		.loc 1 116 0 is_stmt 1
+ 1159 007c 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+ 1160 0080 03F00303 		and	r3, r3, #3
+ 1161 0084 012B     		cmp	r3, #1
+ 1162 0086 D2D0     		beq	.L122
+ 118:src/helper/cli/mx_cli.c ****                 return 2;
+ 1163              		.loc 1 118 0
+ 1164 0088 022B     		cmp	r3, #2
+ 1165 008a 00F08480 		beq	.L131
+ 121:src/helper/cli/mx_cli.c ****                 stat.inArg = 1;
+ 1166              		.loc 1 121 0
+ 1167 008e DBB9     		cbnz	r3, .L124
+ 122:src/helper/cli/mx_cli.c ****                 stat.inQuote = 1;
+ 1168              		.loc 1 122 0
+ 1169 0090 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+ 123:src/helper/cli/mx_cli.c ****                 argc++;
+ 1170              		.loc 1 123 0
+ 1171 0094 43F00303 		orr	r3, r3, #3
+ 1172 0098 8DF80430 		strb	r3, [sp, #4]
+ 1173              	.LVL138:
+ 125:src/helper/cli/mx_cli.c ****             } else if (stat.inQuote && stat.inArg) {
+ 1174              		.loc 1 125 0
+ 1175 009c 0132     		adds	r2, r2, #1
+ 1176 009e 2A44     		add	r2, r2, r5
+ 1177 00a0 424B     		ldr	r3, .L142
+ 1178 00a2 43F82620 		str	r2, [r3, r6, lsl #2]
+ 124:src/helper/cli/mx_cli.c ****                 argv[argc - 1] = &inbuf[i + 1];
+ 1179              		.loc 1 124 0
+ 1180 00a6 0136     		adds	r6, r6, #1
+ 1181              	.LVL139:
+ 1182 00a8 C1E7     		b	.L122
+ 1183              	.LVL140:
+ 1184              	.L139:
+ 111:src/helper/cli/mx_cli.c ****                 memcpy(&inbuf[i - 1], &inbuf[i], strlen(&inbuf[i]) + 1);
+ 1185              		.loc 1 111 0 discriminator 2
+ 1186 00aa 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+ 1187 00ae 13F0010F 		tst	r3, #1
+ 1188 00b2 E3D0     		beq	.L123
+ 112:src/helper/cli/mx_cli.c ****                 --i;
+ 1189              		.loc 1 112 0
+ 1190 00b4 3846     		mov	r0, r7
+ 1191 00b6 FFF7FEFF 		bl	strlen
+ 1192              	.LVL141:
+ 1193 00ba 421C     		adds	r2, r0, #1
+ 1194 00bc 3946     		mov	r1, r7
+ 1195 00be 4046     		mov	r0, r8
+ 1196 00c0 FFF7FEFF 		bl	memcpy
+ 1197              	.LVL142:
+ 113:src/helper/cli/mx_cli.c ****                 break;
+ 1198              		.loc 1 113 0
+ 1199 00c4 013C     		subs	r4, r4, #1
+ 1200              	.LVL143:
+ 114:src/helper/cli/mx_cli.c ****             }
+ 1201              		.loc 1 114 0
+ 1202 00c6 B2E7     		b	.L122
+ 1203              	.LVL144:
+ARM GAS  /tmp/ccUDA1XO.s 			page 33
+
+
+ 1204              	.L124:
+ 126:src/helper/cli/mx_cli.c ****                 stat.inArg = 0;
+ 1205              		.loc 1 126 0
+ 1206 00c8 032B     		cmp	r3, #3
+ 1207 00ca B0D1     		bne	.L122
+ 127:src/helper/cli/mx_cli.c ****                 stat.inQuote = 0;
+ 1208              		.loc 1 127 0
+ 1209 00cc 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+ 128:src/helper/cli/mx_cli.c ****                 inbuf[i] = '\0';
+ 1210              		.loc 1 128 0
+ 1211 00d0 03F0FE03 		and	r3, r3, #254
+ 1212 00d4 6FF34103 		bfc	r3, #1, #1
+ 1213 00d8 8DF80430 		strb	r3, [sp, #4]
+ 129:src/helper/cli/mx_cli.c ****             }
+ 1214              		.loc 1 129 0
+ 1215 00dc 0023     		movs	r3, #0
+ 1216 00de 3B70     		strb	r3, [r7]
+ 1217 00e0 A5E7     		b	.L122
+ 1218              	.L118:
+ 134:src/helper/cli/mx_cli.c ****                 memcpy(&inbuf[i - 1], &inbuf[i], strlen(&inbuf[i]) + 1);
+ 1219              		.loc 1 134 0
+ 1220 00e2 002C     		cmp	r4, #0
+ 1221 00e4 05DD     		ble	.L125
+ 134:src/helper/cli/mx_cli.c ****                 memcpy(&inbuf[i - 1], &inbuf[i], strlen(&inbuf[i]) + 1);
+ 1222              		.loc 1 134 0 is_stmt 0 discriminator 1
+ 1223 00e6 621E     		subs	r2, r4, #1
+ 1224              	.LVL145:
+ 1225 00e8 05EB0208 		add	r8, r5, r2
+ 1226 00ec AB5C     		ldrb	r3, [r5, r2]	@ zero_extendqisi2
+ 1227 00ee 5C2B     		cmp	r3, #92
+ 1228 00f0 0ED0     		beq	.L140
+ 1229              	.L125:
+ 139:src/helper/cli/mx_cli.c ****                 stat.inArg = 0;
+ 1230              		.loc 1 139 0 is_stmt 1
+ 1231 00f2 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+ 1232 00f6 03F00303 		and	r3, r3, #3
+ 1233 00fa 012B     		cmp	r3, #1
+ 1234 00fc 97D1     		bne	.L122
+ 140:src/helper/cli/mx_cli.c ****                 inbuf[i] = '\0';
+ 1235              		.loc 1 140 0
+ 1236 00fe 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+ 1237 0102 6FF30003 		bfc	r3, #0, #1
+ 1238 0106 8DF80430 		strb	r3, [sp, #4]
+ 141:src/helper/cli/mx_cli.c ****             }
+ 1239              		.loc 1 141 0
+ 1240 010a 0023     		movs	r3, #0
+ 1241 010c 3B70     		strb	r3, [r7]
+ 1242 010e 8EE7     		b	.L122
+ 1243              	.L140:
+ 134:src/helper/cli/mx_cli.c ****                 memcpy(&inbuf[i - 1], &inbuf[i], strlen(&inbuf[i]) + 1);
+ 1244              		.loc 1 134 0 discriminator 2
+ 1245 0110 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+ 1246 0114 13F0010F 		tst	r3, #1
+ 1247 0118 EBD0     		beq	.L125
+ 135:src/helper/cli/mx_cli.c ****                 --i;
+ 1248              		.loc 1 135 0
+ 1249 011a 3846     		mov	r0, r7
+ARM GAS  /tmp/ccUDA1XO.s 			page 34
+
+
+ 1250 011c FFF7FEFF 		bl	strlen
+ 1251              	.LVL146:
+ 1252 0120 421C     		adds	r2, r0, #1
+ 1253 0122 3946     		mov	r1, r7
+ 1254 0124 4046     		mov	r0, r8
+ 1255 0126 FFF7FEFF 		bl	memcpy
+ 1256              	.LVL147:
+ 136:src/helper/cli/mx_cli.c ****                 break;
+ 1257              		.loc 1 136 0
+ 1258 012a 013C     		subs	r4, r4, #1
+ 1259              	.LVL148:
+ 137:src/helper/cli/mx_cli.c ****             }
+ 1260              		.loc 1 137 0
+ 1261 012c 7FE7     		b	.L122
+ 1262              	.L126:
+ 155:src/helper/cli/mx_cli.c ****         return 2;
+ 1263              		.loc 1 155 0
+ 1264 012e 13F0020F 		tst	r3, #2
+ 1265 0132 32D1     		bne	.L132
+ 158:src/helper/cli/mx_cli.c ****         return 0;
+ 1266              		.loc 1 158 0
+ 1267 0134 002E     		cmp	r6, #0
+ 1268 0136 34DD     		ble	.L133
+ 161:src/helper/cli/mx_cli.c ****         cli_printf("\r\n");
+ 1269              		.loc 1 161 0
+ 1270 0138 1D4B     		ldr	r3, .L142+4
+ 1271 013a D3F82435 		ldr	r3, [r3, #1316]
+ 1272 013e 13B3     		cbz	r3, .L141
+ 1273              	.L128:
+ 168:src/helper/cli/mx_cli.c ****     command = lookup_command(argv[0], i);
+ 1274              		.loc 1 168 0
+ 1275 0140 1A4B     		ldr	r3, .L142
+ 1276 0142 1C68     		ldr	r4, [r3]
+ 1277              	.LVL149:
+ 1278 0144 2E21     		movs	r1, #46
+ 1279 0146 2046     		mov	r0, r4
+ 1280 0148 FFF7FEFF 		bl	strchr
+ 1281              	.LVL150:
+ 1282 014c F8B1     		cbz	r0, .L134
+ 168:src/helper/cli/mx_cli.c ****     command = lookup_command(argv[0], i);
+ 1283              		.loc 1 168 0 is_stmt 0 discriminator 1
+ 1284 014e 011B     		subs	r1, r0, r4
+ 1285              	.L129:
+ 1286              	.LVL151:
+ 169:src/helper/cli/mx_cli.c ****     if (command == NULL)
+ 1287              		.loc 1 169 0 is_stmt 1 discriminator 4
+ 1288 0150 2046     		mov	r0, r4
+ 1289              	.LVL152:
+ 1290 0152 FFF7FEFF 		bl	lookup_command
+ 1291              	.LVL153:
+ 170:src/helper/cli/mx_cli.c ****         return 1;
+ 1292              		.loc 1 170 0 discriminator 4
+ 1293 0156 0746     		mov	r7, r0
+ 1294 0158 28B3     		cbz	r0, .L135
+ 173:src/helper/cli/mx_cli.c ****     cli_putstr("\r\n");
+ 1295              		.loc 1 173 0
+ 1296 015a 164C     		ldr	r4, .L142+8
+ARM GAS  /tmp/ccUDA1XO.s 			page 35
+
+
+ 1297 015c 4FF48065 		mov	r5, #1024
+ 1298              	.LVL154:
+ 1299 0160 2A46     		mov	r2, r5
+ 1300 0162 0021     		movs	r1, #0
+ 1301 0164 2046     		mov	r0, r4
+ 1302              	.LVL155:
+ 1303 0166 FFF7FEFF 		bl	memset
+ 1304              	.LVL156:
+ 174:src/helper/cli/mx_cli.c ****     command->function(pCli.outbuf, OUTBUF_SIZE, argc, argv);
+ 1305              		.loc 1 174 0
+ 1306 016a 1348     		ldr	r0, .L142+12
+ 1307 016c FFF7FEFF 		bl	cli_putstr
+ 1308              	.LVL157:
+ 175:src/helper/cli/mx_cli.c ****     cli_putstr(pCli.outbuf);
+ 1309              		.loc 1 175 0
+ 1310 0170 BF68     		ldr	r7, [r7, #8]
+ 1311              	.LVL158:
+ 1312 0172 0E4B     		ldr	r3, .L142
+ 1313 0174 3246     		mov	r2, r6
+ 1314 0176 2946     		mov	r1, r5
+ 1315 0178 2046     		mov	r0, r4
+ 1316 017a B847     		blx	r7
+ 1317              	.LVL159:
+ 176:src/helper/cli/mx_cli.c ****     return 0;
+ 1318              		.loc 1 176 0
+ 1319 017c 2046     		mov	r0, r4
+ 1320 017e FFF7FEFF 		bl	cli_putstr
+ 1321              	.LVL160:
+ 177:src/helper/cli/mx_cli.c **** }
+ 1322              		.loc 1 177 0
+ 1323 0182 0020     		movs	r0, #0
+ 1324 0184 0AE0     		b	.L116
+ 1325              	.LVL161:
+ 1326              	.L141:
+ 162:src/helper/cli/mx_cli.c **** 
+ 1327              		.loc 1 162 0
+ 1328 0186 0C48     		ldr	r0, .L142+12
+ 1329 0188 FFF7FEFF 		bl	cli_printf
+ 1330              	.LVL162:
+ 1331 018c D8E7     		b	.L128
+ 1332              	.LVL163:
+ 1333              	.L134:
+ 168:src/helper/cli/mx_cli.c ****     command = lookup_command(argv[0], i);
+ 1334              		.loc 1 168 0
+ 1335 018e 0021     		movs	r1, #0
+ 1336 0190 DEE7     		b	.L129
+ 1337              	.LVL164:
+ 1338              	.L130:
+ 106:src/helper/cli/mx_cli.c ****             stat.done = 1;
+ 1339              		.loc 1 106 0
+ 1340 0192 0220     		movs	r0, #2
+ 1341 0194 02E0     		b	.L116
+ 1342              	.L131:
+ 119:src/helper/cli/mx_cli.c **** 
+ 1343              		.loc 1 119 0
+ 1344 0196 0220     		movs	r0, #2
+ 1345 0198 00E0     		b	.L116
+ARM GAS  /tmp/ccUDA1XO.s 			page 36
+
+
+ 1346              	.LVL165:
+ 1347              	.L132:
+ 156:src/helper/cli/mx_cli.c **** 
+ 1348              		.loc 1 156 0
+ 1349 019a 0220     		movs	r0, #2
+ 1350              	.LVL166:
+ 1351              	.L116:
+ 178:src/helper/cli/mx_cli.c **** 
+ 1352              		.loc 1 178 0
+ 1353 019c 02B0     		add	sp, sp, #8
+ 1354              	.LCFI24:
+ 1355              		.cfi_remember_state
+ 1356              		.cfi_def_cfa_offset 24
+ 1357              		@ sp needed
+ 1358 019e BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1359              	.LVL167:
+ 1360              	.L133:
+ 1361              	.LCFI25:
+ 1362              		.cfi_restore_state
+ 159:src/helper/cli/mx_cli.c **** 
+ 1363              		.loc 1 159 0
+ 1364 01a2 0020     		movs	r0, #0
+ 1365 01a4 FAE7     		b	.L116
+ 1366              	.LVL168:
+ 1367              	.L135:
+ 171:src/helper/cli/mx_cli.c **** 
+ 1368              		.loc 1 171 0
+ 1369 01a6 0120     		movs	r0, #1
+ 1370              	.LVL169:
+ 1371 01a8 F8E7     		b	.L116
+ 1372              	.L143:
+ 1373 01aa 00BF     		.align	2
+ 1374              	.L142:
+ 1375 01ac 00000000 		.word	.LANCHOR2
+ 1376 01b0 00000000 		.word	.LANCHOR0
+ 1377 01b4 58000000 		.word	.LANCHOR0+88
+ 1378 01b8 00000000 		.word	.LC12
+ 1379              		.cfi_endproc
+ 1380              	.LFE129:
+ 1382              		.section	.text.print_bad_command,"ax",%progbits
+ 1383              		.align	1
+ 1384              		.syntax unified
+ 1385              		.thumb
+ 1386              		.thumb_func
+ 1387              		.fpu fpv4-sp-d16
+ 1389              	print_bad_command:
+ 1390              	.LFB132:
+ 274:src/helper/cli/mx_cli.c ****     if (cmd_string != NULL) {
+ 1391              		.loc 1 274 0
+ 1392              		.cfi_startproc
+ 1393              		@ args = 0, pretend = 0, frame = 0
+ 1394              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1395              	.LVL170:
+ 275:src/helper/cli/mx_cli.c ****         char* c = cmd_string;
+ 1396              		.loc 1 275 0
+ 1397 0000 D8B1     		cbz	r0, .L151
+ 274:src/helper/cli/mx_cli.c ****     if (cmd_string != NULL) {
+ARM GAS  /tmp/ccUDA1XO.s 			page 37
+
+
+ 1398              		.loc 1 274 0
+ 1399 0002 10B5     		push	{r4, lr}
+ 1400              	.LCFI26:
+ 1401              		.cfi_def_cfa_offset 8
+ 1402              		.cfi_offset 4, -8
+ 1403              		.cfi_offset 14, -4
+ 1404 0004 0446     		mov	r4, r0
+ 1405              	.LVL171:
+ 1406              	.LBB3:
+ 277:src/helper/cli/mx_cli.c ****         while (*c != '\0') {
+ 1407              		.loc 1 277 0
+ 1408 0006 0D48     		ldr	r0, .L155
+ 1409              	.LVL172:
+ 1410 0008 FFF7FEFF 		bl	cli_printf
+ 1411              	.LVL173:
+ 278:src/helper/cli/mx_cli.c ****             if (isprint(*c)) {
+ 1412              		.loc 1 278 0
+ 1413 000c 03E0     		b	.L146
+ 1414              	.LVL174:
+ 1415              	.L147:
+ 282:src/helper/cli/mx_cli.c ****             }
+ 1416              		.loc 1 282 0
+ 1417 000e 0C48     		ldr	r0, .L155+4
+ 1418 0010 FFF7FEFF 		bl	cli_printf
+ 1419              	.LVL175:
+ 1420              	.L148:
+ 284:src/helper/cli/mx_cli.c ****         }
+ 1421              		.loc 1 284 0
+ 1422 0014 0134     		adds	r4, r4, #1
+ 1423              	.LVL176:
+ 1424              	.L146:
+ 278:src/helper/cli/mx_cli.c ****             if (isprint(*c)) {
+ 1425              		.loc 1 278 0
+ 1426 0016 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 1427 0018 5BB1     		cbz	r3, .L154
+ 279:src/helper/cli/mx_cli.c ****                 cli_printf("%c", *c);
+ 1428              		.loc 1 279 0
+ 1429 001a FFF7FEFF 		bl	__locale_ctype_ptr
+ 1430              	.LVL177:
+ 1431 001e 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 1432 0020 0844     		add	r0, r0, r1
+ 1433 0022 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+ 1434 0024 13F0970F 		tst	r3, #151
+ 1435 0028 F1D0     		beq	.L147
+ 280:src/helper/cli/mx_cli.c ****             } else {
+ 1436              		.loc 1 280 0
+ 1437 002a 0648     		ldr	r0, .L155+8
+ 1438 002c FFF7FEFF 		bl	cli_printf
+ 1439              	.LVL178:
+ 1440 0030 F0E7     		b	.L148
+ 1441              	.L154:
+ 286:src/helper/cli/mx_cli.c ****     }
+ 1442              		.loc 1 286 0
+ 1443 0032 0548     		ldr	r0, .L155+12
+ 1444 0034 FFF7FEFF 		bl	cli_printf
+ 1445              	.LVL179:
+ 1446              	.LBE3:
+ARM GAS  /tmp/ccUDA1XO.s 			page 38
+
+
+ 288:src/helper/cli/mx_cli.c **** 
+ 1447              		.loc 1 288 0
+ 1448 0038 10BD     		pop	{r4, pc}
+ 1449              	.LVL180:
+ 1450              	.L151:
+ 1451              	.LCFI27:
+ 1452              		.cfi_def_cfa_offset 0
+ 1453              		.cfi_restore 4
+ 1454              		.cfi_restore 14
+ 1455 003a 7047     		bx	lr
+ 1456              	.L156:
+ 1457              		.align	2
+ 1458              	.L155:
+ 1459 003c 00000000 		.word	.LC17
+ 1460 0040 10000000 		.word	.LC19
+ 1461 0044 0C000000 		.word	.LC18
+ 1462 0048 18000000 		.word	.LC20
+ 1463              		.cfi_endproc
+ 1464              	.LFE132:
+ 1466              		.section	.text.cli_getchar,"ax",%progbits
+ 1467              		.align	1
+ 1468              		.global	cli_getchar
+ 1469              		.syntax unified
+ 1470              		.thumb
+ 1471              		.thumb_func
+ 1472              		.fpu fpv4-sp-d16
+ 1474              	cli_getchar:
+ 1475              	.LFB143:
+ 487:src/helper/cli/mx_cli.c **** 
+ 488:src/helper/cli/mx_cli.c **** int cli_getchar(char* inbuf)
+ 489:src/helper/cli/mx_cli.c **** {
+ 1476              		.loc 1 489 0
+ 1477              		.cfi_startproc
+ 1478              		@ args = 0, pretend = 0, frame = 0
+ 1479              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1480              	.LVL181:
+ 1481 0000 10B5     		push	{r4, lr}
+ 1482              	.LCFI28:
+ 1483              		.cfi_def_cfa_offset 8
+ 1484              		.cfi_offset 4, -8
+ 1485              		.cfi_offset 14, -4
+ 1486 0002 0446     		mov	r4, r0
+ 490:src/helper/cli/mx_cli.c ****     int ch;
+ 491:src/helper/cli/mx_cli.c ****     ch = mx_hal_cli_getc();
+ 1487              		.loc 1 491 0
+ 1488 0004 FFF7FEFF 		bl	mx_hal_cli_getc
+ 1489              	.LVL182:
+ 492:src/helper/cli/mx_cli.c ****     
+ 493:src/helper/cli/mx_cli.c ****     if (ch < 0)
+ 1490              		.loc 1 493 0
+ 1491 0008 0028     		cmp	r0, #0
+ 1492 000a 02DB     		blt	.L159
+ 494:src/helper/cli/mx_cli.c ****         return 0;
+ 495:src/helper/cli/mx_cli.c ****     inbuf[0] = (char)ch;
+ 1493              		.loc 1 495 0
+ 1494 000c 2070     		strb	r0, [r4]
+ 496:src/helper/cli/mx_cli.c ****     return 1;
+ARM GAS  /tmp/ccUDA1XO.s 			page 39
+
+
+ 1495              		.loc 1 496 0
+ 1496 000e 0120     		movs	r0, #1
+ 1497              	.LVL183:
+ 1498              	.L157:
+ 497:src/helper/cli/mx_cli.c **** }
+ 1499              		.loc 1 497 0
+ 1500 0010 10BD     		pop	{r4, pc}
+ 1501              	.LVL184:
+ 1502              	.L159:
+ 494:src/helper/cli/mx_cli.c ****         return 0;
+ 1503              		.loc 1 494 0
+ 1504 0012 0020     		movs	r0, #0
+ 1505              	.LVL185:
+ 1506 0014 FCE7     		b	.L157
+ 1507              		.cfi_endproc
+ 1508              	.LFE143:
+ 1510              		.section	.text.get_input,"ax",%progbits
+ 1511              		.align	1
+ 1512              		.syntax unified
+ 1513              		.thumb
+ 1514              		.thumb_func
+ 1515              		.fpu fpv4-sp-d16
+ 1517              	get_input:
+ 1518              	.LFB131:
+ 225:src/helper/cli/mx_cli.c ****     if (inbuf == NULL) {
+ 1519              		.loc 1 225 0
+ 1520              		.cfi_startproc
+ 1521              		@ args = 0, pretend = 0, frame = 0
+ 1522              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1523              	.LVL186:
+ 1524 0000 38B5     		push	{r3, r4, r5, lr}
+ 1525              	.LCFI29:
+ 1526              		.cfi_def_cfa_offset 16
+ 1527              		.cfi_offset 3, -16
+ 1528              		.cfi_offset 4, -12
+ 1529              		.cfi_offset 5, -8
+ 1530              		.cfi_offset 14, -4
+ 1531 0002 0C46     		mov	r4, r1
+ 226:src/helper/cli/mx_cli.c ****         return 0;
+ 1532              		.loc 1 226 0
+ 1533 0004 0546     		mov	r5, r0
+ 1534 0006 F0B9     		cbnz	r0, .L163
+ 227:src/helper/cli/mx_cli.c ****     }
+ 1535              		.loc 1 227 0
+ 1536 0008 0020     		movs	r0, #0
+ 1537              	.LVL187:
+ 1538 000a 42E0     		b	.L161
+ 1539              	.LVL188:
+ 1540              	.L176:
+ 233:src/helper/cli/mx_cli.c ****             *bp = 0;
+ 1541              		.loc 1 233 0
+ 1542 000c 0023     		movs	r3, #0
+ 1543 000e 1370     		strb	r3, [r2]
+ 234:src/helper/cli/mx_cli.c ****             return 1;
+ 1544              		.loc 1 234 0
+ 1545 0010 2360     		str	r3, [r4]
+ 235:src/helper/cli/mx_cli.c ****         }
+ARM GAS  /tmp/ccUDA1XO.s 			page 40
+
+
+ 1546              		.loc 1 235 0
+ 1547 0012 3EE0     		b	.L161
+ 1548              	.L166:
+ 240:src/helper/cli/mx_cli.c ****                 (*bp)--;
+ 1549              		.loc 1 240 0
+ 1550 0014 BBB1     		cbz	r3, .L163
+ 241:src/helper/cli/mx_cli.c ****                 if (!pCli.echo_disabled)
+ 1551              		.loc 1 241 0
+ 1552 0016 013B     		subs	r3, r3, #1
+ 1553 0018 2360     		str	r3, [r4]
+ 242:src/helper/cli/mx_cli.c ****                     cli_printf("%c%c", 0x08, 0x08);
+ 1554              		.loc 1 242 0
+ 1555 001a 1E4B     		ldr	r3, .L178
+ 1556 001c D3F82435 		ldr	r3, [r3, #1316]
+ 1557 0020 8BB9     		cbnz	r3, .L163
+ 243:src/helper/cli/mx_cli.c ****             }
+ 1558              		.loc 1 243 0
+ 1559 0022 0822     		movs	r2, #8
+ 1560 0024 1146     		mov	r1, r2
+ 1561 0026 1C48     		ldr	r0, .L178+4
+ 1562 0028 FFF7FEFF 		bl	cli_printf
+ 1563              	.LVL189:
+ 245:src/helper/cli/mx_cli.c ****         }
+ 1564              		.loc 1 245 0
+ 1565 002c 0BE0     		b	.L163
+ 1566              	.L177:
+ 249:src/helper/cli/mx_cli.c ****             tab_complete(inbuf, bp);
+ 1567              		.loc 1 249 0
+ 1568 002e 0022     		movs	r2, #0
+ 1569 0030 EA54     		strb	r2, [r5, r3]
+ 250:src/helper/cli/mx_cli.c ****             continue;
+ 1570              		.loc 1 250 0
+ 1571 0032 2146     		mov	r1, r4
+ 1572 0034 2846     		mov	r0, r5
+ 1573 0036 FFF7FEFF 		bl	tab_complete
+ 1574              	.LVL190:
+ 251:src/helper/cli/mx_cli.c ****         }
+ 1575              		.loc 1 251 0
+ 1576 003a 04E0     		b	.L163
+ 1577              	.L170:
+ 257:src/helper/cli/mx_cli.c ****         if (*bp >= INBUF_SIZE) {
+ 1578              		.loc 1 257 0
+ 1579 003c 2368     		ldr	r3, [r4]
+ 1580 003e 0133     		adds	r3, r3, #1
+ 1581 0040 2360     		str	r3, [r4]
+ 258:src/helper/cli/mx_cli.c ****             cli_printf("Error:input buffer overflow\r\n");
+ 1582              		.loc 1 258 0
+ 1583 0042 4F2B     		cmp	r3, #79
+ 1584 0044 1BD8     		bhi	.L174
+ 1585              	.L163:
+ 229:src/helper/cli/mx_cli.c ****         if (inbuf[*bp] == RET_CHAR)
+ 1586              		.loc 1 229 0
+ 1587 0046 2068     		ldr	r0, [r4]
+ 1588 0048 2844     		add	r0, r0, r5
+ 1589 004a FFF7FEFF 		bl	cli_getchar
+ 1590              	.LVL191:
+ 1591 004e 0128     		cmp	r0, #1
+ARM GAS  /tmp/ccUDA1XO.s 			page 41
+
+
+ 1592 0050 1ED1     		bne	.L175
+ 230:src/helper/cli/mx_cli.c ****             continue;
+ 1593              		.loc 1 230 0
+ 1594 0052 2368     		ldr	r3, [r4]
+ 1595 0054 EA18     		adds	r2, r5, r3
+ 1596 0056 E95C     		ldrb	r1, [r5, r3]	@ zero_extendqisi2
+ 1597 0058 0A29     		cmp	r1, #10
+ 1598 005a F4D0     		beq	.L163
+ 232:src/helper/cli/mx_cli.c ****             inbuf[*bp] = '\0';
+ 1599              		.loc 1 232 0
+ 1600 005c 0D29     		cmp	r1, #13
+ 1601 005e D5D0     		beq	.L176
+ 238:src/helper/cli/mx_cli.c ****             (inbuf[*bp] == 0x7f)) { /* DEL */
+ 1602              		.loc 1 238 0
+ 1603 0060 0829     		cmp	r1, #8
+ 1604 0062 D7D0     		beq	.L166
+ 238:src/helper/cli/mx_cli.c ****             (inbuf[*bp] == 0x7f)) { /* DEL */
+ 1605              		.loc 1 238 0 is_stmt 0 discriminator 1
+ 1606 0064 7F29     		cmp	r1, #127
+ 1607 0066 D5D0     		beq	.L166
+ 248:src/helper/cli/mx_cli.c ****             inbuf[*bp] = '\0';
+ 1608              		.loc 1 248 0 is_stmt 1
+ 1609 0068 0929     		cmp	r1, #9
+ 1610 006a E0D0     		beq	.L177
+ 254:src/helper/cli/mx_cli.c ****             cli_printf("%c", inbuf[*bp]);
+ 1611              		.loc 1 254 0
+ 1612 006c 094B     		ldr	r3, .L178
+ 1613 006e D3F82435 		ldr	r3, [r3, #1316]
+ 1614 0072 002B     		cmp	r3, #0
+ 1615 0074 E2D1     		bne	.L170
+ 255:src/helper/cli/mx_cli.c **** 
+ 1616              		.loc 1 255 0
+ 1617 0076 0948     		ldr	r0, .L178+8
+ 1618 0078 FFF7FEFF 		bl	cli_printf
+ 1619              	.LVL192:
+ 1620 007c DEE7     		b	.L170
+ 1621              	.L174:
+ 259:src/helper/cli/mx_cli.c ****             cli_printf(PROMPT);
+ 1622              		.loc 1 259 0
+ 1623 007e 0848     		ldr	r0, .L178+12
+ 1624 0080 FFF7FEFF 		bl	cli_printf
+ 1625              	.LVL193:
+ 260:src/helper/cli/mx_cli.c ****             *bp = 0;
+ 1626              		.loc 1 260 0
+ 1627 0084 0748     		ldr	r0, .L178+16
+ 1628 0086 FFF7FEFF 		bl	cli_printf
+ 1629              	.LVL194:
+ 261:src/helper/cli/mx_cli.c ****             return 0;
+ 1630              		.loc 1 261 0
+ 1631 008a 0020     		movs	r0, #0
+ 1632 008c 2060     		str	r0, [r4]
+ 262:src/helper/cli/mx_cli.c ****         }
+ 1633              		.loc 1 262 0
+ 1634 008e 00E0     		b	.L161
+ 1635              	.L175:
+ 266:src/helper/cli/mx_cli.c **** }
+ 1636              		.loc 1 266 0
+ARM GAS  /tmp/ccUDA1XO.s 			page 42
+
+
+ 1637 0090 0020     		movs	r0, #0
+ 1638              	.L161:
+ 267:src/helper/cli/mx_cli.c **** 
+ 1639              		.loc 1 267 0
+ 1640 0092 38BD     		pop	{r3, r4, r5, pc}
+ 1641              	.LVL195:
+ 1642              	.L179:
+ 1643              		.align	2
+ 1644              	.L178:
+ 1645 0094 00000000 		.word	.LANCHOR0
+ 1646 0098 00000000 		.word	.LC21
+ 1647 009c 0C000000 		.word	.LC18
+ 1648 00a0 08000000 		.word	.LC22
+ 1649 00a4 18000000 		.word	.LC15
+ 1650              		.cfi_endproc
+ 1651              	.LFE131:
+ 1653              		.section	.text.cli_loop,"ax",%progbits
+ 1654              		.align	1
+ 1655              		.global	cli_loop
+ 1656              		.syntax unified
+ 1657              		.thumb
+ 1658              		.thumb_func
+ 1659              		.fpu fpv4-sp-d16
+ 1661              	cli_loop:
+ 1662              	.LFB139:
+ 415:src/helper/cli/mx_cli.c ****     int ret;
+ 1663              		.loc 1 415 0
+ 1664              		.cfi_startproc
+ 1665              		@ args = 0, pretend = 0, frame = 0
+ 1666              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1667 0000 08B5     		push	{r3, lr}
+ 1668              	.LCFI30:
+ 1669              		.cfi_def_cfa_offset 8
+ 1670              		.cfi_offset 3, -8
+ 1671              		.cfi_offset 14, -4
+ 1672              	.LVL196:
+ 419:src/helper/cli/mx_cli.c ****         return;
+ 1673              		.loc 1 419 0
+ 1674 0002 124B     		ldr	r3, .L188
+ 1675 0004 1B68     		ldr	r3, [r3]
+ 1676 0006 012B     		cmp	r3, #1
+ 1677 0008 00D0     		beq	.L185
+ 1678              	.LVL197:
+ 1679              	.L180:
+ 438:src/helper/cli/mx_cli.c **** 
+ 1680              		.loc 1 438 0
+ 1681 000a 08BD     		pop	{r3, pc}
+ 1682              	.LVL198:
+ 1683              	.L185:
+ 422:src/helper/cli/mx_cli.c ****         return;
+ 1684              		.loc 1 422 0
+ 1685 000c 0F48     		ldr	r0, .L188
+ 1686 000e 011D     		adds	r1, r0, #4
+ 1687 0010 0830     		adds	r0, r0, #8
+ 1688 0012 FFF7FEFF 		bl	get_input
+ 1689              	.LVL199:
+ 1690 0016 0028     		cmp	r0, #0
+ARM GAS  /tmp/ccUDA1XO.s 			page 43
+
+
+ 1691 0018 F7D0     		beq	.L180
+ 1692              	.LVL200:
+ 429:src/helper/cli/mx_cli.c ****             return;
+ 1693              		.loc 1 429 0
+ 1694 001a 0D49     		ldr	r1, .L188+4
+ 1695 001c 0D48     		ldr	r0, .L188+8
+ 1696 001e FFF7FEFF 		bl	strcmp
+ 1697              	.LVL201:
+ 1698 0022 0028     		cmp	r0, #0
+ 1699 0024 F1D0     		beq	.L180
+ 431:src/helper/cli/mx_cli.c ****         if (ret == 1)
+ 1700              		.loc 1 431 0
+ 1701 0026 0B48     		ldr	r0, .L188+8
+ 1702 0028 FFF7FEFF 		bl	handle_input
+ 1703              	.LVL202:
+ 432:src/helper/cli/mx_cli.c ****             print_bad_command(msg);
+ 1704              		.loc 1 432 0
+ 1705 002c 0128     		cmp	r0, #1
+ 1706 002e 05D0     		beq	.L186
+ 434:src/helper/cli/mx_cli.c ****             cli_printf("syntax error\r\n");
+ 1707              		.loc 1 434 0
+ 1708 0030 0228     		cmp	r0, #2
+ 1709 0032 07D0     		beq	.L187
+ 1710              	.LVL203:
+ 1711              	.L183:
+ 436:src/helper/cli/mx_cli.c ****     }
+ 1712              		.loc 1 436 0
+ 1713 0034 0848     		ldr	r0, .L188+12
+ 1714 0036 FFF7FEFF 		bl	cli_printf
+ 1715              	.LVL204:
+ 1716 003a E6E7     		b	.L180
+ 1717              	.LVL205:
+ 1718              	.L186:
+ 433:src/helper/cli/mx_cli.c ****         else if (ret == 2)
+ 1719              		.loc 1 433 0
+ 1720 003c 0548     		ldr	r0, .L188+8
+ 1721              	.LVL206:
+ 1722 003e FFF7FEFF 		bl	print_bad_command
+ 1723              	.LVL207:
+ 1724 0042 F7E7     		b	.L183
+ 1725              	.LVL208:
+ 1726              	.L187:
+ 435:src/helper/cli/mx_cli.c ****         cli_printf(PROMPT);
+ 1727              		.loc 1 435 0
+ 1728 0044 0548     		ldr	r0, .L188+16
+ 1729              	.LVL209:
+ 1730 0046 FFF7FEFF 		bl	cli_printf
+ 1731              	.LVL210:
+ 1732 004a F3E7     		b	.L183
+ 1733              	.L189:
+ 1734              		.align	2
+ 1735              	.L188:
+ 1736 004c 00000000 		.word	.LANCHOR0
+ 1737 0050 00000000 		.word	.LC23
+ 1738 0054 08000000 		.word	.LANCHOR0+8
+ 1739 0058 18000000 		.word	.LC15
+ 1740 005c 08000000 		.word	.LC24
+ARM GAS  /tmp/ccUDA1XO.s 			page 44
+
+
+ 1741              		.cfi_endproc
+ 1742              	.LFE139:
+ 1744              		.section	.bss.argv.9131,"aw",%nobits
+ 1745              		.align	2
+ 1746              		.set	.LANCHOR2,. + 0
+ 1749              	argv.9131:
+ 1750 0000 00000000 		.space	64
+ 1750      00000000 
+ 1750      00000000 
+ 1750      00000000 
+ 1750      00000000 
+ 1751              		.section	.bss.pCli,"aw",%nobits
+ 1752              		.align	2
+ 1753              		.set	.LANCHOR0,. + 0
+ 1756              	pCli:
+ 1757 0000 00000000 		.space	1320
+ 1757      00000000 
+ 1757      00000000 
+ 1757      00000000 
+ 1757      00000000 
+ 1758              		.section	.rodata.built_ins,"a",%progbits
+ 1759              		.align	2
+ 1760              		.set	.LANCHOR1,. + 0
+ 1763              	built_ins:
+ 1764 0000 00000000 		.word	.LC25
+ 1765 0004 00000000 		.word	0
+ 1766 0008 00000000 		.word	help_command
+ 1767 000c 08000000 		.word	.LC26
+ 1768 0010 00000000 		.word	0
+ 1769 0014 00000000 		.word	echo_cmd_handler
+ 1770              		.section	.rodata.cli_init.str1.4,"aMS",%progbits,1
+ 1771              		.align	2
+ 1772              	.LC11:
+ 1773 0000 636C6920 		.ascii	"cli err\015\000"
+ 1773      6572720D 
+ 1773      00
+ 1774              		.section	.rodata.cli_loop.str1.4,"aMS",%progbits,1
+ 1775              		.align	2
+ 1776              	.LC23:
+ 1777 0000 65786974 		.ascii	"exit\000"
+ 1777      00
+ 1778 0005 000000   		.space	3
+ 1779              	.LC24:
+ 1780 0008 73796E74 		.ascii	"syntax error\015\012\000"
+ 1780      61782065 
+ 1780      72726F72 
+ 1780      0D0A00
+ 1781              		.section	.rodata.echo_cmd_handler.str1.4,"aMS",%progbits,1
+ 1782              		.align	2
+ 1783              	.LC4:
+ 1784 0000 44697361 		.ascii	"Disabled\000"
+ 1784      626C6564 
+ 1784      00
+ 1785 0009 000000   		.space	3
+ 1786              	.LC5:
+ 1787 000c 456E6162 		.ascii	"Enabled\000"
+ 1787      6C656400 
+ARM GAS  /tmp/ccUDA1XO.s 			page 45
+
+
+ 1788              	.LC6:
+ 1789 0014 55736167 		.ascii	"Usage:echo on/off. Echo is currently %s\015\012\000"
+ 1789      653A6563 
+ 1789      686F206F 
+ 1789      6E2F6F66 
+ 1789      662E2045 
+ 1790 003e 0000     		.space	2
+ 1791              	.LC7:
+ 1792 0040 6F6E00   		.ascii	"on\000"
+ 1793 0043 00       		.space	1
+ 1794              	.LC8:
+ 1795 0044 456E6162 		.ascii	"Enable echo\015\012\000"
+ 1795      6C652065 
+ 1795      63686F0D 
+ 1795      0A00
+ 1796 0052 0000     		.space	2
+ 1797              	.LC9:
+ 1798 0054 6F666600 		.ascii	"off\000"
+ 1799              	.LC10:
+ 1800 0058 44697361 		.ascii	"Disable echo\015\012\000"
+ 1800      626C6520 
+ 1800      6563686F 
+ 1800      0D0A00
+ 1801              		.section	.rodata.get_input.str1.4,"aMS",%progbits,1
+ 1802              		.align	2
+ 1803              	.LC21:
+ 1804 0000 25632563 		.ascii	"%c%c\000"
+ 1804      00
+ 1805 0005 000000   		.space	3
+ 1806              	.LC22:
+ 1807 0008 4572726F 		.ascii	"Error:input buffer overflow\015\012\000"
+ 1807      723A696E 
+ 1807      70757420 
+ 1807      62756666 
+ 1807      6572206F 
+ 1808              		.section	.rodata.help_command.str1.4,"aMS",%progbits,1
+ 1809              		.align	2
+ 1810              	.LC0:
+ 1811 0000 00       		.ascii	"\000"
+ 1812 0001 000000   		.space	3
+ 1813              	.LC1:
+ 1814 0004 203D3D3D 		.ascii	" ==== Build - in Commands ==== \015\012\000"
+ 1814      3D204275 
+ 1814      696C6420 
+ 1814      2D20696E 
+ 1814      20436F6D 
+ 1815 0026 0000     		.space	2
+ 1816              	.LC2:
+ 1817 0028 2025733A 		.ascii	" %s: %s\015\012\000"
+ 1817      2025730D 
+ 1817      0A00
+ 1818 0032 0000     		.space	2
+ 1819              	.LC3:
+ 1820 0034 0D0A203D 		.ascii	"\015\012 ==== User Commands ==== \015\012\000"
+ 1820      3D3D3D20 
+ 1820      55736572 
+ 1820      20436F6D 
+ARM GAS  /tmp/ccUDA1XO.s 			page 46
+
+
+ 1820      6D616E64 
+ 1821              		.section	.rodata.print_bad_command.str1.4,"aMS",%progbits,1
+ 1822              		.align	2
+ 1823              	.LC17:
+ 1824 0000 636F6D6D 		.ascii	"command '\000"
+ 1824      616E6420 
+ 1824      2700
+ 1825 000a 0000     		.space	2
+ 1826              	.LC18:
+ 1827 000c 256300   		.ascii	"%c\000"
+ 1828 000f 00       		.space	1
+ 1829              	.LC19:
+ 1830 0010 5C307825 		.ascii	"\\0x%x\000"
+ 1830      7800
+ 1831 0016 0000     		.space	2
+ 1832              	.LC20:
+ 1833 0018 27206E6F 		.ascii	"' not found\015\012\000"
+ 1833      7420666F 
+ 1833      756E640D 
+ 1833      0A00
+ 1834              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 1835              		.align	2
+ 1836              	.LC25:
+ 1837 0000 68656C70 		.ascii	"help\000"
+ 1837      00
+ 1838 0005 000000   		.space	3
+ 1839              	.LC26:
+ 1840 0008 6563686F 		.ascii	"echo\000"
+ 1840      00
+ 1841              		.section	.rodata.tab_complete.str1.4,"aMS",%progbits,1
+ 1842              		.align	2
+ 1843              	.LC12:
+ 1844 0000 0D0A00   		.ascii	"\015\012\000"
+ 1845 0003 00       		.space	1
+ 1846              	.LC13:
+ 1847 0004 20252073 		.ascii	" % s % s \000"
+ 1847      20252073 
+ 1847      2000
+ 1848 000e 0000     		.space	2
+ 1849              	.LC14:
+ 1850 0010 20252073 		.ascii	" % s \000"
+ 1850      2000
+ 1851 0016 0000     		.space	2
+ 1852              	.LC15:
+ 1853 0018 0D0A2320 		.ascii	"\015\012# \000"
+ 1853      00
+ 1854 001d 000000   		.space	3
+ 1855              	.LC16:
+ 1856 0020 20252073 		.ascii	" % s % s\000"
+ 1856      20252073 
+ 1856      00
+ 1857              		.text
+ 1858              	.Letext0:
+ 1859              		.file 2 "src/helper/cli/mx_cli.h"
+ 1860              		.file 3 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 1861              		.file 4 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 1862              		.file 5 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ARM GAS  /tmp/ccUDA1XO.s 			page 47
+
+
+ 1863              		.file 6 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 1864              		.file 7 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/lib/gc
+ 1865              		.file 8 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 1866              		.file 9 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-no
+ 1867              		.file 10 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/lib/g
+ 1868              		.file 11 "<built-in>"
+ 1869              		.file 12 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-n
+ 1870              		.file 13 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-n
+ 1871              		.file 14 "Platform/STM32F4xx/drivers/CMSIS/Include/core_cm4.h"
+ 1872              		.file 15 "Platform/STM32F4xx/drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ 1873              		.file 16 "Platform/STM32F4xx/drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f411xe.h"
+ 1874              		.file 17 "Platform/STM32F4xx/drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 1875              		.file 18 "Platform/STM32F4xx/drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 1876              		.file 19 "Platform/STM32F4xx/drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+ 1877              		.file 20 "Platform/STM32F4xx/peripherals/mx_hal.h"
+ 1878              		.file 21 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-n
+ 1879              		.file 22 "/home/wumingju/Documents/aos/AliOS-Things/build/compiler/gcc-arm-none-eabi/Linux64/arm-n
+ARM GAS  /tmp/ccUDA1XO.s 			page 48
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 mx_cli.c
+     /tmp/ccUDA1XO.s:18     .text.lookup_command:0000000000000000 $t
+     /tmp/ccUDA1XO.s:24     .text.lookup_command:0000000000000000 lookup_command
+     /tmp/ccUDA1XO.s:112    .text.lookup_command:000000000000005c $d
+     /tmp/ccUDA1XO.s:117    .text.cli_putstr:0000000000000000 $t
+     /tmp/ccUDA1XO.s:123    .text.cli_putstr:0000000000000000 cli_putstr
+     /tmp/ccUDA1XO.s:160    .text.help_command:0000000000000000 $t
+     /tmp/ccUDA1XO.s:166    .text.help_command:0000000000000000 help_command
+     /tmp/ccUDA1XO.s:294    .text.help_command:000000000000008c $d
+     /tmp/ccUDA1XO.s:303    .text.echo_cmd_handler:0000000000000000 $t
+     /tmp/ccUDA1XO.s:309    .text.echo_cmd_handler:0000000000000000 echo_cmd_handler
+     /tmp/ccUDA1XO.s:413    .text.echo_cmd_handler:0000000000000074 $d
+     /tmp/ccUDA1XO.s:425    .text.cli_register_command:0000000000000000 $t
+     /tmp/ccUDA1XO.s:432    .text.cli_register_command:0000000000000000 cli_register_command
+     /tmp/ccUDA1XO.s:528    .text.cli_register_command:0000000000000054 $d
+     /tmp/ccUDA1XO.s:533    .text.cli_unregister_command:0000000000000000 $t
+     /tmp/ccUDA1XO.s:540    .text.cli_unregister_command:0000000000000000 cli_unregister_command
+     /tmp/ccUDA1XO.s:634    .text.cli_unregister_command:000000000000006c $d
+     /tmp/ccUDA1XO.s:639    .text.cli_register_commands:0000000000000000 $t
+     /tmp/ccUDA1XO.s:646    .text.cli_register_commands:0000000000000000 cli_register_commands
+     /tmp/ccUDA1XO.s:698    .text.cli_unregister_commands:0000000000000000 $t
+     /tmp/ccUDA1XO.s:705    .text.cli_unregister_commands:0000000000000000 cli_unregister_commands
+     /tmp/ccUDA1XO.s:757    .text.cli_init:0000000000000000 $t
+     /tmp/ccUDA1XO.s:764    .text.cli_init:0000000000000000 cli_init
+     /tmp/ccUDA1XO.s:807    .text.cli_init:0000000000000030 $d
+     /tmp/ccUDA1XO.s:814    .text.cli_printf:0000000000000000 $t
+     /tmp/ccUDA1XO.s:821    .text.cli_printf:0000000000000000 cli_printf
+     /tmp/ccUDA1XO.s:899    .text.tab_complete:0000000000000000 $t
+     /tmp/ccUDA1XO.s:905    .text.tab_complete:0000000000000000 tab_complete
+     /tmp/ccUDA1XO.s:1050   .text.tab_complete:00000000000000c4 $d
+     /tmp/ccUDA1XO.s:1060   .text.handle_input:0000000000000000 $t
+     /tmp/ccUDA1XO.s:1066   .text.handle_input:0000000000000000 handle_input
+     /tmp/ccUDA1XO.s:1375   .text.handle_input:00000000000001ac $d
+     /tmp/ccUDA1XO.s:1383   .text.print_bad_command:0000000000000000 $t
+     /tmp/ccUDA1XO.s:1389   .text.print_bad_command:0000000000000000 print_bad_command
+     /tmp/ccUDA1XO.s:1459   .text.print_bad_command:000000000000003c $d
+     /tmp/ccUDA1XO.s:1467   .text.cli_getchar:0000000000000000 $t
+     /tmp/ccUDA1XO.s:1474   .text.cli_getchar:0000000000000000 cli_getchar
+     /tmp/ccUDA1XO.s:1511   .text.get_input:0000000000000000 $t
+     /tmp/ccUDA1XO.s:1517   .text.get_input:0000000000000000 get_input
+     /tmp/ccUDA1XO.s:1645   .text.get_input:0000000000000094 $d
+     /tmp/ccUDA1XO.s:1654   .text.cli_loop:0000000000000000 $t
+     /tmp/ccUDA1XO.s:1661   .text.cli_loop:0000000000000000 cli_loop
+     /tmp/ccUDA1XO.s:1736   .text.cli_loop:000000000000004c $d
+     /tmp/ccUDA1XO.s:1745   .bss.argv.9131:0000000000000000 $d
+     /tmp/ccUDA1XO.s:1749   .bss.argv.9131:0000000000000000 argv.9131
+     /tmp/ccUDA1XO.s:1752   .bss.pCli:0000000000000000 $d
+     /tmp/ccUDA1XO.s:1756   .bss.pCli:0000000000000000 pCli
+     /tmp/ccUDA1XO.s:1759   .rodata.built_ins:0000000000000000 $d
+     /tmp/ccUDA1XO.s:1763   .rodata.built_ins:0000000000000000 built_ins
+     /tmp/ccUDA1XO.s:1771   .rodata.cli_init.str1.4:0000000000000000 $d
+     /tmp/ccUDA1XO.s:1775   .rodata.cli_loop.str1.4:0000000000000000 $d
+     /tmp/ccUDA1XO.s:1782   .rodata.echo_cmd_handler.str1.4:0000000000000000 $d
+     /tmp/ccUDA1XO.s:1802   .rodata.get_input.str1.4:0000000000000000 $d
+     /tmp/ccUDA1XO.s:1809   .rodata.help_command.str1.4:0000000000000000 $d
+     /tmp/ccUDA1XO.s:1822   .rodata.print_bad_command.str1.4:0000000000000000 $d
+ARM GAS  /tmp/ccUDA1XO.s 			page 49
+
+
+     /tmp/ccUDA1XO.s:1835   .rodata.str1.4:0000000000000000 $d
+     /tmp/ccUDA1XO.s:1842   .rodata.tab_complete.str1.4:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+strcmp
+strncmp
+strlen
+mx_hal_cli_putstr
+snprintf
+strcasecmp
+memmove
+memset
+puts
+vsnprintf
+memcpy
+strchr
+__locale_ctype_ptr
+mx_hal_cli_getc
