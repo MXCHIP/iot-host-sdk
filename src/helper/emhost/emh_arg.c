@@ -101,6 +101,16 @@ const char* EMH_ARG_ILOP_DM[] =
 	[EMH_ARG_ILOP_DM_MAX]			= "\0",
 };
 
+const char* EMH_ARG_ILOP_DOMAIN[] =
+{
+	[EMH_ARG_ILOP_DOMAIN_SHANGHAI]			= "0",
+	[EMH_ARG_ILOP_DOMAIN_SINGAPORE]         = "1",
+	[EMH_ARG_ILOP_DOMAIN_JAPAN]	            = "2",
+	[EMH_ARG_ILOP_DOMAIN_AMERICA]			= "3",
+	[EMH_ARG_ILOP_DOMAIN_GERMANY]			= "4",
+	[EMH_ARG_ILOP_DOMAIN_MAX]			    = "\0",
+};
+
 const char* EMH_ARG_ILOP_CONFIG[] = 
 {
 	[EMH_ARG_ILOP_CONFIG_NONE]		= "NONE",

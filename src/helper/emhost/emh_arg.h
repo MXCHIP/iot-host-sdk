@@ -125,6 +125,17 @@ typedef uint8_t emh_arg_ilop_dm_t;
 extern const char* EMH_ARG_ILOP_DM[];
 
 enum{
+	EMH_ARG_ILOP_DOMAIN_SHANGHAI,
+	EMH_ARG_ILOP_DOMAIN_SINGAPORE,
+	EMH_ARG_ILOP_DOMAIN_JAPAN,
+	EMH_ARG_ILOP_DOMAIN_AMERICA,
+	EMH_ARG_ILOP_DOMAIN_GERMANY,
+	EMH_ARG_ILOP_DOMAIN_MAX,
+};
+typedef uint8_t emh_arg_ilop_domain_t;
+extern const char* EMH_ARG_ILOP_DOMAIN[];
+
+enum{
 	EMH_ARG_ILOP_CONFIG_NONE,
 	EMH_ARG_ILOP_CONFIG_TLS,
 	EMH_ARG_ILOP_CONFIG_MAX,
