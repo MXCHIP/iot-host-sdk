@@ -8,7 +8,7 @@
 
 ```c
 |---example
-|   |---ilopicaapp  /*ilop平台 ica标准数据格式的demo*/
+|   |---ilopicaapp  /*ilop平台 ica标准数据格式的demo*/
 |   |---iloprawapp  /*ilop平台 自定义数据格式的demo*/
 |   |---sdsapp      /*sds平台的demo*/
 |   |---qlinkapp    /*杭研平台的demo*/
@@ -19,7 +19,7 @@
 |   |---mx_hal.h
 |
 |---src 
-    |---alicloud_ilop   /*ilop平台的实现*/
+    |---alicloud_ilop   /*ilop平台的实现*/
     |---alicloud_sds    /*sds平台的实现*/
     |---helper          /*at指令解析内核*/
 ```
@@ -28,7 +28,7 @@
 
 ### 3.1 准备
 
-- 串口接入PC，并查询设备，命令：`ls -l /dev/ttyUSB*`
+- 串口接入PC，并查询设备，命令：`ls -l /dev/ttyUSB*`
 
 ```
 parallels@parallels-vm:~/iot-sdk$ ls -l /dev/ttyUSB*
@@ -36,7 +36,7 @@ crw-rw---- 1 root dialout 188, 0 Sep  3 16:15 /dev/ttyUSB0
 ```
 
 ### 3.2 编译
-iot-sdk 提供四个demo，编译demo的命令格式 `make <demo>`
+iot-sdk 提供四个demo，编译demo的命令格式 `make <demo>`
 
 - 清除上次的make命令所产生的build文件，命令：`make clean`
 
@@ -123,7 +123,7 @@ open at uart succeed
       
 
 新建产品后，可以获得product_token,andlink_token,product_id,豪恩报警盒子产品信息如下：
->>>>![30531](./resource/qlink/image/产品资料.png)
+<img src="./resource/qlink/image/产品资料.png" width="500" hegiht="313" align=center />
 ```
 初始化产品参数
 const emh_qlink_config_t config = {
@@ -198,18 +198,17 @@ open at uart succeed
   通过cli串口发送 raw start命令 或者 按键触发调用qlink_raw_start()接口使设备进入本地网关一键配网模式，
 
   同时手机APP点击开始连接按钮，绑定成功后APP提示添加成功，后台虚拟网关下面会显示出设备，如下：
-  >>>>![bind_ok](./resource/qlink/image/bind_ok.png)
-
+  <img src="./resource/qlink/image/bind_ok.png" width="500" hegiht="313" align=center />
 * 数据下发
     
   通过后台获取所有字段，操作如下所示：
-  >>>>![request_all_data](./resource/qlink/image/request_all_data.png)
+  <img src="./resource/qlink/image/request_all_data.png" width="500" hegiht="313" align=center />
 
   通过后台获取部分字段，操作如下所示：
-  >>>>![request_some_data](./resource/qlink/image/request_some_data.png)
-  
+  <img src="./resource/qlink/image/request_some_data.png" width="500" hegiht="313" align=center />
+    
   通过后台下发命令，操作如下所示：
-  >>>>![control_data](./resource/qlink/image/control_data.png)
+  <img src="./resource/qlink/image/control_data.png" width="500" hegiht="313" align=center />
   
   设备收到云端获取字段指令后，需要调用mx_status emh_qlink_send_json_to_cloud( char *type, uint8_t *data, uint32_t len ) 函数将数据发送到云端
   
@@ -268,4 +267,4 @@ data:上传具体内容
 
 ## 5. 移植SDK
 
-- 只需要实现platform/mx_hal.h文件中的函数即可
+- 只需要实现platform/mx_hal.h文件中的函数即可
