@@ -202,6 +202,7 @@ open at uart succeed
 * 数据下发
     
   通过后台获取所有字段，操作如下所示：
+
   <img src="./resource/qlink/image/request_all_data.png" width="500" hegiht="313" align=center />
 
   通过后台获取部分字段，操作如下所示：
@@ -255,7 +256,6 @@ data:上传具体内容
 
 (2) 云端下发命令数据
   
-
   云端下发命令，回调函数emh_ev_qlink_set_local_attrs()会收到数据，用户需要根据字段的类型进行处理，如果字段即下发又要求上报，则return 1,否则return 0。 
 
 (3) 其他
