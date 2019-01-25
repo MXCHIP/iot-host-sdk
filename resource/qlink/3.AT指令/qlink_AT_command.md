@@ -5,12 +5,14 @@
 |---|---|---|
 |1|AT+QLINKPRODUCT|设置/读取QLINK产品参数|
 |2|AT+QLINKVERSION|设置/查询QLINK版本参数|
-|3|AT+QLINKRAWSTART|启动QLINK一键配网|
-|4|AT+QLINKUSERSTART|启动QLINK用户配网|
-|5|AT+QLINKSTART|启动QLINK服务|
-|6|AT+QLINKSTOP|结束QLINK服务|
-|7|AT+QLINKSTATUS|查询QLINK服务状态|
-|8|AT+QLINKSEND|设备发送数据|
+|3|AT+QLINKDM|设置/查询DM参数|
+|4|AT+QLINKRAWSTART|启动QLINK一键配网|
+|5|AT+QLINKUSERSTART|启动QLINK用户配网|
+|6|AT+QLINKSTART|启动QLINK服务|
+|7|AT+QLINKSTOP|结束QLINK服务|
+|8|AT+QLINKSTATUS|查询QLINK服务状态|
+|9|AT+QLINKSEND|设备发送数据|
+|10|AT+QLINKPARAM|设备收到平台设置指令后返回给WIFI模块|
 
 ### AT+QLINKPRODUCT
 功能：查询/设置QLINK product info
@@ -41,6 +43,24 @@
 |响应：|`OK`|
 |参数：|`firmware_version`：WIFI固件版本信息|
 ||`software_version`：系统软件版本信息|
+
+### AT+QLINKDM
+功能：查询/设置QLINK DM info
+
+|查询指令：|`AT+QLINKDM？`|
+|---|:---|
+|响应：|`+QLINKDM:<enable>,<envir>,<cmei>,<version>,<appkey>,<secret>`|
+||`OK`|
+
+|设置指令：|`AT+QLINKDEV=<enable>,<envir>,<cmei>,<version>,<appkey>,<secret>`|
+|---|:---|
+|响应：|`OK`|
+|参数：|`enable`：1:开启DM       0:关闭DM|
+||`envir`：1:测试环境      0正式环境|
+||`cmei`： 从移动终端公司获取|
+||`version`：从移动终端公司获取|
+||`appkey`：从移动终端公司获取|
+||`secret`：从移动终端公司获取|
 
 ### AT+AT+QLINKRAWSTART
 功能：开始QLINK一键配网，如果一键配网超时，自动进入用户配网模式
@@ -88,6 +108,15 @@
 |响应：|`OK`|
 |参数：|`msg_type`：Inform,File,ParamChange,Data|
 ||`data_len`：数据长度|
+
+### AT+QLINKPARAM
+功能：设备收到平台设置指令后返回给WIFI模块
+
+|设置指令：|`AT+QLINKSEND=<type>`|
+|---|:---|
+|响应|`>`|
+|响应：|`OK`|
+|参数：|`type`：1:当前字段仅有配置功能，0:当前字段既有配置功能又有控制功能，每次收到服务器下发字段都需要发送给WIFI模块|
 
 
 ## QLINK事件通知
@@ -148,10 +177,10 @@ AT+QLINKSTATUS?
 +QLINKEVENT:GET
 
 /*发送所有数据*/
-AT+QLINKSEND=Inform,123\r
-{"ErrorCode":{"value":"0"},"Hue":{"value":"50"},"Luminance":{"value":"50"},"Switch":{"value":"1"},"WorkMode":{"value":"0"}}
+AT+QLINKSEND=Inform,59\r
+{"params":[{"paramCode":"permitJoining","paramValue":"1"}]}
 
-/*当APP调用控制接口后，会主动下发指令控制设备状态，此时模块主动下发*/
+/*当APP调用控制接口后，会主动下发指令控制设备状态，此时模块主动下发，MCU需要返回AT+QLINKPARAM指令*/
 +QLINKEVENT:SET,<len>,<data>
 
 /*当APP调用重启接口，此时模块主动下发*/
