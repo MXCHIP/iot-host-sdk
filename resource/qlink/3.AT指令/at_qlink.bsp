@@ -1,0 +1,238 @@
+<?xml version="1.0"?>
+<BSSignalRegistry xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>alink_at</Name>
+  <Latency>0</Latency>
+  <Signals>
+    <BSSignal>
+      <Name>设备恢复出厂设置</Name>
+      <DataFormat>String</DataFormat>
+      <Data>AT+FACTORY\r</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name>取消回显功能</Name>
+      <DataFormat>String</DataFormat>
+      <Data>AT+UARTE=OFF\r</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name>重启设备</Name>
+      <DataFormat>String</DataFormat>
+      <Data>AT+REBOOT\r</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name />
+      <DataFormat>String</DataFormat>
+      <Data>AT+SYSTIM?\r</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name />
+      <DataFormat>String</DataFormat>
+      <Data>AT+FWVER?\r</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name>设置 产品信息 30413</Name>
+      <DataFormat>String</DataFormat>
+      <Data>AT+QLINKPRODUCT=30413,38Szyd6i1240elbV,wWppJIdROfQkcsMW\r</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name>设置 产品信息 30531</Name>
+      <DataFormat>String</DataFormat>
+      <Data>AT+QLINKPRODUCT=30531,PXmsE6kQmxEgc0e3,ZxMo0zJvvZMWP3Az\r</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name>查询产品信息</Name>
+      <DataFormat>String</DataFormat>
+      <Data>AT+QLINKPRODUCT?\r</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name>设置版本信息</Name>
+      <DataFormat>String</DataFormat>
+      <Data>AT+QLINKVERSION=1.0.5,1.0.0\r</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name>查询版本信息</Name>
+      <DataFormat>String</DataFormat>
+      <Data>AT+QLINKVERSION?\r</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name>DM信息</Name>
+      <DataFormat>String</DataFormat>
+      <Data>AT+QLINKDM=0,0, , , , ,3600\r</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name />
+      <DataFormat>String</DataFormat>
+      <Data>AT+QLINKDM?\r</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name>启动一键配网模式</Name>
+      <DataFormat>String</DataFormat>
+      <Data>AT+QLINKRAWSTART\r</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name>关闭一键配网模式</Name>
+      <DataFormat>String</DataFormat>
+      <Data>AT+QLINKRAWSTOP\r</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name>启动用户配网模式</Name>
+      <DataFormat>String</DataFormat>
+      <Data>AT+QLINKUSERSTART\r</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name />
+      <DataFormat>Hex</DataFormat>
+      <Data />
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name />
+      <DataFormat>Hex</DataFormat>
+      <Data />
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name>启动 qlink 服务</Name>
+      <DataFormat>String</DataFormat>
+      <Data>AT+QLINKSTART\r</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name>停止 qlink 服务</Name>
+      <DataFormat>String</DataFormat>
+      <Data>AT+QLINKSTOP\r</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name>查询alink连接状态</Name>
+      <DataFormat>String</DataFormat>
+      <Data>AT+QLINKSTATUS?\r</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name />
+      <DataFormat>Hex</DataFormat>
+      <Data />
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name />
+      <DataFormat>String</DataFormat>
+      <Data>AT+QLINKPARAM=1\r</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name>向 qlink 发送 </Name>
+      <DataFormat>String</DataFormat>
+      <Data>AT+QLINKSEND=Inform,153\r</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name>数据</Name>
+      <DataFormat>String</DataFormat>
+      <Data>{"params":[{"paramCode":"permitJoining","paramValue":"1"},{"paramCode":"permitJoining","paramValue":"1"},{"paramCode":"permitJoining","paramValue":"1"}]}</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name />
+      <DataFormat>Hex</DataFormat>
+      <Data />
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name />
+      <DataFormat>String</DataFormat>
+      <Data />
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name>向alink发送所有数据</Name>
+      <DataFormat>String</DataFormat>
+      <Data>AT+QLINKSEND=Inform,412\r</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name>数据1：所有的json数据</Name>
+      <DataFormat>String</DataFormat>
+      <Data>{"params":[{"paramCode":"firmware","paramValue":"3.1.0"},{"paramCode":"softVersion","paramValue":"1.0.1"},{"paramCode":"dataPM25","paramValue":"0"},{"paramCode":"relativeHumidity","paramValue":"69"},{"paramCode":"degC","paramValue":"27"},{"paramCode":"ch2o","paramValue":"0"},{"paramCode":"voc","paramValue":"0"},{"paramCode":"mir.switchStatus","paramValue":"1"},{"paramCode":"mir.screenMode","paramValue":"0"}]}</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name>数据2：所有的json数据</Name>
+      <DataFormat>String</DataFormat>
+      <Data>{"params":[{"paramCode":"firmware","paramValue":"3.1.0"},{"paramCode":"softVersion","paramValue":"1.0.1"},{"paramCode":"dataPM25","paramValue":"0"},{"paramCode":"relativeHumidity","paramValue":"65"},{"paramCode":"degC","paramValue":"27"},{"paramCode":"ch2o","paramValue":"0"},{"paramCode":"voc","paramValue":"0"},{"paramCode":"mir.switchStatus","paramValue":"1"},{"paramCode":"mir.screenMode","paramValue":"0"}]}</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name />
+      <DataFormat>Hex</DataFormat>
+      <Data />
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name>AT测试指令</Name>
+      <DataFormat>String</DataFormat>
+      <Data>AT\r</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name>30413配网</Name>
+      <DataFormat>Hex</DataFormat>
+      <Data>A5 A5 5A 5A 9B C1 E8 03 02 00 00 0A 01 00</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name>上传数据</Name>
+      <DataFormat>Hex</DataFormat>
+      <Data>A5 A5 5A 5A 3B C1 03 0B 16 00 0A 00 00 00 1B 00 45 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+  </Signals>
+</BSSignalRegistry>
