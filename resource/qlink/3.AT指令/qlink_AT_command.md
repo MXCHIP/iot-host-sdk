@@ -4,15 +4,14 @@
 |序号|指令|描述|
 |---|---|---|
 |1|AT+QLINKPRODUCT|设置/读取QLINK产品参数|
-|2|AT+QLINKVERSION|设置/查询QLINK版本参数|
+|2|AT+QLINKVERSION|查询QLINK版本参数|
 |3|AT+QLINKDM|设置/查询DM参数|
 |4|AT+QLINKRAWSTART|启动QLINK一键配网|
 |5|AT+QLINKUSERSTART|启动QLINK用户配网|
 |6|AT+QLINKSTART|启动QLINK服务|
-|7|AT+QLINKSTOP|结束QLINK服务|
-|8|AT+QLINKSTATUS|查询QLINK服务状态|
-|9|AT+QLINKSEND|设备发送数据|
-|10|AT+QLINKPARAM|设备收到平台设置指令后返回给WIFI模块|
+|7|AT+QLINKSTATUS|查询QLINK服务状态|
+|8|AT+QLINKSEND|设备发送数据|
+|9|AT+QLINKPARAM|设备收到平台设置指令后返回给WIFI模块|
 
 ### AT+QLINKPRODUCT
 功能：查询/设置QLINK product info
@@ -31,16 +30,12 @@
 
 
 ### AT+QLINKVERSION
-功能：查询/设置QLINK product version info
+功能：查询QLINK product version info
 
 |查询指令：|`AT+QLINKVERSION？`|
 |---|:---|
 |响应：|`+QLINKVERSION:<firmware_version>,<software_version>`|
 ||`OK`|
-
-|设置指令：|`AT+QLINKDEV=<firmware_version>,<software_version>`|
-|---|:---|
-|响应：|`OK`|
 |参数：|`firmware_version`：WIFI固件版本信息|
 ||`software_version`：系统软件版本信息|
 
@@ -49,10 +44,10 @@
 
 |查询指令：|`AT+QLINKDM？`|
 |---|:---|
-|响应：|`+QLINKDM:<enable>,<envir>,<cmei>,<version>,<appkey>,<secret>`|
+|响应：|`+QLINKDM:<enable>,<envir>,<cmei>,<version>,<appkey>,<secret>,<dmtime>`|
 ||`OK`|
 
-|设置指令：|`AT+QLINKDEV=<enable>,<envir>,<cmei>,<version>,<appkey>,<secret>`|
+|设置指令：|`AT+QLINKDEV=<enable>,<envir>,<cmei>,<version>,<appkey>,<secret>,<dmtime>`|
 |---|:---|
 |响应：|`OK`|
 |参数：|`enable`：1:开启DM       0:关闭DM|
@@ -61,15 +56,16 @@
 ||`version`：从移动终端公司获取|
 ||`appkey`：从移动终端公司获取|
 ||`secret`：从移动终端公司获取|
+||`dmtime`：未用到|
 
-### AT+AT+QLINKRAWSTART
+### AT+QLINKRAWSTART
 功能：开始QLINK一键配网，如果一键配网超时，自动进入用户配网模式
 
 |执行指令：|`AT+QLINKRAWSTART`|
 |---|:---|
 |响应：|`OK`|
 
-### AT+AT+QLINKUSERSTART
+### AT+QLINKUSERSTART
 功能：开始QLINK用户配网，绑定成功前，系统默认进入此模式
 
 |执行指令：|`AT+QLINKRAWSTART`|
@@ -83,12 +79,6 @@
 |---|:---|
 |响应：|`OK`|
 
-### AT+QLINKSTOP
-功能：停止QLINK服务
-
-|执行指令：|`AT+QLINKSTOP`|
-|---|:---|
-|响应：|`OK`|
 
 ### AT+QLINKSTATUS
 功能：查询QLINK服务状态
@@ -134,23 +124,20 @@
 
 ```
 /*说明：
- *该测试例程是阿里智能厂测包，配网入口V3热点配网,数据格式是JSON
+ *该测试例程是杭研生产环境99版本应用
  */
 
 /*设置QLINK 产品信息*/
-AT+QLINKPRODUCT=QLINK_product,QLINKTEST_LIVING_LIGHT_QLINK_TEST,5gPFl8G4GyFZ1fPWk20m,ngthgTlZ65bX5LpViKIWNsDPhOf2As9ChnoL9gQb,JSON\r
+AT+QLINKPRODUCT=501575,wS9OqT3wLIwkkOH1,JBuFCnhe66RiuSjJ\r
 
-如果使用透传：
-AT+QLINKPRODUCT=QLINK_TEST_LUA,QLINKTEST_LIVING_LIGHT_QLINK_TEST_LUA,PpvWt4yEJhWW9f987meF,c2IGOfujoX7JrbixF1yHNf4tcD8J2rAOIv7AszV8,RAW\r
-
-/*设置QLINK 设备信息*/
-AT+QLINKDEV=LIGHT,LIVING,QLINKTEST\r
+/*设置QLINK DM参数*/
+AT+QLINKDM=0,0,111001330000010, , , ,3600\r
 
 /*查询QLINK 产品信息*/
 AT+QLINKPRODUCT?
 
-/*查询QLINK 设备信息*/
-AT+QLINKDEV？
+/*查询QLINK DM参数*/
+AT+QLINKDM?\r
 
 /*开启本地网关一键配网模式*/
 AT+QLINKRAWSTART

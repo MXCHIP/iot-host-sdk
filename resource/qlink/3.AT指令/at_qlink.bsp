@@ -11,6 +11,13 @@
       <Active>false</Active>
     </BSSignal>
     <BSSignal>
+      <Name>清除kv参数</Name>
+      <DataFormat>String</DataFormat>
+      <Data>AT+QLINKCLEAN\r</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
       <Name>取消回显功能</Name>
       <DataFormat>String</DataFormat>
       <Data>AT+UARTE=OFF\r</Data>
@@ -53,16 +60,23 @@
       <Active>false</Active>
     </BSSignal>
     <BSSignal>
-      <Name>查询产品信息</Name>
+      <Name>设置 产品信息 501575</Name>
       <DataFormat>String</DataFormat>
-      <Data>AT+QLINKPRODUCT?\r</Data>
+      <Data>AT+QLINKPRODUCT=501575,wS9OqT3wLIwkkOH1,JBuFCnhe66RiuSjJ\r</Data>
       <Latency>0</Latency>
       <Active>false</Active>
     </BSSignal>
     <BSSignal>
-      <Name>设置版本信息</Name>
+      <Name>设置 产品信息 675892</Name>
       <DataFormat>String</DataFormat>
-      <Data>AT+QLINKVERSION=1.0.5,1.0.0\r</Data>
+      <Data>AT+QLINKPRODUCT=675892,S57irLQkdPw9PYi6,bGC1IcoCJJUQgVBl\r</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name>查询产品信息</Name>
+      <DataFormat>String</DataFormat>
+      <Data>AT+QLINKPRODUCT?\r</Data>
       <Latency>0</Latency>
       <Active>false</Active>
     </BSSignal>
@@ -76,7 +90,7 @@
     <BSSignal>
       <Name>DM信息</Name>
       <DataFormat>String</DataFormat>
-      <Data>AT+QLINKDM=0,0, , , , ,3600\r</Data>
+      <Data>AT+QLINKDM=0,0,111001330000010 , , , ,3600\r</Data>
       <Latency>0</Latency>
       <Active>false</Active>
     </BSSignal>
@@ -130,13 +144,6 @@
       <Active>false</Active>
     </BSSignal>
     <BSSignal>
-      <Name>停止 qlink 服务</Name>
-      <DataFormat>String</DataFormat>
-      <Data>AT+QLINKSTOP\r</Data>
-      <Latency>0</Latency>
-      <Active>false</Active>
-    </BSSignal>
-    <BSSignal>
       <Name>查询alink连接状态</Name>
       <DataFormat>String</DataFormat>
       <Data>AT+QLINKSTATUS?\r</Data>
@@ -168,6 +175,13 @@
       <Name>数据</Name>
       <DataFormat>String</DataFormat>
       <Data>{"params":[{"paramCode":"permitJoining","paramValue":"1"},{"paramCode":"permitJoining","paramValue":"1"},{"paramCode":"permitJoining","paramValue":"1"}]}</Data>
+      <Latency>0</Latency>
+      <Active>false</Active>
+    </BSSignal>
+    <BSSignal>
+      <Name>数据</Name>
+      <DataFormat>String</DataFormat>
+      <Data>{"params":[{"paramCode":"filter1Time","paramValue":"58"}]}</Data>
       <Latency>0</Latency>
       <Active>false</Active>
     </BSSignal>
